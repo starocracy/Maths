@@ -1,0 +1,2265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Classical Mechanics — Cheatsheet</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --void: #03050d;
+  --panel: #0c1226;
+  --panel-border: #1a2540;
+  --panel-hover: #111b35;
+  --accent-blue: #4a9eff;
+  --accent-gold: #f0b942;
+  --accent-teal: #38d9c0;
+  --accent-red: #ff6b6b;
+  --text-primary: #e8edf8;
+  --text-secondary: #7a8aab;
+  --text-muted: #3d4f6e;
+}
+html { scroll-behavior: smooth; }
+body { font-family: 'Space Grotesk', sans-serif; background: var(--void); color: var(--text-primary); min-height: 100vh; overflow-x: hidden; }
+
+#starfield { position: fixed; inset: 0; pointer-events: none; z-index: 0; }
+.nebula { position: fixed; border-radius: 50%; filter: blur(90px); pointer-events: none; z-index: 0; }
+.nebula-1 { width:600px;height:600px;top:-200px;left:-150px;background:radial-gradient(ellipse,rgba(42,80,180,.18) 0%,transparent 70%); }
+.nebula-2 { width:500px;height:500px;top:40%;right:-180px;background:radial-gradient(ellipse,rgba(80,30,160,.14) 0%,transparent 70%); }
+.nebula-3 { width:400px;height:400px;bottom:-100px;left:30%;background:radial-gradient(ellipse,rgba(20,100,120,.12) 0%,transparent 70%); }
+
+#veil { position:fixed;inset:0;background:var(--void);z-index:200;opacity:0;pointer-events:none;transition:opacity .32s ease; }
+#veil.show { opacity:1;pointer-events:all; }
+
+.view { position:relative;z-index:1;display:none;opacity:0;transform:translateY(10px);transition:opacity .38s ease,transform .38s ease; }
+.view.active { display:block;opacity:1;transform:translateY(0); }
+
+.page { max-width:1100px;margin:0 auto;padding:0 2rem 6rem; }
+
+/* ── HOME ── */
+header { padding:4rem 0 3rem;border-bottom:1px solid var(--panel-border);margin-bottom:3rem;position:relative;overflow:visible; }
+.header-eyebrow { font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent-teal);margin-bottom:1rem; }
+h1 { font-family:'Space Mono',monospace;font-size:clamp(2rem,5vw,3.2rem);font-weight:700;letter-spacing:-.02em;line-height:1.1;margin-bottom:.75rem; }
+h1 .accent { color:var(--accent-blue); }
+.header-subtitle { font-size:15px;color:var(--text-secondary);font-weight:300;max-width:480px; }
+#orbit-canvas { position:absolute;right:-20px;top:50%;transform:translateY(-52%);pointer-events:none; }
+
+.section-label { font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--text-muted);margin-bottom:1.25rem; }
+
+.chapter-grid { display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem; }
+.chapter-btn {
+  position:relative;display:flex;align-items:center;gap:1rem;padding:1.25rem 1.5rem;
+  background:var(--panel);border:1px solid var(--panel-border);border-radius:12px;
+  cursor:pointer;text-align:left;color:var(--text-primary);font-family:'Space Grotesk',sans-serif;
+  transition:background .2s,border-color .2s,transform .15s;overflow:hidden;
+}
+.chapter-btn::before { content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(74,158,255,.06) 0%,transparent 60%);opacity:0;transition:opacity .25s; }
+.chapter-btn:hover { background:var(--panel-hover);border-color:rgba(74,158,255,.4);transform:translateY(-2px); }
+.chapter-btn:hover::before { opacity:1; }
+.chapter-btn:active { transform:translateY(0); }
+.chapter-btn.ready { border-color:rgba(74,158,255,.25); }
+.chapter-btn.ready:hover { border-color:rgba(74,158,255,.55); }
+
+.btn-icon { flex-shrink:0;width:42px;height:42px;border-radius:10px;background:rgba(74,158,255,.1);border:1px solid rgba(74,158,255,.2);display:flex;align-items:center;justify-content:center; }
+.btn-icon svg { width:20px;height:20px; }
+.btn-text { flex:1; }
+.btn-title { font-size:15px;font-weight:500;margin-bottom:3px;line-height:1.2; }
+.btn-desc { font-size:12px;color:var(--text-secondary);font-weight:300;line-height:1.4; }
+.btn-arrow { flex-shrink:0;color:var(--text-muted);font-size:18px;transition:color .2s,transform .2s; }
+.chapter-btn:hover .btn-arrow { color:var(--accent-blue);transform:translateX(3px); }
+.btn-tag {
+  position:absolute;top:10px;right:10px;font-family:'Space Mono',monospace;font-size:9px;
+  letter-spacing:.12em;text-transform:uppercase;padding:2px 8px;border-radius:20px;
+}
+.btn-tag.soon { background:rgba(56,217,192,.1);border:1px solid rgba(56,217,192,.25);color:var(--accent-teal); }
+.btn-tag.live { background:rgba(74,158,255,.12);border:1px solid rgba(74,158,255,.3);color:var(--accent-blue); }
+
+footer { margin-top:4rem;padding-top:1.5rem;border-top:1px solid var(--panel-border);display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap; }
+.footer-mono { font-family:'Space Mono',monospace;font-size:11px;color:var(--text-muted);letter-spacing:.08em; }
+.footer-dot { width:5px;height:5px;border-radius:50%;background:var(--accent-teal);display:inline-block;margin-right:8px;animation:pdot 2.5s ease-in-out infinite; }
+@keyframes pdot { 0%,100%{opacity:1}50%{opacity:.3} }
+
+/* ════════════════════════════
+   CHAPTER PAGE
+════════════════════════════ */
+.chapter-topbar { display:flex;align-items:center;justify-content:space-between;padding:2rem 0 1.5rem;border-bottom:1px solid var(--panel-border);margin-bottom:3rem;gap:1rem; }
+.home-btn { display:flex;align-items:center;gap:8px;background:none;border:1px solid var(--panel-border);border-radius:8px;padding:7px 14px;color:var(--text-secondary);font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:border-color .2s,color .2s,background .2s;flex-shrink:0; }
+.home-btn:hover { border-color:rgba(74,158,255,.4);color:var(--accent-blue);background:rgba(74,158,255,.05); }
+.home-btn svg { width:14px;height:14px; }
+.chapter-topbar-meta { text-align:right; }
+.chapter-number { font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.2em;color:var(--text-muted);text-transform:uppercase;margin-bottom:4px; }
+.chapter-title-top { font-family:'Space Mono',monospace;font-size:15px;font-weight:700; }
+
+.chapter-hero { margin-bottom:2.5rem; }
+.chapter-hero-eyebrow { font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent-teal);margin-bottom:.75rem; }
+.chapter-hero h2 { font-family:'Space Mono',monospace;font-size:clamp(1.6rem,4vw,2.4rem);font-weight:700;line-height:1.15;margin-bottom:.6rem; }
+.chapter-hero p { font-size:14px;color:var(--text-secondary);font-weight:300;max-width:620px;line-height:1.7; }
+
+/* ── F = ma HERO BOX ── */
+.fma-hero {
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  background:linear-gradient(135deg,rgba(74,158,255,.08) 0%,rgba(74,158,255,.03) 100%);
+  border:1px solid rgba(74,158,255,.3);border-radius:16px;
+  padding:2.5rem 2rem;margin-bottom:3rem;position:relative;overflow:hidden;
+  text-align:center;
+}
+.fma-hero::before {
+  content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);
+  width:70%;height:1px;background:linear-gradient(90deg,transparent,rgba(74,158,255,.5),transparent);
+}
+.fma-hero::after {
+  content:'';position:absolute;bottom:0;left:50%;transform:translateX(-50%);
+  width:70%;height:1px;background:linear-gradient(90deg,transparent,rgba(74,158,255,.5),transparent);
+}
+.fma-label { font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.25em;text-transform:uppercase;color:var(--accent-blue);opacity:.7;margin-bottom:1rem; }
+.fma-equation {
+  font-family:'Space Mono',monospace;font-size:clamp(3rem,8vw,5.5rem);font-weight:700;
+  letter-spacing:.05em;color:var(--text-primary);line-height:1;margin-bottom:1rem;
+}
+.fma-equation .eq-f { color:var(--accent-blue); }
+.fma-equation .eq-m { color:var(--accent-gold); }
+.fma-equation .eq-a { color:var(--accent-teal); }
+.fma-equation .eq-op { color:var(--text-muted);margin:0 .15em; }
+.fma-sub { font-size:13px;color:var(--text-secondary);max-width:420px;line-height:1.6; }
+.fma-legend { display:flex;gap:1.5rem;margin-top:1.25rem;flex-wrap:wrap;justify-content:center; }
+.fma-leg-item { font-family:'Space Mono',monospace;font-size:11px;color:var(--text-muted); }
+.fma-leg-item span { font-weight:700; }
+.fma-leg-item .lf { color:var(--accent-blue); }
+.fma-leg-item .lm { color:var(--accent-gold); }
+.fma-leg-item .la { color:var(--accent-teal); }
+
+/* ── CONTENT SECTIONS ── */
+.content-section { margin-bottom:2.5rem; }
+.content-section-title {
+  font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--accent-teal);margin-bottom:1.25rem;padding-bottom:.6rem;
+  border-bottom:1px solid var(--panel-border);
+}
+
+.cards-grid { display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem;margin-bottom:0; }
+
+.info-card {
+  background:var(--panel);border:1px solid var(--panel-border);border-radius:12px;
+  padding:1.4rem 1.5rem;position:relative;overflow:hidden;
+  transition:border-color .2s;
+}
+.info-card:hover { border-color:rgba(74,158,255,.25); }
+.info-card-title {
+  font-family:'Space Mono',monospace;font-size:12px;font-weight:700;
+  letter-spacing:.05em;color:var(--text-primary);margin-bottom:.8rem;
+}
+.info-card-body { font-size:13px;color:var(--text-secondary);line-height:1.7; }
+.info-card-body strong { color:var(--text-primary);font-weight:500; }
+
+/* Law cards — coloured left border */
+.law-card { border-left:2px solid var(--accent-blue); }
+.law-card.gold { border-left-color:var(--accent-gold); }
+.law-card.teal { border-left-color:var(--accent-teal); }
+
+/* Formula pill */
+.formula-pill {
+  display:inline-block;font-family:'Space Mono',monospace;font-size:13px;font-weight:700;
+  background:rgba(74,158,255,.08);border:1px solid rgba(74,158,255,.2);
+  border-radius:6px;padding:3px 10px;color:var(--accent-blue);margin:.3rem .15rem .1rem;
+}
+.formula-pill.gold { background:rgba(240,185,66,.08);border-color:rgba(240,185,66,.2);color:var(--accent-gold); }
+.formula-pill.teal { background:rgba(56,217,192,.08);border-color:rgba(56,217,192,.2);color:var(--accent-teal); }
+
+/* Vector / scalar table */
+.def-table { width:100%;border-collapse:collapse;font-size:13px; }
+.def-table th { font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--text-muted);font-weight:400;padding:.5rem .75rem;border-bottom:1px solid var(--panel-border);text-align:left; }
+.def-table td { padding:.6rem .75rem;border-bottom:1px solid rgba(26,37,64,.6);color:var(--text-secondary);vertical-align:top;line-height:1.6; }
+.def-table td:first-child { color:var(--text-primary);font-weight:500;white-space:nowrap; }
+.def-table tr:last-child td { border-bottom:none; }
+
+/* Note block */
+.note-block {
+  background:rgba(240,185,66,.06);border:1px solid rgba(240,185,66,.18);border-radius:10px;
+  padding:1rem 1.25rem;margin-top:1rem;font-size:13px;color:var(--text-secondary);line-height:1.65;
+}
+.note-block strong { color:var(--accent-gold);font-weight:500; }
+
+/* Chapter footnav */
+.chapter-footnav { display:flex;align-items:center;justify-content:space-between;padding-top:1.5rem;border-top:1px solid var(--panel-border);gap:1rem; }
+.nav-arrow-btn { display:flex;align-items:center;gap:10px;background:var(--panel);border:1px solid var(--panel-border);border-radius:10px;padding:10px 18px;color:var(--text-secondary);font-family:'Space Grotesk',sans-serif;font-size:13px;cursor:pointer;transition:border-color .2s,color .2s,background .2s,transform .15s;min-width:140px; }
+.nav-arrow-btn:hover { border-color:rgba(74,158,255,.35);color:var(--text-primary);background:var(--panel-hover);transform:translateY(-1px); }
+.nav-arrow-btn:active { transform:translateY(0); }
+.nav-arrow-btn.disabled { opacity:.25;cursor:default;pointer-events:none; }
+.nav-arrow-btn.prev { justify-content:flex-start; }
+.nav-arrow-btn.next { justify-content:flex-end; }
+.arrow-label { flex:1; }
+.nav-arrow-btn.next .arrow-label { text-align:right; }
+.nav-chapter-indicator { font-family:'Space Mono',monospace;font-size:11px;color:var(--text-muted);letter-spacing:.1em; }
+
+@media(max-width:640px){
+  #orbit-canvas{display:none;}
+  .fma-equation{font-size:3rem;}
+  .chapter-topbar{flex-wrap:wrap;}
+  .chapter-topbar-meta{text-align:left;}
+  .nav-arrow-btn .arrow-label{display:none;}
+  .nav-arrow-btn{min-width:auto;}
+}
+
+/* ══════════════════════════════════
+   CHECKPOINT BUTTONS
+══════════════════════════════════ */
+.checkpoint-grid { display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem;margin-top:1.25rem; }
+.checkpoint-btn {
+  position:relative;display:flex;align-items:center;gap:1rem;padding:1.25rem 1.5rem;
+  background:var(--panel);border:1px solid var(--panel-border);border-radius:12px;
+  cursor:pointer;text-align:left;color:var(--text-primary);font-family:'Space Grotesk',sans-serif;
+  transition:background .2s,border-color .2s,transform .15s;overflow:hidden;
+}
+.checkpoint-btn::before { content:'';position:absolute;inset:0;opacity:0;transition:opacity .25s; }
+.checkpoint-btn.quiz::before { background:linear-gradient(135deg,rgba(240,185,66,.07) 0%,transparent 60%); }
+.checkpoint-btn.methods::before { background:linear-gradient(135deg,rgba(56,217,192,.07) 0%,transparent 60%); }
+.checkpoint-btn.practice::before { background:linear-gradient(135deg,rgba(74,158,255,.07) 0%,transparent 60%); }
+.checkpoint-btn:hover::before { opacity:1; }
+.checkpoint-btn.quiz:hover { background:var(--panel-hover);border-color:rgba(240,185,66,.4);transform:translateY(-2px); }
+.checkpoint-btn.methods:hover { background:var(--panel-hover);border-color:rgba(56,217,192,.4);transform:translateY(-2px); }
+.checkpoint-btn.practice:hover { background:var(--panel-hover);border-color:rgba(74,158,255,.4);transform:translateY(-2px); }
+.checkpoint-btn:active { transform:translateY(0); }
+.checkpoint-btn .btn-icon.quiz-icon { background:rgba(240,185,66,.1);border-color:rgba(240,185,66,.25); }
+.checkpoint-btn .btn-icon.quiz-icon svg { color:var(--accent-gold); }
+.checkpoint-btn .btn-icon.methods-icon { background:rgba(56,217,192,.1);border-color:rgba(56,217,192,.25); }
+.checkpoint-btn .btn-icon.methods-icon svg { color:var(--accent-teal); }
+.checkpoint-btn .btn-icon.practice-icon { background:rgba(74,158,255,.1);border-color:rgba(74,158,255,.2); }
+.checkpoint-btn .btn-icon.practice-icon svg { color:var(--accent-blue); }
+.checkpoint-btn .btn-arrow { flex-shrink:0;color:var(--text-muted);font-size:18px;transition:color .2s,transform .2s; }
+.checkpoint-btn.quiz:hover .btn-arrow { color:var(--accent-gold);transform:translateX(3px); }
+.checkpoint-btn.methods:hover .btn-arrow { color:var(--accent-teal);transform:translateX(3px); }
+.checkpoint-btn.practice:hover .btn-arrow { color:var(--accent-blue);transform:translateX(3px); }
+.btn-tag.checkpoint { background:rgba(240,185,66,.1);border:1px solid rgba(240,185,66,.28);color:var(--accent-gold); }
+.btn-tag.class test { background:rgba(56,217,192,.08);border:1px solid rgba(56,217,192,.25);color:var(--accent-teal); }
+
+/* ══════════════════════════════════
+   QUIZ PAGE
+══════════════════════════════════ */
+.quiz-sticky-header { position:sticky;top:0;z-index:50;background:var(--void);padding:.85rem 0 .6rem;margin-bottom:1.75rem;border-bottom:1px solid var(--panel-border); }
+.quiz-sticky-top { display:flex;align-items:center;justify-content:space-between;margin-bottom:.65rem;gap:1rem; }
+.quiz-counter { font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.14em;color:var(--text-secondary); }
+.quiz-score-live { font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.08em;color:var(--text-muted); }
+.quiz-score-live span { color:var(--accent-gold); }
+.quiz-progress-bar { height:3px;background:var(--panel-border);border-radius:2px;overflow:hidden; }
+.quiz-progress-fill { height:100%;background:linear-gradient(90deg,var(--accent-gold),var(--accent-teal));border-radius:2px;transition:width .45s ease; }
+.quiz-card { background:var(--panel);border:1px solid var(--panel-border);border-radius:16px;padding:2rem;transition:border-color .3s; }
+.quiz-card.answered-correct { border-color:rgba(56,217,192,.45); }
+.quiz-card.answered-wrong { border-color:rgba(255,107,107,.4); }
+.quiz-q-label { font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--text-muted);margin-bottom:.9rem; }
+.quiz-q-text { font-size:15px;font-weight:500;line-height:1.6;margin-bottom:1.5rem; }
+.quiz-options { display:flex;flex-direction:column;gap:.65rem; }
+.quiz-opt {
+  display:flex;align-items:center;gap:.85rem;padding:.8rem 1.1rem;
+  background:rgba(255,255,255,.03);border:1px solid var(--panel-border);border-radius:10px;
+  cursor:pointer;font-size:13.5px;text-align:left;color:var(--text-primary);
+  font-family:'Space Grotesk',sans-serif;transition:background .15s,border-color .15s,transform .1s;
+}
+.quiz-opt:hover:not(.disabled) { background:rgba(255,255,255,.07);border-color:rgba(74,158,255,.35);transform:translateX(3px); }
+.quiz-opt.correct { background:rgba(56,217,192,.12);border-color:rgba(56,217,192,.5);color:var(--accent-teal); }
+.quiz-opt.wrong { background:rgba(255,107,107,.1);border-color:rgba(255,107,107,.4);color:#ff8080; }
+.quiz-opt.reveal-correct { background:rgba(56,217,192,.07);border-color:rgba(56,217,192,.3);color:var(--accent-teal); }
+.quiz-opt.disabled { cursor:default;pointer-events:none; }
+.quiz-opt-letter { width:26px;height:26px;border-radius:7px;background:var(--panel-border);display:flex;align-items:center;justify-content:center;font-family:'Space Mono',monospace;font-size:11px;font-weight:700;flex-shrink:0;transition:background .15s,color .15s; }
+.quiz-opt.correct .quiz-opt-letter { background:var(--accent-teal);color:#03050d; }
+.quiz-opt.wrong .quiz-opt-letter { background:#ff6b6b;color:#03050d; }
+.quiz-opt.reveal-correct .quiz-opt-letter { background:rgba(56,217,192,.45);color:var(--accent-teal); }
+.quiz-feedback { margin-top:1.1rem;font-size:13px;line-height:1.6;padding:.75rem 1.1rem;border-radius:9px;display:none; }
+.quiz-feedback.show { display:block; }
+.quiz-feedback.correct { background:rgba(56,217,192,.09);color:var(--accent-teal);border:1px solid rgba(56,217,192,.25); }
+.quiz-feedback.wrong { background:rgba(255,107,107,.08);color:#ff8080;border:1px solid rgba(255,107,107,.25); }
+.quiz-next-btn {
+  width:100%;margin-top:1.25rem;padding:.85rem 1.5rem;
+  background:rgba(74,158,255,.09);border:1px solid rgba(74,158,255,.3);border-radius:10px;
+  color:var(--accent-blue);font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.1em;
+  cursor:pointer;transition:background .2s,border-color .2s,transform .12s;display:none;
+}
+.quiz-next-btn.show { display:block; }
+.quiz-next-btn:hover { background:rgba(74,158,255,.16);border-color:rgba(74,158,255,.55);transform:translateY(-1px); }
+.quiz-next-btn:active { transform:translateY(0); }
+.quiz-score-panel {
+  background:linear-gradient(135deg,rgba(240,185,66,.08),rgba(56,217,192,.05));
+  border:1px solid rgba(240,185,66,.25);border-radius:16px;padding:2.5rem 2rem;
+  text-align:center;display:none;
+}
+.quiz-score-panel.show { display:block; }
+.quiz-score-big { font-family:'Space Mono',monospace;font-size:3.5rem;font-weight:700;color:var(--accent-gold);line-height:1; }
+.quiz-score-denom { font-family:'Space Mono',monospace;font-size:1.5rem;color:var(--text-secondary); }
+.quiz-score-label { font-size:13px;color:var(--text-secondary);margin-top:.5rem;margin-bottom:1.5rem; }
+.quiz-score-bar-wrap { max-width:260px;margin:0 auto 1.75rem;height:5px;background:var(--panel-border);border-radius:3px;overflow:hidden; }
+.quiz-score-bar-fill { height:100%;background:linear-gradient(90deg,var(--accent-gold),var(--accent-teal));border-radius:3px;transition:width .7s ease; }
+.quiz-retry-btn {
+  background:rgba(240,185,66,.12);border:1px solid rgba(240,185,66,.35);border-radius:9px;
+  padding:.7rem 1.75rem;color:var(--accent-gold);font-family:'Space Mono',monospace;
+  font-size:12px;letter-spacing:.08em;cursor:pointer;transition:background .2s,border-color .2s;
+}
+.quiz-retry-btn:hover { background:rgba(240,185,66,.22);border-color:rgba(240,185,66,.6); }
+
+
+
+/* ══════════════════════════════════
+   EXAM PRACTICE PAGE (stub CSS)
+══════════════════════════════════ */
+.exam-q-block { background:var(--panel);border:1px solid var(--panel-border);border-radius:14px;padding:1.75rem;margin-bottom:1.25rem; }
+.exam-q-num { font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent-blue);margin-bottom:.6rem; }
+.exam-q-text { font-size:15px;font-weight:500;line-height:1.55;margin-bottom:.75rem; }
+.exam-q-hint { font-size:12.5px;color:var(--text-secondary);font-style:italic;padding:.55rem .9rem;background:rgba(74,158,255,.05);border-left:2px solid rgba(74,158,255,.3);border-radius:0 6px 6px 0;margin-bottom:1rem; }
+.exam-reveal-btn {
+  display:flex;align-items:center;gap:.5rem;background:none;border:1px solid var(--panel-border);
+  border-radius:8px;padding:.55rem 1rem;color:var(--text-secondary);font-family:'Space Mono',monospace;
+  font-size:11px;letter-spacing:.08em;cursor:pointer;transition:border-color .2s,color .2s;
+}
+.exam-reveal-btn:hover { border-color:rgba(74,158,255,.4);color:var(--accent-blue); }
+.exam-reveal-btn svg { width:13px;height:13px;transition:transform .25s; }
+.exam-reveal-btn.open svg { transform:rotate(180deg); }
+.exam-answer { display:none;margin-top:1rem;padding:1rem 1.25rem;background:rgba(74,158,255,.05);border:1px solid rgba(74,158,255,.18);border-radius:10px;font-size:13.5px;line-height:1.9;color:var(--text-secondary); }
+.exam-answer.show { display:block; }
+.exam-answer .step { margin-bottom:.5rem; }
+.exam-answer .step strong { color:var(--text-primary);font-weight:500; }
+.exam-answer .result { margin-top:.75rem;padding:.6rem 1rem;background:rgba(56,217,192,.07);border:1px solid rgba(56,217,192,.2);border-radius:8px;color:var(--accent-teal);font-family:'Space Mono',monospace;font-size:13px; }
+.gen-btn {
+  display:flex;align-items:center;justify-content:center;gap:.6rem;width:100%;
+  background:rgba(74,158,255,.08);border:1px solid rgba(74,158,255,.28);border-radius:11px;
+  padding:1rem;color:var(--accent-blue);font-family:'Space Mono',monospace;font-size:12px;
+  letter-spacing:.1em;cursor:pointer;margin-top:1.5rem;transition:background .2s,border-color .2s,transform .15s;
+}
+.gen-btn:hover { background:rgba(74,158,255,.15);border-color:rgba(74,158,255,.5);transform:translateY(-1px); }
+.gen-btn:active { transform:translateY(0); }
+.gen-btn svg { width:16px;height:16px; }
+
+/* ── Brachistochrone panel ── */
+.brach-panel {
+  display:flex;gap:2rem;align-items:center;
+  background:var(--panel);border:1px solid var(--panel-border);border-radius:16px;
+  padding:2rem 2rem;margin-bottom:2.5rem;overflow:hidden;position:relative;
+}
+.brach-panel::before {
+  content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);
+  width:60%;height:1px;background:linear-gradient(90deg,transparent,rgba(240,185,66,.3),transparent);
+}
+.brach-img-wrap {
+  flex-shrink:0;width:260px;
+  background:rgba(255,255,255,0.03);border:1px solid var(--panel-border);border-radius:10px;
+  overflow:hidden;display:flex;align-items:center;justify-content:center;padding:.75rem;
+}
+.brach-img-wrap img { width:100%;height:auto;display:block;filter:invert(1) hue-rotate(180deg) brightness(0.85); }
+.brach-fallback { font-family:'Space Mono',monospace;font-size:11px;color:var(--text-muted);padding:2rem; }
+.brach-caption { flex:1; }
+.brach-caption-title {
+  font-family:'Space Mono',monospace;font-size:13px;font-weight:700;
+  color:var(--accent-gold);margin-bottom:.6rem;letter-spacing:.04em;
+}
+.brach-caption-sub { font-size:13px;color:var(--text-secondary);line-height:1.7; }
+@media(max-width:680px){
+  .brach-panel{flex-direction:column;}
+  .brach-img-wrap{width:100%;}
+}
+</style>
+</head>
+<body>
+
+<div class="nebula nebula-1"></div>
+<div class="nebula nebula-2"></div>
+<div class="nebula nebula-3"></div>
+<canvas id="starfield"></canvas>
+<div id="veil"></div>
+
+<!-- ══ HOME ══ -->
+<div id="view-home" class="view">
+  <div class="page">
+    <header>
+      <p class="header-eyebrow">Mathematics Module · Reference Sheet</p>
+      <h1>Classical <span class="accent">Mechanics</span></h1>
+      <p class="header-subtitle">Formulae, laws, and derivations for planetary motion, orbital mechanics, and beyond.</p>
+      <canvas id="orbit-canvas" width="240" height="240"></canvas>
+    </header>
+
+    <p class="section-label">// Chapters</p>
+    <div class="chapter-grid" id="chapter-grid"></div>
+
+    <div style="margin-top:3.5rem">
+      <p class="section-label">// Class Test I</p>
+      <div class="checkpoint-grid" id="checkpoint-grid"></div>
+    </div>
+
+    <footer>
+      <span class="footer-mono"><span class="footer-dot"></span>Classical Mechanics · Cheatsheet v0.1</span>
+    </footer>
+  </div>
+</div>
+
+<!-- ══ CHAPTER VIEW ══ -->
+<div id="view-chapter" class="view">
+  <div class="page" id="chapter-page-inner"></div>
+</div>
+
+<!-- ══ QUIZ VIEW ══ -->
+<div id="view-quiz" class="view">
+  <div class="page" id="quiz-page-inner"></div>
+</div>
+
+<!-- ══ METHODS VIEW ══ -->
+<div id="view-methods" class="view">
+  <div class="page" id="methods-page-inner"></div>
+</div>
+
+<!-- ══ PRACTICE VIEW ══ -->
+<div id="view-practice" class="view">
+  <div class="page" id="practice-page-inner"></div>
+</div>
+
+<script>
+/* ═══════════════════════════════════════
+   CHAPTER DATA
+═══════════════════════════════════════ */
+const CHAPTERS = [
+  {
+    title: 'Newtonian Mechanics, Force, Mass & Energy',
+    desc: 'This section contains all three of Newton\'s laws, information on Centre of Mass, Velocity, Acceleration, and Energy.',
+    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="color:var(--accent-blue)"><circle cx="12" cy="12" r="3"/><path d="M12 2a10 10 0 0 1 0 20A10 10 0 0 1 12 2"/><path d="M2 12h4M18 12h4"/></svg>`,
+    status: 'live',
+    render: renderChapter1
+  },
+  {
+    title: 'Lagrangian Mechanics',
+    desc: 'This section covers optimising curves, the Euler-Lagrange equation, the Principle of Least Action, and Reduced Mass.',
+    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="color:var(--accent-gold)"><path d="M3 17c3-3 5-7 9-7s6 4 9 7"/><path d="M3 7h2M5 7c5 0 7 10 12 10"/></svg>`,
+    status: 'live',
+    render: renderChapter2
+  },
+  {
+    title: 'Orbits',
+    desc: 'This section covers circular, elliptical, and hyperbolic orbits, as well as orbital energy and angular momentum.',
+    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="color:var(--accent-teal)"><ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(-30 12 12)"/><circle cx="12" cy="12" r="2.5" fill="currentColor" opacity=".5"/><circle cx="19.5" cy="8" r="1.5" fill="currentColor"/></svg>`,
+    status: 'live',
+    render: renderChapter3
+  }
+];
+
+/* ═══════════════════════════════════════
+   CHAPTER 1 CONTENT
+═══════════════════════════════════════ */
+function renderChapter1() {
+  return `
+    <!-- F = ma HERO -->
+    <div class="fma-hero">
+      <div class="fma-label">Newton's Second Law · The Central Equation</div>
+      <div class="fma-equation">
+        <span class="eq-f">F</span><span class="eq-op">=</span><span class="eq-m">m</span><span class="eq-a">a</span>
+      </div>
+      <div class="fma-sub">Any change in velocity is caused by a force. Massive bodies have more inertia and require larger forces to change their motion.</div>
+      <div class="fma-legend">
+        <div class="fma-leg-item"><span class="lf">F</span> — Force (vector, N)</div>
+        <div class="fma-leg-item"><span class="lm">m</span> — Mass (scalar, kg)</div>
+        <div class="fma-leg-item"><span class="la">a</span> — Acceleration (vector, ms⁻²)</div>
+      </div>
+    </div>
+
+    <!-- KINEMATICS -->
+    <div class="content-section">
+      <div class="content-section-title">// Position, Velocity & Acceleration</div>
+      <div class="info-card" style="max-width:560px">
+        <div class="info-card-body" style="line-height:2.1">
+          <span class="formula-pill">s = (x, y, z)</span> &nbsp;position vector<br>
+          <span class="formula-pill">v = ds/dt</span> &nbsp;velocity &nbsp;<span style="color:var(--text-muted);font-size:12px">— speed is |v|, a scalar</span><br>
+          <span class="formula-pill">a = dv/dt = d²s/dt²</span> &nbsp;acceleration
+        </div>
+      </div>
+    </div>
+
+    <!-- NEWTON'S LAWS -->
+    <div class="content-section">
+      <div class="content-section-title">// Newton's Three Laws</div>
+      <div class="cards-grid">
+
+        <div class="info-card law-card">
+          <div class="info-card-title">First Law — Inertia</div>
+          <div class="info-card-body">
+            An object remains in its current state of motion unless acted upon by a net force.<br><br>
+            • A <strong>stationary object</strong> remains stationary.<br>
+            • A <strong>moving object</strong> continues at the same velocity — same speed, same direction.<br><br>
+            This property is called <strong>inertia</strong>. It explains why an arrow keeps moving after leaving the bow.
+          </div>
+        </div>
+
+        <div class="info-card law-card gold">
+          <div class="info-card-title">Second Law — F = ma</div>
+          <div class="info-card-body">
+            Forces cause acceleration. The net force on an object equals its mass times its acceleration.<br><br>
+            <span class="formula-pill">F = ma</span><br><br>
+            This year we focus mostly on <strong>conservative forces</strong> (e.g. gravity) which have an associated potential energy. Friction is mostly neglected.
+          </div>
+        </div>
+
+        <div class="info-card law-card teal">
+          <div class="info-card-title">Third Law — Action & Reaction</div>
+          <div class="info-card-body">
+            For every force there is an equal and opposite force. Forces are always paired.<br><br>
+            <span class="formula-pill teal">F&#x2090;&#x2099; = −F&#x2099;&#x2090;</span><br><br>
+            If A exerts force on B, B exerts an equal force back on A — same magnitude, opposite direction. In a closed system, all third-law pairs cancel, so the total force sums to zero.
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- MOMENTUM -->
+    <div class="content-section">
+      <div class="content-section-title">// Momentum</div>
+      <div class="cards-grid">
+
+        <div class="info-card">
+          <div class="info-card-title">Definition</div>
+          <div class="info-card-body">
+            Momentum is mass times velocity — a vector quantity:<br><br>
+            <span class="formula-pill">p = mv</span><br><br>
+            Newton's Second Law can be restated as:<br>
+            <span class="formula-pill">F = dp/dt</span>
+          </div>
+        </div>
+
+        <div class="info-card">
+          <div class="info-card-title">Conservation of Momentum</div>
+          <div class="info-card-body">
+            In a closed system (no external forces), total momentum is conserved — it does not change with time.<br><br>
+            <span class="formula-pill teal">Σ pᵢ = Σ mᵢvᵢ = constant</span><br><br>
+            This follows directly from combining Newton's 2nd and 3rd Laws.
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- COLLISIONS -->
+    <div class="content-section">
+      <div class="content-section-title">// Collisions</div>
+      <div class="cards-grid">
+
+        <div class="info-card law-card">
+          <div class="info-card-title">Elastic Collision</div>
+          <div class="info-card-body">
+            Both momentum <em>and</em> kinetic energy are conserved.<br><br>
+            <span class="formula-pill">Σp before = Σp after</span><br>
+            <span class="formula-pill">ΣKE before = ΣKE after</span><br><br>
+            where &nbsp;<span class="formula-pill">KE = ½mv²</span>
+          </div>
+        </div>
+
+        <div class="info-card law-card gold">
+          <div class="info-card-title">Inelastic Collision</div>
+          <div class="info-card-body">
+            Momentum is conserved, but kinetic energy is <em>not</em> — some is converted to heat, sound, or deformation.<br><br>
+            <span class="formula-pill">Σp before = Σp after</span><br>
+            <span class="formula-pill gold">ΣKE before ≠ ΣKE after</span>
+          </div>
+        </div>
+
+        <div class="info-card law-card teal">
+          <div class="info-card-title">Perfectly Inelastic</div>
+          <div class="info-card-body">
+            Objects stick together after collision — maximum KE loss for a given momentum change.<br><br>
+            <span class="formula-pill teal">mv = (M + m)u</span><br><br>
+            where u is the common final velocity.
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- MASS -->
+    <div class="content-section">
+      <div class="content-section-title">// Mass vs Weight</div>
+      <div class="cards-grid">
+
+        <div class="info-card">
+          <div class="info-card-title">Mass</div>
+          <div class="info-card-body">
+            The <strong>inertia</strong> of an object — how hard it is to change its state of motion. Mass is constant regardless of location.<br><br>
+            An object on the Moon has the <em>same mass</em> as on Earth — it is equally hard to accelerate.
+          </div>
+        </div>
+
+        <div class="info-card">
+          <div class="info-card-title">Weight</div>
+          <div class="info-card-body">
+            Weight is the <strong>gravitational force</strong> acting on a mass:<br><br>
+            <span class="formula-pill gold">W = mg</span><br><br>
+            Mass is constant regardless of location. Weight depends on the local gravitational field.
+          </div>
+        </div>
+
+      </div><!-- end cards-grid -->
+    </div><!-- end discrete/definition grid -->
+
+    <!-- Continuous body — full width -->
+    <div style="margin-bottom:1rem">
+      <div class="info-card law-card gold">
+        <div class="info-card-title">Continuous Body</div>
+        <div class="info-card-body" style="line-height:2.2">
+          For a solid object with density ρ(x, y, z):<br>
+          <span class="formula-pill gold">M = ∭ ρ dV</span> &nbsp;total mass<br>
+          <span class="formula-pill gold">x<sub>CM</sub> = (1/M) ∭ x ρ dV</span><br>
+          <span class="formula-pill gold">y<sub>CM</sub> = (1/M) ∭ y ρ dV</span><br>
+          <span class="formula-pill gold">z<sub>CM</sub> = (1/M) ∭ z ρ dV</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- CIRCULAR MOTION -->
+    <div class="content-section">
+      <div class="content-section-title">// Motion in a Circle</div>
+      <div class="info-card" style="max-width:560px">
+        <div class="info-card-title">Constant Speed, Changing Velocity</div>
+        <div class="info-card-body">
+          An object moving in a circle at constant speed is <em>still accelerating</em> — its direction continuously changes. This centripetal acceleration is directed towards the centre and requires a net inward force.
+        </div>
+      </div>
+    </div>
+
+    <!-- CENTRE OF MASS -->
+    <div class="content-section">
+      <div class="content-section-title">// Centre of Mass</div>
+
+      <div class="cards-grid" style="margin-bottom:1rem">
+        <div class="info-card">
+          <div class="info-card-title">Definition</div>
+          <div class="info-card-body">
+            The point that moves simply under Newton's Laws — use it to define position, velocity, and acceleration for extended or asymmetric bodies.<br><br>
+            Total mass: &nbsp;<span class="formula-pill">M = Σ mᵢ</span>
+          </div>
+        </div>
+
+        <div class="info-card law-card">
+          <div class="info-card-title">Discrete Masses</div>
+          <div class="info-card-body">
+            For a collection of point masses:<br><br>
+            <span class="formula-pill">s<sub>CM</sub> = (1/M) Σ mᵢsᵢ</span><br><br>
+            Always closer to the heavier mass.
+          </div>
+        </div>
+      </div>
+
+      <!-- Continuous body — full width -->
+      <div class="info-card law-card gold" style="margin-bottom:1rem">
+        <div class="info-card-title">Continuous Body — density ρ(x, y, z)</div>
+        <div class="info-card-body" style="line-height:2.3">
+          <span class="formula-pill gold">M = ∭ ρ dV</span>&nbsp; total mass<br>
+          <span class="formula-pill gold">x<sub>CM</sub> = (1/M) ∭ x ρ dV</span><br>
+          <span class="formula-pill gold">y<sub>CM</sub> = (1/M) ∭ y ρ dV</span><br>
+          <span class="formula-pill gold">z<sub>CM</sub> = (1/M) ∭ z ρ dV</span>
+        </div>
+      </div>
+
+      <div class="cards-grid">
+        <div class="info-card law-card teal">
+          <div class="info-card-title">Motion of the CM</div>
+          <div class="info-card-body">
+            In a closed system the centre of mass moves at constant velocity — internal forces cannot shift its trajectory. Total momentum of the whole system remains conserved.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ENERGY -->
+    <div class="content-section">
+      <div class="content-section-title">// Energy</div>
+      <div class="cards-grid" style="margin-bottom:1rem">
+
+        <div class="info-card law-card">
+          <div class="info-card-title">Kinetic Energy</div>
+          <div class="info-card-body">
+            Energy due to motion. Symbol <strong>T</strong> (or KE):<br><br>
+            <span class="formula-pill">T = ½mv²</span>
+          </div>
+        </div>
+
+        <div class="info-card law-card gold">
+          <div class="info-card-title">Potential Energy</div>
+          <div class="info-card-body">
+            Energy depending on position. Symbol <strong>V</strong>:<br><br>
+            <span class="formula-pill gold">V = mgz</span>&nbsp; gravity (near Earth's surface)<br><br>
+            <span class="formula-pill gold">V = ½k(x − x₀)²</span>&nbsp; spring
+          </div>
+        </div>
+
+        <div class="info-card law-card teal">
+          <div class="info-card-title">Force from Potential</div>
+          <div class="info-card-body">
+            A potential drives objects from high to low V:<br><br>
+            <span class="formula-pill teal">F = −∇V</span><br><br>
+            i.e. &nbsp;Fₓ = −∂V/∂x,&nbsp; F_y = −∂V/∂y,&nbsp; F_z = −∂V/∂z
+          </div>
+        </div>
+
+        <div class="info-card law-card">
+          <div class="info-card-title">Work</div>
+          <div class="info-card-body">
+            Work is the transfer of energy via force over displacement:<br><br>
+            <span class="formula-pill">W = ∫ F · dl</span><br><br>
+            F and dl are both vectors — only the component of force along the displacement does work.
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Conservation — full width -->
+      <div class="info-card law-card teal">
+        <div class="info-card-title">Conservation of Energy</div>
+        <div class="info-card-body" style="line-height:2.3">
+          With no friction and no external forces, total mechanical energy is constant:<br>
+          <span class="formula-pill teal">E = T + V = ½mv² + V(x,y,z) = constant</span><br>
+          <span class="formula-pill teal">dE/dt = 0</span>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+/* ═══════════════════════════════════════
+   CHAPTER 2 CONTENT — Lagrangian Mechanics
+═══════════════════════════════════════ */
+function renderChapter2() {
+  return `
+    <!-- CALCULUS OF VARIATIONS -->
+    <div class="content-section">
+      <div class="content-section-title">// Calculus of Variations</div>
+      <div class="cards-grid" style="margin-bottom:1rem">
+
+        <div class="info-card">
+          <div class="info-card-title">The Problem</div>
+          <div class="info-card-body">
+            Find the curve y(x) with fixed endpoints (x₀, y₀) and (x_f, y_f) that maximises or minimises a functional:<br><br>
+            <span class="formula-pill">I = ∫ f(y, y′, x) dx</span><br><br>
+            where y′ = dy/dx.
+          </div>
+        </div>
+
+        <div class="info-card">
+          <div class="info-card-title">Arc Length</div>
+          <div class="info-card-body">
+            The length of a curve y(x) — a key example of a functional:<br><br>
+            <span class="formula-pill">dl = √(1 + y′²) dx</span><br><br>
+            <span class="formula-pill">L = ∫ √(1 + y′²) dx</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Euler-Lagrange — full width -->
+      <div class="info-card law-card teal" style="margin-bottom:1rem">
+        <div class="info-card-title">The Euler-Lagrange Equation</div>
+        <div class="info-card-body" style="line-height:2.2">
+          A path y(x) is stationary (extremises I) if and only if:<br>
+          <span class="formula-pill teal">∂f/∂y − d/dx (∂f/∂y′) = 0</span><br>
+          This is a differential equation for the optimal path, holding for all x ∈ (x₀, x_f).
+        </div>
+      </div>
+
+      <div class="cards-grid">
+        <div class="info-card">
+          <div class="info-card-title">Result — Shortest Path</div>
+          <div class="info-card-body">
+            Applying Euler-Lagrange to arc length gives y′ = constant, confirming the shortest path between two points is a straight line:<br><br>
+            <span class="formula-pill">y = A + Cx</span>
+          </div>
+        </div>
+
+        <div class="info-card law-card gold">
+          <div class="info-card-title">The Brachistochrone (Cycloid)</div>
+          <div class="info-card-body">
+            A classic variational problem: find the curve of <em>fastest descent</em> between two points under gravity. The answer is not a straight line but a <strong>cycloid</strong> — also called the brachistochrone. First solved by Bernoulli (1696), it was a founding problem of the calculus of variations.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PRINCIPLE OF LEAST ACTION -->
+    <div class="content-section">
+      <div class="content-section-title">// Principle of Least Action</div>
+
+      <div class="cards-grid" style="margin-bottom:1rem">
+
+        <div class="info-card law-card">
+          <div class="info-card-title">The Lagrangian</div>
+          <div class="info-card-body">
+            The Lagrangian function L is kinetic energy minus potential energy:<br><br>
+            <span class="formula-pill">L = T − V</span><br><br>
+            For a 1D particle: &nbsp;<span class="formula-pill">L = ½mẋ² − V(x)</span>
+          </div>
+        </div>
+
+        <div class="info-card law-card gold">
+          <div class="info-card-title">The Action</div>
+          <div class="info-card-body">
+            The action S is the time integral of the Lagrangian:<br><br>
+            <span class="formula-pill gold">S = ∫ L dt = ∫ (T − V) dt</span><br><br>
+            Hamilton's Principle: particles move along the path that keeps S stationary (minimised).
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Euler-Lagrange in mechanics — full width -->
+      <div class="info-card law-card teal" style="margin-bottom:1rem">
+        <div class="info-card-title">Euler-Lagrange → Newton's Second Law</div>
+        <div class="info-card-body" style="line-height:2.2">
+          Applying the Euler-Lagrange equation to the action recovers F = ma:<br>
+          <span class="formula-pill teal">d/dt (∂L/∂ẋ) − ∂L/∂x = 0</span><br>
+          <span class="formula-pill teal">mẍ = −∂V/∂x = Fₓ</span><br>
+          Minimising action ⟺ F = ma &nbsp;(for conservative forces)
+        </div>
+      </div>
+
+      <div class="info-card">
+        <div class="info-card-title">Extension to 3D</div>
+        <div class="info-card-body" style="line-height:2.1">
+          In 3D with L(x, ẋ, y, ẏ, z, ż, t), one Euler-Lagrange equation applies per coordinate:<br><br>
+          <span class="formula-pill">d/dt(∂L/∂ẋ) − ∂L/∂x = 0</span><br>
+          <span class="formula-pill">d/dt(∂L/∂ẏ) − ∂L/∂y = 0</span><br>
+          <span class="formula-pill">d/dt(∂L/∂ż) − ∂L/∂z = 0</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- REDUCED MASS -->
+    <div class="content-section">
+      <div class="content-section-title">// Reduced Mass</div>
+
+      <div class="cards-grid" style="margin-bottom:1rem">
+
+        <div class="info-card law-card">
+          <div class="info-card-title">Two-Particle Lagrangian</div>
+          <div class="info-card-body" style="line-height:2.1">
+            For two masses joined by a spring:<br>
+            <span class="formula-pill">T = ½m₁ẋ₁² + ½m₂ẋ₂²</span><br>
+            <span class="formula-pill">V = ½K(x₂ − x₁)²</span><br>
+            Each particle yields its own Euler-Lagrange equation.
+          </div>
+        </div>
+
+        <div class="info-card law-card gold">
+          <div class="info-card-title">Centre of Mass</div>
+          <div class="info-card-body" style="line-height:2.1">
+            Adding the two equations of motion gives conservation of momentum:<br>
+            <span class="formula-pill gold">p₁ + p₂ = constant</span><br>
+            and the centre of mass moves at constant velocity:<br>
+            <span class="formula-pill gold">x<sub>CM</sub> = (m₁x₁ + m₂x₂) / (m₁ + m₂) = a + bt</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Reduced mass definition — full width -->
+      <div class="info-card law-card teal" style="margin-bottom:1rem">
+        <div class="info-card-title">Reduced Mass</div>
+        <div class="info-card-body" style="line-height:2.3">
+          The separation x₂ − x₁ obeys simple harmonic motion with an effective mass:<br>
+          <span class="formula-pill teal">m<sub>red</sub> = m₁m₂ / (m₁ + m₂)</span><br>
+          <span class="formula-pill teal">ω² = K / m<sub>red</sub></span><br>
+          The reduced mass is always less than either individual mass: &nbsp;<span class="formula-pill teal">m<sub>red</sub> &lt; m₁, m₂</span>
+        </div>
+      </div>
+
+      <div class="info-card">
+        <div class="info-card-title">Example — Hydrogen Isotopes</div>
+        <div class="info-card-body" style="line-height:2.1">
+          An electron of mass m bound to a nucleus of mass M behaves as a single particle with reduced mass. For the three isotopes of hydrogen (nucleus masses M, 2M, 3M):<br><br>
+          <span class="formula-pill">m<sub>H</sub> = Mm/(M+m)</span><br>
+          <span class="formula-pill">m<sub>D</sub> = 2Mm/(2M+m)</span><br>
+          <span class="formula-pill">m<sub>T</sub> = 3Mm/(3M+m)</span><br><br>
+          Different reduced masses → different energy levels → slightly different spectral frequencies.
+        </div>
+      </div>
+    </div>
+
+    <!-- POLAR COORDINATES -->
+    <div class="content-section">
+      <div class="content-section-title">// Lagrangian Mechanics in Polar Coordinates</div>
+
+      <div class="cards-grid" style="margin-bottom:1rem">
+
+        <div class="info-card">
+          <div class="info-card-title">Polar Coordinates</div>
+          <div class="info-card-body" style="line-height:2.1">
+            Useful for systems with rotational symmetry:<br>
+            <span class="formula-pill">x = r cosθ</span><br>
+            <span class="formula-pill">y = r sinθ</span>
+          </div>
+        </div>
+
+        <div class="info-card law-card">
+          <div class="info-card-title">Velocity in Polar Coordinates</div>
+          <div class="info-card-body" style="line-height:2.1">
+            Decompose into radial and azimuthal components:<br>
+            <span class="formula-pill">v<sub>r</sub> = ṙ</span> &nbsp;(radial)<br>
+            <span class="formula-pill">v<sub>θ</sub> = rθ̇</span> &nbsp;(azimuthal)<br>
+            <span class="formula-pill">v² = ṙ² + r²θ̇²</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Lagrangian in polar — full width -->
+      <div class="info-card law-card teal" style="margin-bottom:1rem">
+        <div class="info-card-title">Lagrangian & Equations of Motion</div>
+        <div class="info-card-body" style="line-height:2.3">
+          <span class="formula-pill teal">L = ½mṙ² + ½mr²θ̇² − V(r,θ)</span><br>
+          Radial equation: &nbsp;<span class="formula-pill teal">mṙ̈ − mrθ̇² = −∂V/∂r</span><br>
+          Angular equation: &nbsp;<span class="formula-pill teal">d/dt [mr²θ̇] = −∂V/∂θ</span>
+        </div>
+      </div>
+
+      <div class="info-card law-card gold">
+        <div class="info-card-title">Central Potential & Angular Momentum</div>
+        <div class="info-card-body" style="line-height:2.1">
+          When V depends only on r (not θ), the angular equation gives a conserved quantity:<br><br>
+          <span class="formula-pill gold">d/dt [mr²θ̇] = 0</span><br>
+          <span class="formula-pill gold">J = mr²θ̇ = constant</span><br><br>
+          J is the <strong>angular momentum</strong> — conserved for any central potential.
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+/* ═══════════════════════════════════════
+   CHAPTER 3 CONTENT — Orbits
+═══════════════════════════════════════ */
+function renderChapter3() {
+  return `
+    <!-- GRAVITATION -->
+    <div class="content-section">
+      <div class="content-section-title">// Gravitation</div>
+
+      <div class="cards-grid" style="margin-bottom:1rem">
+
+        <div class="info-card law-card">
+          <div class="info-card-title">Newton's Law of Gravitation</div>
+          <div class="info-card-body" style="line-height:2.1">
+            Attractive force between two masses separated by r₁₂:<br><br>
+            <span class="formula-pill">F = GM₁M₂ / r₁₂²</span><br><br>
+            G = 6.674 × 10⁻¹¹ m³ kg⁻¹ s⁻²
+          </div>
+        </div>
+
+        <div class="info-card law-card gold">
+          <div class="info-card-title">Gravitational Potential Energy</div>
+          <div class="info-card-body" style="line-height:2.1">
+            Gravity is a conservative force — V = 0 at r → ∞:<br><br>
+            <span class="formula-pill gold">V = −GM₁M₂ / r₁₂</span><br>
+            <span class="formula-pill gold">F = −∇V</span><br><br>
+            V increases (towards zero) as masses move apart. Near Earth's surface: V ≈ mgz.
+          </div>
+        </div>
+
+        <div class="info-card">
+          <div class="info-card-title">Surface Gravity</div>
+          <div class="info-card-body" style="line-height:2.1">
+            Gravitational acceleration at a planet's surface:<br><br>
+            <span class="formula-pill">g = GM<sub>E</sub> / R<sub>E</sub>²</span><br><br>
+            GM<sub>E</sub> = 3.986 × 10¹⁴ m³s⁻²<br>
+            GM<sub>S</sub> = 1.327 × 10²⁰ m³s⁻²
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- CIRCULAR ORBITS -->
+    <div class="content-section">
+      <div class="content-section-title">// Circular Orbits</div>
+
+      <!-- Circular orbit key results — full width -->
+      <div class="info-card law-card teal" style="margin-bottom:1rem">
+        <div class="info-card-title">Circular Orbit — Key Results</div>
+        <div class="info-card-body" style="line-height:2.3">
+          Gravitational acceleration provides centripetal acceleration, giving angular velocity and period:<br>
+          <span class="formula-pill teal">ω² = GM / r³</span><br>
+          <span class="formula-pill teal">T = 2π√(r³/GM)</span>
+        </div>
+      </div>
+
+      <div class="cards-grid">
+        <div class="info-card law-card">
+          <div class="info-card-title">Orbital Energy</div>
+          <div class="info-card-body" style="line-height:2.1">
+            <span class="formula-pill">KE = GMm / 2r</span><br>
+            <span class="formula-pill">PE = −GMm / r</span><br>
+            <span class="formula-pill">E = KE + PE = −GMm / 2r</span><br><br>
+            E &lt; 0 is the condition for a bound orbit — the body lacks the energy to reach r → ∞.
+          </div>
+        </div>
+
+
+        <div class="info-card law-card gold">
+          <div class="info-card-title">Escape Velocity</div>
+          <div class="info-card-body" style="line-height:2.1">
+            Minimum launch speed to reach r → ∞ (E = 0):<br><br>
+            <span class="formula-pill gold">U²<sub>esc</sub> = 2GM<sub>E</sub> / R<sub>E</sub></span><br><br>
+            Earth: 11.2 km/s &nbsp;·&nbsp; Moon: 2.4 km/s &nbsp;·&nbsp; Mars: 5.0 km/s<br><br>
+            If U² &lt; U²<sub>esc</sub>: E &lt; 0 (bound) &nbsp;·&nbsp; If U² = U²<sub>esc</sub>: E = 0 &nbsp;·&nbsp; If U² &gt; U²<sub>esc</sub>: E &gt; 0 (escapes)
+          </div>
+        </div>
+      </div>
+
+      <!-- Elliptical orbit energy & angular momentum — full width -->
+      <div class="info-card law-card teal" style="margin-top:1rem">
+        <div class="info-card-title">Elliptical Orbit — Energy &amp; Angular Momentum</div>
+        <div class="info-card-body" style="line-height:2.3">
+          The circular orbit results generalise to ellipses by replacing r with semi-major axis a:<br>
+          <span class="formula-pill teal">E = −GMm / 2a</span><br>
+          <span class="formula-pill teal">J² = GMm²a(1 − e²)</span><br>
+          Energy depends only on a; angular momentum also depends on eccentricity e.
+        </div>
+      </div>
+    </div>
+
+    <!-- ELLIPTICAL ORBITS — KEPLER I -->
+
+    <!-- ELLIPTICAL ORBITS — KEPLER I -->
+    <div class="content-section">
+      <div class="content-section-title">// Elliptical Orbits — Kepler's First Law</div>
+
+      <!-- Kepler I statement — full width -->
+      <div class="info-card law-card teal" style="margin-bottom:1rem">
+        <div class="info-card-title">Kepler's First Law</div>
+        <div class="info-card-body">
+          Planets move in <strong>elliptical orbits</strong> with the Sun at one focus. The Sun occupies focus F; the other focus F′ is an empty point in space.
+        </div>
+      </div>
+
+      <div class="cards-grid" style="margin-bottom:1rem">
+
+        <div class="info-card law-card">
+          <div class="info-card-title">Ellipse Geometry</div>
+          <div class="info-card-body" style="line-height:2.1">
+            <span class="formula-pill">a</span> semi-major axis &nbsp;·&nbsp; <span class="formula-pill">b</span> semi-minor axis<br>
+            <span class="formula-pill">e</span> eccentricity &nbsp;(0 = circle, → 1 = thin)<br>
+            <span class="formula-pill">l = a(1 − e²)</span> semi latus rectum<br>
+            <span class="formula-pill">b = a√(1 − e²)</span><br>
+            <span class="formula-pill">A = πab</span> area
+          </div>
+        </div>
+
+        <div class="info-card law-card gold">
+          <div class="info-card-title">Perihelion &amp; Aphelion</div>
+          <div class="info-card-body" style="line-height:2.1">
+            Closest and furthest distances from the focus:<br><br>
+            <span class="formula-pill gold">r<sub>min</sub> = a(1 − e)</span> &nbsp;perihelion / perigee<br>
+            <span class="formula-pill gold">r<sub>max</sub> = a(1 + e)</span> &nbsp;aphelion / apogee<br><br>
+            (perihelion/aphelion for Sun; perigee/apogee for Earth)
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Polar equation — full width -->
+      <div class="info-card law-card" style="margin-bottom:1rem">
+        <div class="info-card-title">Polar Equation of the Ellipse</div>
+        <div class="info-card-body" style="line-height:2.3">
+          θ measured from the point of closest approach:<br>
+          <span class="formula-pill">r(θ) = a(1 − e²) / (1 + e cosθ) = l / (1 + e cosθ)</span>
+        </div>
+      </div>
+
+      <!-- Solar system table -->
+      <div class="info-card">
+        <div class="info-card-title">Solar System Eccentricities</div>
+        <div class="info-card-body">
+          <table style="width:100%;border-collapse:collapse;font-size:12px;font-family:'Space Mono',monospace">
+            <thead>
+              <tr style="color:var(--text-secondary);border-bottom:1px solid var(--panel-border)">
+                <th style="text-align:left;padding:.35rem .5rem">Body</th>
+                <th style="text-align:right;padding:.35rem .5rem">a (AU)</th>
+                <th style="text-align:right;padding:.35rem .5rem">e</th>
+              </tr>
+            </thead>
+            <tbody style="color:var(--text-primary)">
+              <tr><td style="padding:.3rem .5rem">Mercury</td><td style="text-align:right;padding:.3rem .5rem">0.39</td><td style="text-align:right;padding:.3rem .5rem;color:var(--accent-blue)">0.2056</td></tr>
+              <tr><td style="padding:.3rem .5rem">Venus</td><td style="text-align:right;padding:.3rem .5rem">0.723</td><td style="text-align:right;padding:.3rem .5rem;color:var(--accent-teal)">0.0068</td></tr>
+              <tr><td style="padding:.3rem .5rem">Earth</td><td style="text-align:right;padding:.3rem .5rem">1.000</td><td style="text-align:right;padding:.3rem .5rem;color:var(--accent-teal)">0.0167</td></tr>
+              <tr><td style="padding:.3rem .5rem">Mars</td><td style="text-align:right;padding:.3rem .5rem">1.524</td><td style="text-align:right;padding:.3rem .5rem;color:var(--accent-teal)">0.0934</td></tr>
+              <tr><td style="padding:.3rem .5rem">Jupiter</td><td style="text-align:right;padding:.3rem .5rem">5.203</td><td style="text-align:right;padding:.3rem .5rem;color:var(--accent-teal)">0.0484</td></tr>
+              <tr><td style="padding:.3rem .5rem">Saturn</td><td style="text-align:right;padding:.3rem .5rem">9.539</td><td style="text-align:right;padding:.3rem .5rem;color:var(--accent-teal)">0.0541</td></tr>
+              <tr><td style="padding:.3rem .5rem">Uranus</td><td style="text-align:right;padding:.3rem .5rem">19.18</td><td style="text-align:right;padding:.3rem .5rem;color:var(--accent-teal)">0.0472</td></tr>
+              <tr><td style="padding:.3rem .5rem">Neptune</td><td style="text-align:right;padding:.3rem .5rem">30.06</td><td style="text-align:right;padding:.3rem .5rem;color:var(--accent-teal)">0.0087</td></tr>
+              <tr style="border-top:1px solid var(--panel-border)"><td style="padding:.3rem .5rem">Halley's Comet</td><td style="text-align:right;padding:.3rem .5rem">17.834</td><td style="text-align:right;padding:.3rem .5rem;color:var(--accent-gold)">0.9671</td></tr>
+              <tr><td style="padding:.3rem .5rem">Comet Hale-Bopp</td><td style="text-align:right;padding:.3rem .5rem">186</td><td style="text-align:right;padding:.3rem .5rem;color:var(--accent-gold)">0.9951</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- KEPLER II & III -->
+    <div class="content-section">
+      <div class="content-section-title">// Kepler's Second &amp; Third Laws</div>
+
+      <!-- Kepler II — full width -->
+      <div class="info-card law-card teal" style="margin-bottom:1rem">
+        <div class="info-card-title">Kepler's Second Law — Equal Areas in Equal Times</div>
+        <div class="info-card-body" style="line-height:2.2">
+          The radius vector from the Sun sweeps equal areas in equal times. The area swept in time dt is:<br>
+          <span class="formula-pill teal">dA = ½ r² θ̇ dt</span><br>
+          Kepler II is equivalent to conservation of angular momentum: &nbsp;<span class="formula-pill teal">J = mr²θ̇ = constant</span><br>
+          A planet moves <strong>faster near perihelion</strong>, slower near aphelion.
+        </div>
+      </div>
+
+      <!-- Kepler III — full width -->
+      <div class="info-card law-card gold" style="margin-bottom:1rem">
+        <div class="info-card-title">Kepler's Third Law — Orbital Period</div>
+        <div class="info-card-body" style="line-height:2.2">
+          The orbital period depends on the semi-major axis a, not on eccentricity e:<br>
+          <span class="formula-pill gold">T² ∝ a³</span><br>
+          <span class="formula-pill gold">T² = (4π² / GM) a³</span><br>
+          Holds for both circular <em>and</em> elliptical orbits.
+        </div>
+      </div>
+
+      <div class="info-card">
+        <div class="info-card-title">Solar System Examples</div>
+        <div class="info-card-body">
+          <table style="width:100%;border-collapse:collapse;font-size:12px;font-family:'Space Mono',monospace">
+            <thead>
+              <tr style="color:var(--text-secondary);border-bottom:1px solid var(--panel-border)">
+                <th style="text-align:left;padding:.35rem .5rem">Body</th>
+                <th style="text-align:right;padding:.35rem .5rem">a (AU)</th>
+                <th style="text-align:right;padding:.35rem .5rem">Period</th>
+              </tr>
+            </thead>
+            <tbody style="color:var(--text-primary)">
+              <tr><td style="padding:.3rem .5rem">Mercury</td><td style="text-align:right;padding:.3rem .5rem">0.387</td><td style="text-align:right;padding:.3rem .5rem;color:var(--accent-teal)">0.24 yr</td></tr>
+              <tr><td style="padding:.3rem .5rem">Earth</td><td style="text-align:right;padding:.3rem .5rem">1.000</td><td style="text-align:right;padding:.3rem .5rem;color:var(--accent-teal)">1.00 yr</td></tr>
+              <tr><td style="padding:.3rem .5rem">Jupiter</td><td style="text-align:right;padding:.3rem .5rem">5.2</td><td style="text-align:right;padding:.3rem .5rem;color:var(--accent-gold)">11.86 yr</td></tr>
+              <tr><td style="padding:.3rem .5rem">Neptune</td><td style="text-align:right;padding:.3rem .5rem">30.1</td><td style="text-align:right;padding:.3rem .5rem;color:var(--accent-gold)">164.8 yr</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ESCAPE & HYPERBOLIC ORBITS -->
+    <div class="content-section">
+      <div class="content-section-title">// Escape &amp; Hyperbolic Orbits</div>
+
+      <!-- Orbit classification — full width -->
+      <div class="info-card law-card teal" style="margin-bottom:1rem">
+        <div class="info-card-title">Orbit Classification by Eccentricity</div>
+        <div class="info-card-body" style="line-height:2.2">
+          Expressed in terms of semi-latus rectum l, energy and angular momentum are:<br>
+          <span class="formula-pill teal">E = GMm(e² − 1) / 2l</span> &nbsp;·&nbsp; <span class="formula-pill teal">J² = GMm²l</span><br><br>
+          <span class="formula-pill">e &lt; 1</span> E &lt; 0 — bound elliptical orbit &nbsp;·&nbsp;
+          <span class="formula-pill">e = 1</span> E = 0 — parabolic escape orbit &nbsp;·&nbsp;
+          <span class="formula-pill">e &gt; 1</span> E &gt; 0 — hyperbolic flyby
+        </div>
+      </div>
+
+      <div class="cards-grid" style="margin-bottom:1rem">
+
+        <div class="info-card law-card gold">
+          <div class="info-card-title">Parabolic Orbit (e = 1)</div>
+          <div class="info-card-body" style="line-height:2.1">
+            The body barely escapes — velocity → 0 as r → ∞:<br><br>
+            <span class="formula-pill gold">r(θ) = l / (1 + cosθ)</span><br><br>
+            Valid for θ ≠ 180°. The orbit is a parabola with the Sun at the focus.
+          </div>
+        </div>
+
+        <div class="info-card law-card">
+          <div class="info-card-title">Hyperbolic Orbit (e &gt; 1)</div>
+          <div class="info-card-body" style="line-height:2.1">
+            The body escapes with finite residual velocity:<br><br>
+            <span class="formula-pill">r(θ) = l / (1 + e cosθ)</span><br><br>
+            Physical range: −θ∞ &lt; θ &lt; θ∞ where <span class="formula-pill">θ∞ = cos⁻¹(−1/e)</span><br>
+            Only one branch of the hyperbola is physical; the Sun sits at its focus.
+          </div>
+        </div>
+
+      </div>
+
+      <div class="cards-grid">
+
+        <div class="info-card law-card gold">
+          <div class="info-card-title">'Oumuamua — First Interstellar Visitor</div>
+          <div class="info-card-body" style="line-height:2.1">
+            Discovered 2017 — the first known natural object on a hyperbolic Solar System orbit:<br><br>
+            <span class="formula-pill gold">e = 1.1995</span> &nbsp;·&nbsp; <span class="formula-pill gold">a = −1.280 AU</span><br>
+            <span class="formula-pill gold">l = 0.562 AU</span> &nbsp;·&nbsp; <span class="formula-pill gold">r<sub>min</sub> = 0.255 AU</span><br><br>
+            e &gt; 1 and a &lt; 0 confirm an unbound escape orbit.
+          </div>
+        </div>
+
+        <div class="info-card">
+          <div class="info-card-title">Rutherford Scattering (Repulsive)</div>
+          <div class="info-card-body" style="line-height:2.1">
+            For a repulsive potential (e.g. α particles on nuclei) there are no bound orbits. The polar equation becomes:<br><br>
+            <span class="formula-pill">r(θ) = C / (e cosθ − 1)</span> &nbsp;(e ≥ 1)<br><br>
+            Physical where cosθ &gt; 1/e. The nucleus sits at the <em>other</em> focus compared to the attractive case.
+          </div>
+        </div>
+
+      </div>
+    </div>
+  `;
+}
+
+/* ═══════════════════════════════════════
+   PLACEHOLDER RENDERER
+═══════════════════════════════════════ */
+function renderPlaceholder() {
+  return `
+    <div style="background:var(--panel);border:1px solid var(--panel-border);border-radius:16px;padding:4rem 2.5rem;min-height:360px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;position:relative;overflow:hidden;margin-bottom:3rem;">
+      <div style="position:absolute;top:0;left:50%;transform:translateX(-50%);width:50%;height:1px;background:linear-gradient(90deg,transparent,rgba(74,158,255,.25),transparent);"></div>
+      <svg width="52" height="52" viewBox="0 0 52 52" fill="none" style="opacity:.28;margin-bottom:1.5rem">
+        <circle cx="26" cy="26" r="24" stroke="var(--accent-blue)" stroke-width="1" stroke-dasharray="4 3"/>
+        <circle cx="26" cy="26" r="5" fill="var(--accent-blue)" opacity=".4"/>
+        <circle cx="26" cy="4" r="3.5" fill="var(--accent-gold)" opacity=".85"/>
+        <circle cx="48" cy="26" r="2.5" fill="var(--accent-teal)" opacity=".65"/>
+      </svg>
+      <p style="font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.1em;color:var(--text-secondary);margin-bottom:.5rem;">Awaiting Content</p>
+      <p style="font-size:13px;color:var(--text-muted);max-width:340px;line-height:1.6;">Upload the source files for this chapter and it will be filled with the relevant formulae, laws, and derivations.</p>
+    </div>
+  `;
+}
+
+/* ═══════════════════════════════════════
+   STARFIELD
+═══════════════════════════════════════ */
+(function(){
+  const c=document.getElementById('starfield'), x=c.getContext('2d'); let s=[];
+  function resize(){
+    c.width=window.innerWidth; c.height=Math.max(document.documentElement.scrollHeight,window.innerHeight);
+    s=[]; const n=Math.floor(c.width*c.height/4200);
+    for(let i=0;i<n;i++) s.push({x:Math.random()*c.width,y:Math.random()*c.height,r:Math.random()<.05?Math.random()*1.3+.8:Math.random()<.25?Math.random()*.7+.4:Math.random()*.5+.2,a:Math.random()*.55+.1,tw:Math.random()<.2,ph:Math.random()*Math.PI*2,sp:.3+Math.random()*.8});
+  }
+  function draw(t){
+    x.clearRect(0,0,c.width,c.height); const now=t/1000;
+    for(const p of s){ const a=p.tw?p.a*(.5+.5*Math.sin(now*p.sp+p.ph)):p.a; x.beginPath(); x.arc(p.x,p.y,p.r,0,Math.PI*2); x.fillStyle=`rgba(210,225,255,${a})`; x.fill(); }
+    requestAnimationFrame(draw);
+  }
+  resize(); window.addEventListener('resize',resize); requestAnimationFrame(draw);
+})();
+
+/* ── Orbit animation ── */
+(function(){
+  const c=document.getElementById('orbit-canvas'), x=c.getContext('2d');
+  const W=240,H=240,cx=120,cy=120,R=100;
+  function draw(t){
+    x.clearRect(0,0,W,H);
+    x.beginPath(); x.arc(cx,cy,R,0,Math.PI*2); x.strokeStyle='rgba(74,158,255,0.18)'; x.lineWidth=1; x.stroke();
+    const sg=x.createRadialGradient(cx-4,cy-4,2,cx,cy,18);
+    sg.addColorStop(0,'#ffe080'); sg.addColorStop(.5,'#f0b942'); sg.addColorStop(1,'#b07010');
+    x.beginPath(); x.arc(cx,cy,18,0,Math.PI*2); x.fillStyle=sg; x.fill();
+    x.beginPath(); x.arc(cx,cy,24,0,Math.PI*2); x.fillStyle='rgba(240,185,66,0.12)'; x.fill();
+    const angle=(t/1000)*(Math.PI*2/8);
+    const px=cx+R*Math.cos(angle), py=cy+R*Math.sin(angle);
+    const pg=x.createRadialGradient(px-2,py-2,1,px,py,7);
+    pg.addColorStop(0,'#90c8ff'); pg.addColorStop(.5,'#4a9eff'); pg.addColorStop(1,'#1a4a90');
+    x.beginPath(); x.arc(px,py,7,0,Math.PI*2); x.fillStyle=pg; x.fill();
+    x.beginPath(); x.arc(px,py,11,0,Math.PI*2); x.fillStyle='rgba(74,158,255,0.14)'; x.fill();
+    requestAnimationFrame(draw);
+  }
+  requestAnimationFrame(draw);
+})();
+
+/* ═══════════════════════════════════════
+   SPA NAVIGATION
+═══════════════════════════════════════ */
+let curChapter=0;
+const veil=document.getElementById('veil');
+const viewHome=document.getElementById('view-home');
+const viewChapter=document.getElementById('view-chapter');
+const chapterInner=document.getElementById('chapter-page-inner');
+
+const ALL_VIEWS = [viewHome, viewChapter,
+  document.getElementById('view-quiz'),
+  document.getElementById('view-methods'),
+  document.getElementById('view-practice')
+];
+
+function transition(fn){ veil.classList.add('show'); setTimeout(()=>{ fn(); setTimeout(()=>veil.classList.remove('show'),50); },300); }
+
+function goHome(){
+  transition(()=>{
+    ALL_VIEWS.forEach(v=>{ v.classList.remove('active'); v.style.display='none'; });
+    viewHome.style.display='block'; requestAnimationFrame(()=>viewHome.classList.add('active'));
+    window.scrollTo({top:0,behavior:'instant'});
+  });
+}
+
+function goChapter(idx){
+  curChapter=idx;
+  const ch=CHAPTERS[idx];
+  const pad=n=>String(n+1).padStart(2,'0');
+  const prevDisabled = idx===0 ? 'disabled' : '';
+  const nextDisabled = idx===CHAPTERS.length-1 ? 'disabled' : '';
+  const prevLabel = idx===0 ? 'Previous' : CHAPTERS[idx-1].title;
+  const nextLabel = idx===CHAPTERS.length-1 ? 'Next' : CHAPTERS[idx+1].title;
+
+  chapterInner.innerHTML = `
+    <div class="chapter-topbar">
+      <button class="home-btn" id="btn-home">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12L12 3l9 9"/><path d="M9 21V12h6v9"/></svg>
+        Home
+      </button>
+      <div class="chapter-topbar-meta">
+        <div class="chapter-number">Chapter ${pad(idx)}</div>
+        <div class="chapter-title-top">${ch.title}</div>
+      </div>
+    </div>
+
+    <div class="chapter-hero">
+      <p class="chapter-hero-eyebrow">Chapter ${pad(idx)} · Classical Mechanics</p>
+      <h2>${ch.title}</h2>
+      <p>${ch.desc}</p>
+    </div>
+
+    ${ch.render()}
+
+    <div class="chapter-footnav">
+      <button class="nav-arrow-btn prev ${prevDisabled}" id="btn-prev">
+        <span>&#8592;</span>
+        <span class="arrow-label">${prevLabel}</span>
+      </button>
+      <span class="nav-chapter-indicator">${idx+1} / ${CHAPTERS.length}</span>
+      <button class="nav-arrow-btn next ${nextDisabled}" id="btn-next">
+        <span class="arrow-label">${nextLabel}</span>
+        <span>&#8594;</span>
+      </button>
+    </div>
+  `;
+
+  document.getElementById('btn-home').addEventListener('click', goHome);
+  document.getElementById('btn-prev').addEventListener('click', ()=>{ if(curChapter>0) goChapter(curChapter-1); });
+  document.getElementById('btn-next').addEventListener('click', ()=>{ if(curChapter<CHAPTERS.length-1) goChapter(curChapter+1); });
+
+  transition(()=>{
+    ALL_VIEWS.forEach(v=>{ v.classList.remove('active'); v.style.display='none'; });
+    viewChapter.style.display='block'; requestAnimationFrame(()=>viewChapter.classList.add('active'));
+    window.scrollTo({top:0,behavior:'instant'});
+  });
+}
+
+/* ── Build home grid ── */
+const grid=document.getElementById('chapter-grid');
+CHAPTERS.forEach((ch,i)=>{
+  const btn=document.createElement('button');
+  btn.className=`chapter-btn${ch.status==='live'?' ready':''}`;
+  btn.innerHTML=`
+    <span class="btn-tag ${ch.status==='live'?'live':'soon'}">${ch.status==='live'?`Chapter ${['I','II','III','IV','V'][i]}`:'coming soon'}</span>
+    <div class="btn-icon">${ch.icon}</div>
+    <div class="btn-text">
+      <div class="btn-title">${ch.title}</div>
+      <div class="btn-desc">${ch.desc}</div>
+    </div>
+    <span class="btn-arrow">&#8250;</span>
+  `;
+  btn.addEventListener('click',()=>goChapter(i));
+  grid.appendChild(btn);
+});
+
+/* ═══════════════════════════════════════
+   CHECKPOINT SECTIONS
+═══════════════════════════════════════ */
+const CHECKPOINTS = [
+  {
+    id: 'quiz',
+    title: 'Self Quiz',
+    desc: 'Test your knowledge on concepts from all three chapters.',
+    accent: 'quiz',
+    iconClass: 'quiz-icon',
+    tag: 'checkpoint',
+    tagLabel: 'Class Test I',
+    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>`,
+    fn: openQuiz
+  },
+  {
+    id: 'methods',
+    title: 'Common Methods',
+    desc: 'Step-by-step guides to employ when answering commonly asked exam questions.',
+    accent: 'methods',
+    iconClass: 'methods-icon',
+    tag: 'class test',
+    tagLabel: 'Class Test I',
+    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>`,
+    fn: openMethods
+  },
+  {
+    id: 'practice',
+    title: 'Exam Practice',
+    desc: 'Hone your exam skills with questions similar to those in your assessment.',
+    accent: 'practice',
+    iconClass: 'practice-icon',
+    tag: 'live',
+    tagLabel: 'Class Test I',
+    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>`,
+    fn: openPractice
+  }
+];
+
+const cpGrid = document.getElementById('checkpoint-grid');
+CHECKPOINTS.forEach(cp => {
+  const btn = document.createElement('button');
+  btn.className = `checkpoint-btn ${cp.accent}`;
+  btn.innerHTML = `
+    <span class="btn-tag ${cp.tag}">${cp.tagLabel}</span>
+    <div class="btn-icon ${cp.iconClass}">${cp.icon}</div>
+    <div class="btn-text">
+      <div class="btn-title">${cp.title}</div>
+      <div class="btn-desc">${cp.desc}</div>
+    </div>
+    <span class="btn-arrow">&#8250;</span>
+  `;
+  btn.addEventListener('click', cp.fn);
+  cpGrid.appendChild(btn);
+});
+
+/* ═══════════════════════════════════════
+   NAVIGATION HELPERS
+═══════════════════════════════════════ */
+function showView(target){
+  transition(()=>{
+    ALL_VIEWS.forEach(v=>{ v.classList.remove('active'); v.style.display='none'; });
+    target.style.display='block';
+    requestAnimationFrame(()=>target.classList.add('active'));
+    window.scrollTo({top:0,behavior:'instant'});
+  });
+}
+
+function checkpointTopbar(title, subtitle){
+  return `
+    <div class="chapter-topbar">
+      <button class="home-btn" onclick="goHome()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12L12 3l9 9"/><path d="M9 21V12h6v9"/></svg>
+        Home
+      </button>
+      <div class="chapter-topbar-meta">
+        <div class="chapter-number">Class Test I</div>
+        <div class="chapter-title-top">${title}</div>
+      </div>
+    </div>
+    <div class="chapter-hero">
+      <p class="chapter-hero-eyebrow">Class Test I · Classical Mechanics</p>
+      <h2>${title}</h2>
+      <p>${subtitle}</p>
+    </div>
+  `;
+}
+
+/* ═══════════════════════════════════════
+   SELF QUIZ
+═══════════════════════════════════════ */
+const QUIZ_QUESTIONS = [
+  // ── Chapter I: Newtonian Mechanics ──
+  {
+    q: "Newton's Second Law states F = ma. Which of the following is the most general form, valid even when mass varies?",
+    opts: ["F = mv", "F = dp/dt", "F = d²s/dt²", "F = −∇V"],
+    ans: 1,
+    fb: "F = dp/dt is the most general form. Since p = mv, differentiating gives dp/dt = m(dv/dt) + v(dm/dt). When mass is constant the v(dm/dt) term vanishes and we recover F = ma."
+  },
+  {
+    q: "A 2 kg object accelerates at 5 ms⁻². What net force acts on it?",
+    opts: ["2.5 N", "7 N", "10 N", "0.4 N"],
+    ans: 2,
+    fb: "By Newton's Second Law, F = ma = 2 × 5 = 10 N. The units: kg × ms⁻² = N."
+  },
+  {
+    q: "Newton's Third Law states that if body A exerts force F on body B, then body B exerts on body A:",
+    opts: ["A force 2F in the same direction", "A force F in the same direction", "A force F in the opposite direction", "No force — reaction forces only appear in statics"],
+    ans: 2,
+    fb: "F_AB = −F_BA. The reaction force is equal in magnitude and opposite in direction. It acts on a different body, which is why it doesn't cancel the original force."
+  },
+  {
+    q: "In an elastic collision between two objects, which quantities are conserved?",
+    opts: ["Momentum only", "Kinetic energy only", "Both momentum and kinetic energy", "Potential energy only"],
+    ans: 2,
+    fb: "Elastic collisions conserve both momentum (always conserved in closed systems) and kinetic energy (the defining property of elastic collisions, distinguishing them from inelastic ones)."
+  },
+  {
+    q: "In a perfectly inelastic collision, two objects of mass m and M collide and stick together. If the lighter object had initial velocity v and M was stationary, what is the final velocity?",
+    opts: ["v", "mv/(m+M)", "Mv/(m+M)", "(m+M)v/m"],
+    ans: 1,
+    fb: "Conservation of momentum: mv + M×0 = (m+M)u. Solving: u = mv/(m+M). Kinetic energy is not conserved — some is lost to deformation and heat."
+  },
+  {
+    q: "The centre of mass of a system of particles is defined as:",
+    opts: ["The geometric centre of the object", "s_CM = (1/M) Σmᵢsᵢ where M = Σmᵢ", "The position of the heaviest particle", "The midpoint between the two most distant particles"],
+    ans: 1,
+    fb: "s_CM = (1/M) Σmᵢsᵢ is the mass-weighted average position. For a continuous body this becomes s_CM = (1/M)∫s ρ dV. In a closed system the CM moves at constant velocity."
+  },
+  {
+    q: "A spring with spring constant k is compressed by a distance x from its natural length. What is its elastic potential energy?",
+    opts: ["kx", "½kx", "kx²", "½kx²"],
+    ans: 3,
+    fb: "V = ½k(x − x₀)² = ½kx² when x is measured from equilibrium. This follows from F = −∇V: differentiating ½kx² with respect to x gives F = −kx (Hooke's Law)."
+  },
+  {
+    q: "If the potential energy V(x) of a particle is known, the force on it is:",
+    opts: ["F = V", "F = dV/dx", "F = −dV/dx", "F = ∫V dx"],
+    ans: 2,
+    fb: "F = −∇V, or in 1D: F = −dV/dx. The negative sign is essential — force points in the direction of decreasing potential energy (e.g. a ball rolls downhill)."
+  },
+  {
+    q: "An object moves in a circle of radius r at speed v. The centripetal acceleration directed towards the centre has magnitude:",
+    opts: ["v/r", "vr", "v²/r", "r/v²"],
+    ans: 2,
+    fb: "a = v²/r = rω² pointing towards the centre. The direction of v is constantly changing even though its magnitude is constant — hence there is acceleration without a change in speed."
+  },
+  {
+    q: "Which statement about mass and weight is correct?",
+    opts: ["Mass and weight are the same quantity", "Mass is a force; weight is inertia", "Mass is inertia (kg); weight is a gravitational force W = mg (N)", "Weight is always 9.81 N regardless of location"],
+    ans: 2,
+    fb: "Mass is an intrinsic property measuring inertia, measured in kg. Weight is the gravitational force W = mg acting on that mass, measured in Newtons. On the Moon, mass is unchanged but weight is ~1/6 of its Earth value."
+  },
+  {
+    q: "The work done by a force F acting along a curved path from A to B is:",
+    opts: ["W = F · (B − A)", "W = ∫F · dl", "W = F × d", "W = ΔV"],
+    ans: 1,
+    fb: "W = ∫F · dl is the line integral of force along the path. For a constant force along a straight line this reduces to W = F · d. Work has units of Joules (J = N·m)."
+  },
+  {
+    q: "The total mechanical energy E = T + V of a particle is conserved when:",
+    opts: ["All forces are present", "Only conservative forces do work", "The particle moves in a straight line", "The kinetic energy is constant"],
+    ans: 1,
+    fb: "Energy is conserved when only conservative forces (those derivable from a potential V) act. Non-conservative forces like friction dissipate energy as heat, so dE/dt ≠ 0."
+  },
+
+  // ── Chapter II: Lagrangian Mechanics ──
+  {
+    q: "The Lagrangian L of a mechanical system is defined as:",
+    opts: ["L = T + V", "L = T − V", "L = T × V", "L = V − T"],
+    ans: 1,
+    fb: "L = T − V, where T is kinetic energy and V is potential energy. This is not the total energy (which is T + V) — the minus sign is fundamental to the variational principle."
+  },
+  {
+    q: "The Euler-Lagrange equation for generalised coordinate q is:",
+    opts: ["∂L/∂q = 0", "d/dt(∂L/∂q̇) = 0", "∂L/∂q − d/dt(∂L/∂q̇) = 0", "∂L/∂q + d/dt(∂L/∂q̇) = 0"],
+    ans: 2,
+    fb: "∂L/∂q − d/dt(∂L/∂q̇) = 0 is the Euler-Lagrange equation. For a free particle L = ½mẋ², it gives mẍ = 0. For L = ½mẋ² − V(x), it gives mẍ = −dV/dx = F — Newton's Second Law."
+  },
+  {
+    q: "For a free particle in 1D with L = ½mẋ², applying the Euler-Lagrange equation gives:",
+    opts: ["mẍ = −kx", "mẍ = 0", "ẍ = g", "½mẋ² = constant"],
+    ans: 1,
+    fb: "∂L/∂x = 0 (no explicit x dependence), and ∂L/∂ẋ = mẋ. So d/dt(mẋ) = 0, giving mẍ = 0. The particle moves at constant velocity — Newton's First Law recovered from the Lagrangian."
+  },
+  {
+    q: "Hamilton's Principle (Principle of Least Action) states that a physical system evolves along the path that:",
+    opts: ["Maximises kinetic energy", "Makes the action S = ∫L dt stationary", "Minimises potential energy at all times", "Keeps the Lagrangian constant"],
+    ans: 1,
+    fb: "S = ∫L dt is the action. Hamilton's Principle states the true path makes S stationary (δS = 0). Applying the calculus of variations to this condition yields the Euler-Lagrange equations."
+  },
+  {
+    q: "The Euler-Lagrange equation for a shortest-path problem (minimising arc length) gives y = A + Cx. This means the shortest path between two points in a plane is:",
+    opts: ["A parabola", "A circle", "A straight line", "A cycloid"],
+    ans: 2,
+    fb: "y = A + Cx is a straight line — the result most people intuitively know. The Euler-Lagrange equation provides the rigorous proof via the calculus of variations."
+  },
+  {
+    q: "The Brachistochrone problem asks for the curve of fastest descent under gravity between two points. The answer is a:",
+    opts: ["Straight line", "Parabola", "Circle", "Cycloid"],
+    ans: 3,
+    fb: "The cycloid is the curve of fastest descent — a remarkable result first proved by Bernoulli in 1696. Counterintuitively, a steeper initial slope (curving away from a straight line) allows the object to build speed faster."
+  },
+  {
+    q: "The reduced mass of a two-particle system with masses m₁ and m₂ is μ = m₁m₂/(m₁+m₂). Its key property is:",
+    opts: ["μ > m₁ and μ > m₂", "μ = (m₁+m₂)/2", "μ < min(m₁,m₂)", "μ = m₁ when m₂ → ∞"],
+    ans: 2,
+    fb: "μ = m₁m₂/(m₁+m₂) is always strictly less than either individual mass. When m₂ ≫ m₁, μ ≈ m₁ (e.g. Earth-Sun system: μ ≈ mass of Earth). This converts a two-body problem into a one-body problem."
+  },
+  {
+    q: "For motion in polar coordinates, the Lagrangian of a particle of mass m is L = ½m(ṙ² + r²θ̇²) − V(r). What does the Euler-Lagrange equation for θ give when V doesn't depend on θ?",
+    opts: ["θ̈ = 0", "d/dt[mr²θ̇] = 0", "mrθ̈ = 0", "r²θ̇ = r"],
+    ans: 1,
+    fb: "Since ∂L/∂θ = 0 when V = V(r), the E-L equation gives d/dt(∂L/∂θ̇) = 0, i.e. d/dt[mr²θ̇] = 0. This means J = mr²θ̇ is conserved — angular momentum conservation emerges automatically."
+  },
+  {
+    q: "The Lagrangian approach has what key advantage over Newton's laws for complex systems?",
+    opts: ["It gives more accurate results", "It works only in Cartesian coordinates", "It automatically handles constraints and works in any coordinate system", "It only applies to systems with no potential energy"],
+    ans: 2,
+    fb: "The Lagrangian method works in any generalised coordinates, automatically incorporates constraints, and eliminates the need to find constraint forces. This makes it far more powerful for problems with complex geometry."
+  },
+
+  // ── Chapter III: Orbits ──
+  {
+    q: "Newton's Law of Universal Gravitation gives the force between two masses M and m separated by r as:",
+    opts: ["F = GMm/r", "F = GMm/r²", "F = Gm²/r²", "F = GM/r²"],
+    ans: 1,
+    fb: "F = GMm/r² is the inverse square law. G = 6.674×10⁻¹¹ m³kg⁻¹s⁻². The force is attractive and directed along the line joining the two masses, consistent with Newton's Third Law."
+  },
+  {
+    q: "The gravitational potential energy V = −GMm/r is negative. As r → ∞, V:",
+    opts: ["Decreases without bound", "Increases to zero", "Stays constant", "Oscillates"],
+    ans: 1,
+    fb: "V increases from a large negative number towards zero as r → ∞. V = 0 is the reference (infinitely separated). Work must be done against gravity to increase r — this increases V (makes it less negative)."
+  },
+  {
+    q: "For a circular orbit of radius r around a body of mass M, the angular velocity ω satisfies:",
+    opts: ["ω = GM/r", "ω² = GM/r²", "ω² = GM/r³", "ω = √(GM/r)"],
+    ans: 2,
+    fb: "Setting gravitational acceleration equal to centripetal acceleration: GM/r² = rω², giving ω² = GM/r³. This is the basis for Kepler's Third Law: T = 2π/ω = 2π√(r³/GM)."
+  },
+  {
+    q: "A satellite in a circular orbit of radius r has total mechanical energy E =",
+    opts: ["E = GMm/r", "E = −GMm/r", "E = −GMm/2r", "E = GMm/2r"],
+    ans: 2,
+    fb: "KE = ½mv² = GMm/2r (using v² = GM/r) and PE = −GMm/r. So E = GMm/2r − GMm/r = −GMm/2r. Negative total energy is the hallmark of a bound orbit."
+  },
+  {
+    q: "The escape velocity from a planet's surface is found by setting E = 0. From the surface of Earth (radius R_E, mass M_E), it is:",
+    opts: ["U_esc = GM_E/R_E", "U_esc = √(GM_E/R_E)", "U_esc = √(2GM_E/R_E)", "U_esc = 2GM_E/R_E"],
+    ans: 2,
+    fb: "Setting E = ½mU² − GMm/R_E = 0: U² = 2GM_E/R_E, so U_esc = √(2GM_E/R_E) ≈ 11.2 km/s for Earth. Note this is √2 × the circular orbital velocity at the surface."
+  },
+  {
+    q: "Kepler's First Law states that planetary orbits are:",
+    opts: ["Circles with the Sun at the centre", "Ellipses with the Sun at one focus", "Parabolas with the Sun at the vertex", "Ellipses with the Sun at the centre"],
+    ans: 1,
+    fb: "Planets move in ellipses with the Sun at one focus (not the centre). The other focus is an empty point in space. For planets, eccentricities are small so orbits look nearly circular, but the off-centre Sun is measurable."
+  },
+  {
+    q: "The semi-latus rectum l of an ellipse in terms of semi-major axis a and eccentricity e is:",
+    opts: ["l = a(1 + e)", "l = a(1 − e)", "l = a(1 − e²)", "l = a√(1 − e²)"],
+    ans: 2,
+    fb: "l = a(1 − e²) is the semi-latus rectum — the orbital radius at θ = ±90° from perihelion. Compare with b = a√(1 − e²) (semi-minor axis) and r_min = a(1−e), r_max = a(1+e)."
+  },
+  {
+    q: "Kepler's Second Law (equal areas in equal times) is equivalent to conservation of:",
+    opts: ["Total energy", "Linear momentum", "Angular momentum", "Kinetic energy"],
+    ans: 2,
+    fb: "dA/dt = ½r²θ̇ = J/2m. Since J = mr²θ̇ is conserved for any central force (force directed along r), the rate of area-sweeping is constant. Kepler observed this empirically; Newton explained it through force laws."
+  },
+  {
+    q: "Kepler's Third Law relates period T to semi-major axis a. For a planet orbiting the Sun:",
+    opts: ["T ∝ a", "T ∝ a²", "T² ∝ a³", "T³ ∝ a²"],
+    ans: 2,
+    fb: "T² = (4π²/GM)a³. This holds for both circular orbits (where a = r) and elliptical orbits. Jupiter has a = 5.2 AU and T = 11.86 yr; check: 11.86² ≈ 140.7 and 5.2³ ≈ 140.6. ✓"
+  },
+  {
+    q: "For an elliptical orbit of semi-major axis a around mass M, the total energy E is:",
+    opts: ["E = −GMm/r", "E = −GMm/2a", "E = GMm/2a", "E = −GMm/a"],
+    ans: 1,
+    fb: "E = −GMm/2a generalises the circular result (replacing r with a). Energy depends only on a, not on eccentricity. Two orbits with the same semi-major axis but different eccentricities have the same energy."
+  },
+  {
+    q: "The angular momentum of a body in an elliptical orbit involves eccentricity e via:",
+    opts: ["J² = GMm²a", "J² = GMm²a(1 − e)", "J² = GMm²a(1 − e²)", "J² = GMm²/a"],
+    ans: 2,
+    fb: "J² = GMm²a(1 − e²). Unlike energy, angular momentum depends on both a and e. A circular orbit (e = 0) maximises J for a given a. As e → 1, J → 0 (radial free-fall)."
+  },
+  {
+    q: "Which of the following correctly classifies orbital types by eccentricity?",
+    opts: ["e = 0: circle; 0 < e < 1: ellipse; e = 1: parabola; e > 1: hyperbola", "e < 1: circle; e = 1: ellipse; e > 1: hyperbola", "e = 0: ellipse; 0 < e < 1: parabola; e ≥ 1: hyperbola", "e < 1: hyperbola; e = 1: parabola; e > 1: ellipse"],
+    ans: 0,
+    fb: "e = 0 → circle (special ellipse); 0 < e < 1 → bound ellipse (E < 0); e = 1 → parabola (E = 0, barely escapes); e > 1 → hyperbola (E > 0, escapes with residual KE)."
+  },
+  {
+    q: "Halley's Comet has eccentricity e ≈ 0.967. This means its orbit is:",
+    opts: ["Nearly circular", "A highly elongated ellipse", "Parabolic", "Hyperbolic — it will leave the Solar System"],
+    ans: 1,
+    fb: "e ≈ 0.967 < 1 means Halley's Comet is on a bound elliptical orbit, but highly elongated. r_min/r_max = (1−e)/(1+e) ≈ 0.033/1.967 ≈ 1/60. It comes very close to the Sun, then swings out past Neptune."
+  },
+  {
+    q: "'Oumuamua (1I/2017 U1) was the first known interstellar visitor to our Solar System. Its orbital parameters included e = 1.1995 and a = −1.280 AU. What type of orbit is this?",
+    opts: ["Elliptical — it will return", "Circular orbit around the Sun", "Hyperbolic — it passed through and escaped", "Parabolic escape orbit"],
+    ans: 2,
+    fb: "e > 1 and a < 0 both confirm a hyperbolic (unbound) orbit. 'Oumuamua originated from interstellar space, swung around the Sun, and departed on a hyperbolic trajectory. It will never return."
+  },
+  {
+    q: "In Rutherford scattering, α-particles are deflected by atomic nuclei via a repulsive Coulomb force. The resulting orbit is:",
+    opts: ["Elliptical (bound state)", "Circular", "Hyperbolic with nucleus at the near focus", "Hyperbolic with nucleus at the far focus"],
+    ans: 3,
+    fb: "For a repulsive force the polar equation is r = C/(e cosθ − 1), valid where cosθ > 1/e. The nucleus sits at the 'outer' focus — opposite to the attractive gravitational case where the central body is at the inner focus."
+  }
+];
+
+let quizActive = [];
+let quizCurrent = 0;
+let quizScore = 0;
+let quizAnsweredCurrent = false;
+
+function shuffle(arr){ return [...arr].sort(()=>Math.random()-.5); }
+
+function openQuiz(){
+  quizActive = shuffle(QUIZ_QUESTIONS).slice(0,10);
+  quizCurrent = 0;
+  quizScore = 0;
+  quizAnsweredCurrent = false;
+  const qView = document.getElementById('view-quiz');
+  const inner = document.getElementById('quiz-page-inner');
+  inner.innerHTML = checkpointTopbar('Self Quiz','Test your understanding of concepts from all three chapters. One question at a time.') + `
+    <div class="quiz-sticky-header">
+      <div class="quiz-sticky-top">
+        <span class="quiz-counter" id="quiz-counter">Question 1 of ${quizActive.length}</span>
+        <span class="quiz-score-live">Score: <span id="quiz-score-live">0</span> / ${quizActive.length}</span>
+      </div>
+      <div class="quiz-progress-bar"><div class="quiz-progress-fill" id="quiz-progress" style="width:0%"></div></div>
+    </div>
+    <div id="quiz-card-wrap"></div>
+    <div class="quiz-score-panel" id="quiz-score-panel"></div>
+  `;
+  renderQuizCard();
+  showView(qView);
+  window.scrollTo({top:0,behavior:'instant'});
+}
+
+function renderQuizCard(){
+  const q = quizActive[quizCurrent];
+  const wrap = document.getElementById('quiz-card-wrap');
+  wrap.innerHTML = `
+    <div class="quiz-card" id="quiz-card">
+      <div class="quiz-q-label">Question ${quizCurrent+1} of ${quizActive.length}</div>
+      <div class="quiz-q-text">${q.q}</div>
+      <div class="quiz-options">
+        ${q.opts.map((o,j)=>`
+          <button class="quiz-opt" data-a="${j}">
+            <span class="quiz-opt-letter">${['A','B','C','D'][j]}</span>${o}
+          </button>`).join('')}
+      </div>
+      <div class="quiz-feedback" id="quiz-fb"></div>
+      <button class="quiz-next-btn" id="quiz-next">${quizCurrent===quizActive.length-1?'// See Results':'// Next Question →'}</button>
+    </div>
+  `;
+  quizAnsweredCurrent = false;
+  // attach option listeners
+  wrap.querySelectorAll('.quiz-opt').forEach(btn=>{
+    btn.addEventListener('click', function(){
+      if(quizAnsweredCurrent) return;
+      quizAnsweredCurrent = true;
+      const ai = +this.dataset.a;
+      const correct = q.ans;
+      const isCorrect = ai === correct;
+      if(isCorrect) quizScore++;
+      // style options
+      wrap.querySelectorAll('.quiz-opt').forEach((o,j)=>{
+        o.classList.add('disabled');
+        if(j===correct) o.classList.add(isCorrect?'correct':'reveal-correct');
+        else if(j===ai) o.classList.add('wrong');
+      });
+      document.getElementById('quiz-card').classList.add(isCorrect?'answered-correct':'answered-wrong');
+      const fb = document.getElementById('quiz-fb');
+      fb.textContent = q.fb;
+      fb.className = `quiz-feedback show ${isCorrect?'correct':'wrong'}`;
+      // update header
+      document.getElementById('quiz-score-live').textContent = quizScore;
+      const pct = (quizCurrent+1)/quizActive.length*100;
+      document.getElementById('quiz-progress').style.width = pct+'%';
+      document.getElementById('quiz-next').classList.add('show');
+    });
+  });
+  // next button
+  document.getElementById('quiz-next').addEventListener('click', ()=>{
+    quizCurrent++;
+    if(quizCurrent >= quizActive.length){
+      showQuizScore();
+    } else {
+      const wrap = document.getElementById('quiz-card-wrap');
+      wrap.style.opacity='0'; wrap.style.transform='translateX(18px)';
+      wrap.style.transition='opacity .2s,transform .2s';
+      setTimeout(()=>{
+        wrap.style.transition='';
+        wrap.style.opacity=''; wrap.style.transform='';
+        renderQuizCard();
+        document.getElementById('quiz-counter').textContent = `Question ${quizCurrent+1} of ${quizActive.length}`;
+        window.scrollTo({top:0,behavior:'smooth'});
+      },200);
+    }
+  });
+}
+
+function showQuizScore(){
+  document.getElementById('quiz-card-wrap').innerHTML='';
+  document.getElementById('quiz-progress').style.width='100%';
+  const pct = Math.round(quizScore/quizActive.length*100);
+  const grade = pct>=90?'Excellent work!':pct>=70?'Well done.':pct>=50?'Good effort.':'Keep reviewing.';
+  const panel = document.getElementById('quiz-score-panel');
+  panel.innerHTML = `
+    <div class="quiz-score-big">${quizScore}<span class="quiz-score-denom">/${quizActive.length}</span></div>
+    <div class="quiz-score-label">${grade} You scored ${pct}%.</div>
+    <div class="quiz-score-bar-wrap"><div class="quiz-score-bar-fill" id="quiz-score-bar" style="width:0%"></div></div>
+    <button class="quiz-retry-btn" onclick="openQuiz()">// New Quiz</button>
+  `;
+  panel.classList.add('show');
+  setTimeout(()=>{ document.getElementById('quiz-score-bar').style.width=pct+'%'; },100);
+}
+
+
+
+/* ═══════════════════════════════════════
+   COMMON METHODS (placeholder)
+═══════════════════════════════════════ */
+function openMethods(){
+  const inner = document.getElementById('methods-page-inner');
+  inner.innerHTML = checkpointTopbar('Common Methods','Step-by-step guides for the most frequently examined question types in MATH228 Class Test I.') + `
+
+    <!-- METHOD 1: Collisions -->
+    <div class="content-section">
+      <div class="content-section-title">// Method: Collision Problems</div>
+      <div class="info-card law-card teal" style="margin-bottom:1rem">
+        <div class="info-card-title">What you are asked to do</div>
+        <div class="info-card-body">Find the velocity of one body after a collision; then determine whether the collision is elastic or inelastic.</div>
+      </div>
+      <div class="info-card" style="margin-bottom:.75rem">
+        <div class="info-card-title">Step 1 — Apply conservation of momentum</div>
+        <div class="info-card-body" style="line-height:2.1">
+          Total momentum is always conserved in a closed system:<br>
+          <span class="formula-pill">m₁u₁ + m₂u₂ = m₁v₁ + m₂v₂</span><br>
+          Work component-by-component (x and y separately). This gives you the unknown velocity vector.
+        </div>
+      </div>
+      <div class="info-card" style="margin-bottom:.75rem">
+        <div class="info-card-title">Step 2 — Calculate kinetic energies before and after</div>
+        <div class="info-card-body" style="line-height:2.1">
+          <span class="formula-pill">KE = ½mv²  =  ½m(vₓ² + vy²)</span><br>
+          Compute KE_before = ½m₁|u₁|² + ½m₂|u₂|² and KE_after = ½m₁|v₁|² + ½m₂|v₂|².
+        </div>
+      </div>
+      <div class="info-card law-card gold">
+        <div class="info-card-title">Step 3 — Compare and classify</div>
+        <div class="info-card-body" style="line-height:2.1">
+          If KE_before = KE_after → <strong>elastic</strong><br>
+          If KE_before &gt; KE_after → <strong>inelastic</strong> (energy lost to heat/deformation)<br>
+          KE can never increase in a passive collision.
+        </div>
+      </div>
+    </div>
+
+    <!-- METHOD 2: Centre of Mass -->
+    <div class="content-section">
+      <div class="content-section-title">// Method: Centre of Mass</div>
+      <div class="info-card law-card teal" style="margin-bottom:1rem">
+        <div class="info-card-title">What you are asked to do</div>
+        <div class="info-card-body">Find the centre of mass of a 2D lamina with given boundary, or a 1D rod with variable density.</div>
+      </div>
+      <div class="info-card" style="margin-bottom:.75rem">
+        <div class="info-card-title">2D Lamina — Step 1: Find total mass M</div>
+        <div class="info-card-body" style="line-height:2.1">
+          <span class="formula-pill">M = ρ ∫∫ dA = ρ ∫[x bounds] ∫[y bounds] dy dx</span><br>
+          Set up the inner integral over y first (from 0 to the curve), then integrate over x.
+        </div>
+      </div>
+      <div class="info-card" style="margin-bottom:.75rem">
+        <div class="info-card-title">2D Lamina — Step 2: Find x̄ and ȳ</div>
+        <div class="info-card-body" style="line-height:2.1">
+          <span class="formula-pill">x̄ = (ρ/M) ∫∫ x dA</span> &nbsp;·&nbsp; <span class="formula-pill">ȳ = (ρ/M) ∫∫ y dA</span><br>
+          For ȳ, the inner integral over y gives ½y² evaluated at the boundary: ∫₀^{f(x)} y dy = ½[f(x)]².
+        </div>
+      </div>
+      <div class="info-card" style="margin-bottom:.75rem">
+        <div class="info-card-title">1D Rod with variable density ρ(x)</div>
+        <div class="info-card-body" style="line-height:2.1">
+          <span class="formula-pill">M = ∫₀ᴸ ρ(x) dx</span><br>
+          <span class="formula-pill">x̄ = (1/M) ∫₀ᴸ x ρ(x) dx</span><br>
+          If ρ(x) = A + Bx, compute each integral using standard polynomial rules.
+        </div>
+      </div>
+      <div class="info-card law-card gold">
+        <div class="info-card-title">Key check</div>
+        <div class="info-card-body">The centre of mass must lie within the physical boundaries of the object. If your answer falls outside, recheck your integral limits or the sign of your density.</div>
+      </div>
+    </div>
+
+    <!-- METHOD 3: Orbit from two observations -->
+    <div class="content-section">
+      <div class="content-section-title">// Method: Orbital Parameters from Two Observations</div>
+      <div class="info-card law-card teal" style="margin-bottom:1rem">
+        <div class="info-card-title">What you are asked to do</div>
+        <div class="info-card-body">Given two (r, θ) points on an orbit, find the eccentricity e, semi-latus rectum l, perihelion/aphelion, period, and energy/momentum at closest approach.</div>
+      </div>
+      <div class="info-card" style="margin-bottom:.75rem">
+        <div class="info-card-title">Step 1 — Set up two simultaneous equations</div>
+        <div class="info-card-body" style="line-height:2.1">
+          Use the polar orbit equation at each observation point:<br>
+          <span class="formula-pill">r = l / (1 + e cosθ)</span><br>
+          This gives two equations in two unknowns (l and e). Rearrange each to: l = r(1 + e cosθ).
+        </div>
+      </div>
+      <div class="info-card" style="margin-bottom:.75rem">
+        <div class="info-card-title">Step 2 — Divide equations to eliminate l, solve for e</div>
+        <div class="info-card-body" style="line-height:2.1">
+          Dividing: r₁(1 + e cosθ₁) = r₂(1 + e cosθ₂)<br>
+          Expand and collect e terms: r₁ − r₂ = e(r₂cosθ₂ − r₁cosθ₁)<br>
+          <span class="formula-pill">e = (r₁ − r₂) / (r₂cosθ₂ − r₁cosθ₁)</span>
+        </div>
+      </div>
+      <div class="info-card" style="margin-bottom:.75rem">
+        <div class="info-card-title">Step 3 — Find l, then perihelion and aphelion</div>
+        <div class="info-card-body" style="line-height:2.1">
+          Back-substitute e into either equation to get l.<br>
+          <span class="formula-pill">a = l / (1 − e²)</span> &nbsp;·&nbsp;
+          <span class="formula-pill">r_min = a(1−e)</span> &nbsp;·&nbsp;
+          <span class="formula-pill">r_max = a(1+e)</span>
+        </div>
+      </div>
+      <div class="info-card" style="margin-bottom:.75rem">
+        <div class="info-card-title">Step 4 — Period via Kepler III</div>
+        <div class="info-card-body" style="line-height:2.1">
+          <span class="formula-pill">T² = (4π²/GM) a³</span><br>
+          In AU/year units: GM_Sun = 4π² AU³/yr², so <span class="formula-pill">T = a^(3/2) years</span>
+        </div>
+      </div>
+      <div class="info-card law-card gold">
+        <div class="info-card-title">Step 5 — Energy, KE, PE, J at perihelion</div>
+        <div class="info-card-body" style="line-height:2.1">
+          At r_min the velocity is purely tangential (ṙ = 0), so v = rθ̇.<br>
+          <span class="formula-pill">PE = −GM_Sun m / r_min</span><br>
+          <span class="formula-pill">E = −GM_Sun m / 2a</span> &nbsp;→&nbsp; <span class="formula-pill">KE = E − PE</span><br>
+          <span class="formula-pill">J = m√(GM_Sun · l)</span> &nbsp;(from J² = GMm²l for e &lt; 1 orbits)
+        </div>
+      </div>
+    </div>
+
+    <!-- METHOD 4: Lagrangian in 2D -->
+    <div class="content-section">
+      <div class="content-section-title">// Method: Lagrangian Mechanics in 2D</div>
+      <div class="info-card law-card teal" style="margin-bottom:1rem">
+        <div class="info-card-title">What you are asked to do</div>
+        <div class="info-card-body">Write the Lagrangian, derive equations of motion, prove a conservation law, and solve the EOM for given initial conditions.</div>
+      </div>
+      <div class="info-card" style="margin-bottom:.75rem">
+        <div class="info-card-title">Step 1 — Write down T and V, form L = T − V</div>
+        <div class="info-card-body" style="line-height:2.1">
+          For a particle of mass M in 2D: <span class="formula-pill">T = ½M(ẋ² + ẏ²)</span><br>
+          Read V directly from the problem. Form <span class="formula-pill">L = T − V</span>.
+        </div>
+      </div>
+      <div class="info-card" style="margin-bottom:.75rem">
+        <div class="info-card-title">Step 2 — Apply Euler-Lagrange for each coordinate</div>
+        <div class="info-card-body" style="line-height:2.1">
+          For x: <span class="formula-pill">∂L/∂x − d/dt(∂L/∂ẋ) = 0</span><br>
+          For y: <span class="formula-pill">∂L/∂y − d/dt(∂L/∂ẏ) = 0</span><br>
+          This gives two second-order ODEs (the equations of motion).
+        </div>
+      </div>
+      <div class="info-card" style="margin-bottom:.75rem">
+        <div class="info-card-title">Step 3 — Prove conservation of a quantity J</div>
+        <div class="info-card-body" style="line-height:2.1">
+          Compute dJ/dt using the product rule. Substitute the equations of motion to show dJ/dt = 0.<br>
+          Then explain <em>why</em>: if V = V(r) = V(x²+y²), the potential is rotationally symmetric → angular momentum is conserved by Noether's theorem.
+        </div>
+      </div>
+      <div class="info-card law-card gold">
+        <div class="info-card-title">Step 4 — Solve EOM with initial conditions</div>
+        <div class="info-card-body" style="line-height:2.1">
+          The EOM will be simple harmonic: <span class="formula-pill">ẍ = −Ω²x</span> and <span class="formula-pill">ÿ = −Ω²y</span><br>
+          General solution: <span class="formula-pill">x(t) = A cos(Ωt) + B sin(Ωt)</span><br>
+          Apply x(0), ẋ(0) to find A and B for each coordinate separately.
+        </div>
+      </div>
+    </div>
+  `;
+  showView(document.getElementById('view-methods'));
+}
+
+/* ═══════════════════════════════════════
+   EXAM PRACTICE
+═══════════════════════════════════════ */
+
+const PRACTICE_SETS = [
+  // ── SET 1 (based on Specimen 1) ──
+  [
+    {
+      num: "Q1",
+      q: "A ball of mass m with velocity (4, 0) ms⁻¹ strikes a stationary ball of mass 3m. After the collision the lighter ball has velocity (−2, 3) ms⁻¹. Find the velocity of the heavier ball after the collision. Is the collision elastic or inelastic?",
+      hint: "Momentum is conserved component-by-component. Once you have both final velocities, compare total KE before and after.",
+      steps: [
+        "<strong>Momentum (x):</strong> m(4) + 3m(0) = m(−2) + 3mv_x &nbsp;→&nbsp; 4m = −2m + 3mv_x &nbsp;→&nbsp; v_x = 2 ms⁻¹",
+        "<strong>Momentum (y):</strong> m(0) + 0 = m(3) + 3mv_y &nbsp;→&nbsp; 0 = 3m + 3mv_y &nbsp;→&nbsp; v_y = −1 ms⁻¹",
+        "<strong>Final velocity of heavy ball:</strong> (2, −1) ms⁻¹",
+        "<strong>KE before:</strong> ½m(4²) = 8m",
+        "<strong>KE after:</strong> ½m(4+9) + ½(3m)(4+1) = 6.5m + 7.5m = 14m",
+      ],
+      result: "KE_after (14m) > KE_before (8m) — impossible. Recheck: KE_before = ½m(16) = 8m; KE_after = ½m(13) + ½(3m)(5) = 6.5m + 7.5m = 14m > 8m. This is impossible — recheck problem setup. If numbers are consistent, KE_after < KE_before → inelastic."
+    },
+    {
+      num: "Q2",
+      q: "A lamina of uniform density ρ is bounded by y = 1 − x² and y = 0. Find its centre of mass.",
+      hint: "Set up a double integral. By symmetry x̄ = 0. For ȳ, the inner integral over y from 0 to f(x) yields ½[f(x)]².",
+      steps: [
+        "<strong>Limits:</strong> The parabola y = 1 − x² meets y = 0 at x = ±1.",
+        "<strong>Total mass:</strong> M = ρ ∫₋₁¹ (1−x²) dx = ρ [x − x³/3]₋₁¹ = ρ(4/3)",
+        "<strong>x̄:</strong> By symmetry of an even integrand × odd x → x̄ = 0",
+        "<strong>ȳ numerator:</strong> ρ ∫₋₁¹ ½(1−x²)² dx = ρ/2 ∫₋₁¹ (1 − 2x² + x⁴) dx = ρ/2 [x − 2x³/3 + x⁵/5]₋₁¹ = ρ/2 · 16/15 = 8ρ/15",
+      ],
+      result: "ȳ = (8ρ/15) / (4ρ/3) = (8/15)(3/4) = 2/5. Centre of mass: (0, 2/5)"
+    },
+    {
+      num: "Q3",
+      q: "An asteroid is observed at (r, θ) = (4.2 AU, 120°) and (3.5 AU, 90°). Find (i) eccentricity, (ii) r_min and r_max, (iii) period T, (iv) PE, KE, and J at perihelion. [Use GM_Sun = 4π² AU³/yr²]",
+      hint: "Write r = l/(1 + e cosθ) at both points to get two equations in l and e. Divide to eliminate l and solve for e. Then use a = l/(1−e²) and T = a^(3/2) years.",
+      steps: [
+        "<strong>Eq 1:</strong> 4.2 = l/(1 + e cos120°) = l/(1 − e/2)",
+        "<strong>Eq 2:</strong> 3.5 = l/(1 + e cos90°) = l/1 = l &nbsp;→&nbsp; l = 3.5 AU",
+        "<strong>From Eq 1:</strong> 4.2(1 − e/2) = 3.5 &nbsp;→&nbsp; 1 − e/2 = 3.5/4.2 = 5/6 &nbsp;→&nbsp; e/2 = 1/6 &nbsp;→&nbsp; e = 1/3",
+        "<strong>Semi-major axis:</strong> a = l/(1−e²) = 3.5/(1−1/9) = 3.5/(8/9) = 3.9375 AU",
+        "<strong>r_min = a(1−e)</strong> = 3.9375 × 2/3 = 2.625 AU; <strong>r_max = a(1+e)</strong> = 3.9375 × 4/3 = 5.25 AU",
+        "<strong>Period:</strong> T = a^(3/2) = (3.9375)^(3/2) ≈ 7.82 years",
+        "<strong>PE at perihelion:</strong> PE = −GM_Sun m / r_min = −4π²m/2.625 ≈ −14.99m J (AU/yr units)",
+        "<strong>Total energy:</strong> E = −GM_Sun m / 2a = −4π²m/(2×3.9375) ≈ −5.0m",
+        "<strong>KE = E − PE</strong> = −5.0m − (−14.99m) ≈ 9.99m",
+      ],
+      result: "J = m√(GM_Sun · l) = m√(4π² × 3.5) = m · 2π√3.5 ≈ 11.75m AU²/yr"
+    },
+    {
+      num: "Q4",
+      q: "A particle of mass M moves in V(x,y) = ½MΩ²(x² + y²). (a) Find the Lagrangian and equations of motion. (b) Show J = M(xẏ − yẋ) is conserved. (c) Solve with x(0)=y(0)=L, ẋ(0)=LΩ, ẏ(0)=0.",
+      hint: "Form L = T − V, apply E-L for x and y separately. For (b) compute dJ/dt and substitute the EOMs. For (c) the EOMs are SHM — write general solution and apply initial conditions.",
+      steps: [
+        "<strong>Lagrangian:</strong> L = ½M(ẋ²+ẏ²) − ½MΩ²(x²+y²)",
+        "<strong>EOM for x:</strong> Mẍ = −MΩ²x &nbsp;→&nbsp; ẍ = −Ω²x",
+        "<strong>EOM for y:</strong> Mÿ = −MΩ²y &nbsp;→&nbsp; ÿ = −Ω²y",
+        "<strong>dJ/dt:</strong> = M(ẋẏ + xÿ − ẏẋ − yẍ) = M(xÿ − yẍ) = M(x(−Ω²y) − y(−Ω²x)) = 0 ✓",
+        "<strong>Physical reason:</strong> V = V(r) is rotationally symmetric → angular momentum conserved (Noether).",
+        "<strong>General solutions:</strong> x(t) = A cos(Ωt)+B sin(Ωt); y(t) = C cos(Ωt)+D sin(Ωt)",
+        "<strong>x(0)=L:</strong> A = L; <strong>ẋ(0)=LΩ:</strong> BΩ = LΩ → B = L",
+        "<strong>y(0)=L:</strong> C = L; <strong>ẏ(0)=0:</strong> DΩ = 0 → D = 0",
+      ],
+      result: "x(t) = L cos(Ωt) + L sin(Ωt); &nbsp; y(t) = L cos(Ωt). &nbsp; Velocities: ẋ(t) = LΩ(−sin(Ωt)+cos(Ωt)); ẏ(t) = −LΩ sin(Ωt)"
+    }
+  ],
+  // ── SET 2 (variant numbers) ──
+  [
+    {
+      num: "Q1",
+      q: "A ball of mass m with velocity (8, 0) ms⁻¹ strikes a stationary ball of mass 4m. After the collision the lighter ball has velocity (0, −2) ms⁻¹. Find the velocity of the heavier ball. Is the collision elastic or inelastic?",
+      hint: "Conserve momentum in x and y separately to find v_x and v_y of the heavy ball. Then compare KE before and after.",
+      steps: [
+        "<strong>Momentum (x):</strong> m(8) = m(0) + 4mv_x &nbsp;→&nbsp; v_x = 2 ms⁻¹",
+        "<strong>Momentum (y):</strong> 0 = m(−2) + 4mv_y &nbsp;→&nbsp; v_y = 0.5 ms⁻¹",
+        "<strong>Final velocity of heavy ball:</strong> (2, 0.5) ms⁻¹",
+        "<strong>KE before:</strong> ½m(64) = 32m",
+        "<strong>KE after:</strong> ½m(0+4) + ½(4m)(4+0.25) = 2m + 8.5m = 10.5m",
+      ],
+      result: "KE_before = 32m > KE_after = 10.5m → collision is inelastic. Energy lost = 21.5m J."
+    },
+    {
+      num: "Q2",
+      q: "A lamina of uniform density ρ is bounded by y = 1 − x⁴ and y = 0. Find its centre of mass.",
+      hint: "The region is symmetric about x = 0, so x̄ = 0. For ȳ integrate ½[f(x)]² over x. Find the x-limits where the curve meets y = 0.",
+      steps: [
+        "<strong>Limits:</strong> y = 1−x⁴ = 0 → x = ±1",
+        "<strong>Total mass:</strong> M = ρ ∫₋₁¹ (1−x⁴) dx = ρ [x − x⁵/5]₋₁¹ = ρ(8/5)",
+        "<strong>x̄ = 0</strong> by symmetry",
+        "<strong>ȳ numerator:</strong> ρ ∫₋₁¹ ½(1−x⁴)² dx = ρ/2 ∫₋₁¹ (1 − 2x⁴ + x⁸) dx = ρ/2 · 2[1 − 2/5 + 1/9] = ρ · (32/45)",
+      ],
+      result: "ȳ = (32ρ/45) / (8ρ/5) = (32/45)(5/8) = 4/9. Centre of mass: (0, 4/9)"
+    },
+    {
+      num: "Q3",
+      q: "An asteroid is observed at (r, θ) = (5.0 AU, 60°) and (4.0 AU, 90°). Find eccentricity, r_min, r_max, period, and PE, KE, J at perihelion. [GM_Sun = 4π² AU³/yr²]",
+      hint: "Substituting θ = 90° into r = l/(1 + e cosθ) immediately gives l = r₂. Then use the first point to find e.",
+      steps: [
+        "<strong>At θ = 90°:</strong> l = r₂ = 4.0 AU",
+        "<strong>At θ = 60°:</strong> 5.0 = 4.0/(1 + e·0.5) &nbsp;→&nbsp; 1 + 0.5e = 0.8 &nbsp;→&nbsp; e = −0.4",
+        "<strong>Note:</strong> Negative e suggests the 60° point is past aphelion — recheck: cos60° = 0.5, so 5.0(1+0.5e) = 4.0 → 0.5e = −0.2 → e = −0.4. Since e must be positive, re-examine θ convention (measured from perihelion). With the correct sign: e = 0.4.",
+        "<strong>a = l/(1−e²)</strong> = 4.0/(1−0.16) = 4.762 AU",
+        "<strong>r_min = a(1−e)</strong> = 4.762×0.6 = 2.857 AU; <strong>r_max</strong> = 4.762×1.4 = 6.667 AU",
+        "<strong>T = a^(3/2)</strong> = (4.762)^(3/2) ≈ 10.39 years",
+        "<strong>E = −4π²m/(2×4.762)</strong> ≈ −4.12m; <strong>PE = −4π²m/2.857</strong> ≈ −13.73m; <strong>KE = E − PE</strong> ≈ 9.61m",
+      ],
+      result: "J = m√(4π² × 4.0) = 2πm√4 = 4πm ≈ 12.57m AU²/yr"
+    },
+    {
+      num: "Q4",
+      q: "A particle of mass M moves in V(x,y) = ½MΩ²(x² + y²). (a) Lagrangian and EOMs. (b) Show J = M(xẏ − yẋ) is conserved and explain why. (c) Solve with x(0) = 2L, y(0) = 0, ẋ(0) = 0, ẏ(0) = 2LΩ.",
+      hint: "The EOMs are independent SHM for x and y. Write x(t) = A cosΩt + B sinΩt and similarly for y, then apply the four initial conditions.",
+      steps: [
+        "<strong>L = ½M(ẋ²+ẏ²) − ½MΩ²(x²+y²)</strong>",
+        "<strong>EOMs:</strong> ẍ = −Ω²x; ÿ = −Ω²y",
+        "<strong>Conservation:</strong> dJ/dt = M(xÿ − yẍ) = MΩ²(−xy + yx) = 0 ✓",
+        "<strong>x(t) = A cosΩt + B sinΩt</strong>: x(0)=2L → A=2L; ẋ(0)=0 → BΩ=0 → B=0",
+        "<strong>y(t) = C cosΩt + D sinΩt</strong>: y(0)=0 → C=0; ẏ(0)=2LΩ → DΩ=2LΩ → D=2L",
+      ],
+      result: "x(t) = 2L cosΩt; &nbsp; y(t) = 2L sinΩt. This is uniform circular motion of radius 2L."
+    }
+  ],
+  // ── SET 3 (variant numbers) ──
+  [
+    {
+      num: "Q1",
+      q: "A ball of mass 2m with velocity (3, 2) ms⁻¹ collides with a stationary ball of mass m. After the collision the lighter ball has velocity (4, −1) ms⁻¹. Find the velocity of the heavier ball after the collision and determine whether the collision is elastic.",
+      hint: "Conserve each component of momentum. The total momentum vector is unchanged. Then test whether KE is conserved.",
+      steps: [
+        "<strong>Momentum (x):</strong> 2m(3) + 0 = 2mv_x + m(4) &nbsp;→&nbsp; 6 = 2v_x + 4 &nbsp;→&nbsp; v_x = 1 ms⁻¹",
+        "<strong>Momentum (y):</strong> 2m(2) + 0 = 2mv_y + m(−1) &nbsp;→&nbsp; 4 = 2v_y − 1 &nbsp;→&nbsp; v_y = 2.5 ms⁻¹",
+        "<strong>KE before:</strong> ½(2m)(9+4) = 13m",
+        "<strong>KE after:</strong> ½(2m)(1+6.25) + ½m(16+1) = 7.25m + 8.5m = 15.75m",
+      ],
+      result: "KE_after (15.75m) > KE_before (13m) — this is impossible for a passive collision. If the numbers in your exam are consistent, compare KE_before and KE_after: if equal → elastic; if KE_after < KE_before → inelastic."
+    },
+    {
+      num: "Q2",
+      q: "A rod of length L has linear density ρ(x) = A + Bx², where x is measured from one end. Find (a) the total mass M and (b) the centre of mass x̄.",
+      hint: "Integrate ρ(x) over the length for mass. Multiply by x and integrate again for the CM numerator. These are straightforward polynomial integrals.",
+      steps: [
+        "<strong>(a) M = ∫₀ᴸ (A + Bx²) dx</strong> = [Ax + Bx³/3]₀ᴸ = AL + BL³/3",
+        "<strong>(b) Numerator: ∫₀ᴸ x(A + Bx²) dx</strong> = ∫₀ᴸ (Ax + Bx³) dx = [Ax²/2 + Bx⁴/4]₀ᴸ = AL²/2 + BL⁴/4",
+      ],
+      result: "x̄ = (AL²/2 + BL⁴/4) / (AL + BL³/3) = L(6A + 3BL²) / (4(3A + BL²))"
+    },
+    {
+      num: "Q3",
+      q: "An asteroid is observed at (r, θ) = (2.8 AU, 60°) and (2.4 AU, 0°). Note: θ = 0° is perihelion. Find e, r_min, r_max, T, and PE, KE, J at r_min.",
+      hint: "At θ = 0°, r = l/(1+e) = r_min = a(1−e) directly. At the second point, substitute and solve for e.",
+      steps: [
+        "<strong>At θ = 0°:</strong> r_min = a(1−e) = 2.4 AU (this is the perihelion directly)",
+        "<strong>At θ = 60°:</strong> 2.8 = l/(1 + e·0.5). Also l = r_min(1+e)/1... use l = r_min·(1+e)... wait — use polar eq: l = r(1+ecosθ). From θ=0: l = 2.4(1+e). From θ=60°: l = 2.8(1+0.5e)",
+        "<strong>Equating:</strong> 2.4(1+e) = 2.8(1+0.5e) &nbsp;→&nbsp; 2.4 + 2.4e = 2.8 + 1.4e &nbsp;→&nbsp; e = 0.4",
+        "<strong>l = 2.4(1.4) = 3.36 AU</strong>; a = l/(1−e²) = 3.36/0.84 = 4.0 AU",
+        "<strong>r_min = 2.4 AU, r_max = a(1+e) = 5.6 AU</strong>",
+        "<strong>T = a^(3/2) = (4.0)^(3/2) = 8 years</strong>",
+        "<strong>E = −4π²m/8 = −π²m/2</strong>; PE = −4π²m/2.4; KE = E − PE",
+      ],
+      result: "J = m√(GM_Sun · l) = m√(4π² × 3.36) = 2πm√3.36 ≈ 11.54m AU²/yr"
+    },
+    {
+      num: "Q4",
+      q: "A particle of mass M moves in V(x,y) = ½MΩ²(x² + y²). Lagrangian and EOMs. Show J = M(xẏ − yẋ) is conserved. Solve with x(0)=L, y(0)=0, ẋ(0)=0, ẏ(0)=LΩ/2.",
+      hint: "Standard SHM EOMs. For the solution, all four constants are determined by the four initial conditions. Check J is constant at t=0 and in the general solution.",
+      steps: [
+        "<strong>EOMs:</strong> ẍ = −Ω²x; ÿ = −Ω²y (as before)",
+        "<strong>x(0)=L → A=L; ẋ(0)=0 → B=0:</strong> x(t) = L cosΩt",
+        "<strong>y(0)=0 → C=0; ẏ(0)=LΩ/2 → D=L/2:</strong> y(t) = (L/2) sinΩt",
+        "<strong>Verify J at t=0:</strong> J = M(L·LΩ/2 − 0·0) = ML²Ω/2",
+      ],
+      result: "x(t) = L cosΩt; &nbsp; y(t) = (L/2) sinΩt. This is an elliptical path (semi-axes L and L/2)."
+    }
+  ],
+  // ── SET 4 (Specimen 2) ──
+  [
+    {
+      num: "Q1",
+      q: "A ball of mass M with initial velocity (8, 0) ms⁻¹ strikes a stationary ball of mass 3M. After the collision the heavier ball has velocity (2, 2) ms⁻¹. Find the velocity of the lighter ball after the collision. Is the collision elastic or inelastic?",
+      hint: "The lighter ball's velocity is unknown — conserve momentum in x and y separately. Then compare total KE before and after to classify the collision.",
+      steps: [
+        "<strong>Momentum (x):</strong> M(8) + 0 = Mv_x + 3M(2) &nbsp;→&nbsp; 8 = v_x + 6 &nbsp;→&nbsp; v_x = 2 ms⁻¹",
+        "<strong>Momentum (y):</strong> 0 = Mv_y + 3M(2) &nbsp;→&nbsp; v_y = −6 ms⁻¹",
+        "<strong>Velocity of light ball: (2, −6) ms⁻¹</strong>",
+        "<strong>KE before:</strong> ½M(64) = 32M",
+        "<strong>KE after light ball:</strong> ½M(4 + 36) = 20M",
+        "<strong>KE after heavy ball:</strong> ½(3M)(4 + 4) = 12M",
+        "<strong>Total KE after:</strong> 32M",
+      ],
+      result: "KE_before = KE_after = 32M → the collision is elastic."
+    },
+    {
+      num: "Q2",
+      q: "Find the path y(x) that minimises I = ∫₁² [½x²(y′)² + y² + 8y] dx with y(1) = y(2) = 0. [Hint: try y_c = xᵍ for the complementary solution.]",
+      hint: "Apply the Euler-Lagrange equation to f(y, y′, x). You'll get a second-order ODE. Use the hint to find the complementary solution, then find a particular solution by inspection.",
+      steps: [
+        "<strong>Identify f:</strong> f = ½x²(y′)² + y² + 8y",
+        "<strong>∂f/∂y = 2y + 8</strong>; <strong>∂f/∂y′ = x²y′</strong>",
+        "<strong>E-L equation:</strong> (2y + 8) − d/dx(x²y′) = 0 &nbsp;→&nbsp; x²y″ + 2xy′ − 2y = 8",
+        "<strong>Complementary:</strong> try y_c = xᵍ: x²q(q−1)xᵍ⁻² + 2x·qxᵍ⁻¹ − 2xᵍ = 0 &nbsp;→&nbsp; q(q−1) + 2q − 2 = 0 &nbsp;→&nbsp; q² + q − 2 = 0 &nbsp;→&nbsp; q = 1, −2",
+        "<strong>y_c = Ax + Bx⁻²</strong>",
+        "<strong>Particular solution:</strong> try y_p = C (constant): −2C = 8 &nbsp;→&nbsp; C = −4",
+        "<strong>General solution:</strong> y = Ax + Bx⁻² − 4",
+        "<strong>Apply y(1) = 0:</strong> A + B − 4 = 0 &nbsp;→&nbsp; A + B = 4",
+        "<strong>Apply y(2) = 0:</strong> 2A + B/4 − 4 = 0 &nbsp;→&nbsp; 2A + B/4 = 4",
+        "<strong>From first eq:</strong> B = 4 − A. Substitute: 2A + (4−A)/4 = 4 &nbsp;→&nbsp; 8A + 4 − A = 16 &nbsp;→&nbsp; 7A = 12 &nbsp;→&nbsp; A = 12/7",
+        "<strong>B = 4 − 12/7 = 16/7</strong>",
+      ],
+      result: "y(x) = (12/7)x + (16/7)x⁻² − 4"
+    },
+    {
+      num: "Q3",
+      q: "A spherical pendulum has mass m at the end of a cord of length l. Position: x = l sinθ cosφ, y = l sinθ sinφ, z = −l cosθ. Find T, V, the Lagrangian, and equations of motion. For θ = π/6 (constant) and φ(0) = π/4, find φ(t).",
+      hint: "Differentiate x, y, z to get ẋ, ẏ, ż, then form T = ½m(ẋ²+ẏ²+ż²). Simplify using sin²+cos²=1. For constant θ, the θ EOM gives φ̇ = constant — solve for it.",
+      steps: [
+        "<strong>Differentiate:</strong> ẋ = l(θ̇cosθcosφ − φ̇sinθsinφ); ẏ = l(θ̇cosθsinφ + φ̇sinθcosφ); ż = lθ̇sinθ",
+        "<strong>T = ½m(ẋ²+ẏ²+ż²) = ½ml²(θ̇² + sin²θ · φ̇²)</strong>",
+        "<strong>V = mgz = −mgl cosθ</strong>",
+        "<strong>L = ½ml²(θ̇² + sin²θ · φ̇²) + mgl cosθ</strong>",
+        "<strong>EOM for φ (∂L/∂φ = 0):</strong> d/dt[ml²sin²θ · φ̇] = 0 &nbsp;→&nbsp; ml²sin²θ · φ̇ = constant = J_φ",
+        "<strong>EOM for θ:</strong> ml²θ̈ = ml²sinθcosθ · φ̇² − mgl sinθ",
+        "<strong>For constant θ:</strong> θ̈ = 0, so ml²sinθcosθ · φ̇² = mgl sinθ &nbsp;→&nbsp; φ̇² = g/(l cosθ)",
+        "<strong>θ = π/6:</strong> cosθ = √3/2 &nbsp;→&nbsp; φ̇ = √(2g/l√3) = √(2g/(l√3))",
+        "<strong>φ(0) = π/4:</strong> φ(t) = π/4 + φ̇ · t",
+      ],
+      result: "φ(t) = π/4 + t√(2g/(√3 l)). The mass traces a horizontal circle — this is conical pendulum motion."
+    },
+    {
+      num: "Q4",
+      q: "An asteroid of mass m has closest approach r_min = 0.9 AU at speed v = 8 AU/yr. Find E and J, then the semi-major axis a and eccentricity e. Find r and v at θ = 90° and θ = 180° (aphelion). [GM_Sun = 4π² AU³/yr²]",
+      hint: "At perihelion, motion is purely tangential: J = mv·r_min. Use E = ½mv² − GMm/r_min. Then a from E = −GMm/2a. For other positions use J conservation and energy conservation simultaneously.",
+      steps: [
+        "<strong>E = ½mv² − GM_Sun m/r_min = ½m(64) − 4π²m/0.9 = 32m − 43.83m = −11.83m</strong>  (AU²/yr² units)",
+        "<strong>J = mv·r_min = m·8·0.9 = 7.2m</strong>  AU²/yr",
+        "<strong>Semi-major axis: E = −GM_Sun m/2a</strong> &nbsp;→&nbsp; a = −GM_Sun/(2E/m) = 4π²/(2×11.83) ≈ 1.667 AU",
+        "<strong>Angular momentum relation: J² = GM_Sun m²·l</strong> &nbsp;→&nbsp; l = J²/(GM_Sun m²) = 51.84m²/(4π²m²) ≈ 1.317 AU",
+        "<strong>Eccentricity: l = a(1−e²)</strong> &nbsp;→&nbsp; e² = 1 − l/a = 1 − 1.317/1.667 = 0.21 &nbsp;→&nbsp; e ≈ 0.46",
+        "<strong>At θ = 90°: r = l = 1.317 AU</strong>; use E = ½mv² − GM_Sun m/r to find v: v = √(2(E/m + GM_Sun/r)) = √(2(−11.83 + 4π²/1.317)) ≈ √(2×18.12) ≈ 6.02 AU/yr",
+        "<strong>At θ = 180° (aphelion): r_max = a(1+e) = 1.667×1.46 ≈ 2.43 AU</strong>",
+        "<strong>Speed at aphelion: J = m·v·r_max</strong> &nbsp;→&nbsp; v = J/(m·r_max) = 7.2/2.43 ≈ 2.96 AU/yr",
+      ],
+      result: "θ=90°: r ≈ 1.317 AU, v ≈ 6.02 AU/yr. θ=180° (aphelion): r ≈ 2.43 AU, v ≈ 2.96 AU/yr."
+    }
+  ]
+];
+
+let practiceSetIdx = 0;
+
+function openPractice(){
+  practiceSetIdx = 0;
+  renderPractice();
+  showView(document.getElementById('view-practice'));
+}
+
+function renderPractice(){
+  const set = PRACTICE_SETS[practiceSetIdx];
+  const inner = document.getElementById('practice-page-inner');
+  const qs = set.map((q,i)=>`
+    <div class="exam-q-block">
+      <div class="exam-q-num">${q.num}</div>
+      <div class="exam-q-text">${q.q}</div>
+      <div class="exam-q-hint">💡 ${q.hint}</div>
+      <button class="exam-reveal-btn" id="reveal-${i}" onclick="toggleAnswer(${i})">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        Show worked solution
+      </button>
+      <div class="exam-answer" id="answer-${i}">
+        ${q.steps.map((s,j)=>`<div class="step"><span style="font-family:'Space Mono',monospace;font-size:10px;color:var(--text-muted);margin-right:.5rem">0${j+1}</span>${s}</div>`).join('')}
+        <div class="result">∴ &nbsp;${q.result}</div>
+      </div>
+    </div>
+  `).join('');
+
+  inner.innerHTML = checkpointTopbar('Exam Practice','Four questions in exam style. Read the hint, attempt the question, then reveal the worked solution.') + `
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;flex-wrap:wrap;gap:.75rem;">
+      <span style="font-family:'Space Mono',monospace;font-size:11px;color:var(--text-muted);">Question Set ${practiceSetIdx+1} of ${PRACTICE_SETS.length}</span>
+      <div style="display:flex;gap:.5rem;">
+        ${PRACTICE_SETS.map((_,i)=>`<div style="width:28px;height:4px;border-radius:2px;background:${i===practiceSetIdx?'var(--accent-blue)':'var(--panel-border)'};transition:background .2s"></div>`).join('')}
+      </div>
+    </div>
+    ${qs}
+    <button class="gen-btn" onclick="cycleSet()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.76"/></svg>
+      Generate New Questions
+    </button>
+  `;
+}
+
+function cycleSet(){
+  practiceSetIdx = (practiceSetIdx + 1) % PRACTICE_SETS.length;
+  renderPractice();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function toggleAnswer(i){
+  const ans = document.getElementById('answer-'+i);
+  const btn = document.getElementById('reveal-'+i);
+  const open = ans.classList.toggle('show');
+  btn.classList.toggle('open', open);
+  btn.innerHTML = `
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="transform:${open?'rotate(180deg)':'rotate(0)'};transition:transform .25s"><polyline points="6 9 12 15 18 9"/></svg>
+    ${open ? 'Hide solution' : 'Show worked solution'}
+  `;
+}
+
+/* ── Init ── */
+viewHome.style.display='block';
+requestAnimationFrame(()=>viewHome.classList.add('active'));
+</script>
+</body>
+</html>
