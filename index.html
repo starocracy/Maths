@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Max's Revision Hub</title>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --parchment: #f5f0e8;
+    --parchment-dark: #ede6d6;
+    --ink: #2c2416;
+    --ink-muted: #6b5e45;
+    --gold: #b8860b;
+    --gold-light: #d4a017;
+    --teal: #2e7d6b;
+    --red: #8b2020;
+    --cream-border: #d4c9a8;
+    --shadow: rgba(44, 36, 22, 0.12);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background-color: var(--parchment);
+    background-image:
+      radial-gradient(ellipse at 20% 20%, rgba(184,134,11,0.06) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 80%, rgba(46,125,107,0.05) 0%, transparent 60%),
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    font-family: 'EB Garamond', Georgia, serif;
+    color: var(--ink);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 3rem 1.5rem 4rem;
+  }
+
+  /* ── Header ── */
+  header {
+    text-align: center;
+    margin-bottom: 3rem;
+    position: relative;
+  }
+
+  .eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin-bottom: 0.6rem;
+  }
+
+  h1 {
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 500;
+    line-height: 1.15;
+    color: var(--ink);
+    margin-bottom: 0.5rem;
+  }
+
+  h1 em {
+    font-style: italic;
+    color: var(--gold);
+  }
+
+  .subtitle {
+    font-size: 1.05rem;
+    color: var(--ink-muted);
+    font-style: italic;
+  }
+
+  .rule {
+    width: 80px;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--gold), transparent);
+    margin: 1.2rem auto 0;
+  }
+
+  /* ── Grid ── */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    width: 100%;
+    max-width: 900px;
+  }
+
+  /* ── Card ── */
+  .card {
+    background: linear-gradient(145deg, #faf6ee, #f0e9d6);
+    border: 1px solid var(--cream-border);
+    border-radius: 4px;
+    padding: 1.8rem 1.6rem 1.5rem;
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    box-shadow: 0 2px 8px var(--shadow), inset 0 1px 0 rgba(255,255,255,0.6);
+    transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--accent, var(--gold));
+    opacity: 0.7;
+    transition: opacity 0.18s ease;
+  }
+
+  .card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px var(--shadow), inset 0 1px 0 rgba(255,255,255,0.6);
+    border-color: var(--accent, var(--gold));
+  }
+
+  .card:hover::before { opacity: 1; }
+
+  .card-code {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent, var(--gold));
+  }
+
+  .card-title {
+    font-size: 1.25rem;
+    font-weight: 500;
+    line-height: 1.3;
+    color: var(--ink);
+  }
+
+  .card-topics {
+    font-size: 0.88rem;
+    color: var(--ink-muted);
+    font-style: italic;
+    line-height: 1.5;
+    flex: 1;
+  }
+
+  .card-arrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.78rem;
+    color: var(--accent, var(--gold));
+    letter-spacing: 0.05em;
+    margin-top: 0.25rem;
+    opacity: 0;
+    transform: translateX(-4px);
+    transition: opacity 0.18s ease, transform 0.18s ease;
+  }
+
+  .card:hover .card-arrow {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  /* ── Footer ── */
+  footer {
+    margin-top: 3.5rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    color: var(--ink-muted);
+    opacity: 0.6;
+    text-align: center;
+  }
+
+  /* ── Load animation ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  header { animation: fadeUp 0.5s ease both; }
+  .card:nth-child(1) { animation: fadeUp 0.5s 0.1s ease both; }
+  .card:nth-child(2) { animation: fadeUp 0.5s 0.18s ease both; }
+  .card:nth-child(3) { animation: fadeUp 0.5s 0.26s ease both; }
+  .card:nth-child(4) { animation: fadeUp 0.5s 0.34s ease both; }
+</style>
+</head>
+<body>
+
+<header>
+  <p class="eyebrow">University of Liverpool · Mathematics</p>
+  <h1>Revision <em>Hub</em></h1>
+  <p class="subtitle">Interactive cheatsheets for exam preparation</p>
+  <div class="rule"></div>
+</header>
+
+<div class="grid">
+
+  <a class="card" href="DifferentialEquations.html" style="--accent: var(--teal);">
+    <span class="card-code">MATH221</span>
+    <span class="card-title">Differential Equations</span>
+    <span class="card-topics">Separable & linear ODEs · Existence theorems · 2nd-order methods · BVPs · Sturm–Liouville · Series solutions · ODE systems</span>
+    <span class="card-arrow">Open sheet →</span>
+  </a>
+
+  <a class="card" href="MetricSpacesSheet.html" style="--accent: var(--gold);">
+    <span class="card-code">MATH241</span>
+    <span class="card-title">Metric Spaces & Calculus</span>
+    <span class="card-topics">Metric spaces · Open & closed sets · Continuity · Completeness · Compactness · Multivariate calculus · Jacobians · INFT & IMFT</span>
+    <span class="card-arrow">Open sheet →</span>
+  </a>
+
+  <a class="card" href="CommutativeAlgebraSheet.html" style="--accent: var(--red);">
+    <span class="card-code">MATH342</span>
+    <span class="card-title">Commutative Algebra</span>
+    <span class="card-topics">Rings & modules · Smith normal form · CRT · UFDs · Noetherian rings · Nullstellensatz · Cayley–Hamilton · Resultants</span>
+    <span class="card-arrow">Open sheet →</span>
+  </a>
+
+  <a class="card" href="classical-mechanics-cheatsheet (2).html" style="--accent: var(--ink-muted);">
+    <span class="card-code">MATH228</span>
+    <span class="card-title">Classical Mechanics</span>
+    <span class="card-topics">Newtonian mechanics · Lagrangian dynamics · Euler–Lagrange · Torque & angular momentum · Effective potential · Oscillations</span>
+    <span class="card-arrow">Open sheet →</span>
+  </a>
+
+</div>
+
+<footer>University of Liverpool &nbsp;·&nbsp; 2025–26</footer>
+
+</body>
+</html>
