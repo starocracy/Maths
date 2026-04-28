@@ -5,6 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Metric Spaces & Calculus — Cheat Sheet</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],throwOnError:false});"></script>
 <style>
   :root {
     --ink: #0f0e0c;
@@ -157,21 +161,20 @@
   .card-title .tag.green { background: var(--accent3); }
 
   .formula {
-    font-family: 'DM Mono', monospace;
-    font-size: 13px;
-    background: var(--ink);
-    color: #f0ebe0;
-    padding: 10px 14px;
-    border-radius: 5px;
-    margin: 8px 0;
+    background: #f0ece4;
+    border-left: 3px solid var(--accent2);
+    padding: 12px 18px;
+    border-radius: 0 5px 5px 0;
+    margin: 10px 0;
+    overflow-x: auto;
     line-height: 1.8;
-    white-space: pre-wrap;
   }
+  .formula .katex-display { margin: 4px 0; }
 
-  .formula .kw { color: #e8a87c; }
-  .formula .sym { color: #7ec8e3; }
-  .formula .cmt { color: #888; font-style: italic; }
-  .formula .hi { color: #f8d56b; }
+  .formula .kw  { color: var(--accent2); font-family:'DM Mono',monospace; font-size:12px; font-weight:600; }
+  .formula .sym { color: var(--accent3); }
+  .formula .cmt { color: var(--muted); font-style: italic; font-size: 12.5px; display: block; margin-top: 4px; }
+  .formula .hi  { color: var(--accent); font-weight: 600; }
 
   p.note {
     font-size: 12.5px;
@@ -380,9 +383,7 @@
       <div class="def">
         <strong>Definition.</strong> A metric space is a pair <em>(X, d)</em> where <em>X</em> is a set and <em>d: X×X → ℝ</em> satisfies:
       </div>
-      <div class="formula"><span class="kw">1.</span> <span class="hi">d(x,y) ≥ 0</span>; d(x,y)=0 ⟺ x=y  <span class="cmt">(non-neg)</span>
-<span class="kw">2.</span> <span class="hi">d(x,y) = d(y,x)</span>             <span class="cmt">(symmetry)</span>
-<span class="kw">3.</span> <span class="hi">d(x,z) ≤ d(x,y)+d(y,z)</span>     <span class="cmt">(triangle ineq)</span></div>
+      <div class="formula">$$\begin{aligned}&d(x,y)\geq 0;\quad d(x,y)=0\iff x=y&&\text{(non-negativity)}\\&d(x,y)=d(y,x)&&\text{(symmetry)}\\&d(x,z)\leq d(x,y)+d(y,z)&&\text{(triangle inequality)}\end{aligned}$$</div>
       <p class="note">Common metrics: Euclidean d₂, taxicab d₁, supremum d∞, discrete metric.</p>
     </div>
 
@@ -406,8 +407,7 @@
 
     <div class="card">
       <div class="card-title"><span class="tag">Def</span> Sequences & Limits</div>
-      <div class="formula"><span class="hi">xₙ → x</span>  iff  <span class="sym">∀ε&gt;0, ∃N</span> s.t.
-  n ≥ N ⟹ d(xₙ, x) &lt; ε</div>
+      <div class="formula">$$x_n \to x \iff \forall\varepsilon>0,\;\exists N\in\mathbb{Z}_+\text{ s.t. }n\geq N\implies d(x_n,x)<\varepsilon$$</div>
       <ul class="checklist">
         <li>Limits are unique in a metric space</li>
         <li>Convergent sequences are Cauchy</li>
@@ -452,9 +452,7 @@
         <strong>Continuous at x:</strong> ∀ε&gt;0, ∃δ&gt;0 s.t. d(x,y)&lt;δ ⟹ d(f(x),f(y))&lt;ε
       </div>
       <div class="formula"><span class="cmt">Equivalent characterisations:</span>
-<span class="kw">•</span> xₙ→x ⟹ f(xₙ)→f(x)
-<span class="kw">•</span> f⁻¹(open) is open
-<span class="kw">•</span> f⁻¹(closed) is closed</div>
+$$x_n\!\to\!x\implies f(x_n)\!\to\!f(x)\qquad f^{-1}(\text{open})\text{ is open}\qquad f^{-1}(\text{closed})\text{ is closed}$$</div>
       <div class="theorem">
         <strong>Uniform continuity:</strong> δ depends only on ε, not on x. Continuous on compact ⟹ uniformly continuous.
       </div>
@@ -503,27 +501,14 @@
       <div class="def">
         <strong>Definition.</strong> A <em>metric</em> on a set X is d : X×X → ℝ≥0 satisfying:
       </div>
-      <div class="formula"><span class="kw">(M0)</span> <span class="hi">d(x,y) ≥ 0</span>              <span class="cmt">(non-negativity)</span>
-<span class="kw">(M1)</span> <span class="hi">d(x,y) = 0 ⟺ x = y</span>   <span class="cmt">(identity)</span>
-<span class="kw">(M2)</span> <span class="hi">d(x,y) = d(y,x)</span>         <span class="cmt">(symmetry)</span>
-<span class="kw">(M3)</span> <span class="hi">d(x,z) ≤ d(x,y)+d(y,z)</span>  <span class="cmt">(triangle ineq)</span></div>
+      <div class="formula">$$\begin{aligned}&\textbf{(M0)}\quad d(x,y)\geq 0&&\text{(non-negativity)}\\&\textbf{(M1)}\quad d(x,y)=0\iff x=y&&\text{(identity)}\\&\textbf{(M2)}\quad d(x,y)=d(y,x)&&\text{(symmetry)}\\&\textbf{(M3)}\quad d(x,z)\leq d(x,y)+d(y,z)&&\text{(triangle inequality)}\end{aligned}$$</div>
       <p class="note">⚠ Remark 1.2: Don't forget (M0)! Always check non-negativity separately from (M1).</p>
     </div>
 
     <!-- STANDARD METRICS ON Rⁿ -->
     <div class="card">
       <div class="card-title"><span class="tag green">Ex 1.8–1.11</span> Standard Metrics on ℝⁿ</div>
-      <div class="formula"><span class="cmt">Euclidean (d₂):</span>
-<span class="hi">d₂(x,y) = √(Σ|xᵢ−yᵢ|²)</span>
-
-<span class="cmt">Manhattan / Taxicab (d₁):</span>
-<span class="hi">d₁(x,y) = Σ|xᵢ−yᵢ|</span>
-
-<span class="cmt">Supremum / Chebyshev (d∞):</span>
-<span class="hi">d∞(x,y) = max₁≤ᵢ≤ₙ |xᵢ−yᵢ|</span>
-
-<span class="cmt">General Lᵖ (Def 1.21):</span>
-<span class="hi">dₚ(x,y) = (Σ|xᵢ−yᵢ|ᵖ)^(1/p)</span></div>
+      <div class="formula">$$\begin{aligned}d_2(x,y)&=\sqrt{\sum_{i=1}^n|x_i-y_i|^2}&&\text{(Euclidean)}\\d_1(x,y)&=\sum_{i=1}^n|x_i-y_i|&&\text{(Manhattan/Taxicab)}\\d_\infty(x,y)&=\max_{1\leq i\leq n}|x_i-y_i|&&\text{(Supremum/Chebyshev)}\\d_p(x,y)&=\Bigl(\sum_{i=1}^n|x_i-y_i|^p\Bigr)^{1/p}&&\text{(general }L^p\text{, Def 1.21)}\end{aligned}$$</div>
       <p class="note">For n=1: d₁ = d₂ = |x−y|. All dₚ are valid metrics on ℝⁿ via Minkowski's inequality.</p>
     </div>
 
@@ -533,7 +518,7 @@
       <div class="theorem">
         <strong>Statement.</strong> For any a₁,…,aₙ, b₁,…,bₙ ∈ ℝ:
       </div>
-      <div class="formula">(<span class="hi">Σ aᵢbᵢ</span>)² ≤ (<span class="sym">Σ aᵢ²</span>) · (<span class="sym">Σ bᵢ²</span>)</div>
+      <div class="formula">$$\Bigl(\sum_{i=1}^n a_i b_i\Bigr)^2\leq\Bigl(\sum_{i=1}^n a_i^2\Bigr)\Bigl(\sum_{i=1}^n b_i^2\Bigr)$$</div>
       <div class="def">
         <strong>Proof idea.</strong> Define F(t) = Σ(aᵢt + bᵢ)² ≥ 0. This is quadratic in t with discriminant H²−4AB ≤ 0, which gives the inequality.
       </div>
@@ -546,7 +531,7 @@
       <div class="theorem">
         <strong>Statement.</strong> For sequences (Aₙ), (Bₙ) and p ≥ 1:
       </div>
-      <div class="formula">(Σ|Aₙ+Bₙ|ᵖ)^(1/p) ≤ <span class="hi">(Σ|Aₙ|ᵖ)^(1/p) + (Σ|Bₙ|ᵖ)^(1/p)</span></div>
+      <div class="formula">$$\Bigl(\sum_n|A_n+B_n|^p\Bigr)^{1/p}\leq\Bigl(\sum_n|A_n|^p\Bigr)^{1/p}+\Bigl(\sum_n|B_n|^p\Bigr)^{1/p}$$</div>
       <div class="def">
         <strong>Proof idea.</strong> Normalise: Âₙ = Aₙ/A, B̂ₙ = Bₙ/B. Use convexity of F(t)=tᵖ with α=A/(A+B), β=B/(A+B), then sum and take p-th roots.
       </div>
@@ -563,7 +548,7 @@
       <div class="def">
         <strong>Definition.</strong> For any set X:
       </div>
-      <div class="formula">d<span class="kw">discr</span>(x,y) = <span class="hi">0 if x=y,  1 if x≠y</span></div>
+      <div class="formula">$$d_{\mathrm{discr}}(x,y)=\begin{cases}0&\text{if }x=y\\1&\text{if }x\neq y\end{cases}$$</div>
       <div class="def">
         <strong>Triangle inequality.</strong> If x≠z, then for any y, at least one of x≠y or y≠z must hold, so the RHS is ≥ 1.
       </div>
@@ -573,13 +558,8 @@
     <!-- ℓᵖ SEQUENCE SPACES -->
     <div class="card">
       <div class="card-title"><span class="tag">Def 1.32</span> ℓᵖ Sequence Spaces</div>
-      <div class="formula"><span class="cmt">For 1 ≤ p &lt; ∞:</span>
-ℓᵖ = { (aₙ) : <span class="hi">Σ|aₙ|ᵖ &lt; ∞</span> }
-‖x‖ₚ = (Σ|xₙ|ᵖ)^(1/p)
-
-<span class="cmt">For p = ∞:</span>
-ℓ∞ = { (aₙ) : <span class="hi">sup|aₙ| &lt; ∞</span> }
-‖x‖∞ = sup|xₙ|</div>
+      <div class="formula">$$\ell^p=\Bigl\{(a_n):\sum_n|a_n|^p<\infty\Bigr\},\qquad\|x\|_p=\Bigl(\sum_n|x_n|^p\Bigr)^{1/p}\quad(1\leq p<\infty)$$
+$$\ell^\infty=\Bigl\{(a_n):\sup_n|a_n|<\infty\Bigr\},\qquad\|x\|_\infty=\sup_n|x_n|$$</div>
       <div class="theorem">
         <strong>Thm 1.34.</strong> For all p ≥ 1 (incl. p=∞), dₚ is a distance on ℓᵖ.
       </div>
@@ -595,16 +575,12 @@
       <div class="def">
         <strong>Definition 1.41.</strong> C([0,1]) = { f : [0,1] → ℝ | f continuous }.
       </div>
-      <div class="formula"><span class="cmt">L∞ metric (Def 1.42):</span>
-d<span class="kw">L∞</span>(f,g) = <span class="hi">max_{x∈[0,1]} |f(x)−g(x)|</span>
-
-<span class="cmt">L¹ metric (Def 1.42):</span>
-d<span class="kw">L1</span>(f,g) = <span class="hi">∫₀¹ |f(x)−g(x)| dx</span></div>
+      <div class="formula">$$d_{L^\infty}(f,g)=\max_{x\in[0,1]}|f(x)-g(x)|$$
+$$d_{L^1}(f,g)=\int_0^1|f(x)-g(x)|\,dx$$</div>
       <div class="def">
         <strong>Example 1.47.</strong> For f(x)=x, g(x)=x²:
       </div>
-      <div class="formula">d<span class="kw">L∞</span>(f,g) = <span class="hi">1/4</span>  (max at x=1/2)
-d<span class="kw">L1</span>(f,g) = <span class="hi">1/6</span>  (∫₀¹(x−x²)dx)</div>
+      <div class="formula">$$d_{L^\infty}(f,g)=\tfrac{1}{4}\quad\text{(max at }x=\tfrac{1}{2}\text{)},\qquad d_{L^1}(f,g)=\tfrac{1}{6}\quad\Bigl(\int_0^1(x-x^2)\,dx\Bigr)$$</div>
     </div>
 
     <!-- PRODUCT METRICS -->
@@ -613,11 +589,7 @@ d<span class="kw">L1</span>(f,g) = <span class="hi">1/6</span>  (∫₀¹(x−x�
       <div class="def">
         <strong>Setup.</strong> (X,dX) and (Y,dY) metric spaces. Three natural metrics on X×Y:
       </div>
-      <div class="formula">D₁((x₁,y₁),(x₂,y₂)) = <span class="hi">dX(x₁,x₂) + dY(y₁,y₂)</span>
-
-D₂((x₁,y₁),(x₂,y₂)) = <span class="hi">√(dX²+dY²)</span>
-
-D∞((x₁,y₁),(x₂,y₂)) = <span class="hi">max{dX(x₁,x₂), dY(y₁,y₂)}</span></div>
+      <div class="formula">$$\begin{aligned}D_1\bigl((x_1,y_1),(x_2,y_2)\bigr)&=d_X(x_1,x_2)+d_Y(y_1,y_2)\\D_2\bigl((x_1,y_1),(x_2,y_2)\bigr)&=\sqrt{d_X(x_1,x_2)^2+d_Y(y_1,y_2)^2}\\D_\infty\bigl((x_1,y_1),(x_2,y_2)\bigr)&=\max\{d_X(x_1,x_2),\,d_Y(y_1,y_2)\}\end{aligned}$$</div>
       <div class="theorem">
         <strong>Thm 1.49.</strong> D₂ is a distance. Proof uses Cauchy–Schwarz to bound the cross term in the triangle inequality.
       </div>
@@ -636,9 +608,7 @@ D∞((x₁,y₁),(x₂,y₂)) = <span class="hi">max{dX(x₁,x₂), dY(y₁,y₂
       <div class="theorem">
         <strong>Prop 1.52.</strong> Every isometry is automatically injective (hence bijective). Proof: φ(x₁)=φ(x₂) ⟹ dY=0 ⟹ dX=0 ⟹ x₁=x₂.
       </div>
-      <div class="formula"><span class="cmt">Key examples:</span>
-<span class="hi">Translations, rotations, reflections</span>
-are isometries of (ℝⁿ, d₂).</div>
+      <div class="formula"><span class="cmt">Key examples: translations, rotations, reflections are isometries of $(\mathbb{R}^n,d_2)$.</span></div>
     </div>
 
     <!-- ISOMETRY EXAMPLES & PITFALLS -->
@@ -663,9 +633,7 @@ are isometries of (ℝⁿ, d₂).</div>
       <div class="def">
         <strong>Cartesian product (Def 1.5).</strong> X×Y = {(x,y) | x∈X, y∈Y}. If X,Y finite: #(X×Y) = #X·#Y.
       </div>
-      <div class="formula"><span class="cmt">Extension to n dimensions:</span>
-ℝⁿ = ℝ×ℝ×···×ℝ  (n times)
-<span class="hi">x = (x₁, x₂, …, xₙ)</span></div>
+      <div class="formula">$$\mathbb{R}^n=\underbrace{\mathbb{R}\times\mathbb{R}\times\cdots\times\mathbb{R}}_{n},\qquad x=(x_1,x_2,\ldots,x_n)$$</div>
       <p class="note">Remark 1.28: ℝⁿ embeds in ℓᵖ via (x₀,…,xₙ₋₁) ↦ (x₀,…,xₙ₋₁,0,0,…).</p>
     </div>
 
@@ -697,17 +665,15 @@ are isometries of (ℝⁿ, d₂).</div>
       <div class="def">
         <strong>Sequence convergence.</strong> (xₙ) converges to ℓ ∈ X if:
       </div>
-      <div class="formula"><span class="hi">∀ε&gt;0, ∃N ∈ ℤ₊</span> such that
-∀n &gt; N,  <span class="sym">d(xₙ, ℓ) &lt; ε</span>
-
-<span class="cmt">Notation: lim xₙ = ℓ,  or  xₙ → ℓ,  or  xₙ →(d) ℓ</span></div>
+      <div class="formula">$$\forall\varepsilon>0,\;\exists N\in\mathbb{Z}_+\text{ s.t. }\forall n>N:\;d(x_n,\ell)<\varepsilon$$
+<span class="cmt">Notation: $\lim x_n=\ell$, or $x_n\to\ell$, or $x_n\xrightarrow{d}\ell$</span></div>
       <p class="note">Note: strict inequality n &gt; N — match your lecturer's notation in proofs.</p>
     </div>
 
     <div class="card">
       <div class="card-title"><span class="tag">Def 2.7</span> Open &amp; Closed Balls</div>
-      <div class="formula"><span class="kw">Open ball:</span>   <span class="hi">B_R(p) = {x ∈ X | d(x,p) &lt; R}</span>
-<span class="kw">Closed ball:</span> <span class="hi">B̄_R(p) = {x ∈ X | d(x,p) ≤ R}</span></div>
+      <div class="formula">$$B_R(p)=\{x\in X\mid d(x,p)<R\}\quad\text{(open ball)}$$
+$$\bar{B}_R(p)=\{x\in X\mid d(x,p)\leq R\}\quad\text{(closed ball)}$$</div>
       <ul class="checklist">
         <li><strong>d₂ in ℝ²:</strong> open disk √(x₁²+x₂²) &lt; R</li>
         <li><strong>d∞ in ℝ²:</strong> open square max{|x₁|,|x₂|} &lt; R</li>
@@ -721,12 +687,8 @@ are isometries of (ℝⁿ, d₂).</div>
       <div class="def">
         <strong>Example 2.11.</strong> In (ℓ∞, d∞) with A = (0,0,…), R=1:
       </div>
-      <div class="formula"><span class="kw">Open ball:</span>  x ∈ B₁(A) ⟺ <span class="hi">sup|xₙ| &lt; 1</span>
-<span class="kw">Closed ball:</span> x ∈ B̄₁(A) ⟺ <span class="hi">sup|xₙ| ≤ 1</span>
-
-<span class="cmt">⚠ "∀n, |xₙ|&lt;1" does NOT imply sup|xₙ|&lt;1</span>
-<span class="cmt">Counterex: xₙ = 1−1/n has each term &lt;1</span>
-<span class="cmt">but sup = 1, so it's in B̄₁ not B₁</span></div>
+      <div class="formula">$$x\in B_1(A)\iff\sup_n|x_n|<1,\qquad x\in\bar{B}_1(A)\iff\sup_n|x_n|\leq 1$$
+<span class="cmt">⚠ "$\forall n,|x_n|<1$" does NOT imply $\sup|x_n|<1$. Counterexample: $x_n=1-\tfrac{1}{n}$ has each term $<1$ but $\sup=1$, so $x\in\bar{B}_1$ but $x\notin B_1$.</span></div>
     </div>
 
     <div class="card">
@@ -747,12 +709,11 @@ are isometries of (ℝⁿ, d₂).</div>
       <div class="def">
         <strong>Ex 2.15 (converges in d∞).</strong> fₙ(x) = x/(n+1), f = 0:
       </div>
-      <div class="formula">d∞(fₙ,f) = max|x/(n+1)| = <span class="hi">1/(n+1) → 0</span> ✓</div>
+      <div class="formula">$$d_{L^\infty}(f_n,f)=\max_{x\in[0,1]}\frac{x}{n+1}=\frac{1}{n+1}\to 0\checkmark$$</div>
       <div class="def">
         <strong>Ex 2.16 (diverges in d∞).</strong> fₙ(x) = xⁿ, f = 0:
       </div>
-      <div class="formula">fₙ(1)=1, f(1)=0  ⟹  d∞(fₙ,f) ≥ 1  <span class="cmt">for all n</span>
-<span class="hi">⟹ fₙ ↛ f in d∞</span>  (though fₙ→f pointwise)</div>
+      <div class="formula">$$f_n(1)=1,\;f(1)=0\implies d_{L^\infty}(f_n,f)\geq 1\text{ for all }n\implies f_n\not\to f\text{ in }d_{L^\infty}\quad\text{(though }f_n\to f\text{ pointwise)}$$</div>
     </div>
 
     <div class="card">
@@ -760,14 +721,8 @@ are isometries of (ℝⁿ, d₂).</div>
       <div class="def">
         <strong>Key idea.</strong> Elements of ℓᵖ are sequences, so a sequence in ℓᵖ is a "sequence of sequences." Write as matrix Aₖ = (Aₖ,ₙ)ₙ, row k.
       </div>
-      <div class="formula"><span class="cmt">Ex 2.17 — CONVERGES in ℓ∞:</span>
-Aₖ,ₙ = (-1)ⁿ/(k+1)
-sup|Aₖ,ₙ| = 1/(k+1) → 0  <span class="hi">⟹ Aₖ → 0</span>
-
-<span class="cmt">Ex 2.18 — DIVERGES in ℓ∞:</span>
-Aₖ,ₙ = (-1)ᵏ/(n+1)
-Rows alternate ±(1,½,⅓,…) <span class="hi">⟹ no limit</span>
-<span class="cmt">(B₀ must be both &gt;0 and &lt;0 — contradiction)</span></div>
+      <div class="formula"><span class="cmt">Ex 2.17 — CONVERGES in $\ell^\infty$: $A_{k,n}=\frac{(-1)^n}{k+1}$, so $\sup_n|A_{k,n}|=\frac{1}{k+1}\to 0\implies A_k\to 0$.</span>
+<span class="cmt">Ex 2.18 — DIVERGES in $\ell^\infty$: $A_{k,n}=\frac{(-1)^k}{n+1}$; rows alternate $\pm(1,\tfrac{1}{2},\tfrac{1}{3},\ldots)\implies$ no limit.</span></div>
     </div>
 
     <div class="card">
@@ -778,8 +733,7 @@ Rows alternate ±(1,½,⅓,…) <span class="hi">⟹ no limit</span>
       <div class="def">
         <strong>Proof sketch.</strong> Set ε = d(ℓ₁,ℓ₂)/2. Use triangle inequality for n ≥ max{N₁,N₂}:
       </div>
-      <div class="formula">d(ℓ₁,ℓ₂) ≤ d(ℓ₁,xₙ)+d(xₙ,ℓ₂) &lt; ε+ε = d(ℓ₁,ℓ₂)
-<span class="hi">Contradiction ⟹ ℓ₁ = ℓ₂</span>  □</div>
+      <div class="formula">$$d(\ell_1,\ell_2)\leq d(\ell_1,x_n)+d(x_n,\ell_2)<\varepsilon+\varepsilon=d(\ell_1,\ell_2)\quad\Rightarrow\text{contradiction}\implies\ell_1=\ell_2\quad\square$$</div>
     </div>
 
     <div class="card">
@@ -787,10 +741,8 @@ Rows alternate ±(1,½,⅓,…) <span class="hi">⟹ no limit</span>
       <div class="def">
         <strong>f continuous at x₀</strong> if:
       </div>
-      <div class="formula">∀ε&gt;0, ∃δ&gt;0: <span class="hi">dₓ(x,x₀)&lt;δ ⟹ dᵧ(f(x),f(x₀))&lt;ε</span>
-
-<span class="cmt">Equivalent (Prop 2.25):</span>
-f(B^dₓ_δ(x₀)) ⊆ B^dᵧ_ε(f(x₀))</div>
+      <div class="formula">$$\forall\varepsilon>0,\;\exists\delta>0:\;d_X(x,x_0)<\delta\implies d_Y(f(x),f(x_0))<\varepsilon$$
+<span class="cmt">Equivalent (Prop 2.25): $f\!\left(B^{d_X}_\delta(x_0)\right)\subseteq B^{d_Y}_\varepsilon(f(x_0))$</span></div>
       <div class="def">
         <strong>Limit (Def 2.22).</strong> lim f(x) = ℓ uses strict 0 &lt; dₓ(x,x₀) &lt; δ.
       </div>
@@ -804,9 +756,9 @@ f(B^dₓ_δ(x₀)) ⊆ B^dᵧ_ε(f(x₀))</div>
       </div>
       <div class="def">
         <strong>Proof (ball language).</strong><br>
-        ∃δ₂: g(B_{δ₂}(f(x₀))) ⊆ Bε(g(f(x₀)))<br>
-        ∃δ₁: f(B_{δ₁}(x₀)) ⊆ B_{δ₂}(f(x₀))<br>
-        ∴ (g∘f)(B_{δ₁}(x₀)) ⊆ Bε(g(f(x₀)))  □
+        $\exists\delta_2$: $g(B_{\delta_2}(f(x_0)))\subseteq B_\varepsilon(g(f(x_0)))$<br>
+        $\exists\delta_1$: $f(B_{\delta_1}(x_0))\subseteq B_{\delta_2}(f(x_0))$<br>
+        $\therefore$ $(g\circ f)(B_{\delta_1}(x_0))\subseteq B_\varepsilon(g(f(x_0)))$ $\square$
       </div>
       <p class="note">Corollary 2.27: If f and g are both continuous everywhere, so is g∘f.</p>
     </div>
@@ -898,9 +850,7 @@ f(B^dₓ_δ(x₀)) ⊆ B^dᵧ_ε(f(x₀))</div>
       <div class="def">
         <strong>Topology U on X:</strong> a collection of subsets (called open sets) satisfying:
       </div>
-      <div class="formula"><span class="kw">(T1)</span> ∅, X ∈ U
-<span class="kw">(T2)</span> Arbitrary unions of elements of U ∈ U
-<span class="kw">(T3)</span> Finite intersections of elements of U ∈ U</div>
+      <div class="formula">$$\begin{aligned}&\textbf{(T1)}\quad\emptyset,X\in\mathcal{U}\\&\textbf{(T2)}\quad\text{Arbitrary unions of elements of }\mathcal{U}\text{ belong to }\mathcal{U}\\&\textbf{(T3)}\quad\text{Finite intersections of elements of }\mathcal{U}\text{ belong to }\mathcal{U}\end{aligned}$$</div>
       <ul class="checklist">
         <li><strong>Discrete topology:</strong> U = P(X) — every subset is open (largest)</li>
         <li><strong>Trivial topology:</strong> U = {∅, X} (smallest)</li>
@@ -931,10 +881,8 @@ f(B^dₓ_δ(x₀)) ⊆ B^dᵧ_ε(f(x₀))</div>
       <div class="def">
         <strong>Example 3.23.</strong> To show xₙ = (n+1)/n, sin(1/n)) → (1,0) in (ℝ², d₂):
       </div>
-      <div class="formula">d₂(xₙ,(1,0)) = √(1/n² + sin²(1/n))
-<span class="cmt">Use |sin(1/n)| ≤ 1/n:</span>
-≤ √(1/n² + 1/n²) = <span class="hi">√2/n</span>
-<span class="cmt">Take N = ⌊√2/ε⌋ + 1 ⟹ √2/n &lt; ε ✓</span></div>
+      <div class="formula">$$d_2(x_n,(1,0))=\sqrt{\tfrac{1}{n^2}+\sin^2\!\tfrac{1}{n}}\leq\sqrt{\tfrac{1}{n^2}+\tfrac{1}{n^2}}=\frac{\sqrt{2}}{n}$$
+<span class="cmt">Take $N=\lfloor\sqrt{2}/\varepsilon\rfloor+1\implies\sqrt{2}/n<\varepsilon$ $\checkmark$</span></div>
     </div>
 
     <div class="card">
@@ -959,10 +907,8 @@ f(B^dₓ_δ(x₀)) ⊆ B^dᵧ_ε(f(x₀))</div>
         <strong>Proposition.</strong> If d(x,y) ≤ C·d'(x,y) for all x,y, then: U open in (X,d) ⟹ U open in (X,d').
       </div>
       <div class="formula"><span class="cmt">Proof idea:</span>
-U open in d ⟹ ∃R: B^d_R(p) ⊆ U
-Set r = R/C.  If d'(x,p) &lt; r then
-<span class="hi">d(x,p) ≤ C·d'(x,p) &lt; C·r = R</span>
-So B^{d'}_r(p) ⊆ B^d_R(p) ⊆ U  □</div>
+$$U\text{ open in }d\implies\exists R:\;B^d_R(p)\subseteq U.\quad\text{Set }r=R/C.$$
+$$d'(x,p)<r\implies d(x,p)\leq C\cdot d'(x,p)<C\cdot r=R\implies B^{d'}_r(p)\subseteq B^d_R(p)\subseteq U\quad\square$$</div>
       <p class="note">Two such inequalities (both directions) ⟹ d ~ d' by Corollary 3.29.</p>
     </div>
 
@@ -1058,14 +1004,12 @@ So B^{d'}_r(p) ⊆ B^d_R(p) ⊆ U  □</div>
 
     <div class="card">
       <div class="card-title"><span class="tag">Def 4.10</span> limsup &amp; liminf</div>
-      <div class="formula"><span class="hi">limsup Aₙ</span> = lim_{m→∞} sup_{n≥m} Aₙ
-<span class="hi">liminf Aₙ</span> = lim_{m→∞} inf_{n≥m} Aₙ</div>
+      <div class="formula">$$\limsup_{n\to\infty} A_n=\lim_{m\to\infty}\sup_{n\geq m}A_n,\qquad\liminf_{n\to\infty} A_n=\lim_{m\to\infty}\inf_{n\geq m}A_n$$</div>
       <div class="theorem">
         <strong>Lemma 4.13:</strong> Aₙ → ℓ ⟺ limsup Aₙ = liminf Aₙ = ℓ
       </div>
-      <div class="formula"><span class="cmt">Example 4.11: Aₙ = (-1)ⁿ(n+2)/(n+1)</span>
-limsup = <span class="hi">1</span>,  liminf = <span class="hi">−1</span>
-<span class="cmt">⟹ does not converge</span></div>
+      <div class="formula"><span class="cmt">Example 4.11: $A_n=\dfrac{(-1)^n(n+2)}{n+1}$</span>
+$$\limsup=1,\quad\liminf=-1\implies\text{does not converge}$$</div>
       <p class="note">Always: limsup ≥ liminf. Equal iff sequence converges.</p>
     </div>
 
@@ -1077,11 +1021,9 @@ limsup = <span class="hi">1</span>,  liminf = <span class="hi">−1</span>
       <div class="theorem">
         <strong>CMT:</strong> If (X,d) is complete and f is a contraction, then f has a <em>unique</em> fixed point.
       </div>
-      <div class="formula"><span class="cmt">Proof sketch:</span>
-<span class="kw">Uniqueness:</span> d(p,q) ≤ L·d(p,q) ⟹ d(p,q)=0
-<span class="kw">Existence:</span> iterate x₀, f(x₀), f²(x₀), …
-d(xₙ,xₘ) ≤ <span class="hi">Lᵐ·d(x₁,x₀)/(1−L)</span> → 0
-Cauchy ⟹ converges to ρ; f(ρ)=ρ by continuity</div>
+      <div class="formula"><span class="cmt">Uniqueness: $d(p,q)\leq L\cdot d(p,q)\implies d(p,q)=0$.</span>
+<span class="cmt">Existence: iterate $x_0,f(x_0),f^2(x_0),\ldots$</span>
+$$d(x_n,x_m)\leq\frac{L^m\,d(x_1,x_0)}{1-L}\to 0\implies\text{Cauchy}\implies x_n\to\rho;\;f(\rho)=\rho$$</div>
       <p class="note">⚠ d(f(x),f(y)) &lt; d(x,y) (strict but not uniform) is NOT enough — see Example 4.24: f(x)=x+1/x has no fixed point on (1,∞).</p>
     </div>
 
@@ -1093,9 +1035,8 @@ Cauchy ⟹ converges to ρ; f(ρ)=ρ by continuity</div>
       <div class="def">
         <strong>Proof:</strong> MVT ⟹ |f(x₂)−f(x₁)| = |f'(ξ)|·|x₂−x₁| ≤ L|x₂−x₁|.
       </div>
-      <div class="formula"><span class="cmt">Example 4.26: f(x) = x/2 + 3/4 on [0, 3/2]</span>
-f'(x) = 1/2 ≤ 3/4 &lt; 1  ⟹  contraction
-<span class="hi">Unique fixed point: x = 1</span>  (f(1) = 1 ✓)</div>
+      <div class="formula"><span class="cmt">Example 4.26: $f(x)=\tfrac{x}{2}+\tfrac{3}{4}$ on $[0,\tfrac{3}{2}]$</span>
+$$f'(x)=\tfrac{1}{2}<1\implies\text{contraction}\implies\text{unique fixed point }x=1\quad(f(1)=1\checkmark)$$</div>
     </div>
 
     <div class="card">
@@ -1157,10 +1098,9 @@ f'(x) = 1/2 ≤ 3/4 &lt; 1  ⟹  contraction
     <div class="card">
       <div class="card-title"><span class="tag">Def 5.1</span> Pointwise vs Uniform Convergence</div>
       <div class="formula"><span class="cmt">Pointwise (weaker):</span>
-∀x ∈ X,  <span class="hi">lim fₙ(x) = f(x)</span>
-
+$$\forall x\in X,\quad\lim_{n\to\infty}f_n(x)=f(x)$$
 <span class="cmt">Uniform (stronger):</span>
-∀ε&gt;0, ∃N: ∀n≥N, <span class="hi">sup_x |fₙ(x)−f(x)| &lt; ε</span></div>
+$$\forall\varepsilon>0,\;\exists N:\;\forall n\geq N,\quad\sup_{x}|f_n(x)-f(x)|<\varepsilon$$</div>
       <div class="theorem">
         <strong>Remark 5.2.</strong> Uniform ⟹ pointwise. Converse FAILS.
       </div>
@@ -1209,7 +1149,7 @@ f'(x) = 1/2 ≤ 3/4 &lt; 1  ⟹  contraction
       <div class="theorem">
         <strong>Statement.</strong> If fₙ → f uniformly on [a,b], then:
       </div>
-      <div class="formula">lim_{n→∞} <span class="hi">∫_{x₁}^{x₂} fₙ(x)dx = ∫_{x₁}^{x₂} f(x)dx</span></div>
+      <div class="formula">$$\lim_{n\to\infty}\int_{x_1}^{x_2}f_n(x)\,dx=\int_{x_1}^{x_2}f(x)\,dx$$</div>
       <div class="def">
         <strong>Proof idea.</strong> Show I(f) = ∫f is continuous (dL∞ → d on ℝ) with δ = ε/|x₂−x₁|. Then apply continuity of I to the uniform limit.
       </div>
@@ -1224,9 +1164,7 @@ f'(x) = 1/2 ≤ 3/4 &lt; 1  ⟹  contraction
       <div class="theorem">
         <strong>Statement.</strong> If fₙ → f uniformly and f'ₙ continuous and f'ₙ → g uniformly, then f is differentiable and f' = g.
       </div>
-      <div class="formula">f(x) = lim fₙ(x) = lim<span class="sym">[fₙ(a) + ∫_a^x f'ₙ]</span>
-     = f(a) + ∫_a^x g(t)dt
-<span class="hi">∴ f'(x) = g(x)</span>  (by FTC)</div>
+      <div class="formula">$$f(x)=\lim f_n(x)=\lim\Bigl[f_n(a)+\int_a^x f_n'\Bigr]=f(a)+\int_a^x g(t)\,dt\implies f'(x)=g(x)\quad\text{(by FTC)}$$</div>
       <div class="theorem">
         <strong>FTC (Thm 5.17).</strong> If φ continuous: F(x)=∫_a^x φ ⟹ F'=φ. If G'=φ ⟹ ∫_a^b φ = G(b)−G(a).
       </div>
@@ -1238,8 +1176,8 @@ f'(x) = 1/2 ≤ 3/4 &lt; 1  ⟹  contraction
       <div class="def">
         <strong>Def 5.19.</strong> For Σaₙxⁿ, the radius of convergence is:
       </div>
-      <div class="formula">R = <span class="hi">1 / limsup_{n→∞} |aₙ|^(1/n)</span>
-<span class="cmt">(R=∞ if limsup=0;  R=0 if limsup=∞)</span></div>
+      <div class="formula">$$R=\frac{1}{\displaystyle\limsup_{n\to\infty}|a_n|^{1/n}}$$
+<span class="cmt">($R=\infty$ if limsup $= 0$; $R=0$ if limsup $=\infty$)</span></div>
       <div class="theorem">
         <strong>Thm 5.21.</strong> For every δ ∈ (0,R), the partial sums SN form a Cauchy sequence in (C([−δ,δ]), dL∞).
       </div>
@@ -1255,11 +1193,10 @@ f'(x) = 1/2 ≤ 3/4 &lt; 1  ⟹  contraction
       <div class="theorem">
         <strong>Statement.</strong> If S(x) = Σaₙxⁿ has radius R &gt; 0, then:
       </div>
-      <div class="formula"><span class="kw">1. S'(x) =</span> <span class="hi">Σ(n+1)aₙ₊₁xⁿ</span>  (radius R)
-
-<span class="kw">2. ∫S(x)dx =</span> <span class="hi">Σ aₙ/(n+1) · xⁿ⁺¹ + C</span>  (radius R)</div>
+      <div class="formula">$$S'(x)=\sum_{n=0}^\infty(n+1)a_{n+1}x^n\quad\text{(radius }R\text{)}$$
+$$\int S(x)\,dx=\sum_{n=0}^\infty\frac{a_n}{n+1}x^{n+1}+C\quad\text{(radius }R\text{)}$$</div>
       <div class="def">
-        <strong>Example 5.25.</strong> Σnxⁿ⁻¹ = d/dx [Σxⁿ] = d/dx [x/(1−x)] = 1/(1−x)², for |x|&lt;1.
+        <strong>Example 5.25.</strong> $\sum nx^{n-1}=\dfrac{d}{dx}\!\left[\sum x^n\right]=\dfrac{d}{dx}\!\left[\dfrac{x}{1-x}\right]=\dfrac{1}{(1-x)^2}$, for $|x|<1$.
       </div>
       <p class="note">Key: limsup |nan|^(1/n) = limsup |aₙ|^(1/n) since lim n^(1/n) = 1, so radius is unchanged by differentiation.</p>
     </div>
@@ -1286,8 +1223,7 @@ f'(x) = 1/2 ≤ 3/4 &lt; 1  ⟹  contraction
       <div class="def">
         <strong>Data:</strong> (x₀,y₀) ∈ ℝ², a,b &gt; 0, and continuous f : [x₀−a, x₀+a]×[y₀−b, y₀+b] → ℝ.
       </div>
-      <div class="formula"><span class="hi">y'(x) = f(x, y(x))</span>
-<span class="hi">y(x₀) = y₀</span></div>
+      <div class="formula">$$y'(x)=f(x,y(x)),\qquad y(x_0)=y_0$$</div>
       <div class="def">
         <strong>Local solution:</strong> differentiable y : [x₀−α, x₀+α] → [y₀−b, y₀+b] satisfying both conditions, for some 0 &lt; α ≤ a.
       </div>
@@ -1300,15 +1236,15 @@ f'(x) = 1/2 ≤ 3/4 &lt; 1  ⟹  contraction
     <div class="card">
       <div class="card-title"><span class="tag red">Thm 5.32 / 5.38</span> Peano–Picard Theorem</div>
       <div class="theorem">
-        <strong>Statement.</strong> If ∂f/∂y exists and is continuous near (x₀,y₀), then the Cauchy problem has a <em>unique local solution</em>.
+        <strong>Statement.</strong> If $\partial f/\partial y$ exists and is continuous near $(x_0,y_0)$, then the Cauchy problem has a <em>unique local solution</em>.
       </div>
       <div class="def">
-        <strong>Proof strategy (Thm 5.38).</strong> Set M = max|f|, L = max|∂f/∂y| on R. For h &lt; min{a, b/M, 1/L}:
+        <strong>Proof strategy (Thm 5.38).</strong> Set $M=\max|f|$, $L=\max|\partial f/\partial y|$ on $R$. For $h<\min\{a,\,b/M,\,1/L\}$:
       </div>
       <ul class="checklist">
         <li><strong>Step 1:</strong> X = {continuous y : [x₀−h,x₀+h]→[y₀−b,y₀+b]} is complete (closed in C([−h,h]))</li>
-        <li><strong>Step 2:</strong> F(y)(x) = y₀ + ∫f(t,y(t))dt maps X→X since |F(y)(x)−y₀| ≤ Mα ≤ b</li>
-        <li><strong>Step 3:</strong> F is a contraction: dL∞(F(y₁),F(y₂)) ≤ αL·dL∞(y₁,y₂), and αL &lt; 1</li>
+        <li><strong>Step 2:</strong> $F(y)(x)=y_0+\int f(t,y(t))\,dt$ maps $X\to X$ since $|F(y)(x)-y_0|\leq M\alpha\leq b$</li>
+        <li><strong>Step 3:</strong> $F$ is a contraction: $d_{L^\infty}(F(y_1),F(y_2))\leq\alpha L\cdot d_{L^\infty}(y_1,y_2)$, and $\alpha L<1$</li>
         <li><strong>CMT:</strong> Unique fixed point = unique local solution</li>
       </ul>
     </div>
@@ -1319,13 +1255,9 @@ f'(x) = 1/2 ≤ 3/4 &lt; 1  ⟹  contraction
       <div class="def">
         <strong>Example.</strong> y'(x) = 3y(x)^(2/3), y(x₀) = y₀.
       </div>
-      <div class="formula"><span class="cmt">∂f/∂y = 2y^(−1/3)  →  undefined at y=0</span>
-
-<span class="cmt">For y₀ ≠ 0:</span>  unique solution  y(x) = (x−x₀ + y₀^(1/3))³
-
-<span class="cmt">For y₀ = 0:</span>  infinitely many solutions:
-  <span class="hi">y≡0  and  y(x)=(x−x₀)³</span>
-  and more: yc,d = 0 on [−c,d], (x+c)³ left, (x−d)³ right</div>
+      <div class="formula"><span class="cmt">$\partial f/\partial y=2y^{-1/3}\to$ undefined at $y=0$.</span>
+<span class="cmt">$y_0\neq 0$: unique solution $y(x)=(x-x_0+y_0^{1/3})^3$.</span>
+<span class="cmt">$y_0=0$: infinitely many solutions: $y\equiv 0$, $y(x)=(x-x_0)^3$, and piecewise families.</span></div>
       <p class="note">The Lipschitz condition (∂f/∂y bounded) fails at y₀=0, so Peano–Picard does not apply and uniqueness breaks down.</p>
     </div>
 
@@ -1335,14 +1267,13 @@ f'(x) = 1/2 ≤ 3/4 &lt; 1  ⟹  contraction
       <div class="def">
         <strong>Algorithm.</strong> Start with any u ∈ X. Iterate:
       </div>
-      <div class="formula">u,  F(u),  F²(u),  F³(u),  …
-<span class="hi">Fⁿ(u) →_{dL∞} solution of C.P.</span></div>
+      <div class="formula">$$u,\;F(u),\;F^2(u),\;F^3(u),\;\ldots\quad F^n(u)\xrightarrow{d_{L^\infty}}\text{solution of C.P.}$$</div>
       <div class="def">
         <strong>Why it works.</strong> F is a contraction on complete X, so by CMT the iterates form a Cauchy sequence converging to the unique fixed point.
       </div>
       <ul class="checklist">
         <li>Gives a constructive method to approximate solutions</li>
-        <li>Rate of convergence: dL∞(Fⁿ(u), y*) ≤ Lⁿ/(1−L) · dL∞(u, F(u))</li>
+        <li>Rate of convergence: $d_{L^\infty}(F^n(u),y^*)\leq\dfrac{L^n}{1-L}\cdot d_{L^\infty}(u,F(u))$</li>
       </ul>
     </div>
 
@@ -1369,11 +1300,8 @@ f'(x) = 1/2 ≤ 3/4 &lt; 1  ⟹  contraction
       <div class="def">
         <strong>Rmk 6.2.</strong> There is a bijection between linear maps ℝⁿ → ℝᵐ and m×n matrices. The matrix of f has columns f(e₁), …, f(eₙ).
       </div>
-      <div class="formula"><span class="cmt">Rmk 6.4: Composition = matrix multiplication</span>
-g ∘ f = L_B ∘ L_A = <span class="hi">L_{BA}</span>
-
-<span class="cmt">Rmk 6.5: f is bijection ⟺ A is invertible</span>
-<span class="cmt">(only possible when n = m)</span></div>
+      <div class="formula"><span class="cmt">Composition = matrix multiplication (Rmk 6.4): $g\circ f=L_B\circ L_A=L_{BA}$</span>
+<span class="cmt">$f$ is a bijection $\iff$ $A$ is invertible (only possible when $n=m$).</span></div>
       <div class="theorem">
         <strong>Lemma 6.11.</strong> Every linear map L : ℝⁿ → ℝᵐ is continuous (for d₂).
       </div>
@@ -1386,13 +1314,8 @@ g ∘ f = L_B ∘ L_A = <span class="hi">L_{BA}</span>
       <div class="def">
         <strong>Cofactor expansion.</strong> For A = (aᵢⱼ) ∈ Mₙ(ℝ):
       </div>
-      <div class="formula">det(A) = <span class="hi">Σⱼ (−1)^{i+j} aᵢⱼ det(Aᵢⱼ)</span>
-<span class="cmt">(expand along any row i; Aᵢⱼ = (i,j)-minor)</span>
-
-<span class="kw">Properties:</span>
-<span class="hi">(1)</span> det(Id) = 1
-<span class="hi">(2)</span> Multilinear in columns
-<span class="hi">(3)</span> Swapping two columns negates det</div>
+      <div class="formula">$$\det(A)=\sum_j(-1)^{i+j}a_{ij}\det(A_{ij})\quad\text{(expand along row }i\text{; }A_{ij}=\text{$(i,j)$-minor)}$$
+<span class="cmt">Properties: (1) $\det(I)=1$; (2) multilinear in columns; (3) swapping two columns negates $\det$.</span></div>
       <ul class="checklist">
         <li>det(λA) = λⁿ det A</li>
         <li>det(A·B) = det A · det B</li>
@@ -1407,14 +1330,12 @@ g ∘ f = L_B ∘ L_A = <span class="hi">L_{BA}</span>
       <div class="def">
         <strong>Partial derivative.</strong> For f : U ⊆ ℝⁿ → ℝᵐ:
       </div>
-      <div class="formula">∂f/∂xⱼ(x) = <span class="hi">lim_{t→0} [f(x+teⱼ) − f(x)] / t</span></div>
+      <div class="formula">$$\frac{\partial f}{\partial x_j}(x)=\lim_{t\to 0}\frac{f(x+te_j)-f(x)}{t}$$</div>
       <div class="def">
         <strong>Jacobian matrix.</strong> The m×n matrix:
       </div>
-      <div class="formula">Jf(x) = <span class="hi">[ ∂fᵢ/∂xⱼ(x) ]</span>  (i = row, j = col)
-
-<span class="cmt">Represents the best linear approximation of f.</span>
-<span class="cmt">Prop 6.38: rows of Jf are ∇f₁, …, ∇fₘ</span></div>
+      <div class="formula">$$Jf(x)=\left[\frac{\partial f_i}{\partial x_j}(x)\right]_{\substack{i=1,\ldots,m\\j=1,\ldots,n}}\quad\text{($i$=row, $j$=col)}$$
+<span class="cmt">Represents the best linear approximation of $f$. Prop 6.38: rows of $Jf$ are $\nabla f_1,\ldots,\nabla f_m$.</span></div>
       <p class="note">Rmk 6.37: if m = 1, Jf = ∇f (gradient). The gradient points in the direction of maximal growth and is ⊥ to level sets.</p>
     </div>
 
@@ -1424,9 +1345,8 @@ g ∘ f = L_B ∘ L_A = <span class="hi">L_{BA}</span>
       <div class="def">
         <strong>Definition.</strong> For unit vector v (‖v‖ = 1):
       </div>
-      <div class="formula">D_v f(x) = <span class="hi">lim_{t→0} [f(x+tv) − f(x)] / t</span>
-
-<span class="cmt">Rmk 6.25: D_{eᵢ}f(x) = ∂f/∂xᵢ(x)</span></div>
+      <div class="formula">$$D_v f(x)=\lim_{t\to 0}\frac{f(x+tv)-f(x)}{t}$$
+<span class="cmt">Rmk 6.25: $D_{e_i}f(x)=\dfrac{\partial f}{\partial x_i}(x)$</span></div>
       <div class="theorem">
         <strong>Prop 6.31.</strong> If f is differentiable at x₀ then D_v f(x₀) = Df_{x₀}(v).
       </div>
@@ -1442,7 +1362,7 @@ g ∘ f = L_B ∘ L_A = <span class="hi">L_{BA}</span>
       <div class="def">
         <strong>Definition.</strong> f : U → ℝᵐ is <em>differentiable at x₀</em> if ∃ linear L : ℝⁿ → ℝᵐ such that:
       </div>
-      <div class="formula">lim_{h→0} <span class="hi">‖f(x₀+h) − f(x₀) − L(h)‖ / ‖h‖</span> = 0</div>
+      <div class="formula">$$\lim_{h\to 0}\frac{\|f(x_0+h)-f(x_0)-L(h)\|}{\|h\|}=0$$</div>
       <div class="def">
         <strong>L = Df(x₀)</strong> is the <em>differential</em> (unique by Rmk 6.29).
       </div>
@@ -1467,10 +1387,10 @@ g ∘ f = L_B ∘ L_A = <span class="hi">L_{BA}</span>
         <li><strong>Differentiable ⟹ partial derivatives exist</strong></li>
       </ul>
       <div class="formula"><span class="cmt">What does NOT hold:</span>
-<span class="hi">✗</span> Continuous ⟹ differentiable   (e.g. |x|)
-<span class="hi">✗</span> Partials exist ⟹ continuous    (Ex 6.15)
-<span class="hi">✗</span> All D_v exist ⟹ differentiable  (Ex 6.36)
-<span class="hi">✗</span> Differentiable ⟹ C¹             (Ex 6.41)</div>
+<span class="hi">✗</span> Continuous $\implies$ differentiable (e.g. $|x|$)<br>
+<span class="hi">✗</span> Partials exist $\implies$ continuous (Ex 6.15)<br>
+<span class="hi">✗</span> All $D_v$ exist $\implies$ differentiable (Ex 6.36)<br>
+<span class="hi">✗</span> Differentiable $\implies C^1$ (Ex 6.41)</div>
     </div>
 
     <!-- CHAIN RULE -->
@@ -1479,13 +1399,9 @@ g ∘ f = L_B ∘ L_A = <span class="hi">L_{BA}</span>
       <div class="theorem">
         <strong>Statement.</strong> If f : U → V differentiable at x₀ and g : V → ℝᵏ differentiable at f(x₀):
       </div>
-      <div class="formula">D(g∘f)(x₀) = <span class="hi">Dg_{f(x₀)} ∘ Df_{x₀}</span>
-
-<span class="cmt">In terms of Jacobians (Cor 6.49):</span>
-J(g∘f)(x₀) = <span class="hi">Jg(f(x₀)) · Jf(x₀)</span>
-
-<span class="cmt">Cor 6.51 (reciprocal rule):</span>
-D(1/f)(x₀) = <span class="hi">−Df(x₀) / f(x₀)²</span></div>
+      <div class="formula">$$D(g\circ f)(x_0)=Dg_{f(x_0)}\circ Df_{x_0}$$
+$$J(g\circ f)(x_0)=Jg(f(x_0))\cdot Jf(x_0)\quad\text{(Cor 6.49)}$$
+$$D(1/f)(x_0)=-\frac{Df(x_0)}{f(x_0)^2}\quad\text{(Cor 6.51, reciprocal rule)}$$</div>
       <p class="note">Cor 6.50: if f has continuous partials at x₀ and g at f(x₀), then g∘f has continuous partials at x₀.</p>
     </div>
 
@@ -1498,11 +1414,11 @@ D(1/f)(x₀) = <span class="hi">−Df(x₀) / f(x₀)²</span></div>
       <div class="theorem">
         <strong>Cor 6.56 (scalar f).</strong> If f : U → ℝ differentiable and [u,v] ⊂ U, then ∃c ∈ (u,v):
       </div>
-      <div class="formula">f(v) − f(u) = <span class="hi">Jf(c) · (v−u)</span></div>
+      <div class="formula">$$f(v)-f(u)=Jf(c)\cdot(v-u)$$</div>
       <div class="theorem">
         <strong>Lemma 6.58 (vector f).</strong> For f : U → ℝᵐ differentiable:
       </div>
-      <div class="formula">‖f(v) − f(u)‖ ≤ <span class="hi">sup_{c∈[u,v]} ‖Jf(c)‖_op · ‖v−u‖</span></div>
+      <div class="formula">$$\|f(v)-f(u)\|\leq\sup_{c\in[u,v]}\|Jf(c)\|_{\mathrm{op}}\cdot\|v-u\|$$</div>
       <div class="theorem">
         <strong>Cor 6.59.</strong> If Df(x) = 0 everywhere on open ball U, then f is constant on U.
       </div>
@@ -1515,9 +1431,8 @@ D(1/f)(x₀) = <span class="hi">−Df(x₀) / f(x₀)²</span></div>
       <div class="def">
         <strong>Definition.</strong> For A ∈ M_{m,n}(ℝ):
       </div>
-      <div class="formula">‖A‖_op = <span class="hi">max_{w≠0} ‖Aw‖/‖w‖ = max_{‖v‖=1} ‖Av‖</span>
-
-<span class="cmt">dop(A,B) = ‖A−B‖_op  is a metric on M_{m,n}</span></div>
+      <div class="formula">$$\|A\|_{\mathrm{op}}=\max_{w\neq 0}\frac{\|Aw\|}{\|w\|}=\max_{\|v\|=1}\|Av\|$$
+<span class="cmt">$d_{\mathrm{op}}(A,B)=\|A-B\|_{\mathrm{op}}$ is a metric on $M_{m,n}(\mathbb{R})$.</span></div>
       <div class="theorem">
         <strong>Thm 6.46.</strong> Partial derivatives of f continuous at x₀ ⟺ Jf : U → M_{m,n}(ℝ) is continuous at x₀ (under dop).
       </div>
@@ -1533,10 +1448,8 @@ D(1/f)(x₀) = <span class="hi">−Df(x₀) / f(x₀)²</span></div>
       <div class="theorem">
         <strong>Conclusion.</strong> ∃ open V ∋ x₀ and open W ∋ f(x₀) such that f|_V : V → W is invertible with continuously differentiable inverse.
       </div>
-      <div class="formula"><span class="cmt">Derivative of inverse (Rmk 6.63):</span>
-Dg_{f(x₀)} = <span class="hi">(Df_{x₀})⁻¹</span>
-
-<span class="cmt">Test: compute Jf, check det(Jf(x₀)) ≠ 0</span></div>
+      <div class="formula">$$Dg_{f(x_0)}=(Df_{x_0})^{-1}\quad\text{(Rmk 6.63)}$$
+<span class="cmt">Test: compute $Jf$, check $\det(Jf(x_0))\neq 0$.</span></div>
       <div class="theorem">
         <strong>Cor 6.72.</strong> Df(x) invertible everywhere ⟹ f is a local homeomorphism and f(U) is open.
       </div>
@@ -1552,11 +1465,11 @@ Dg_{f(x₀)} = <span class="hi">(Df_{x₀})⁻¹</span>
       <div class="theorem">
         <strong>Conclusion.</strong> If J_yf(x₀,y₀) is invertible, then ∃ open V ∋ x₀, W ∋ y₀ and φ : V → W continuously differentiable such that:
       </div>
-      <div class="formula">{(x,y) ∈ V×W | f(x,y) = 0} = <span class="hi">{(x, φ(x)) | x ∈ V}</span></div>
+      <div class="formula">$$\{(x,y)\in V\times W\mid f(x,y)=0\}=\{(x,\varphi(x))\mid x\in V\}$$</div>
       <div class="theorem">
         <strong>Prop 6.87 (derivative of φ):</strong>
       </div>
-      <div class="formula">Jφ(x₀) = <span class="hi">−(J_yf(x₀,y₀))⁻¹ · Jₓf(x₀,y₀)</span></div>
+      <div class="formula">$$J\varphi(x_0)=-(J_y f(x_0,y_0))^{-1}\cdot J_x f(x_0,y_0)$$</div>
       <p class="note">Converse false (Ex 6.89): f(x,y)=y² gives y=0 everywhere without J_yf invertible at origin.</p>
     </div>
 
@@ -1573,10 +1486,8 @@ Dg_{f(x₀)} = <span class="hi">(Df_{x₀})⁻¹</span>
       <div class="def">
         <strong>INFT check (Ex 6.69).</strong> f(x₁,x₂) = (x₁²+x₂², 3x₂).
       </div>
-      <div class="formula">Jf(x₁,x₂) = [ 2x₁  2x₂ ]
-              [  0    3  ]
-<span class="cmt">At P=(0,0): det=0 ⟹ no local inverse</span>
-<span class="cmt">At Q=(1,1): det=6 ≠ 0 ⟹ local inverse exists</span></div>
+      <div class="formula">$$Jf(x_1,x_2)=\begin{pmatrix}2x_1&2x_2\\0&3\end{pmatrix}$$
+<span class="cmt">At $P=(0,0)$: $\det=0\implies$ no local inverse. At $Q=(1,1)$: $\det=6\neq 0\implies$ local inverse exists.</span></div>
     </div>
 
   </div>
@@ -1591,9 +1502,7 @@ Dg_{f(x₀)} = <span class="hi">(Df_{x₀})⁻¹</span>
 
     <div class="card">
       <div class="card-title"><span class="tag">Def</span> Limits & Continuity</div>
-      <div class="formula"><span class="hi">lim f(x) = L</span>  (x→a)
-<span class="cmt">means:</span>
-∀ε&gt;0, ∃δ&gt;0: 0&lt;|x-a|&lt;δ ⟹ |f(x)-L|&lt;ε</div>
+      <div class="formula">$$\lim_{x\to a}f(x)=L\iff\forall\varepsilon>0,\;\exists\delta>0:\;0<|x-a|<\delta\implies|f(x)-L|<\varepsilon$$</div>
       <ul class="checklist">
         <li>L'Hôpital: 0/0 or ∞/∞ → take derivatives top/bottom</li>
         <li>Squeeze theorem: g≤f≤h, g→L, h→L ⟹ f→L</li>
@@ -1602,12 +1511,8 @@ Dg_{f(x₀)} = <span class="hi">(Df_{x₀})⁻¹</span>
 
     <div class="card">
       <div class="card-title"><span class="tag">Ref</span> Derivative Rules</div>
-      <div class="formula"><span class="kw">Power:</span>    <span class="hi">d/dx xⁿ = nxⁿ⁻¹</span>
-<span class="kw">Product:</span>  <span class="hi">(fg)' = f'g + fg'</span>
-<span class="kw">Quotient:</span> <span class="hi">(f/g)' = (f'g−fg')/g²</span>
-<span class="kw">Chain:</span>    <span class="hi">(f∘g)' = f'(g)·g'</span></div>
-      <div class="formula"><span class="kw">eˣ</span>→eˣ  <span class="kw">ln x</span>→1/x  <span class="kw">sin</span>→cos  <span class="kw">cos</span>→−sin
-<span class="kw">tan</span>→sec²x  <span class="kw">arctan</span>→1/(1+x²)</div>
+      <div class="formula">$$\begin{aligned}\text{Power:}\quad&\frac{d}{dx}x^n=nx^{n-1}&\text{Product:}\quad&(fg)'=f'g+fg'\\[4pt]\text{Quotient:}\quad&\left(\frac{f}{g}\right)'=\frac{f'g-fg'}{g^2}&\text{Chain:}\quad&(f\circ g)'=f'(g)\cdot g'\end{aligned}$$</div>
+      <div class="formula">$$e^x\!\to e^x\quad\ln x\!\to\tfrac{1}{x}\quad\sin\!\to\cos\quad\cos\!\to{-}\sin\quad\tan\!\to\sec^2\!x\quad\arctan\!\to\tfrac{1}{1+x^2}$$</div>
     </div>
 
     <div class="card">
@@ -1625,8 +1530,7 @@ Dg_{f(x₀)} = <span class="hi">(Df_{x₀})⁻¹</span>
 
     <div class="card">
       <div class="card-title"><span class="tag green">Key</span> Integration</div>
-      <div class="formula"><span class="hi">∫ₐᵇ f(x)dx</span> = F(b) − F(a)
-<span class="cmt">where F'= f  (Fundamental Theorem)</span></div>
+      <div class="formula">$$\int_a^b f(x)\,dx=F(b)-F(a)\quad\text{where }F'=f\text{ (FTC)}$$</div>
       <ul class="checklist">
         <li><strong>Sub:</strong> ∫f(g(x))g'(x)dx = ∫f(u)du, u=g(x)</li>
         <li><strong>Parts:</strong> ∫u dv = uv − ∫v du</li>
@@ -1636,13 +1540,8 @@ Dg_{f(x₀)} = <span class="hi">(Df_{x₀})⁻¹</span>
 
     <div class="card">
       <div class="card-title"><span class="tag">Ref</span> Taylor & Power Series</div>
-      <div class="formula"><span class="hi">f(x) = Σ f⁽ⁿ⁾(a)/n! · (x−a)ⁿ</span>
-
-<span class="kw">eˣ</span> = Σ xⁿ/n!
-<span class="kw">sin x</span> = x − x³/6 + x⁵/120 − …
-<span class="kw">cos x</span> = 1 − x²/2 + x⁴/24 − …
-<span class="kw">ln(1+x)</span> = x − x²/2 + x³/3 − …  |x|≤1
-<span class="kw">1/(1-x)</span> = Σ xⁿ   |x|&lt;1</div>
+      <div class="formula">$$f(x)=\sum_{n=0}^\infty\frac{f^{(n)}(a)}{n!}(x-a)^n$$
+$$\begin{aligned}e^x&=\sum_{n=0}^\infty\frac{x^n}{n!}&\sin x&=x-\frac{x^3}{6}+\frac{x^5}{120}-\cdots\\[4pt]\cos x&=1-\frac{x^2}{2}+\frac{x^4}{24}-\cdots&\ln(1+x)&=x-\frac{x^2}{2}+\frac{x^3}{3}-\cdots\;(|x|\leq1)\\[4pt]\frac{1}{1-x}&=\sum_{n=0}^\infty x^n\;(|x|<1)\end{aligned}$$</div>
     </div>
 
     <div class="card">
@@ -1659,9 +1558,7 @@ Dg_{f(x₀)} = <span class="hi">(Df_{x₀})⁻¹</span>
 
     <div class="card">
       <div class="card-title"><span class="tag">Def</span> Multivariate Calculus</div>
-      <div class="formula"><span class="kw">Gradient:</span>  <span class="hi">∇f = (∂f/∂x, ∂f/∂y, …)</span>
-<span class="kw">Directional:</span> Dᵤf = ∇f · û
-<span class="kw">Jacobian:</span>  J = [∂fᵢ/∂xⱼ]</div>
+      <div class="formula">$$\nabla f=\Bigl(\frac{\partial f}{\partial x_1},\frac{\partial f}{\partial x_2},\ldots\Bigr),\quad D_{\hat{u}}f=\nabla f\cdot\hat{u},\quad J=\Bigl[\frac{\partial f_i}{\partial x_j}\Bigr]$$</div>
       <div class="theorem">
         <strong>Chain rule (multi):</strong> dz/dt = ∂z/∂x · dx/dt + ∂z/∂y · dy/dt
       </div>
@@ -1699,11 +1596,7 @@ Dg_{f(x₀)} = <span class="hi">(Df_{x₀})⁻¹</span>
         <li><strong>Step 3 — ℓ²:</strong> Does Σaₙ² converge? Same tests. Note ℓ¹ ⊆ ℓ² ⊆ ℓ∞, so if ∈ ℓ¹ then ∈ ℓ².</li>
         <li><strong>Step 4 — Conclude:</strong> State clearly which spaces it belongs to and which it doesn't, with one-line justification each.</li>
       </ul>
-      <div class="formula"><span class="cmt">Key facts:</span>
-ℓ¹ ⊆ ℓ² ⊆ ℓ∞  (inclusions are strict)
-Σ1/n  diverges  →  (1/n) ∉ ℓ¹
-Σ1/n² converges →  (1/n) ∈ ℓ²
-Constant nonzero sequence ∈ ℓ∞ only</div>
+      <div class="formula"><span class="cmt">Key facts: $\ell^1\subsetneq\ell^2\subsetneq\ell^\infty$. $\;\sum 1/n$ diverges $\Rightarrow(1/n)\notin\ell^1$. $\;\sum 1/n^2$ converges $\Rightarrow(1/n)\in\ell^2$. Constant nonzero sequence $\in\ell^\infty$ only.</span></div>
     </div>
 
     <div class="card">
@@ -1729,11 +1622,7 @@ Constant nonzero sequence ∈ ℓ∞ only</div>
         <li><strong>A = X:</strong> both open and closed always.</li>
         <li><strong>In C[0,1] with dL∞:</strong> sets defined by max|f−g| ≤ r are closed balls — closed. Strict &lt; gives open balls — open.</li>
       </ul>
-      <div class="formula"><span class="cmt">Template answer structure:</span>
-"A is [open/not open] because [for each x∈A,
-B_r(x)⊆A / there exists x∈A with no such r]."
-"A is [closed/not closed] because [Aᶜ is open /
-sequence xₙ→x with xₙ∈A but x∉A]."</div>
+      <div class="formula"><span class="cmt">Template: "$A$ is [open/not open] because [for each $x\in A$, $B_r(x)\subseteq A$ / there exists $x\in A$ with no such $r$]." "$A$ is [closed/not closed] because [$A^c$ is open / sequence $x_n\to x$ with $x_n\in A$ but $x\notin A$]."</span></div>
     </div>
 
     <div class="card">
@@ -1758,8 +1647,7 @@ sequence xₙ→x with xₙ∈A but x∉A]."</div>
         <li><strong>If h has no zeros:</strong> just compute ∫₀¹|h(x)|dx = |∫₀¹h(x)dx| directly.</li>
       </ul>
       <div class="formula"><span class="cmt">Useful integrals:</span>
-∫₀¹ xⁿ dx = 1/(n+1)
-∫₀¹ xⁿ(1−x) dx = 1/((n+1)(n+2))</div>
+$$\int_0^1 x^n\,dx=\frac{1}{n+1},\qquad\int_0^1 x^n(1-x)\,dx=\frac{1}{(n+1)(n+2)}$$</div>
     </div>
 
     <div class="card">
@@ -1784,9 +1672,7 @@ sequence xₙ→x with xₙ∈A but x∉A]."</div>
         <li><strong>Step 4:</strong> The supremum is either achieved at a specific n (state which) or is a limit (e.g. sup n/(n+1) = 1, not attained).</li>
       </ul>
       <div class="formula"><span class="cmt">Common suprema:</span>
-sup n/(n+1) = 1  (not attained)
-sup (1−1/n) = 1  (not attained)
-sup e⁻ⁿ = 1      (attained at n=0)</div>
+$$\sup_n\frac{n}{n+1}=1\text{ (not attained)},\quad\sup_n(1-\tfrac{1}{n})=1\text{ (not attained)},\quad\sup_n e^{-n}=1\text{ (attained at }n=0\text{)}$$</div>
     </div>
 
     <div class="card">
@@ -1811,12 +1697,7 @@ sup e⁻ⁿ = 1      (attained at n=0)</div>
         <li><strong>δ = r:</strong> p ∈ closed ball only.</li>
         <li><strong>δ &gt; r:</strong> p in neither.</li>
       </ul>
-      <div class="formula"><span class="cmt">Distance formulas:</span>
-d₂: √(Σ(xᵢ−yᵢ)²)
-d₁: Σ|xᵢ−yᵢ|
-d∞: max|xᵢ−yᵢ|
-d_disc: 0 if x=y, else 1
-dL∞: max_{[0,1]}|f(x)−g(x)|</div>
+      <div class="formula">$$\begin{aligned}d_2:&\;\sqrt{\sum_i(x_i-y_i)^2}&d_1:&\;\sum_i|x_i-y_i|\\d_\infty:&\;\max_i|x_i-y_i|&d_{\mathrm{discr}}:&\;\begin{cases}0&x=y\\1&x\neq y\end{cases}\\d_{L^\infty}:&\;\max_{x\in[0,1]}|f(x)-g(x)|\end{aligned}$$</div>
     </div>
 
     <div class="card">
@@ -1828,9 +1709,8 @@ dL∞: max_{[0,1]}|f(x)−g(x)|</div>
         <li><strong>Step 3 — Assemble.</strong> Entry (i,j) of Jf(x) is ∂fᵢ/∂xⱼ(x). Write it as an m×n matrix.</li>
         <li><strong>Step 4 — Evaluate.</strong> Substitute the specific point x₀. Then Jf(x₀)·h gives the differential applied to h.</li>
       </ul>
-      <div class="formula"><span class="cmt">Example: f(x₁,x₂) = (x₁x₂, x₁+x₂³)</span>
-Jf = [ x₂   x₁  ]   At (1,−1): [ −1  1 ]
-     [ 1    3x₂²]               [  1  3 ]</div>
+      <div class="formula"><span class="cmt">Example: $f(x_1,x_2)=(x_1x_2,\,x_1+x_2^3)$</span>
+$$Jf=\begin{pmatrix}x_2&x_1\\1&3x_2^2\end{pmatrix},\qquad Jf(1,-1)=\begin{pmatrix}-1&1\\1&3\end{pmatrix}$$</div>
     </div>
 
     <div class="card">
@@ -1842,9 +1722,7 @@ Jf = [ x₂   x₁  ]   At (1,−1): [ −1  1 ]
         <li><strong>Step 3 — Compute Jg(y).</strong> Differentiate g with respect to y, then substitute y = f(x) to express in terms of x.</li>
         <li><strong>Step 4 — Multiply.</strong> Jh(x) = Jg(f(x)) · Jf(x). Matrix multiply: (k×m)·(m×n) = k×n.</li>
       </ul>
-      <div class="formula"><span class="cmt">Always: J(g∘f)(x₀) = Jg(f(x₀)) · Jf(x₀)</span>
-<span class="cmt">Check dimensions before multiplying!</span>
-<span class="cmt">If m=1 (scalar f), Jf = ∇f (row vector)</span></div>
+      <div class="formula"><span class="cmt">Always: $J(g\circ f)(x_0)=Jg(f(x_0))\cdot Jf(x_0)$. Check dimensions before multiplying. If $m=1$ (scalar $f$), $Jf=\nabla f$ (row vector).</span></div>
     </div>
 
     <div class="card">
@@ -1856,10 +1734,7 @@ Jf = [ x₂   x₁  ]   At (1,−1): [ −1  1 ]
         <li><strong>Step 3 — Compute det(Jf(x₀)).</strong> If det ≠ 0, the INFT guarantees a local differentiable inverse. If det = 0, no local differentiable inverse exists (Cor 6.65).</li>
         <li><strong>Step 4 — Derivative of inverse.</strong> Dg_{f(x₀)} = (Df_{x₀})⁻¹, i.e. Jg = (Jf(x₀))⁻¹.</li>
       </ul>
-      <div class="formula"><span class="cmt">Template answer:</span>
-"Jf(x₀) = [matrix]. det = [value].
-Since det ≠ 0 [= 0], by INFT a local
-differentiable inverse [does / does not] exist."</div>
+      <div class="formula"><span class="cmt">Template: "$Jf(x_0)=[\text{matrix}]$, $\det=[\text{value}]$. Since $\det\neq 0$ $[=0]$, by INFT a local differentiable inverse [does / does not] exist."</span></div>
     </div>
 
     <div class="card">
@@ -1872,7 +1747,7 @@ differentiable inverse [does / does not] exist."</div>
         <li><strong>Step 4 — Compute Jφ.</strong> Differentiate f(x,φ(x)) = 0 via chain rule: Jₓf + J_yf · Jφ = 0, so Jφ = −(J_yf)⁻¹ · Jₓf.</li>
       </ul>
       <div class="formula"><span class="cmt">Key formula (Prop 6.87):</span>
-Jφ(x₀) = <span class="hi">−(J_yf(x₀,y₀))⁻¹ · Jₓf(x₀,y₀)</span></div>
+$$J\varphi(x_0)=-(J_y f(x_0,y_0))^{-1}\cdot J_x f(x_0,y_0)$$</div>
     </div>
 
     <div class="card">
@@ -1884,8 +1759,7 @@ Jφ(x₀) = <span class="hi">−(J_yf(x₀,y₀))⁻¹ · Jₓf(x₀,y₀)</span
         <li><strong>dₚ ≤ dq (p≥q):</strong> bound |xᵢ−yᵢ|ᵖ ≤ dq^(p−q)·|xᵢ−yᵢ|q, sum, take roots.</li>
         <li><strong>Equivalence:</strong> all dₚ on ℝⁿ are equivalent — bounded above and below by multiples of each other.</li>
       </ul>
-      <div class="formula">d∞ ≤ d₂ ≤ d₁ ≤ n·d∞   (on ℝⁿ)
-d∞ ≤ d₂ ≤ √n·d∞      (tighter via C-S)</div>
+      <div class="formula">$$d_\infty\leq d_2\leq d_1\leq n\cdot d_\infty\quad\text{(on }\mathbb{R}^n\text{)},\qquad d_\infty\leq d_2\leq\sqrt{n}\cdot d_\infty\quad\text{(tighter, via C–S)}$$</div>
     </div>
 
   </div>
@@ -2447,6 +2321,7 @@ function generateExamQuestions() {
       </details>
     `;
     container.appendChild(card);
+    if (window.renderMathInElement) renderMathInElement(card, {delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],throwOnError:false});
   });
 }
 

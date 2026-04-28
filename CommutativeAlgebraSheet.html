@@ -5,6 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Commutative Algebra — Interactive Cheat Sheet</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=JetBrains+Mono:wght@400;600&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'\\(',right:'\\)',display:false}],throwOnError:false});"></script>
 <style>
   :root {
     --ink: #1a1a2e;
@@ -246,12 +250,7 @@
 
   /* ── MATH ── */
   .math {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.85rem;
-    background: rgba(0,0,0,0.04);
-    border-radius: 4px;
-    padding: 2px 6px;
-    color: var(--ink);
+    font-size: 0.9em;
   }
   .math-block {
     font-family: 'JetBrains Mono', monospace;
@@ -263,7 +262,19 @@
     margin: 10px 0;
     line-height: 1.8;
     overflow-x: auto;
+    white-space: pre;
   }
+  /* Single-line blocks upgraded to KaTeX display */
+  .math-block.katex-rendered {
+    font-family: inherit;
+    background: rgba(0,0,0,0.025);
+    color: var(--ink);
+    border: 1px solid var(--rule);
+    border-left: 3px solid var(--gold);
+    text-align: center;
+    white-space: normal;
+  }
+  .math-block.katex-rendered .katex-display { margin: 0; }
 
   /* ── TABLE ── */
   .data-table {
@@ -845,7 +856,7 @@ a · 1 = 1 · a = a  (identity)</div>
         <div class="thm-label">Theorem (Main Theorem of Arithmetic)</div>
         <div class="thm-content">
           <p>Every <span class="math">a ≠ 0, ±1</span> has a <strong>unique</strong> factorisation:</p>
-          <div class="math-block">a = ε · p₁^m₁ · p₂^m₂ · ... · pₙ^mₙ</div>
+          <div class="math-block">$a = \varepsilon \cdot p_1^{m_1} \cdot p_2^{m_2} \cdots p_n^{m_n}$</div>
           <p>where <span class="math">ε = ±1</span>, the <span class="math">pᵢ</span> are <strong>distinct primes</strong> with <span class="math">p₁ &lt; p₂ &lt; ... &lt; pₙ</span>, and <span class="math">mᵢ ≥ 1</span>.</p>
           <p style="margin-top:8px"><em>Uniqueness:</em> If also <span class="math">a = ε'q₁···qₘ</span> then <span class="math">ε' = ε</span>, <span class="math">n = m</span>, and <span class="math">pᵢ = q_{σ(i)}</span> for some bijection σ.</p>
         </div>
@@ -1092,7 +1103,7 @@ d = 1·z + (−1+i)·w</div>
       <div class="thm-box warning">
         <div class="thm-label">Counterexample — ℤ[√−3] fails</div>
         <div class="thm-content">
-          <div class="math-block">4 = 2 · 2 = (1 + √−3)(1 − √−3)</div>
+          <div class="math-block">$4 = 2 \cdot 2 = (1 + \sqrt{-3})(1 - \sqrt{-3})$</div>
           <p>These are two genuinely different factorisations — unique factorisation fails in ℤ[√−3].</p>
           <p style="margin-top:6px">The reason: (½)² + 3(½)² = 1, which is not strictly less than 1, so the Euclidean algorithm doesn't work here.</p>
         </div>
@@ -1117,7 +1128,7 @@ d = 1·z + (−1+i)·w</div>
       <div class="thm-box definition">
         <div class="thm-label">Definition</div>
         <div class="thm-content">
-          <div class="math-block">f(x) = aₙxⁿ + aₙ₋₁xⁿ⁻¹ + ... + a₀</div>
+          <div class="math-block">$f(x) = a_n x^n + a_{n-1} x^{n-1} + \cdots + a_0$</div>
           <p>Coefficients <span class="math">aᵢ</span> from <span class="math">K = ℚ, ℝ, ℂ</span> (or ℤ). The set of all such polynomials is <span class="math">K[x]</span>.</p>
         </div>
       </div>
@@ -1574,7 +1585,7 @@ aⁱ⁺ʲ = aⁱ · aʲ</div>
         <div class="thm-label">Primary Decomposition of Cₙ</div>
         <div class="thm-content">
           <p>Write n = p₁^α₁ · … · pₖ^αₖ (distinct primes). Then:</p>
-          <div class="math-block">Cₙ ≅ Cₙ₁ × … × Cₙₖ   where nᵢ = pᵢ^αᵢ</div>
+          <div class="math-block">$C_n \cong C_{n_1} \times \cdots \times C_{n_k} \quad \text{where } n_i = p_i^{\alpha_i}$</div>
           <p>(The primary decomposition — each Cₙᵢ cannot be decomposed further.)</p>
           <p style="margin-top:6px"><em>Example:</em> C₇₂ ≅ C₈ × C₉ = C₇₂^(2) × C₇₂^(3)</p>
         </div>
@@ -1675,7 +1686,7 @@ SNF(C₂₈ × C₉₈) = C₁₉₆ × C₁₄</div>
         <div class="thm-label">Theorem — Classification of f.g. Abelian Groups</div>
         <div class="thm-content">
           <p>Any finitely generated abelian group A is isomorphic to:</p>
-          <div class="math-block">A ≅ C∞^r × Cₙ₁ × … × Cₙₖ</div>
+          <div class="math-block">$A \cong C_\infty^r \times C_{n_1} \times \cdots \times C_{n_k}$</div>
           <p>for some r ≥ 0 and positive integers n₁,…,nₖ. This can be expressed as a primary decomposition (then reassembled into SNF).</p>
         </div>
       </div>
@@ -2197,7 +2208,7 @@ g satisfies EC for p=3  ⟹  g irreducible
       <div class="thm-box theorem">
         <div class="thm-label">Cyclotomic Polynomial Φₚ(t) is irreducible</div>
         <div class="thm-content">
-          <div class="math-block">Φₚ(t) = tᵖ⁻¹+tᵖ⁻²+…+t+1 = (tᵖ−1)/(t−1)</div>
+          <div class="math-block">$\Phi_p(t) = t^{p-1}+t^{p-2}+\cdots+t+1 = \dfrac{t^p-1}{t-1}$</div>
           <p>Consider Φₚ(x+1) = ((x+1)ᵖ−1)/x = xᵖ⁻¹ + (p choose p−1)xᵖ⁻² + … + (p choose 1).</p>
           <p>All middle binomials (p choose i) for i=1,…,p−1 are divisible by p. Constant term (p choose 1) = p, not divisible by p². So EC applies with this prime p ⟹ Φₚ(x+1) irreducible ⟹ Φₚ(t) irreducible.</p>
         </div>
@@ -2563,7 +2574,7 @@ x₀ − 3x₁ + 3x₂ = 0</div>
           <p><strong>Step 1:</strong> K₁ = ℚ(∛2), [K₁:ℚ] = 3 (degree of x³−2), basis {1, α₁, α₁²}.</p>
           <p><strong>Step 2:</strong> Since α₁,α₂ ∈ K (the full splitting field), ζ = α₂/α₁ ∈ K. Note ℚ(ζ) = ℚ(√−3), corresponding to the irreducible x²+x+1, so [K₂:ℚ]=2.</p>
           <p><strong>Step 3:</strong> [K:ℚ] is divisible by both 2=[K₂:ℚ] and 3=[K₁:ℚ], so divisible by 6. Since ℚ(∛2,ζ) contains all roots and [ℚ(∛2,ζ):ℚ] ≤ 6, we conclude:</p>
-          <div class="math-block">K = ℚ(∛2, ζ),   [K:ℚ] = 6</div>
+          <div class="math-block">$K = \mathbb{Q}(\sqrt[3]{2},\,\zeta),\quad [K:\mathbb{Q}] = 6$</div>
           <p>Basis: <strong>1, ∛2, ∛4, ζ, ζ∛2, ζ∛4</strong>.</p>
           <p><em>Also:</em> x²+x+1 remains irreducible over ℚ(∛2) (since 6 is divisible by [K₂:ℚ]=2).</p>
         </div>
@@ -3167,16 +3178,16 @@ det A = a₁₁a₂₂ − a₁₂a₂₁</div>
         <div class="thm-content">
           <p>In A = ‖aᵢⱼ‖, remove Row i and Column j to get an (n−1)×(n−1) matrix. Its determinant is the <strong>minor</strong> Mᵢⱼ of aᵢⱼ.</p>
           <p>The <strong>cofactor</strong> (algebraic complement) of aᵢⱼ is:</p>
-          <div class="math-block">Aᵢⱼ = (−1)^{i+j} Mᵢⱼ</div>
+          <div class="math-block">$A_{ij} = (-1)^{i+j} M_{ij}$</div>
         </div>
       </div>
       <div class="thm-box theorem">
         <div class="thm-label">Theorem — Laplace Expansion</div>
         <div class="thm-content">
           <p>Expanding along Row i:</p>
-          <div class="math-block">det A = Σ_{j=1}^{n} aᵢⱼ Aᵢⱼ</div>
+          <div class="math-block">$\det A = \sum_{j=1}^{n} a_{ij}\, A_{ij}$</div>
           <p>Or expanding along Column j:</p>
-          <div class="math-block">det A = Σ_{i=1}^{n} aᵢⱼ Aᵢⱼ</div>
+          <div class="math-block">$\det A = \sum_{i=1}^{n} a_{ij}\, A_{ij}$</div>
           <p><strong>Tip:</strong> Choose the row or column with the most zeros to minimise computation.</p>
         </div>
       </div>
@@ -3261,14 +3272,14 @@ Result: det = 2−n.</div>
         <div class="thm-label">Definition — Adjoint Matrix A*</div>
         <div class="thm-content">
           <p>For A = ‖aᵢⱼ‖, the <strong>adjoint matrix</strong> A* = ‖a*ᵢⱼ‖ is defined by:</p>
-          <div class="math-block">a*ᵢⱼ = (−1)^{i+j} M_{ji}   ← note the swap of indices!</div>
+          <div class="math-block">$a^*_{ij} = (-1)^{i+j} M_{ji}$</div>
           <p>That is, the (i,j) entry of A* is the cofactor of aⱼᵢ (the transpose cofactor).</p>
         </div>
       </div>
       <div class="thm-box theorem">
         <div class="thm-label">Theorem — A · A* = A* · A = (det A) · I</div>
         <div class="thm-content">
-          <div class="math-block">(AA*)ᵢⱼ = Σₖ aᵢₖ · a*ₖⱼ = Σₖ aᵢₖ (−1)^{j+k} M_{jk}</div>
+          <div class="math-block">$( AA^* )_{ij} = \sum_k a_{ik} \cdot a^*_{kj} = \sum_k a_{ik}(-1)^{j+k} M_{jk}$</div>
           <p>When i = j: this equals det A. When i ≠ j: this is the det of the matrix with Row j replaced by Row i — a matrix with two identical rows — so it equals 0.</p>
           <div class="math-block">Example: A = (a b; c d) → A* = (d −b; −c a)
 AA* = (ad−bc  0; 0  ad−bc) = (det A)·I  ✓</div>
@@ -3279,7 +3290,7 @@ AA* = (ad−bc  0; 0  ad−bc) = (det A)·I  ✓</div>
       <div class="thm-box definition">
         <div class="thm-label">Definition — Characteristic Polynomial</div>
         <div class="thm-content">
-          <div class="math-block">χ_A(λ) = det(λI − A)</div>
+          <div class="math-block">$\chi_A(\lambda) = \det(\lambda I - A)$</div>
           <p>This is a monic polynomial of degree n in λ. Its roots are the <strong>eigenvalues</strong> of A.</p>
           <div class="math-block">Example: A = (3 4; 5 6),  λI−A = (λ−3  −4; −5  λ−6)
 χ_A(λ) = λ²−9λ−2</div>
@@ -4371,10 +4382,120 @@ ${v2.groups[2].name} = ${v2.groups[2].factors}</div>
     </div>
     ${answerBlock('ans-q4', ans4)}
   `;
+  var container = document.getElementById('exam-questions-container');
+  if (container) renderKatexInContainer(container);
+}
+
+// ── Unicode → LaTeX conversion ────────────────────────────────────────────
+function unicodeToLatex(s) {
+  // Combining diacritics: must run before other replacements
+  s = s.replace(/([\s\S])̄/g, '\\bar{$1}')   // combining macron  → \bar{x}
+        .replace(/([\s\S])̲/g, '\\underline{$1}'); // combining underline
+  // Group consecutive subscript characters into _{...}
+  s = s.replace(/[₀₁₂₃₄₅₆₇₈₉₊₋ᵢⱼₖₙₘₗₚₐ]+/g, function(seq) {
+    var b = seq
+      .replace(/₀/g,'0').replace(/₁/g,'1').replace(/₂/g,'2').replace(/₃/g,'3')
+      .replace(/₄/g,'4').replace(/₅/g,'5').replace(/₆/g,'6').replace(/₇/g,'7')
+      .replace(/₈/g,'8').replace(/₉/g,'9')
+      .replace(/₊/g,'+').replace(/₋/g,'-')
+      .replace(/ᵢ/g,'i').replace(/ⱼ/g,'j').replace(/ₖ/g,'k').replace(/ₙ/g,'n')
+      .replace(/ₘ/g,'m').replace(/ₗ/g,'l').replace(/ₚ/g,'p').replace(/ₐ/g,'a');
+    return b.length === 1 ? '_' + b : '_{' + b + '}';
+  });
+  // Group consecutive superscript characters into ^{...}
+  s = s.replace(/[²³⁴⁵⁶⁷⁸⁹⁰¹ⁿᵐᵏʳˢ⁻⁺ⁱᵖ]+/g, function(seq) {
+    var b = seq
+      .replace(/²/g,'2').replace(/³/g,'3').replace(/⁴/g,'4').replace(/⁵/g,'5')
+      .replace(/⁶/g,'6').replace(/⁷/g,'7').replace(/⁸/g,'8').replace(/⁹/g,'9')
+      .replace(/⁰/g,'0').replace(/¹/g,'1')
+      .replace(/⁻/g,'-').replace(/⁺/g,'+')
+      .replace(/ⁿ/g,'n').replace(/ᵐ/g,'m').replace(/ᵏ/g,'k').replace(/ʳ/g,'r')
+      .replace(/ˢ/g,'s').replace(/ⁱ/g,'i').replace(/ᵖ/g,'p');
+    return b.length === 1 ? '^' + b : '^{' + b + '}';
+  });
+  return s
+    // Blackboard bold
+    .replace(/ℤ/g,'\\mathbb{Z}').replace(/ℝ/g,'\\mathbb{R}').replace(/ℂ/g,'\\mathbb{C}')
+    .replace(/ℚ/g,'\\mathbb{Q}').replace(/ℕ/g,'\\mathbb{N}')
+    .replace(/𝔽/g,'\\mathbb{F}').replace(/𝔸/g,'\\mathbb{A}')
+    // Fraktur
+    .replace(/𝔪/g,'\\mathfrak{m}')
+    // Greek lowercase
+    .replace(/α/g,'\\alpha').replace(/β/g,'\\beta').replace(/γ/g,'\\gamma')
+    .replace(/δ/g,'\\delta').replace(/ε/g,'\\varepsilon').replace(/ζ/g,'\\zeta')
+    .replace(/η/g,'\\eta').replace(/θ/g,'\\theta').replace(/ι/g,'\\iota')
+    .replace(/κ/g,'\\kappa').replace(/λ/g,'\\lambda').replace(/μ/g,'\\mu')
+    .replace(/ν/g,'\\nu').replace(/ξ/g,'\\xi').replace(/π/g,'\\pi')
+    .replace(/ρ/g,'\\rho').replace(/σ/g,'\\sigma').replace(/τ/g,'\\tau')
+    .replace(/υ/g,'\\upsilon').replace(/φ/g,'\\varphi').replace(/χ/g,'\\chi')
+    .replace(/ψ/g,'\\psi').replace(/ω/g,'\\omega')
+    // Greek uppercase
+    .replace(/Γ/g,'\\Gamma').replace(/Δ/g,'\\Delta').replace(/Θ/g,'\\Theta')
+    .replace(/Λ/g,'\\Lambda').replace(/Ξ/g,'\\Xi').replace(/Π/g,'\\Pi')
+    .replace(/Σ/g,'\\sum').replace(/Φ/g,'\\Phi').replace(/Ψ/g,'\\Psi')
+    .replace(/Ω/g,'\\Omega')
+    // Relations and arrows
+    .replace(/⟹/g,'\\implies').replace(/⟺/g,'\\iff')
+    .replace(/→/g,'\\to').replace(/↦/g,'\\mapsto').replace(/↠/g,'\\twoheadrightarrow')
+    .replace(/⊂/g,'\\subset').replace(/⊃/g,'\\supset')
+    .replace(/⊆/g,'\\subseteq').replace(/⊇/g,'\\supseteq')
+    .replace(/∈/g,'\\in').replace(/∉/g,'\\notin')
+    .replace(/≅/g,'\\cong').replace(/≃/g,'\\simeq').replace(/≈/g,'\\approx')
+    .replace(/≠/g,'\\neq').replace(/≤/g,'\\leq').replace(/≥/g,'\\geq')
+    .replace(/≡/g,'\\equiv').replace(/∣/g,'\\mid')
+    // Operators
+    .replace(/⊕/g,'\\oplus').replace(/⊗/g,'\\otimes')
+    .replace(/∩/g,'\\cap').replace(/∪/g,'\\cup')
+    .replace(/×/g,'\\times').replace(/·/g,'\\cdot')
+    .replace(/∞/g,'\\infty').replace(/∅/g,'\\emptyset')
+    .replace(/∂/g,'\\partial').replace(/∇/g,'\\nabla')
+    .replace(/∑/g,'\\sum').replace(/∏/g,'\\prod').replace(/∫/g,'\\int')
+    .replace(/√(\w+)/g,'\\sqrt{$1}')  // √3, √n → \sqrt{3}
+    .replace(/√/g,'\\sqrt').replace(/∘/g,'\\circ')
+    .replace(/±/g,'\\pm').replace(/∓/g,'\\mp')
+    // Misc
+    .replace(/ℓ/g,'\\ell').replace(/′/g,"'").replace(/…/g,'\\ldots')
+    .replace(/⋮/g,'\\vdots').replace(/⋯/g,'\\cdots').replace(/⋱/g,'\\ddots')
+    .replace(/−/g,'-')
+    .replace(/½/g,'\\tfrac{1}{2}').replace(/⅓/g,'\\tfrac{1}{3}')
+    .replace(/⅔/g,'\\tfrac{2}{3}').replace(/¼/g,'\\tfrac{1}{4}')
+    .replace(/¾/g,'\\tfrac{3}{4}')
+    // Operator names
+    .replace(/\bdet\b/g,'\\det').replace(/\bgcd\b/g,'\\gcd');
+}
+
+// ── KaTeX rendering ───────────────────────────────────────────────────────
+function renderKatexInContainer(container) {
+  if (!window.katex) return;
+  container.querySelectorAll('span.math').forEach(function(span) {
+    if (span.querySelector('.katex')) return;
+    try {
+      span.innerHTML = katex.renderToString(unicodeToLatex(span.textContent), {throwOnError: false, displayMode: false});
+    } catch(e) {}
+  });
+  container.querySelectorAll('.math-block:not(.katex-rendered)').forEach(function(div) {
+    var txt = div.textContent.trim();
+    if (txt.includes('\n')) return; // multi-line: keep as dark code block
+    var latex;
+    if (txt.charAt(0) === '$' && txt.charAt(txt.length - 1) === '$' && txt.length > 2) {
+      latex = txt.slice(1, -1); // strip $...$ wrapper from manual conversions
+    } else if (!txt.includes('$')) {
+      latex = unicodeToLatex(txt); // auto-convert Unicode
+    } else {
+      return; // mixed/unknown: skip
+    }
+    try {
+      div.innerHTML = katex.renderToString(latex, {displayMode: true, throwOnError: false});
+      div.classList.add('katex-rendered');
+    } catch(e) {}
+  });
 }
 
 // Render initial set on page load
-document.addEventListener('DOMContentLoaded', function() { renderExamQuestions(); });
+document.addEventListener('DOMContentLoaded', function() {
+  renderExamQuestions();
+  renderKatexInContainer(document);
+});
 </script>
 
 </body>

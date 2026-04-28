@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Classical Mechanics — Cheatsheet</title>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 :root {
@@ -159,9 +161,10 @@ footer { margin-top:4rem;padding-top:1.5rem;border-top:1px solid var(--panel-bor
 
 /* Formula pill */
 .formula-pill {
-  display:inline-block;font-family:'Space Mono',monospace;font-size:13px;font-weight:700;
+  display:inline-block;font-size:13px;
   background:rgba(74,158,255,.08);border:1px solid rgba(74,158,255,.2);
   border-radius:6px;padding:3px 10px;color:var(--accent-blue);margin:.3rem .15rem .1rem;
+  vertical-align:middle;
 }
 .formula-pill.gold { background:rgba(240,185,66,.08);border-color:rgba(240,185,66,.2);color:var(--accent-gold); }
 .formula-pill.teal { background:rgba(56,217,192,.08);border-color:rgba(56,217,192,.2);color:var(--accent-teal); }
@@ -1929,24 +1932,24 @@ function openMethods(){
         <div class="info-card-body" style="line-height:2.1">
           Back-substitute e into either equation to get l.<br>
           <span class="formula-pill">a = l / (1 − e²)</span> &nbsp;·&nbsp;
-          <span class="formula-pill">r_min = a(1−e)</span> &nbsp;·&nbsp;
-          <span class="formula-pill">r_max = a(1+e)</span>
+          <span class="formula-pill">r_{min} = a(1−e)</span> &nbsp;·&nbsp;
+          <span class="formula-pill">r_{max} = a(1+e)</span>
         </div>
       </div>
       <div class="info-card" style="margin-bottom:.75rem">
         <div class="info-card-title">Step 4 — Period via Kepler III</div>
         <div class="info-card-body" style="line-height:2.1">
           <span class="formula-pill">T² = (4π²/GM) a³</span><br>
-          In AU/year units: GM_Sun = 4π² AU³/yr², so <span class="formula-pill">T = a^(3/2) years</span>
+          In AU/year units: GM_Sun = 4π² AU³/yr², so <span class="formula-pill">T = a^{3/2}</span>
         </div>
       </div>
       <div class="info-card law-card gold">
         <div class="info-card-title">Step 5 — Energy, KE, PE, J at perihelion</div>
         <div class="info-card-body" style="line-height:2.1">
           At r_min the velocity is purely tangential (ṙ = 0), so v = rθ̇.<br>
-          <span class="formula-pill">PE = −GM_Sun m / r_min</span><br>
-          <span class="formula-pill">E = −GM_Sun m / 2a</span> &nbsp;→&nbsp; <span class="formula-pill">KE = E − PE</span><br>
-          <span class="formula-pill">J = m√(GM_Sun · l)</span> &nbsp;(from J² = GMm²l for e &lt; 1 orbits)
+          <span class="formula-pill">PE = -GM_{Sun} m / r_{min}</span><br>
+          <span class="formula-pill">E = -GM_{Sun} m / 2a</span> &nbsp;→&nbsp; <span class="formula-pill">KE = E − PE</span><br>
+          <span class="formula-pill">J = m√(GM_{Sun} · l)</span> &nbsp;(from J² = GMm²l for e &lt; 1 orbits)
         </div>
       </div>
     </div>
@@ -2045,9 +2048,9 @@ function openMethods(){
       <div class="info-card" style="margin-bottom:.75rem">
         <div class="info-card-title">Step 2 — Solve the complementary (homogeneous) equation</div>
         <div class="info-card-body" style="line-height:2.1">
-          For constant-coefficient ODEs, try <span class="formula-pill">y = eᵏˣ</span> to get the characteristic equation.<br>
-          For Euler-type ODEs (coefficients like x², x), try <span class="formula-pill">y = xᵍ</span> to get an algebraic equation in q.<br>
-          Two roots q₁, q₂ give complementary solution <span class="formula-pill">y_c = Axᵍ¹ + Bxᵍ²</span>.
+          For constant-coefficient ODEs, try <span class="formula-pill">y = e^{kx}</span> to get the characteristic equation.<br>
+          For Euler-type ODEs (coefficients like x², x), try <span class="formula-pill">y = x^q</span> to get an algebraic equation in q.<br>
+          Two roots q₁, q₂ give complementary solution <span class="formula-pill">y_c = Ax^{q_1} + Bx^{q_2}</span>.
         </div>
       </div>
       <div class="info-card" style="margin-bottom:.75rem">
@@ -2193,7 +2196,7 @@ function openMethods(){
       <div class="info-card law-card gold">
         <div class="info-card-title">Step 3 — Final solution</div>
         <div class="info-card-body" style="line-height:2.1">
-          <span class="formula-pill">r(t) = [R^{3/2} + (3/2)√(2GM)·t]^{2/3}</span><br>
+          <span class="formula-pill">r(t) = \bigl[R^{3/2} + \tfrac{3}{2}\sqrt{2GM}\cdot t\bigr]^{2/3}</span><br>
           Growth goes as t^{2/3} — the object escapes but gravity continuously decelerates it. For a bound object (E &lt; 0), the ODE is ṙ = √(2(E/m + GM/r)) and separation is more involved.
         </div>
       </div>
@@ -2210,22 +2213,22 @@ function openMethods(){
         <div class="info-card-title">Step 1 — Identify r_min and r_max, compute a and e</div>
         <div class="info-card-body" style="line-height:2.1">
           The transfer ellipse has perihelion = inner orbit radius, aphelion = outer orbit radius:<br>
-          <span class="formula-pill">a = (r_min + r_max)/2</span> &nbsp;&nbsp;
-          <span class="formula-pill">e = (r_max − r_min)/(r_max + r_min)</span>
+          <span class="formula-pill">a = (r_{min} + r_{max})/2</span> &nbsp;&nbsp;
+          <span class="formula-pill">e = (r_{max} - r_{min})/(r_{max} + r_{min})</span>
         </div>
       </div>
       <div class="info-card" style="margin-bottom:.75rem">
         <div class="info-card-title">Step 2 — Transfer time (half the orbital period)</div>
         <div class="info-card-body" style="line-height:2.1">
-          <span class="formula-pill">T_full = a^{3/2} years</span> &nbsp;(in AU/yr units where GM_Sun = 4π²)<br>
-          <span class="formula-pill">t_transfer = T_full / 2</span>
+          <span class="formula-pill">T_{full} = a^{3/2}</span> &nbsp;(in AU/yr units where GM_Sun = 4π²)<br>
+          <span class="formula-pill">t_{transfer} = T_{full}/2</span>
         </div>
       </div>
       <div class="info-card" style="margin-bottom:.75rem">
         <div class="info-card-title">Step 3 — Energy and angular momentum</div>
         <div class="info-card-body" style="line-height:2.1">
           <span class="formula-pill">E = −GM_Sun m / (2a)</span><br>
-          <span class="formula-pill">l = a(1−e²)</span> &nbsp;→&nbsp; <span class="formula-pill">J = m√(GM_Sun · l)</span>
+          <span class="formula-pill">l = a(1−e²)</span> &nbsp;→&nbsp; <span class="formula-pill">J = m√(GM_{Sun} · l)</span>
         </div>
       </div>
       <div class="info-card law-card gold">
@@ -2848,6 +2851,96 @@ function toggleAnswer(i){
 /* ── Init ── */
 viewHome.style.display='block';
 requestAnimationFrame(()=>viewHome.classList.add('active'));
+
+/* ── KaTeX: Unicode → LaTeX ── */
+function unicodeToLatex(s) {
+  // Precomposed-dot + combining diaeresis (double derivative) — must run first
+  s = s.replace(/ṙ̈/g,'\\ddot{r}').replace(/ż̈/g,'\\ddot{z}')
+        .replace(/ẋ̈/g,'\\ddot{x}').replace(/ẏ̈/g,'\\ddot{y}');
+  // Combining diacritics (single chars)
+  s = s.replace(/([\s\S])̇/g,'\\dot{$1}')   // combining dot above  → \dot{x}
+        .replace(/([\s\S])̈/g,'\\ddot{$1}')  // combining diaeresis  → \ddot{x}
+        .replace(/([\s\S])̂/g,'\\hat{$1}')   // combining circumflex → \hat{r}
+        .replace(/([\s\S])̄/g,'\\bar{$1}');  // combining macron     → \bar{x}
+  // Precomposed dot-above letters (single derivative)
+  s = s.replace(/ẋ/g,'\\dot{x}').replace(/ẍ/g,'\\ddot{x}')
+        .replace(/ẏ/g,'\\dot{y}').replace(/ÿ/g,'\\ddot{y}')
+        .replace(/ṙ/g,'\\dot{r}').replace(/ṡ/g,'\\dot{s}')
+        .replace(/ż/g,'\\dot{z}');
+  // Group subscript sequences
+  s = s.replace(/[₀₁₂₃₄₅₆₇₈₉ᵢⱼₖₙₘₗₚₐ₋₊]+/g, function(seq) {
+    var b = seq
+      .replace(/₀/g,'0').replace(/₁/g,'1').replace(/₂/g,'2').replace(/₃/g,'3')
+      .replace(/₄/g,'4').replace(/₅/g,'5').replace(/₆/g,'6').replace(/₇/g,'7')
+      .replace(/₈/g,'8').replace(/₉/g,'9').replace(/₋/g,'-').replace(/₊/g,'+')
+      .replace(/ᵢ/g,'i').replace(/ⱼ/g,'j').replace(/ₖ/g,'k').replace(/ₙ/g,'n')
+      .replace(/ₘ/g,'m').replace(/ₗ/g,'l').replace(/ₚ/g,'p').replace(/ₐ/g,'a');
+    return b.length === 1 ? '_' + b : '_{' + b + '}';
+  });
+  // Group superscript sequences
+  s = s.replace(/[²³⁴⁵⁶⁷⁸⁹⁰¹ⁿᵐ⁻⁺]/g, function(seq) {
+    var b = seq.replace(/²/g,'2').replace(/³/g,'3').replace(/⁴/g,'4').replace(/⁵/g,'5')
+               .replace(/⁶/g,'6').replace(/⁷/g,'7').replace(/⁸/g,'8').replace(/⁹/g,'9')
+               .replace(/⁰/g,'0').replace(/¹/g,'1').replace(/⁻/g,'-').replace(/⁺/g,'+')
+               .replace(/ⁿ/g,'n').replace(/ᵐ/g,'m');
+    return b.length === 1 ? '^' + b : '^{' + b + '}';
+  });
+  return s
+    // Greek letters
+    .replace(/α/g,'\\alpha').replace(/β/g,'\\beta').replace(/γ/g,'\\gamma')
+    .replace(/δ/g,'\\delta').replace(/ε/g,'\\varepsilon').replace(/ζ/g,'\\zeta')
+    .replace(/η/g,'\\eta').replace(/θ/g,'\\theta').replace(/λ/g,'\\lambda')
+    .replace(/μ/g,'\\mu').replace(/ν/g,'\\nu').replace(/ξ/g,'\\xi')
+    .replace(/π/g,'\\pi').replace(/ρ/g,'\\rho').replace(/σ/g,'\\sigma')
+    .replace(/τ/g,'\\tau').replace(/φ/g,'\\varphi').replace(/χ/g,'\\chi')
+    .replace(/ψ/g,'\\psi').replace(/ω/g,'\\omega')
+    .replace(/Γ/g,'\\Gamma').replace(/Δ/g,'\\Delta').replace(/Λ/g,'\\Lambda')
+    .replace(/Σ/g,'\\sum').replace(/Ω/g,'\\Omega')
+    // Operators and symbols
+    .replace(/∂/g,'\\partial').replace(/∇/g,'\\nabla')
+    .replace(/∫/g,'\\int').replace(/∬/g,'\\iint').replace(/∭/g,'\\iiint')
+    .replace(/∑/g,'\\sum').replace(/∏/g,'\\prod')
+    .replace(/√\(([^)]*)\)/g,'\\sqrt{$1}')
+    .replace(/√(\w+)/g,'\\sqrt{$1}').replace(/√/g,'\\sqrt')
+    .replace(/ᴸ/g,'^L').replace(/′/g,"'")
+    .replace(/×/g,'\\times').replace(/·/g,'\\cdot')
+    .replace(/∞/g,'\\infty').replace(/∅/g,'\\emptyset')
+    .replace(/±/g,'\\pm').replace(/∓/g,'\\mp')
+    .replace(/≤/g,'\\leq').replace(/≥/g,'\\geq')
+    .replace(/≠/g,'\\neq').replace(/≈/g,'\\approx')
+    .replace(/→/g,'\\to').replace(/↦/g,'\\mapsto')
+    .replace(/⟹/g,'\\implies').replace(/⟺/g,'\\iff')
+    .replace(/∈/g,'\\in').replace(/∉/g,'\\notin')
+    .replace(/⊂/g,'\\subset').replace(/⊕/g,'\\oplus')
+    .replace(/−/g,'-')
+    .replace(/½/g,'\\tfrac{1}{2}').replace(/⅓/g,'\\tfrac{1}{3}')
+    // Operator names
+    .replace(/\bdet\b/g,'\\det').replace(/\bgcd\b/g,'\\gcd');
+}
+
+function renderFormulaPills() {
+  if (!window.katex) return;
+  document.querySelectorAll('span.formula-pill').forEach(function(span) {
+    if (span.querySelector('.katex')) return;
+    // Convert <sub>...</sub> and <sup>...</sup> in innerHTML to LaTeX
+    var html = span.innerHTML
+      .replace(/<sub>([^<]*)<\/sub>/gi, '_{$1}')
+      .replace(/<sup>([^<]*)<\/sup>/gi, '^{$1}')
+      .replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&amp;/g,'&')
+      .replace(/&nbsp;/g,' ').replace(/&#x[\da-f]+;/gi, function(m) {
+        return String.fromCodePoint(parseInt(m.slice(3,-1),16));
+      }).replace(/<[^>]+>/g,'');
+    try {
+      span.innerHTML = katex.renderToString(unicodeToLatex(html.trim()), {throwOnError:false, displayMode:false});
+    } catch(e) {}
+  });
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  // Wait for KaTeX to load (it's deferred)
+  if (window.katex) { renderFormulaPills(); }
+  else { document.querySelector('script[src*="katex.min.js"]').addEventListener('load', renderFormulaPills); }
+});
 </script>
 </body>
 </html>
