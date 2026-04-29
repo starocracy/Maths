@@ -8,7 +8,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
-  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],throwOnError:false});"></script>
+  onload="initMath();"></script>
 <style>
 :root {
   --ink: #1a1814;
@@ -5011,8 +5011,6 @@ const EXAM_QUESTIONS = {
   ]
 };
 
-renderExamQuestions('ct1', [...EXAM_QUESTIONS.ct1].sort(() => Math.random() - 0.5).slice(0, 4));
-renderExamQuestions('ct2', [...EXAM_QUESTIONS.ct2].sort(() => Math.random() - 0.5).slice(0, 3));
 
 function stripSource(q) {
   // Remove leading bracketed source tag e.g. "[CT1 2025–26 Q1(i) — 11 marks] "
@@ -5103,30 +5101,21 @@ function unicodeToLatex(s) {
     .replace(/\\(varepsilon|vartheta|varsigma|varphi|varrho|varpi|subseteq|supseteq|Upsilon|upsilon|partial|mapsto|Lambda|lambda|langle|rangle|implies|cdots|ddots|vdots|ldots|nabla|equiv|simeq|cong|times|cdot|oplus|otimes|notin|supset|subset|infty|Omega|omega|Sigma|sigma|Theta|theta|Gamma|gamma|Delta|delta|alpha|beta|kappa|leq|geq|neq|approx|sqrt|Phi|Psi|psi|phi|chi|tau|rho|circ|ell|mid|int|sum|prod|cup|cap|mu|nu|xi|Xi|pi|Pi|eta|zeta|iota|iff|pm|mp|to|in)(?=[a-zA-Z])/g, '\\$1{}');
 }
 
-document.addEventListener('DOMContentLoaded', function() {
-  if (!window.katex) return;
+function initMath() {
+  renderMathInElement(document.body, {delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],throwOnError:false});
   document.querySelectorAll('span.math').forEach(function(span) {
     try {
-      var latex = unicodeToLatex(span.textContent);
-      span.innerHTML = katex.renderToString(latex, {throwOnError: false, displayMode: false});
+      span.innerHTML = katex.renderToString(unicodeToLatex(span.textContent), {throwOnError:false, displayMode:false});
     } catch(e) {}
   });
   document.querySelectorAll('td.f-eq').forEach(function(td) {
     try {
-      var latex = unicodeToLatex(td.textContent);
-      td.innerHTML = katex.renderToString(latex, {throwOnError: false, displayMode: false});
+      td.innerHTML = katex.renderToString(unicodeToLatex(td.textContent), {throwOnError:false, displayMode:false});
     } catch(e) {}
   });
-  document.querySelectorAll('.math-display').forEach(function(div) {
-    var txt = div.textContent.trim();
-    if (txt.startsWith('$$') && txt.endsWith('$$')) {
-      txt = txt.slice(2, -2).trim();
-    }
-    try {
-      div.innerHTML = katex.renderToString(unicodeToLatex(txt), {displayMode: true, throwOnError: false});
-    } catch(e) {}
-  });
-});
+  renderExamQuestions('ct1', [...EXAM_QUESTIONS.ct1].sort(() => Math.random() - 0.5).slice(0, 4));
+  renderExamQuestions('ct2', [...EXAM_QUESTIONS.ct2].sort(() => Math.random() - 0.5).slice(0, 3));
+}
 </script>
 </body>
 </html>
