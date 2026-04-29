@@ -4462,7 +4462,7 @@ function unicodeToLatex(s) {
     .replace(/¾/g,'\\tfrac{3}{4}')
     // Operator names
     .replace(/\bdet\b/g,'\\det').replace(/\bgcd\b/g,'\\gcd')
-    .replace(/\\([a-zA-Z]+)(?=[a-zA-Z])/g, '\\$1{}');
+    .replace(/\\(varepsilon|vartheta|varsigma|varphi|varrho|varpi|subseteq|supseteq|twoheadrightarrow|Upsilon|upsilon|partial|mapsto|Lambda|lambda|cdots|ddots|vdots|ldots|nabla|equiv|simeq|cong|times|cdot|oplus|otimes|notin|supset|subset|infty|Omega|omega|Sigma|sigma|Theta|theta|Gamma|gamma|Delta|delta|alpha|beta|kappa|leq|geq|neq|approx|sqrt|Phi|Psi|psi|phi|chi|tau|rho|circ|ell|mid|int|sum|prod|cup|cap|mu|nu|xi|Xi|pi|Pi|eta|zeta|iota|det|gcd|iff|pm|mp|to|in)(?=[a-zA-Z])/g, '\\$1{}');
 }
 
 // ── KaTeX rendering ───────────────────────────────────────────────────────

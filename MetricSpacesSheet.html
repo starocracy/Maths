@@ -360,17 +360,17 @@
     <div class="subtitle">Exam Cheat Sheet · Tap a section to explore</div>
   </div>
   <div class="tabs">
-    <button class="tab active" onclick="showSection('metric')">Metric Spaces</button>
-    <button class="tab" onclick="showSection('chapter1')">Ch.1 Intro</button>
-    <button class="tab" onclick="showSection('chapter2')">Ch.2 Continuity</button>
-    <button class="tab" onclick="showSection('chapter3')">Ch.3 Topology</button>
-    <button class="tab" onclick="showSection('chapter4')">Ch.4 Completeness</button>
-    <button class="tab" onclick="showSection('chapter5')">Ch.5 Function Spaces</button>
-    <button class="tab" onclick="showSection('chapter6')">Ch.6 Multivariate</button>
-    <button class="tab" onclick="showSection('calculus')">Calculus</button>
-    <button class="tab" onclick="showSection('methods')">Common Methods</button>
-    <button class="tab" onclick="showSection('examq')">Exam Questions</button>
-    <button class="tab" onclick="showSection('quiz')">Self-Quiz</button>
+    <button class="tab active" onclick="showSection('metric',this)">Metric Spaces</button>
+    <button class="tab" onclick="showSection('chapter1',this)">Ch.1 Intro</button>
+    <button class="tab" onclick="showSection('chapter2',this)">Ch.2 Continuity</button>
+    <button class="tab" onclick="showSection('chapter3',this)">Ch.3 Topology</button>
+    <button class="tab" onclick="showSection('chapter4',this)">Ch.4 Completeness</button>
+    <button class="tab" onclick="showSection('chapter5',this)">Ch.5 Function Spaces</button>
+    <button class="tab" onclick="showSection('chapter6',this)">Ch.6 Multivariate</button>
+    <button class="tab" onclick="showSection('calculus',this)">Calculus</button>
+    <button class="tab" onclick="showSection('methods',this)">Common Methods</button>
+    <button class="tab" onclick="showSection('examq',this)">Exam Questions</button>
+    <button class="tab" onclick="showSection('quiz',this)">Self-Quiz</button>
   </div>
 </header>
 
@@ -2630,11 +2630,11 @@ function restartQuiz() {
   renderQuestion();
 }
 
-function showSection(id) {
+function showSection(id, btn) {
   document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
   document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
   document.getElementById(id).classList.add('active');
-  event.target.classList.add('active');
+  if (btn) btn.classList.add('active');
   if (id === 'quiz') renderQuestion();
 }
 
