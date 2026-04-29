@@ -4461,7 +4461,8 @@ function unicodeToLatex(s) {
     .replace(/⅔/g,'\\tfrac{2}{3}').replace(/¼/g,'\\tfrac{1}{4}')
     .replace(/¾/g,'\\tfrac{3}{4}')
     // Operator names
-    .replace(/\bdet\b/g,'\\det').replace(/\bgcd\b/g,'\\gcd');
+    .replace(/\bdet\b/g,'\\det').replace(/\bgcd\b/g,'\\gcd')
+    .replace(/\\([a-zA-Z]+)(?=[a-zA-Z])/g, '\\$1{}');
 }
 
 // ── KaTeX rendering ───────────────────────────────────────────────────────

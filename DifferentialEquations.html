@@ -5099,7 +5099,8 @@ function unicodeToLatex(s) {
     .replace(/ω/g,'\\omega').replace(/Γ/g,'\\Gamma').replace(/Δ/g,'\\Delta')
     .replace(/Θ/g,'\\Theta').replace(/Λ/g,'\\Lambda').replace(/Σ/g,'\\Sigma')
     .replace(/Φ/g,'\\Phi').replace(/Ψ/g,'\\Psi').replace(/Ω/g,'\\Omega')
-    .replace(/ℓ/g,'\\ell').replace(/∘/g,'\\circ');
+    .replace(/ℓ/g,'\\ell').replace(/∘/g,'\\circ')
+    .replace(/\\([a-zA-Z]+)(?=[a-zA-Z])/g, '\\$1{}');
 }
 
 document.addEventListener('DOMContentLoaded', function() {
