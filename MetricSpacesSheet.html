@@ -2329,7 +2329,7 @@ function generateExamQuestions() {
 }
 
 // Auto-generate on first load of tab
-document.querySelector('[onclick="showSection(\'examq\')"]').addEventListener('click', function() {
+document.querySelector('[onclick="showSection(\'examq\',this)"]').addEventListener('click', function() {
   if (!document.getElementById('examq-container').hasChildNodes()) {
     generateExamQuestions();
   }
