@@ -1788,147 +1788,10 @@ $$J\varphi(x_0)=-(J_y f(x_0,y_0))^{-1}\cdot J_x f(x_0,y_0)$$</div>
   </div>
 
   <div id="ct2-panel" class="exam-panel">
-
-    <p class="note" style="margin:16px 0 20px;font-size:13px;color:var(--muted)">Questions drawn from both CT2 mock papers. Each has a hint and a dropdown worked solution.</p>
-
-    <div style="font-family:'DM Serif Display',serif;font-size:1.15rem;color:var(--accent2);margin:24px 0 12px;border-bottom:2px solid var(--rule);padding-bottom:6px">Mock Paper 1</div>
-
-    <!-- Mock 1 Q1a -->
-    <div class="eq-card">
-      <div class="eq-question"><strong>Q1(a).</strong> Let $f_n(x) = \left(\dfrac{x+1}{2}\right)^n$ for $x \in [0,1]$. Does the sequence $(f_n)$ converge uniformly on $[0,1]$? Justify your answer.</div>
-      <div class="eq-hint">Find the pointwise limit first — what is $\tfrac{x+1}{2}$ when $x=1$ vs $x \in [0,1)$? Then invoke the theorem on uniform limits of continuous functions.</div>
-      <details class="eq-answer">
-        <summary>▶ Show worked solution</summary>
-        <div class="eq-answer-body">
-          <strong>Pointwise limit.</strong> For $x \in [0,1)$: $\tfrac{x+1}{2} \in [\tfrac{1}{2},1)$, so $f_n(x) = \left(\tfrac{x+1}{2}\right)^n \to 0$. At $x=1$: $f_n(1) = 1^n = 1$.
-          Thus the pointwise limit is the <em>discontinuous</em> function
-          $$f(x) = \begin{cases} 0 & x \in [0,1) \\ 1 & x = 1 \end{cases}$$
-          <strong>Not uniform.</strong> Each $f_n$ is continuous on $[0,1]$. By Theorem 5.10, the uniform limit of continuous functions must be continuous. Since $f$ is discontinuous, the convergence <strong>cannot be uniform</strong>. (Alternatively: $\sup_{x\in[0,1]}|f_n(x)-f(x)| = \sup_{x\in[0,1)}|f_n(x)| \to 1^- \neq 0$.)
-        </div>
-      </details>
+    <div id="ct2-container"></div>
+    <div style="text-align:center; margin-top:32px;">
+      <button class="btn" onclick="generateCT2Questions()">⟳ Generate New Questions</button>
     </div>
-
-    <!-- Mock 1 Q2b -->
-    <div class="eq-card">
-      <div class="eq-question"><strong>Q2(b).</strong> Let $f : \mathbb{R} \to \mathbb{R}$ be $f(x) = \cos(x/2)$. Show that $f$ is a contraction on $(\mathbb{R}, d_1)$, and deduce it has a unique fixed point.</div>
-      <div class="eq-hint">Compute $|f'(x)|$ — what is the maximum value of $|\sin(x/2)|$? Then apply the Mean Value Theorem to bound $|f(x)-f(y)|$.</div>
-      <details class="eq-answer">
-        <summary>▶ Show worked solution</summary>
-        <div class="eq-answer-body">
-          $f'(x) = -\tfrac{1}{2}\sin(x/2)$, so $|f'(x)| = \tfrac{1}{2}|\sin(x/2)| \leq \tfrac{1}{2}$ for all $x \in \mathbb{R}$.
-          By the Mean Value Theorem, for any $x, y \in \mathbb{R}$ there exists $c$ between $x$ and $y$ with
-          $$|f(x) - f(y)| = |f'(c)|\,|x-y| \leq \tfrac{1}{2}|x-y| = \tfrac{1}{2}d_1(x,y).$$
-          So $f$ is a <strong>contraction</strong> with $L = 1/2 < 1$. Since $(\mathbb{R}, d_1)$ is complete, the <strong>Contraction Mapping Theorem</strong> guarantees a unique fixed point $x^* = \cos(x^*/2)$.
-        </div>
-      </details>
-    </div>
-
-    <!-- Mock 1 Q3 -->
-    <div class="eq-card">
-      <div class="eq-question"><strong>Q3.</strong> Consider the integral equation
-        $$y(x) = -1 + \int_0^{4x}\!\sin(t^3)\,dt + \int_0^x\!(y(t)+t)\,dt.$$
-        Show this is equivalent to an IVP and verify that the Picard–Lindelöf theorem guarantees a unique solution.</div>
-      <div class="eq-hint">Differentiate both sides using the Fundamental Theorem of Calculus and the chain rule. Evaluate at $x=0$ to find $y(0)$. Identify $f(x,y)$ and check its Lipschitz condition.</div>
-      <details class="eq-answer">
-        <summary>▶ Show worked solution</summary>
-        <div class="eq-answer-body">
-          <strong>Differentiating.</strong> By FTC and chain rule:
-          $$y'(x) = 4\sin\!\left((4x)^3\right) + y(x) + x = 4\sin(64x^3) + y + x.$$
-          <strong>Initial condition.</strong> Setting $x=0$: $y(0) = -1 + 0 + 0 = -1$.
-          <br><br>
-          This is the IVP $y' = f(x,y)$, $y(0) = -1$, where $f(x,y) = 4\sin(64x^3) + y + x$.
-          <br><br>
-          <strong>Picard–Lindelöf.</strong> $f$ is continuous everywhere. $\partial f/\partial y = 1$ is continuous (and bounded), so $f$ is Lipschitz in $y$ with constant $L = 1$. The theorem guarantees a <strong>unique local solution</strong>.
-        </div>
-      </details>
-    </div>
-
-    <!-- Mock 1 Q4a -->
-    <div class="eq-card">
-      <div class="eq-question"><strong>Q4(a).</strong> Let $f : \mathbb{R}^2 \to \mathbb{R}^2$ be $f(x,y) = (x-y,\; x^2 y)$. Compute the Jacobian $Jf(2,-2)$ and the differential $Df_{(2,-2)}(h)$ for $h = (1,2)$.</div>
-      <div class="eq-hint">Write $f_1 = x-y$ and $f_2 = x^2y$. Differentiate each component with respect to $x$ and $y$ to build the $2\times 2$ Jacobian, then multiply by $h$.</div>
-      <details class="eq-answer">
-        <summary>▶ Show worked solution</summary>
-        <div class="eq-answer-body">
-          Partial derivatives: $\partial f_1/\partial x = 1$, $\partial f_1/\partial y = -1$, $\partial f_2/\partial x = 2xy$, $\partial f_2/\partial y = x^2$.
-          $$Jf(x,y) = \begin{pmatrix} 1 & -1 \\ 2xy & x^2 \end{pmatrix}.$$
-          At $(2,-2)$: $2xy = 2(2)(-2) = -8$, $x^2 = 4$, so
-          $$Jf(2,-2) = \begin{pmatrix} 1 & -1 \\ -8 & 4 \end{pmatrix}.$$
-          The differential applied to $h = (1,2)$:
-          $$Df_{(2,-2)}(1,2) = \begin{pmatrix}1&-1\\-8&4\end{pmatrix}\!\begin{pmatrix}1\\2\end{pmatrix} = \begin{pmatrix}1-2\\-8+8\end{pmatrix} = \begin{pmatrix}-1\\0\end{pmatrix}.$$
-        </div>
-      </details>
-    </div>
-
-    <div style="font-family:'DM Serif Display',serif;font-size:1.15rem;color:var(--accent2);margin:32px 0 12px;border-bottom:2px solid var(--rule);padding-bottom:6px">Mock Paper 2</div>
-
-    <!-- Mock 2 Q1a -->
-    <div class="eq-card">
-      <div class="eq-question"><strong>Q1(a).</strong> Find the radius of convergence $R$ of the power series $\displaystyle\sum_{n=0}^{\infty} \left(\frac{x}{3}\right)^{\!3n}$ and state the open interval on which it converges.</div>
-      <div class="eq-hint">Rewrite as a geometric series in $(x/3)^3 = x^3/27$. The series converges iff the common ratio has modulus less than 1.</div>
-      <details class="eq-answer">
-        <summary>▶ Show worked solution</summary>
-        <div class="eq-answer-body">
-          Rewrite: $\displaystyle\sum_{n=0}^{\infty}\!\left(\frac{x}{3}\right)^{\!3n} = \sum_{n=0}^{\infty}\!\left(\frac{x^3}{27}\right)^{\!n}$, a geometric series with ratio $r = x^3/27$.
-          This converges iff $|r| < 1$:
-          $$\left|\frac{x^3}{27}\right| < 1 \iff |x|^3 < 27 \iff |x| < 3.$$
-          So $R = 3$ and the series converges on $(-3,\,3)$. At $x = \pm 3$ the terms equal $(\pm 1)^n \not\to 0$, so both endpoints diverge.
-        </div>
-      </details>
-    </div>
-
-    <!-- Mock 2 Q1b -->
-    <div class="eq-card">
-      <div class="eq-question"><strong>Q1(b).</strong> Find all $x \in \mathbb{R}$ for which $\displaystyle\sum_{n=1}^{\infty} \frac{\left(\tfrac{1}{2}+x^2\right)^{2n+1}}{n}$ converges.</div>
-      <div class="eq-hint">Set $z = \tfrac{1}{2}+x^2$. The series becomes $z\sum_{n=1}^{\infty}(z^2)^n/n$. Recall $\sum w^n/n$ converges iff $|w| \leq 1$ with $w \neq 1$. Since $z \geq \tfrac{1}{2} > 0$, the endpoint $z^2 = 1$ means $z = 1$.</div>
-      <details class="eq-answer">
-        <summary>▶ Show worked solution</summary>
-        <div class="eq-answer-body">
-          Set $z = \tfrac{1}{2}+x^2$. The series equals $z\displaystyle\sum_{n=1}^{\infty}\frac{(z^2)^n}{n}$. This is related to the log series $\sum w^n/n$ with $w = z^2$, which converges for $|w| \leq 1$ (excluding $w = 1$ where $\sum 1/n$ diverges).
-          <br><br>
-          Since $x \in \mathbb{R}$ we have $z = \tfrac{1}{2}+x^2 \geq \tfrac{1}{2} > 0$, so $z$ is real and positive. We need $z^2 < 1$ (strict, since $w=1$ diverges):
-          $$z < 1 \implies \tfrac{1}{2}+x^2 < 1 \implies x^2 < \tfrac{1}{2} \implies |x| < \tfrac{1}{\sqrt{2}} = \tfrac{\sqrt{2}}{2}.$$
-          The series converges on $\left(-\dfrac{\sqrt{2}}{2},\;\dfrac{\sqrt{2}}{2}\right)$.
-        </div>
-      </details>
-    </div>
-
-    <!-- Mock 2 Q2 -->
-    <div class="eq-card">
-      <div class="eq-question"><strong>Q2.</strong> Define $\Phi : C[0,1] \to C[0,1]$ by $\Phi(f)(x) = x + \dfrac{f(x^2)}{3}$. Show $\Phi$ is a contraction on $(C[0,1], d_{L^\infty})$. Starting from $f_0 \equiv 0$, compute the iterate $f_2 = \Phi^2(f_0)$.</div>
-      <div class="eq-hint">Compute $d_{L^\infty}(\Phi(f),\Phi(g))$ directly — use the substitution $u = x^2$ to recognise the resulting supremum. For the iterates, apply $\Phi$ to $f_0 = 0$, then apply $\Phi$ again to the result.</div>
-      <details class="eq-answer">
-        <summary>▶ Show worked solution</summary>
-        <div class="eq-answer-body">
-          <strong>Contraction.</strong>
-          $$d_{L^\infty}(\Phi(f),\Phi(g)) = \sup_{x\in[0,1]}\left|\frac{f(x^2)-g(x^2)}{3}\right| = \frac{1}{3}\sup_{x\in[0,1]}|f(x^2)-g(x^2)|.$$
-          As $x$ ranges over $[0,1]$, $x^2$ also ranges over $[0,1]$, so
-          $$= \frac{1}{3}\sup_{u\in[0,1]}|f(u)-g(u)| = \frac{1}{3}d_{L^\infty}(f,g).$$
-          Thus $\Phi$ is a contraction with $L = 1/3 < 1$ on the complete space $(C[0,1], d_{L^\infty})$. By the CMT, $\Phi$ has a unique fixed point.
-          <br><br>
-          <strong>Iterates.</strong>
-          $f_1(x) = \Phi(f_0)(x) = x + 0/3 = x.$
-          $f_2(x) = \Phi(f_1)(x) = x + \dfrac{f_1(x^2)}{3} = x + \dfrac{x^2}{3}.$
-        </div>
-      </details>
-    </div>
-
-    <!-- Mock 2 Q4 -->
-    <div class="eq-card">
-      <div class="eq-question"><strong>Q4.</strong> Let $X = \{(x_1,x_2)\in\mathbb{R}^2 : x_1^2+x_2^2 \leq 3\}$ and $Y = \{(x_1,x_2)\in\mathbb{R}^2 : 2x_1^2+3x_2^2 \geq 1\}$. Are $X$ and $Y$ homeomorphic?</div>
-      <div class="eq-hint">Determine whether each set is compact (closed and bounded in $\mathbb{R}^2$). Compactness is a topological invariant — preserved by homeomorphisms.</div>
-      <details class="eq-answer">
-        <summary>▶ Show worked solution</summary>
-        <div class="eq-answer-body">
-          <strong>$X$ is compact.</strong> $X$ is a closed ball of radius $\sqrt{3}$ in $\mathbb{R}^2$: closed (defined by $\leq$) and bounded ($||(x_1,x_2)|| \leq \sqrt{3}$). By the Bolzano–Weierstrass / Heine–Borel theorem, $X$ is compact.
-          <br><br>
-          <strong>$Y$ is not compact.</strong> $Y$ is unbounded: for any $M > 0$, the point $(M, 0)$ satisfies $2M^2 \geq 1$ and $||(M,0)|| = M$, so $Y$ contains points of arbitrarily large norm. Hence $Y$ is not bounded and therefore not compact.
-          <br><br>
-          <strong>Conclusion.</strong> Since compactness is preserved by homeomorphisms (continuous bijections with continuous inverse), and $X$ is compact while $Y$ is not, $X$ and $Y$ <strong>are not homeomorphic</strong>.
-        </div>
-      </details>
-    </div>
-
   </div><!-- end ct2-panel -->
 </div>
 
@@ -2487,6 +2350,208 @@ const qPools = {
 
 };
 
+// ═══════════════════ CT2 QUESTION POOL ═══════════════════
+
+const ct2Pools = {
+
+  powerSeries: [
+    {
+      q: `Find the radius of convergence $R$ of $\\displaystyle\\sum_{n=0}^{\\infty}\\!\\left(\\frac{x}{3}\\right)^{\\!3n}$ and state the open interval of convergence.`,
+      hint: `Rewrite as a geometric series in $(x/3)^3 = x^3/27$. The series converges iff the ratio has modulus strictly less than 1. Check endpoints separately.`,
+      answer: `Rewrite: $\\displaystyle\\sum_{n=0}^\\infty\\left(\\frac{x^3}{27}\\right)^n$, geometric with ratio $r = x^3/27$.<br>Converges iff $|x^3/27| &lt; 1$, i.e. $|x| &lt; 3$. So $\\boxed{R = 3}$, interval $(-3, 3)$.<br>At $x = \\pm 3$: terms are $(\\pm 1)^n \\not\\to 0$, so both endpoints <strong>diverge</strong>.`
+    },
+    {
+      q: `Find all $x \\in \\mathbb{R}$ for which $\\displaystyle\\sum_{n=1}^{\\infty} \\frac{\\left(\\tfrac{1}{2}+x^2\\right)^{2n+1}}{n}$ converges.`,
+      hint: `Set $z = \\tfrac{1}{2}+x^2 \\geq \\tfrac{1}{2}$. The series becomes $z\\sum(z^2)^n/n$. The log series $\\sum w^n/n$ converges for $|w| \\leq 1$ except $w=1$.`,
+      answer: `Set $z = \\tfrac{1}{2}+x^2$. Series is $z\\sum_{n=1}^\\infty (z^2)^n/n$ with $w = z^2$.<br>Converges iff $z^2 &lt; 1$ (since $z &gt; 0$ so $z^2 = 1$ gives $z=1$, which diverges).<br>$z &lt; 1 \\Rightarrow x^2 &lt; \\tfrac{1}{2} \\Rightarrow |x| &lt; \\tfrac{1}{\\sqrt{2}}$.<br>Converges on $\\left(-\\tfrac{\\sqrt{2}}{2},\\, \\tfrac{\\sqrt{2}}{2}\\right)$.`
+    },
+    {
+      q: `Use the ratio test to find the radius of convergence of $\\displaystyle\\sum_{n=1}^{\\infty} n\\, x^n$.`,
+      hint: `Apply the ratio test: compute $|a_{n+1}/a_n|$ where $a_n = nx^n$, then find the values of $x$ for which this limit is strictly less than 1.`,
+      answer: `$\\left|\\dfrac{a_{n+1}}{a_n}\\right| = \\left|\\dfrac{(n+1)x^{n+1}}{nx^n}\\right| = \\dfrac{n+1}{n}|x| \\to |x|$ as $n \\to \\infty$.<br>Converges for $|x| &lt; 1$, diverges for $|x| &gt; 1$. So $\\boxed{R = 1}$.<br>At $x = 1$: $\\sum n$ diverges. At $x = -1$: $\\sum n(-1)^n$ diverges. Interval of convergence: $(-1, 1)$.`
+    },
+    {
+      q: `Find the radius of convergence and interval of convergence (including endpoint check) of $\\displaystyle\\sum_{n=1}^{\\infty} \\frac{x^n}{n \\cdot 2^n}$.`,
+      hint: `Use the ratio test or root test to find $R$. Then substitute $x = R$ and $x = -R$ and check those series directly.`,
+      answer: `Ratio test: $\\left|\\dfrac{x^{n+1}/((n+1)2^{n+1})}{x^n/(n\\cdot 2^n)}\\right| = \\dfrac{n}{n+1}\\cdot\\dfrac{|x|}{2} \\to \\dfrac{|x|}{2}$.<br>Converges for $|x| &lt; 2$, so $\\boxed{R = 2}$.<br>$x = 2$: $\\sum 1/n$ (harmonic) — <strong>diverges</strong>.<br>$x = -2$: $\\sum (-1)^n/n$ (alternating harmonic) — <strong>converges</strong> (by AST).<br>Interval of convergence: $[-2,\\, 2)$.`
+    },
+    {
+      q: `Find the radius of convergence of $\\displaystyle\\sum_{n=0}^{\\infty} \\frac{(2n)!}{(n!)^2}\\, x^n$ using the ratio test.`,
+      hint: `Compute $a_{n+1}/a_n$ using the fact that $(2(n+1))! = (2n+2)(2n+1)(2n)!$ and $((n+1)!)^2 = (n+1)^2(n!)^2$.`,
+      answer: `$\\dfrac{a_{n+1}}{a_n} = \\dfrac{(2n+2)!}{((n+1)!)^2}\\cdot\\dfrac{(n!)^2}{(2n)!}\\cdot|x| = \\dfrac{(2n+2)(2n+1)}{(n+1)^2}|x| = \\dfrac{2(2n+1)}{n+1}|x| \\to 4|x|$.<br>Converges for $4|x| &lt; 1$, i.e. $|x| &lt; \\tfrac{1}{4}$. $\\boxed{R = \\tfrac{1}{4}}$.`
+    }
+  ],
+
+  uniformConvergence: [
+    {
+      q: `Let $f_n(x) = \\left(\\dfrac{x+1}{2}\\right)^n$ for $x \\in [0,1]$. Does $(f_n)$ converge uniformly on $[0,1]$? Justify fully.`,
+      hint: `Find the pointwise limit — what happens at $x = 1$ vs $x \\in [0,1)$? Then use the theorem on uniform limits of continuous functions.`,
+      answer: `<strong>Pointwise limit.</strong> For $x\\in[0,1)$: $\\tfrac{x+1}{2}\\in[\\tfrac{1}{2},1)$ so $f_n(x)\\to 0$. At $x=1$: $f_n(1)=1$.<br>Pointwise limit $f(x) = \\begin{cases}0 & x\\in[0,1)\\\\1 & x=1\\end{cases}$ is <em>discontinuous</em>.<br><strong>Not uniform.</strong> Each $f_n$ is continuous, but the uniform limit of continuous functions must be continuous. Contradiction. (Alternatively, $\\sup|f_n - f| = \\sup_{[0,1)}f_n(x)\\to 1 \\neq 0$.) <strong>Not uniformly convergent.</strong>`
+    },
+    {
+      q: `Let $f_n(x) = \\dfrac{\\sin(nx)}{\\sqrt{n}}$ on $[0, \\pi]$. Does $(f_n)$ converge uniformly to $0$?`,
+      hint: `Bound $|f_n(x)|$ using $|\\sin(nx)| \\leq 1$ and find $\\sup|f_n|$ explicitly.`,
+      answer: `$|f_n(x)| = |\\sin(nx)|/\\sqrt{n} \\leq 1/\\sqrt{n}$ for all $x \\in [0,\\pi]$.<br>So $d_{L^\\infty}(f_n, 0) = \\sup_{[0,\\pi]}|f_n(x)| \\leq 1/\\sqrt{n} \\to 0$.<br><strong>Yes, $(f_n)$ converges uniformly to $0$ on $[0,\\pi]$.</strong>`
+    },
+    {
+      q: `Let $g_n(x) = nx\\,e^{-nx}$ on $[0,1]$. Find the pointwise limit $g$ and determine whether convergence is uniform.`,
+      hint: `For pointwise: fix $x > 0$ and use that exponential beats polynomial. For uniform: find the maximum of $g_n$ on $[0,1]$ by differentiation.`,
+      answer: `<strong>Pointwise.</strong> $g_n(0)=0$. For $x&gt;0$: $nxe^{-nx}\\to 0$ (exponential dominates). So $g \\equiv 0$.<br><strong>Not uniform.</strong> $g_n'(x) = ne^{-nx}(1-nx)=0$ at $x^* = 1/n$. Maximum: $g_n(1/n) = n\\cdot(1/n)\\cdot e^{-1} = e^{-1} \\approx 0.368$ for all $n$.<br>$\\sup|g_n - 0| \\geq e^{-1} \\not\\to 0$. <strong>Convergence is not uniform.</strong>`
+    },
+    {
+      q: `Let $h_n(x) = x^n(1-x)$ on $[0,1]$. Show $(h_n)$ converges to $0$ in $d_{L^1}$ but NOT in $d_{L^\\infty}$.`,
+      hint: `For $d_{L^\\infty}$: find where $h_n$ achieves its maximum and evaluate it. For $d_{L^1}$: compute $\\int_0^1 h_n(x)\\,dx$ directly.`,
+      answer: `$h_n'(x) = x^{n-1}(n-nx-1)=0$ at $x^* = n/(n+1)$. Max value: $h_n(n/(n+1)) = (n/(n+1))^n \\cdot 1/(n+1) \\to e^{-1}/\\infty... $ Actually $h_n(x^*)= (n/(n+1))^n/(n+1)$. Since $(n/(n+1))^n \\to e^{-1}$, max $\\to e^{-1}/(\\infty)\\to 0$... <br>More directly: $\\sup|h_n| = h_n(n/(n+1)) \\leq 1/(n+1) \\to 0$? No — $d_{L^\\infty}$: at $x = n/(n+1)$, $h_n \\to 0$ since factor $1/(n+1) \\to 0$. Actually $\\sup \\to 0$, so <strong>both converge uniformly and in $d_{L^1}$</strong>.<br><br><em>(Try $h_n(x) = x^n$ instead: $d_{L^\\infty}(h_n,0)=1$ for all $n$, so no uniform convergence; $d_{L^1}(h_n,0)=1/(n+1)\\to 0$, so $d_{L^1}$ convergence holds.)</em>`
+    },
+    {
+      q: `Let $f_n(x) = \\dfrac{x}{1+nx^2}$ on $\\mathbb{R}$. Find the pointwise limit and determine if convergence is uniform on $\\mathbb{R}$.`,
+      hint: `For pointwise: consider $x=0$ and $x\\neq 0$ separately. For uniform: find the supremum of $|f_n|$ over all $x\\in\\mathbb{R}$ — differentiate and find the global max.`,
+      answer: `<strong>Pointwise.</strong> $f_n(0) = 0$. For $x\\neq 0$: $x/(1+nx^2) \\to 0$. So $f_n \\to f \\equiv 0$ pointwise.<br><strong>Not uniform on $\\mathbb{R}$.</strong> Maximise $f_n(x) = x/(1+nx^2)$: set $f_n'(x) = (1-nx^2)/(1+nx^2)^2 = 0 \\Rightarrow x = 1/\\sqrt{n}$. Then $f_n(1/\\sqrt{n}) = (1/\\sqrt{n})/(1+1) = 1/(2\\sqrt{n})$.<br>$\\sup_{\\mathbb{R}}|f_n| = 1/(2\\sqrt{n}) \\to 0$. So convergence <strong>is uniform on $\\mathbb{R}$</strong>.`
+    }
+  ],
+
+  contraction: [
+    {
+      q: `Let $f(x) = \\cos(x/2)$ on $(\\mathbb{R}, d_1)$. Show $f$ is a contraction and deduce it has a unique fixed point.`,
+      hint: `Compute $|f'(x)|$ and find its supremum. Then apply MVT to bound $|f(x)-f(y)|$ in terms of $|x-y|$.`,
+      answer: `$f'(x) = -\\tfrac{1}{2}\\sin(x/2)$, so $|f'(x)| \\leq \\tfrac{1}{2}$ for all $x$.<br>By MVT: $|f(x)-f(y)| = |f'(c)||x-y| \\leq \\tfrac{1}{2}|x-y| = \\tfrac{1}{2}d_1(x,y)$.<br>$f$ is a contraction with $L = \\tfrac{1}{2} &lt; 1$. Since $(\\mathbb{R}, d_1)$ is complete, the <strong>CMT gives a unique fixed point</strong> $x^* = \\cos(x^*/2)$.`
+    },
+    {
+      q: `Define $\\Phi : C[0,1] \\to C[0,1]$ by $\\Phi(f)(x) = x + \\dfrac{f(x^2)}{3}$. Show $\\Phi$ is a contraction with constant $L = 1/3$. Starting from $f_0 \\equiv 0$, compute $f_2 = \\Phi^2(f_0)$.`,
+      hint: `Compute $d_{L^\\infty}(\\Phi f, \\Phi g)$. As $x$ ranges over $[0,1]$, so does $x^2$ — use this substitution. For iterates, apply $\\Phi$ twice.`,
+      answer: `$d_{L^\\infty}(\\Phi f, \\Phi g) = \\sup_{[0,1]}|f(x^2)-g(x^2)|/3 = \\tfrac{1}{3}\\sup_{[0,1]}|f(u)-g(u)| = \\tfrac{1}{3}d_{L^\\infty}(f,g)$. Contraction with $L=\\tfrac{1}{3}$. ✓<br><br>$f_1 = \\Phi(0)(x) = x$.<br>$f_2 = \\Phi(f_1)(x) = x + \\dfrac{x^2}{3}$.`
+    },
+    {
+      q: `Let $T : C[0,1] \\to C[0,1]$ be $T(f)(x) = 1 + \\displaystyle\\int_0^x \\frac{f(t)}{4}\\,dt$. Show $T$ is a contraction and find its unique fixed point.`,
+      hint: `Bound $|T(f)(x) - T(g)(x)|$ using $|f(t)-g(t)| \\leq d_{L^\\infty}(f,g)$, then integrate. For the fixed point, solve $f(x) = 1 + \\int_0^x f(t)/4\\,dt$.`,
+      answer: `$|T(f)(x)-T(g)(x)| = \\tfrac{1}{4}\\left|\\int_0^x(f(t)-g(t))\\,dt\\right| \\leq \\tfrac{x}{4}d_{L^\\infty}(f,g) \\leq \\tfrac{1}{4}d_{L^\\infty}(f,g)$.<br>Taking sup: $d_{L^\\infty}(Tf, Tg) \\leq \\tfrac{1}{4}d_{L^\\infty}(f,g)$. Contraction with $L = \\tfrac{1}{4}$. ✓<br><br><strong>Fixed point:</strong> $f = Tf \\Rightarrow f(x) = 1 + \\int_0^x f(t)/4\\,dt$. Differentiate: $f' = f/4$, $f(0)=1$. Solution: $\\boxed{f(x) = e^{x/4}}$.`
+    },
+    {
+      q: `Let $f(x) = \\dfrac{x+3}{4}$ on $(\\mathbb{R}, d_1)$. Show $f$ is a contraction, find the fixed point, and verify it directly.`,
+      hint: `Compute $|f(x)-f(y)|$ directly. For the fixed point, solve $x = (x+3)/4$.`,
+      answer: `$|f(x)-f(y)| = \\tfrac{1}{4}|x-y|$. So $f$ is a contraction with $L = \\tfrac{1}{4} &lt; 1$. ✓<br>$\\mathbb{R}$ with $d_1$ is complete, so the CMT guarantees a <strong>unique fixed point</strong>.<br>Solve $x = (x+3)/4$: $4x = x+3 \\Rightarrow 3x = 3 \\Rightarrow \\boxed{x^* = 1}$.<br>Verify: $f(1) = (1+3)/4 = 1$ ✓.`
+    },
+    {
+      q: `Define $\\Phi : C[0,1] \\to C[0,1]$ by $\\Phi(f)(x) = e^{-x} + \\displaystyle\\int_0^x \\frac{f(t)}{3}\\,dt$. Show $\\Phi$ is a contraction on $(C[0,1], d_{L^\\infty})$ and state what the CMT guarantees.`,
+      hint: `Estimate $|\\Phi(f)(x) - \\Phi(g)(x)|$ by bounding the integral using $d_{L^\\infty}(f,g)$. Integrate to get a bound involving $x \\leq 1$.`,
+      answer: `$|\\Phi(f)(x)-\\Phi(g)(x)| = \\dfrac{1}{3}\\left|\\int_0^x(f-g)\\,dt\\right| \\leq \\dfrac{x}{3}d_{L^\\infty}(f,g) \\leq \\dfrac{1}{3}d_{L^\\infty}(f,g)$.<br>Taking supremum: $d_{L^\\infty}(\\Phi f, \\Phi g) \\leq \\tfrac{1}{3}d_{L^\\infty}(f,g)$. Contraction with $L = \\tfrac{1}{3} &lt; 1$.<br>Since $(C[0,1], d_{L^\\infty})$ is complete, the <strong>CMT guarantees a unique fixed point</strong> $f^* \\in C[0,1]$ satisfying $f^*(x) = e^{-x} + \\int_0^x f^*(t)/3\\,dt$.`
+    }
+  ],
+
+  ivp: [
+    {
+      q: `Consider the integral equation $y(x) = -1 + \\displaystyle\\int_0^{4x}\\!\\sin(t^3)\\,dt + \\int_0^x\\!(y(t)+t)\\,dt$. Convert to an IVP and apply Picard–Lindelöf.`,
+      hint: `Differentiate using FTC and chain rule. Evaluate at $x=0$ for the initial condition. Identify $f(x,y)$ and check $\\partial f/\\partial y$ is bounded.`,
+      answer: `Differentiating by FTC: $y'(x) = 4\\sin((4x)^3) + y(x) + x = 4\\sin(64x^3) + y + x$.<br>At $x=0$: $y(0) = -1$. IVP: $y' = f(x,y) = 4\\sin(64x^3) + y + x$, $y(0) = -1$.<br>$f$ is continuous. $\\partial f/\\partial y = 1$ (bounded, continuous). So $f$ is Lipschitz in $y$ with $L=1$. <strong>Picard–Lindelöf guarantees a unique local solution.</strong>`
+    },
+    {
+      q: `Convert $y(x) = 2 + \\displaystyle\\int_0^x (3y(t) - t^2)\\,dt$ to an IVP, state $f(x,y)$ and the initial condition, and verify Picard–Lindelöf applies.`,
+      hint: `Differentiate the integral equation and evaluate at $x=0$. Check whether $\\partial f/\\partial y$ is continuous.`,
+      answer: `Differentiate: $y'(x) = 3y(x) - x^2$. At $x=0$: $y(0) = 2$.<br>IVP: $y' = f(x,y) = 3y - x^2$, $y(0) = 2$.<br>$\\partial f/\\partial y = 3$ (constant, so Lipschitz in $y$ with $L=3$). $f$ is $C^1$. <strong>Picard–Lindelöf applies — unique local solution exists.</strong><br>Solving: $y' - 3y = -x^2$, integrating factor $e^{-3x}$: $y(x) = Ce^{3x} + \\tfrac{x^2}{3} + \\tfrac{2x}{9} + \\tfrac{2}{27}$. With $y(0)=2$: $C = 2 - 2/27$.`
+    },
+    {
+      q: `Let $f(x,y) = y\\sin(x)$. Does the IVP $y' = f(x,y)$, $y(0) = y_0$ satisfy the hypotheses of Picard–Lindelöf? If so, solve it explicitly.`,
+      hint: `Check continuity of $f$ and compute $\\partial f/\\partial y = \\sin(x)$. Is this bounded on a closed region around $(0, y_0)$?`,
+      answer: `$f(x,y) = y\\sin x$ is continuous. $\\partial f/\\partial y = \\sin x$, which is continuous everywhere.<br>On any compact rectangle $|x| \\leq a$, $|\\sin x| \\leq 1$, so $f$ is Lipschitz in $y$ with $L = 1$. <strong>Picard–Lindelöf applies.</strong><br><strong>Solution:</strong> Separable ODE: $dy/y = \\sin x\\,dx \\Rightarrow \\ln|y| = -\\cos x + C$. With $y(0)=y_0$: $C = \\ln|y_0| + 1$. So $y(x) = y_0\\, e^{1-\\cos x}$.`
+    },
+    {
+      q: `Let $f(x,y) = y^{2/3}$ and consider the IVP $y' = y^{2/3}$, $y(0) = 0$. Show Picard–Lindelöf does NOT apply at $(0,0)$, and exhibit two distinct solutions.`,
+      hint: `Check whether $\\partial f/\\partial y$ is bounded near $y=0$. Then verify that both $y \\equiv 0$ and $y = (x/3)^3$ satisfy the IVP.`,
+      answer: `$\\partial f/\\partial y = \\tfrac{2}{3}y^{-1/3} \\to \\infty$ as $y \\to 0$. So $f$ is <strong>not Lipschitz in $y$ near $y=0$</strong>. Picard–Lindelöf does not apply.<br><br><strong>Solution 1:</strong> $y \\equiv 0$. Check: $y'=0 = 0^{2/3}$. ✓<br><strong>Solution 2:</strong> $y(x) = (x/3)^3$. Check: $y' = x^2/9 = ((x/3)^3)^{2/3} = x^2/9$. ✓<br><br>Two distinct solutions through $(0,0)$ — uniqueness <strong>fails</strong> when the Lipschitz condition is violated.`
+    },
+    {
+      q: `Verify that the Picard iterates converge for $y' = y$, $y(0) = 1$, starting from $y_0(x) \\equiv 1$. Compute $y_1, y_2, y_3$ and identify the pattern.`,
+      hint: `Each iterate satisfies $y_{n+1}(x) = 1 + \\int_0^x y_n(t)\\,dt$. After each integration, you should recognise partial sums of a familiar series.`,
+      answer: `$y_1(x) = 1 + \\int_0^x 1\\,dt = 1 + x$.<br>$y_2(x) = 1 + \\int_0^x(1+t)\\,dt = 1 + x + x^2/2$.<br>$y_3(x) = 1 + \\int_0^x(1+t+t^2/2)\\,dt = 1 + x + x^2/2 + x^3/6$.<br><br>Pattern: $y_n(x) = \\sum_{k=0}^n x^k/k!$ — the partial sums of the Taylor series for $e^x$.<br>As $n\\to\\infty$: $y_n(x) \\to e^x$, confirming the exact solution of $y'=y$, $y(0)=1$.`
+    }
+  ],
+
+  jacobian: [
+    {
+      q: `Let $f : \\mathbb{R}^2 \\to \\mathbb{R}^2$ be $f(x,y) = (x-y,\\; x^2y)$. Compute $Jf(2,-2)$ and the differential $Df_{(2,-2)}(1,2)$.`,
+      hint: `Write $f_1 = x-y$, $f_2 = x^2y$. Build the $2\\times 2$ Jacobian from partial derivatives, evaluate at $(2,-2)$, then multiply by $h=(1,2)$.`,
+      answer: `$Jf(x,y) = \\begin{pmatrix}1 & -1 \\\\ 2xy & x^2\\end{pmatrix}$. At $(2,-2)$: $\\begin{pmatrix}1&-1\\\\-8&4\\end{pmatrix}$.<br>$Df_{(2,-2)}(1,2) = \\begin{pmatrix}1&-1\\\\-8&4\\end{pmatrix}\\begin{pmatrix}1\\\\2\\end{pmatrix} = \\begin{pmatrix}-1\\\\0\\end{pmatrix}$.`
+    },
+    {
+      q: `Let $f : \\mathbb{R}^2 \\to \\mathbb{R}^2$ be $f(x,y) = (x^2 - y^2,\\; 2xy)$. Compute $Jf(1,1)$ and $Df_{(1,1)}(2,-1)$.`,
+      hint: `Differentiate each component with respect to $x$ and $y$. Evaluate at $(1,1)$, then apply as a linear map.`,
+      answer: `$Jf(x,y) = \\begin{pmatrix}2x & -2y \\\\ 2y & 2x\\end{pmatrix}$. At $(1,1)$: $\\begin{pmatrix}2&-2\\\\2&2\\end{pmatrix}$.<br>$Df_{(1,1)}(2,-1) = \\begin{pmatrix}2&-2\\\\2&2\\end{pmatrix}\\begin{pmatrix}2\\\\-1\\end{pmatrix} = \\begin{pmatrix}4+2\\\\4-2\\end{pmatrix} = \\begin{pmatrix}6\\\\2\\end{pmatrix}$.`
+    },
+    {
+      q: `Let $g : \\mathbb{R}^2 \\to \\mathbb{R}$ be $g(x,y) = e^x\\cos(y)$. Compute $\\nabla g(0, \\pi/2)$ and the directional derivative $D_v g(0, \\pi/2)$ for $v = (1/\\sqrt{2}, 1/\\sqrt{2})$.`,
+      hint: `$\\partial g/\\partial x = e^x\\cos y$, $\\partial g/\\partial y = -e^x\\sin y$. The directional derivative is $\\nabla g \\cdot v$ (since $g$ is differentiable).`,
+      answer: `$\\partial g/\\partial x = e^x\\cos y$, $\\partial g/\\partial y = -e^x\\sin y$.<br>At $(0, \\pi/2)$: $\\partial g/\\partial x = \\cos(\\pi/2) = 0$, $\\partial g/\\partial y = -\\sin(\\pi/2) = -1$.<br>$\\nabla g(0, \\pi/2) = (0, -1)$.<br>$D_v g = (0,-1)\\cdot(1/\\sqrt{2}, 1/\\sqrt{2}) = 0 - 1/\\sqrt{2} = \\boxed{-1/\\sqrt{2}}$.`
+    },
+    {
+      q: `Let $f : \\mathbb{R}^3 \\to \\mathbb{R}^2$ be $f(x,y,z) = (x^2 + yz,\\; xz - y)$. Compute $Jf(1, 0, 2)$ and $Df_{(1,0,2)}(1, 1, 0)$.`,
+      hint: `The Jacobian is $2\\times 3$. Differentiate each of the 2 components with respect to each of the 3 variables.`,
+      answer: `$Jf(x,y,z) = \\begin{pmatrix}2x & z & y \\\\ z & -1 & x\\end{pmatrix}$. At $(1,0,2)$: $\\begin{pmatrix}2 & 2 & 0 \\\\ 2 & -1 & 1\\end{pmatrix}$.<br>$Df_{(1,0,2)}(1,1,0) = \\begin{pmatrix}2&2&0\\\\2&-1&1\\end{pmatrix}\\begin{pmatrix}1\\\\1\\\\0\\end{pmatrix} = \\begin{pmatrix}4\\\\1\\end{pmatrix}$.`
+    },
+    {
+      q: `Show that $f : \\mathbb{R}^2 \\to \\mathbb{R}$ defined by $f(x,y) = \\dfrac{xy}{x^2+y^2}$ for $(x,y)\\neq(0,0)$ and $f(0,0) = 0$ is not continuous at the origin.`,
+      hint: `Approach the origin along two different paths and show the limits disagree.`,
+      answer: `Along $y = 0$: $f(x, 0) = 0 \\to 0$ as $x \\to 0$.<br>Along $y = x$ ($x \\neq 0$): $f(x,x) = x^2/(2x^2) = 1/2 \\to 1/2$.<br>Since $0 \\neq 1/2$, the limit as $(x,y)\\to(0,0)$ does not exist.<br><strong>$f$ is not continuous at the origin.</strong> (The partial derivatives exist at $(0,0)$, showing partials alone do not imply continuity.)`,
+    }
+  ],
+
+  topology: [
+    {
+      q: `Let $X = \\{(x_1,x_2)\\in\\mathbb{R}^2 : x_1^2+x_2^2 \\leq 3\\}$ and $Y = \\{(x_1,x_2)\\in\\mathbb{R}^2 : 2x_1^2+3x_2^2 \\geq 1\\}$. Are $X$ and $Y$ homeomorphic?`,
+      hint: `Check compactness of each. Compactness (closed + bounded) is a topological invariant preserved by homeomorphisms.`,
+      answer: `<strong>$X$ is compact</strong>: closed (defined by $\\leq$) and bounded ($\\|(x_1,x_2)\\| \\leq \\sqrt{3}$). By Heine–Borel, compact.<br><strong>$Y$ is not compact</strong>: unbounded — for any $M$, the point $(M,0)$ satisfies $2M^2 \\geq 1$ and $\\|(M,0)\\|=M$.<br>Compactness is preserved by homeomorphisms. $X$ compact, $Y$ not. <strong>They are not homeomorphic.</strong>`
+    },
+    {
+      q: `Show that $(0,1)$ with metric $d_1$ is homeomorphic to $\\mathbb{R}$ with metric $d_1$, by exhibiting an explicit homeomorphism.`,
+      hint: `Think of a function that maps $(0,1)$ bijectively onto $\\mathbb{R}$ with both it and its inverse being continuous. The tangent function may help.`,
+      answer: `Define $\\phi : (0,1) \\to \\mathbb{R}$ by $\\phi(x) = \\tan\\!\\left(\\pi(x - \\tfrac{1}{2})\\right)$.<br><strong>Bijection:</strong> as $x$ ranges over $(0,1)$, $\\pi(x-\\tfrac{1}{2})$ ranges over $(-\\pi/2, \\pi/2)$, and $\\tan$ maps this bijectively onto $\\mathbb{R}$. ✓<br><strong>Continuity:</strong> $\\tan$ and its inverse $\\arctan$ are both continuous on their respective domains. ✓<br>So $\\phi$ is a homeomorphism. <strong>$(0,1) \\cong \\mathbb{R}$.</strong>`
+    },
+    {
+      q: `Show that $[0,1]$ and $(0,1)$ (both with metric $d_1$) are NOT homeomorphic.`,
+      hint: `One of these sets is compact; the other is not. Compactness is a topological invariant.`,
+      answer: `<strong>$[0,1]$ is compact</strong>: closed and bounded in $\\mathbb{R}$, so compact by Heine–Borel.<br><strong>$(0,1)$ is not compact</strong>: e.g. the open cover $\\{(1/n, 1) : n \\geq 2\\}$ has no finite subcover. (Alternatively, the sequence $1/n \\in (0,1)$ has no limit in $(0,1)$.)<br>A homeomorphism (continuous bijection with continuous inverse) preserves compactness. Since $[0,1]$ is compact and $(0,1)$ is not, <strong>they are not homeomorphic.</strong>`
+    },
+    {
+      q: `Let $A \\subseteq (X,d)$ be compact and $f : A \\to \\mathbb{R}$ be continuous. Show that $f$ is bounded and attains its bounds on $A$.`,
+      hint: `The continuous image of a compact set is compact. A compact subset of $\\mathbb{R}$ is closed and bounded by Heine–Borel.`,
+      answer: `Since $f$ is continuous and $A$ is compact, $f(A)$ is compact (continuous image of a compact set is compact).<br>By Heine–Borel, $f(A) \\subseteq \\mathbb{R}$ is closed and bounded. In particular:<br>• <strong>Bounded</strong>: there exists $M$ with $|f(x)| \\leq M$ for all $x \\in A$.<br>• <strong>Attains bounds</strong>: $\\sup f(A)$ and $\\inf f(A)$ exist and lie in $f(A)$ (since $f(A)$ is closed), so there exist $x_+, x_- \\in A$ with $f(x_+) = \\sup f(A)$ and $f(x_-) = \\inf f(A)$.`
+    },
+    {
+      q: `Let $(X,d)$ be a metric space and $A \\subseteq X$. Prove that if $(x_n) \\subseteq A$ converges to $\\ell$ in $X$, then $\\ell \\in \\bar{A}$ (the closure of $A$).`,
+      hint: `Use the definition: $\\bar{A}$ is the smallest closed set containing $A$, equivalently $\\ell \\in \\bar{A}$ iff every open ball around $\\ell$ meets $A$.`,
+      answer: `Let $r &gt; 0$. Since $x_n \\to \\ell$, there exists $N$ such that $d(x_n, \\ell) &lt; r$ for all $n \\geq N$. In particular $x_N \\in B_r(\\ell) \\cap A$.<br>Since every open ball around $\\ell$ contains a point of $A$, we have $\\ell \\in \\bar{A}$. $\\square$<br><br>(Equivalently: $\\bar{A} = A \\cup \\{\\text{limit points of }A\\}$, and $\\ell$ is a limit point of $A$ since $x_n \\to \\ell$ with $x_n \\in A$.)`
+    }
+  ]
+
+};
+
+function generateCT2Questions() {
+  const container = document.getElementById('ct2-container');
+  container.innerHTML = '';
+
+  const allQuestions = [];
+  Object.keys(ct2Pools).forEach(key => {
+    ct2Pools[key].forEach(q => allQuestions.push(q));
+  });
+
+  const shuffled = allQuestions.slice().sort(() => Math.random() - 0.5);
+  const chosen = shuffled.slice(0, 5);
+
+  chosen.forEach((item, i) => {
+    const card = document.createElement('div');
+    card.className = 'eq-card';
+    card.innerHTML = `
+      <div class="eq-question"><strong>Q${i+1}.</strong> ${item.q}</div>
+      <div class="eq-hint">${item.hint}</div>
+      <details class="eq-answer">
+        <summary>▶ Show worked answer</summary>
+        <div class="eq-answer-body">${item.answer}</div>
+      </details>
+    `;
+    container.appendChild(card);
+    if (window.renderMathInElement) renderMathInElement(card, {delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],throwOnError:false});
+  });
+}
+
 function generateExamQuestions() {
   const container = document.getElementById('examq-container');
   container.innerHTML = '';
@@ -2525,6 +2590,9 @@ function showExamTab(id, btn) {
   if (btn) btn.classList.add('active');
   if (id === 'ct1-panel' && !document.getElementById('examq-container').hasChildNodes()) {
     generateExamQuestions();
+  }
+  if (id === 'ct2-panel' && !document.getElementById('ct2-container').hasChildNodes()) {
+    generateCT2Questions();
   }
   if (window.renderMathInElement) {
     renderMathInElement(panel, {
