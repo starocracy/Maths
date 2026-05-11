@@ -1145,9 +1145,30 @@ body {
     <a class="sidebar-item sub" onclick="showSection('s8')" href="#">MUC for Systems</a>
     <a class="sidebar-item sub" onclick="showSection('s8')" href="#">Diagonalisation Method</a>
 
-    <div class="sidebar-section-label" style="margin-top:0.8rem;">Coming Soon</div>
-    <span class="sidebar-item locked">9 · Further Topics</span>
-    <span class="sidebar-item locked">10 · Laplace Transforms</span>
+    <div class="sidebar-section-label" style="margin-top:0.8rem;">Jordan Form &amp; VoP</div>
+    <a class="sidebar-item" onclick="showSection('s9')" href="#">
+      <span class="item-num">9</span> Generalised Eigenvectors &amp; Jordan Form
+    </a>
+    <a class="sidebar-item sub" onclick="showSection('s9')" href="#">Incomplete Eigenvectors</a>
+    <a class="sidebar-item sub" onclick="showSection('s9')" href="#">GEVs &amp; Jordan Chains</a>
+    <a class="sidebar-item sub" onclick="showSection('s9')" href="#">Quasi-Diagonalisation</a>
+    <a class="sidebar-item" onclick="showSection('s9a')" href="#">
+      <span class="item-num">9A</span> Variation of Parameters for Systems
+    </a>
+    <a class="sidebar-item sub" onclick="showSection('s9a')" href="#">Fundamental Matrix</a>
+    <a class="sidebar-item sub" onclick="showSection('s9a')" href="#">VoP Algorithm</a>
+
+    <div class="sidebar-section-label" style="margin-top:0.8rem;">Partial Differential Equations</div>
+    <a class="sidebar-item" onclick="showSection('s10p')" href="#">
+      <span class="item-num">10P</span> PDEs: Waves, ICs &amp; Characteristics
+    </a>
+    <a class="sidebar-item sub" onclick="showSection('s10p')" href="#">d'Alembert's Formula</a>
+    <a class="sidebar-item sub" onclick="showSection('s10p')" href="#">Characteristics</a>
+    <a class="sidebar-item" onclick="showSection('s10')" href="#">
+      <span class="item-num">10</span> PDEs: Separation of Variables
+    </a>
+    <a class="sidebar-item sub" onclick="showSection('s10')" href="#">Wave &amp; Heat Equations</a>
+    <a class="sidebar-item sub" onclick="showSection('s10')" href="#">Laplace's Equation</a>
 
     <div class="sidebar-section-label" style="margin-top:0.8rem;">Tools</div>
     <a class="sidebar-item" onclick="showView('methods')" href="#">
@@ -1292,14 +1313,50 @@ body {
         <button onclick="showView('quiz')" style="margin-left:auto;font-family:var(--mono);font-size:0.62rem;letter-spacing:0.1em;text-transform:uppercase;background:var(--ink);color:var(--page-warm);border:none;padding:0.4rem 0.9rem;border-radius:2px;cursor:pointer;white-space:nowrap;">Take Quiz →</button>
       </div>
 
-      <div class="home-section-label">Locked — Upload further PDFs to unlock</div>
+      <div class="home-section-label">Jordan Form &amp; Variation of Parameters — Set 9</div>
       <div class="home-grid">
-        <div class="home-card locked" style="--card-color: #888;">
-          <span class="home-card-num">Set 9+</span>
-          <div class="home-card-icon">…</div>
-          <div class="home-card-title">Further Topics</div>
-          <p class="home-card-desc">Awaiting PDF upload.</p>
+        <div class="home-card" style="--card-color: #3a1a5c;" onclick="showSection('s9')">
+          <span class="home-card-num">Set 9</span>
+          <div class="home-card-icon">J = P⁻¹AP</div>
+          <div class="home-card-week">Week 11</div>
+          <div class="home-card-title">Generalised Eigenvectors &amp; Jordan Form</div>
+          <p class="home-card-desc">Incomplete eigenvector sets, GEVs, Jordan blocks, quasi-diagonalisation method.</p>
+          <div class="home-card-arrow">Open →</div>
         </div>
+        <div class="home-card" style="--card-color: #1a5c3a;" onclick="showSection('s9a')">
+          <span class="home-card-num">Set 9A</span>
+          <div class="home-card-icon">x = Ψ(t)z</div>
+          <div class="home-card-week">Week 11 · Additional</div>
+          <div class="home-card-title">Variation of Parameters for Systems</div>
+          <p class="home-card-desc">Fundamental matrix, VoP ansatz for systems, non-constant coefficient case.</p>
+          <div class="home-card-arrow">Open →</div>
+        </div>
+      </div>
+
+      <div class="home-section-label">Partial Differential Equations — Set 10</div>
+      <div class="home-grid">
+        <div class="home-card" style="--card-color: #1a3a5c;" onclick="showSection('s10p')">
+          <span class="home-card-num">Set 10P</span>
+          <div class="home-card-icon">u_tt = a²u_xx</div>
+          <div class="home-card-week">Week 12 · Prelim.</div>
+          <div class="home-card-title">PDEs: Waves, ICs &amp; Characteristics</div>
+          <p class="home-card-desc">d'Alembert's formula, initial conditions, characteristics, boundary conditions.</p>
+          <div class="home-card-arrow">Open →</div>
+        </div>
+        <div class="home-card" style="--card-color: #1a5c1a;" onclick="showSection('s10')">
+          <span class="home-card-num">Set 10</span>
+          <div class="home-card-icon">u = X(x)T(t)</div>
+          <div class="home-card-week">Week 12</div>
+          <div class="home-card-title">PDEs: Separation of Variables</div>
+          <p class="home-card-desc">Wave, heat and Laplace equations solved by separation of variables.</p>
+          <div class="home-card-arrow">Open →</div>
+        </div>
+      </div>
+
+      <div style="background:var(--gold-bg);border:1px solid var(--gold);border-radius:2px;padding:0.9rem 1.2rem;margin:1.5rem 0 0.5rem;display:flex;align-items:center;gap:0.8rem;">
+        <span style="font-family:var(--mono);font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);white-space:nowrap;">★ Final Assessment</span>
+        <span style="font-size:0.9rem;color:var(--ink-soft);font-style:italic;">Sets 1–10 cover all Final Assessment material. Practice on specimen papers from 2022–23.</span>
+        <button onclick="showView('exam')" style="margin-left:auto;font-family:var(--mono);font-size:0.62rem;letter-spacing:0.1em;text-transform:uppercase;background:var(--ink);color:var(--page-warm);border:none;padding:0.4rem 0.9rem;border-radius:2px;cursor:pointer;white-space:nowrap;">Practice →</button>
       </div>
     </div>
 
@@ -2687,7 +2744,402 @@ body {
       <div class="section-nav">
         <button class="sec-nav-btn" onclick="showSection('s8p')">← Set 8P: Systems Preliminaries</button>
         <button class="sec-nav-btn" onclick="showView('home')">⌂ Back to Home</button>
-        <button class="sec-nav-btn" disabled>Next → <span style="font-style:italic;font-family:var(--serif)">(upload Set 9)</span></button>
+        <button class="sec-nav-btn" onclick="showSection('s9')">Next → Set 9: Jordan Form</button>
+      </div>
+    </div>
+
+    <!-- ════════════════════════════
+         S9 VIEW — Generalised Eigenvectors & Jordan Form
+    ════════════════════════════ -->
+    <div id="s9-view" class="view">
+      <div class="section-header">
+        <p class="crumb">MATH221 · Set 9 (Week 11)</p>
+        <h2>Generalised Eigenvectors &amp; Jordan Form</h2>
+        <p class="section-meta">Handling repeated eigenvalues when eigenvectors are insufficient · Jordan chains · quasi-diagonalisation</p>
+      </div>
+
+      <!-- §9.1 Motivation -->
+      <div class="subsec-heading">9.1 Motivation: Incomplete Eigenvector Sets</div>
+
+      <div class="block note-block">
+        <strong>Recall:</strong> For <span class="math">\dot{\mathbf{x}} = A\mathbf{x}</span>, if <span class="math">A</span> has <span class="math">n</span> linearly independent eigenvectors the general solution is <span class="math">\mathbf{x} = \sum C_k \mathbf{v}^k e^{\lambda_k t}</span>. A problem arises when a repeated eigenvalue has <em>fewer</em> linearly independent eigenvectors than its algebraic multiplicity — the eigenvector set is <strong>incomplete</strong>.
+      </div>
+
+      <div class="block ex-block">
+        <div class="block-label">Motivating Example — <span class="math">N = \begin{pmatrix}0&amp;1\\0&amp;0\end{pmatrix}</span></div>
+        <p>The only eigenvalue is <span class="math">\lambda = 0</span> (algebraic mult. 2), but only one eigenvector direction <span class="math">\mathbf{v} = (1,0)^\top</span> exists (geometric mult. 1). Direct solution of <span class="math">\dot{x}_1 = x_2,\ \dot{x}_2 = 0</span> gives:</p>
+        <div class="math-display">$$\mathbf{x}(t) = C_1\begin{pmatrix}1\\0\end{pmatrix} + C_2\begin{pmatrix}t\\1\end{pmatrix}$$</div>
+        <p>The second basis solution involves <span class="math">t</span> rather than a pure exponential. Generalised eigenvectors provide this systematically.</p>
+      </div>
+
+      <div class="block warn-block">
+        <strong>Defective matrix:</strong> A matrix where geometric multiplicity &lt; algebraic multiplicity for some eigenvalue cannot be diagonalised. Jordan form is the appropriate substitute.
+      </div>
+
+      <!-- §9.2 Generalised Eigenvectors -->
+      <div class="subsec-heading">9.2 Generalised Eigenvectors</div>
+
+      <div class="block def-block">
+        <div class="block-label">Definition — Generalised Eigenvector of Order <span class="math">m</span></div>
+        <p>A nonzero vector <span class="math">\mathbf{v}</span> is a <strong>generalised eigenvector (GEV) of order <span class="math">m</span></strong> for eigenvalue <span class="math">\lambda</span> if:</p>
+        <div class="math-display">$$(A - \lambda I)^m \mathbf{v} = \mathbf{0}, \qquad (A - \lambda I)^{m-1} \mathbf{v} \neq \mathbf{0}$$</div>
+        <ul class="content-list">
+          <li>Order 1: ordinary eigenvector, <span class="math">(A-\lambda I)\mathbf{v}=\mathbf{0}</span>.</li>
+          <li>Order 2: <span class="math">(A-\lambda I)^2\mathbf{v}=\mathbf{0}</span> but <span class="math">(A-\lambda I)\mathbf{v}\neq\mathbf{0}</span>. Note that <span class="math">(A-\lambda I)\mathbf{v}</span> is then an ordinary eigenvector.</li>
+        </ul>
+      </div>
+
+      <div class="block thm-block">
+        <div class="block-label">How <span class="math">A</span> Acts on a GEV</div>
+        <p>If <span class="math">\mathbf{v}^{(1)}</span> is a GEV of order 2 and <span class="math">\mathbf{v}^{(0)} = (A-\lambda I)\mathbf{v}^{(1)}</span> (the ordinary eigenvector below it), then:</p>
+        <div class="math-display">$$A\mathbf{v}^{(1)} = \lambda\,\mathbf{v}^{(1)} + \mathbf{v}^{(0)}$$</div>
+        <p>Multiplication by <span class="math">A</span> acts like scalar multiplication by <span class="math">\lambda</span> <em>plus a shift down the chain</em>. This structure is what forces the <span class="math">te^{\lambda t}</span> terms in the solution.</p>
+      </div>
+
+      <!-- §9.3 Jordan Chains & Jordan Form -->
+      <div class="subsec-heading">9.3 Jordan Chains &amp; Jordan Normal Form</div>
+
+      <div class="block def-block">
+        <div class="block-label">Definition — Jordan Chain</div>
+        <p>A <strong>Jordan chain</strong> of length <span class="math">m+1</span> for eigenvalue <span class="math">\lambda</span> is a sequence <span class="math">(\mathbf{v}^{(0)}, \mathbf{v}^{(1)}, \ldots, \mathbf{v}^{(m)})</span> where:</p>
+        <ul class="content-list">
+          <li><span class="math">\mathbf{v}^{(0)}</span> is an ordinary eigenvector: <span class="math">(A-\lambda I)\mathbf{v}^{(0)} = \mathbf{0}</span>.</li>
+          <li>Each subsequent vector satisfies: <span class="math">(A-\lambda I)\mathbf{v}^{(k)} = \mathbf{v}^{(k-1)}</span> for <span class="math">k = 1,\ldots,m</span>.</li>
+        </ul>
+        <div class="math-display">$$\mathbf{v}^{(0)} \xleftarrow{(A-\lambda I)} \mathbf{v}^{(1)} \xleftarrow{(A-\lambda I)} \cdots \xleftarrow{(A-\lambda I)} \mathbf{v}^{(m)}$$</div>
+        <p><strong>Algorithm:</strong> Find the <em>lead GEV</em> <span class="math">\mathbf{v}^{(m)}</span> by solving <span class="math">(A-\lambda I)^{m+1}\mathbf{v} = \mathbf{0}</span> for a vector not in the image of lower powers. Then generate the chain <em>downward</em>: <span class="math">\mathbf{v}^{(k-1)} = (A-\lambda I)\mathbf{v}^{(k)}</span>.</p>
+      </div>
+
+      <div class="block def-block">
+        <div class="block-label">Definition — Jordan Block and Jordan Normal Form</div>
+        <p>The <strong>Jordan block</strong> of size <span class="math">k</span> for eigenvalue <span class="math">\lambda</span>:</p>
+        <div class="math-display">$$J_{\lambda,k} = \begin{pmatrix}\lambda & 1 & 0 & \cdots & 0 \\ 0 & \lambda & 1 & \cdots & 0 \\ \vdots & & \ddots & \ddots & \vdots \\ 0 & 0 & \cdots & \lambda & 1 \\ 0 & 0 & \cdots & 0 & \lambda\end{pmatrix} \in \mathbb{R}^{k\times k}$$</div>
+        <p>Every <span class="math">n\times n</span> matrix <span class="math">A</span> is similar to a block-diagonal <strong>Jordan normal form</strong>:</p>
+        <div class="math-display">$$J = P^{-1}AP = \operatorname{diag}(J_{\lambda_1,k_1},\, J_{\lambda_2,k_2},\, \ldots)$$</div>
+        <p>where the columns of <span class="math">P</span> are the Jordan chain vectors in order: for each Jordan block, list <span class="math">\mathbf{v}^{(0)},\mathbf{v}^{(1)},\ldots,\mathbf{v}^{(m)}</span>.</p>
+      </div>
+
+      <!-- §9.4 Quasi-Diagonalisation -->
+      <div class="subsec-heading">9.4 Quasi-Diagonalisation — Solving Systems via Jordan Form</div>
+
+      <div class="block method-block">
+        <div class="block-label">Method — Quasi-Diagonalisation</div>
+        <ol class="steps">
+          <li>Find all eigenvalues. For each defective eigenvalue, construct a Jordan chain.</li>
+          <li>Build <span class="math">P = [\mathbf{v}^{(0)}_1 \mid \cdots \mid \mathbf{v}^{(0)}_r \mid \mathbf{v}^{(0)} \mid \mathbf{v}^{(1)} \mid \cdots]</span> (simple eigenvectors first, then each chain in order). Compute <span class="math">J = P^{-1}AP</span>.</li>
+          <li>Substitute <span class="math">\mathbf{x} = P\mathbf{y}</span> to decouple the system: <span class="math">\dot{\mathbf{y}} = J\mathbf{y} + \mathbf{g}(t)</span> where <span class="math">\mathbf{g} = P^{-1}\mathbf{f}</span>.</li>
+          <li><strong>Back-substitution from bottom row upward</strong>. For a 2×2 Jordan block (rows <span class="math">j</span> and <span class="math">j+1</span> of <span class="math">J</span>):</li>
+        </ol>
+        <div class="math-display">$$\dot{y}_{j+1} = \lambda\, y_{j+1} + g_{j+1} \implies y_{j+1} = e^{\lambda t}\!\left[C_{j+1} + \int e^{-\lambda s}g_{j+1}(s)\,ds\right]$$</div>
+        <div class="math-display">$$\dot{y}_j = \lambda\, y_j + y_{j+1} + g_j \implies y_j = e^{\lambda t}\!\left[C_j + \int e^{-\lambda s}(y_{j+1}(s)+g_j(s))\,ds\right]$$</div>
+        <ol class="steps" style="counter-reset:step 4;">
+          <li>Recover <span class="math">\mathbf{x} = P\mathbf{y}</span>.</li>
+        </ol>
+      </div>
+
+      <div class="block thm-block">
+        <div class="block-label">Homogeneous Solutions from a Jordan Chain <span class="math">(\mathbf{v}^{(0)},\ldots,\mathbf{v}^{(m)})</span></div>
+        <p>The <span class="math">m+1</span> linearly independent homogeneous solutions contributed by the chain are:</p>
+        <div class="math-display">$$\mathbf{x}^{(k)}(t) = e^{\lambda t}\sum_{j=0}^{k}\frac{t^j}{j!}\,\mathbf{v}^{(k-j)}, \qquad k = 0,1,\ldots,m$$</div>
+        <p>For a length-2 chain explicitly:</p>
+        <div class="math-display">$$\mathbf{x}^{(0)} = e^{\lambda t}\mathbf{v}^{(0)}, \qquad \mathbf{x}^{(1)} = e^{\lambda t}\!\left(t\,\mathbf{v}^{(0)} + \mathbf{v}^{(1)}\right)$$</div>
+      </div>
+
+      <div class="block ex-block">
+        <div class="block-label">Example — 2×2 Defective Matrix</div>
+        <p>Let <span class="math">A = \begin{pmatrix}4&1\\-9&-2\end{pmatrix}</span>. Characteristic polynomial: <span class="math">(4-\lambda)(-2-\lambda)+9 = \lambda^2 - 2\lambda + 1 = (\lambda-1)^2</span>.</p>
+        <p style="margin-top:0.4rem;">Single eigenvalue <span class="math">\lambda = 1</span> (alg. mult. 2). Null space of <span class="math">A-I</span>: <span class="math">\begin{pmatrix}3&1\\-9&-3\end{pmatrix}</span> has rank 1, so geom. mult. = 1.</p>
+        <p style="margin-top:0.4rem;"><strong>Eigenvector:</strong> <span class="math">\mathbf{v}^{(0)} = (1,-3)^\top</span>. <strong>GEV:</strong> Solve <span class="math">(A-I)\mathbf{v}^{(1)} = \mathbf{v}^{(0)}</span>:</p>
+        <div class="math-display">$$3v_1 + v_2 = 1 \implies \mathbf{v}^{(1)} = (0,1)^\top$$</div>
+        <p><strong>General solution:</strong></p>
+        <div class="math-display">$$\mathbf{x}(t) = C_1 e^t\begin{pmatrix}1\\-3\end{pmatrix} + C_2 e^t\!\left(t\begin{pmatrix}1\\-3\end{pmatrix} + \begin{pmatrix}0\\1\end{pmatrix}\right)$$</div>
+      </div>
+
+      <div class="block ex-block">
+        <div class="block-label">Example — 3×3 Mixed Jordan Structure (FA 2023 Q2)</div>
+        <p>Matrix <span class="math">A</span> has eigenvalues <span class="math">\lambda_1=-2</span> (simple) and <span class="math">\lambda_{2,3}=-1</span> (alg. mult. 2, geom. mult. 1). Jordan chain for <span class="math">\lambda=-1</span>: <span class="math">(\mathbf{v}^{(0)}, \mathbf{v}^{(1)})</span>.</p>
+        <div class="math-display">$$P = \bigl[\mathbf{v}^1 \mid \mathbf{v}^{(0)} \mid \mathbf{v}^{(1)}\bigr], \qquad J = P^{-1}AP = \begin{pmatrix}-2 &amp; 0 &amp; 0 \\ 0 &amp; -1 &amp; 1 \\ 0 &amp; 0 &amp; -1\end{pmatrix}$$</div>
+        <p>Homogeneous general solution:</p>
+        <div class="math-display">$$\mathbf{x}_h = C_1 e^{-2t}\mathbf{v}^1 + C_2 e^{-t}\mathbf{v}^{(0)} + C_3 e^{-t}\!\left(t\,\mathbf{v}^{(0)} + \mathbf{v}^{(1)}\right)$$</div>
+      </div>
+
+      <!-- Section nav -->
+      <div class="section-nav">
+        <button class="sec-nav-btn" onclick="showSection('s8')">← Set 8: Systems &amp; Eigenvalues</button>
+        <button class="sec-nav-btn" onclick="showView('home')">⌂ Back to Home</button>
+        <button class="sec-nav-btn" onclick="showSection('s9a')">Next → Set 9A: Variation of Parameters</button>
+      </div>
+    </div>
+
+    <!-- ════════════════════════════
+         S9A VIEW — Variation of Parameters for Systems
+    ════════════════════════════ -->
+    <div id="s9a-view" class="view">
+      <div class="section-header">
+        <p class="crumb">MATH221 · Set 9 Additional Reading (Week 11)</p>
+        <h2>Variation of Parameters for Systems</h2>
+        <p class="section-meta">Fundamental matrix · VoP ansatz · general algorithm · connection to 2nd-order equations</p>
+      </div>
+
+      <!-- §9A.1 Fundamental Matrix -->
+      <div class="subsec-heading">9A.1 The Fundamental Matrix</div>
+
+      <div class="block def-block">
+        <div class="block-label">Definition — Fundamental Matrix</div>
+        <p>Let <span class="math">\mathbf{x}^1(t), \ldots, \mathbf{x}^n(t)</span> be <span class="math">n</span> linearly independent solutions of the homogeneous system <span class="math">\dot{\mathbf{x}} = A(t)\mathbf{x}</span>. Their <strong>fundamental matrix</strong> is:</p>
+        <div class="math-display">$$\Psi(t) = \bigl[\mathbf{x}^1(t) \mid \mathbf{x}^2(t) \mid \cdots \mid \mathbf{x}^n(t)\bigr]$$</div>
+        <p>Key properties: <span class="math">\dot{\Psi} = A(t)\Psi</span> (matrix ODE), and <span class="math">\det\Psi(t)\neq 0</span> for all <span class="math">t</span> (Liouville). In particular, <span class="math">\Psi(t)</span> is always invertible.</p>
+      </div>
+
+      <div class="block thm-block">
+        <div class="block-label">Liouville's Theorem — Abel's Formula for Systems</div>
+        <div class="math-display">$$\frac{d}{dt}\det\Psi(t) = \operatorname{tr}(A(t))\cdot\det\Psi(t) \implies \det\Psi(t) = \det\Psi(t_0)\,\exp\!\left(\int_{t_0}^t\operatorname{tr}(A(s))\,ds\right)$$</div>
+        <p>Since the exponential is never zero, linear independence of solutions is preserved for all time.</p>
+      </div>
+
+      <!-- §9A.2 VoP Theory -->
+      <div class="subsec-heading">9A.2 Variation of Parameters — Theory</div>
+
+      <div class="block method-block">
+        <div class="block-label">VoP Derivation for <span class="math">\dot{\mathbf{x}} = A(t)\mathbf{x} + \mathbf{f}(t)</span></div>
+        <p>Make the ansatz <span class="math">\mathbf{x}(t) = \Psi(t)\mathbf{z}(t)</span> where <span class="math">\mathbf{z}(t)</span> is a vector of <em>varying parameters</em>. Differentiate:</p>
+        <div class="math-display">$$\dot{\mathbf{x}} = \dot{\Psi}\mathbf{z} + \Psi\dot{\mathbf{z}} = A\Psi\mathbf{z} + \Psi\dot{\mathbf{z}}$$</div>
+        <p>Substituting into the ODE: <span class="math">A\Psi\mathbf{z} + \Psi\dot{\mathbf{z}} = A\Psi\mathbf{z} + \mathbf{f}</span>. The <span class="math">A\Psi\mathbf{z}</span> terms cancel (this is the key cancellation — because <span class="math">\Psi</span> solves the homogeneous system):</p>
+        <div class="math-display">$$\Psi\dot{\mathbf{z}} = \mathbf{f}(t) \implies \dot{\mathbf{z}} = \Psi^{-1}(t)\mathbf{f}(t) \implies \mathbf{z}(t) = \mathbf{C} + \int\Psi^{-1}(s)\mathbf{f}(s)\,ds$$</div>
+        <p><strong>General solution:</strong></p>
+        <div class="math-display">$$\mathbf{x}(t) = \underbrace{\Psi(t)\mathbf{C}}_{\text{CF}} + \underbrace{\Psi(t)\int_{t_0}^t\Psi^{-1}(s)\mathbf{f}(s)\,ds}_{\text{PI}}$$</div>
+      </div>
+
+      <!-- §9A.3 Algorithm -->
+      <div class="subsec-heading">9A.3 Algorithm &amp; Example</div>
+
+      <div class="block method-block">
+        <div class="block-label">VoP Algorithm for Systems</div>
+        <ol class="steps">
+          <li>Solve <span class="math">\dot{\mathbf{x}} = A\mathbf{x}</span> (by diagonalisation, Jordan form, etc.) to obtain <span class="math">n</span> LI solutions.</li>
+          <li>Form <span class="math">\Psi(t)</span> and compute <span class="math">\Psi^{-1}(t)</span>.</li>
+          <li>Compute the integral <span class="math">\mathbf{z}_p(t) = \int_{t_0}^t\Psi^{-1}(s)\mathbf{f}(s)\,ds</span>.</li>
+          <li>Particular integral: <span class="math">\mathbf{x}_p = \Psi(t)\mathbf{z}_p(t)</span>.</li>
+          <li>General solution: <span class="math">\mathbf{x} = \Psi(t)\mathbf{C} + \mathbf{x}_p(t)</span>.</li>
+        </ol>
+      </div>
+
+      <div class="block ex-block">
+        <div class="block-label">Example — VoP with Jordan Form for Inhomogeneous System</div>
+        <p>For <span class="math">\dot{\mathbf{x}} = J\mathbf{x} + \mathbf{g}(t)</span> with Jordan block <span class="math">J = \begin{pmatrix}\lambda&amp;1\\0&amp;\lambda\end{pmatrix}</span>, the fundamental matrix is:</p>
+        <div class="math-display">$$\Psi(t) = e^{\lambda t}\begin{pmatrix}1 &amp; t \\ 0 &amp; 1\end{pmatrix}, \qquad \Psi^{-1}(t) = e^{-\lambda t}\begin{pmatrix}1 &amp; -t \\ 0 &amp; 1\end{pmatrix}$$</div>
+        <p>Integrating <span class="math">\Psi^{-1}(s)\mathbf{g}(s)</span> gives <span class="math">\mathbf{z}_p</span>, then <span class="math">\mathbf{x}_p = \Psi(t)\mathbf{z}_p</span>. This is equivalent to the back-substitution in quasi-diagonalisation.</p>
+      </div>
+
+      <!-- §9A.4 Connection to 2nd-order equations -->
+      <div class="subsec-heading">9A.4 Connection to 2nd-Order Scalar Equations</div>
+
+      <div class="block thm-block">
+        <div class="block-label">VoP for <span class="math">y'' + p(t)y' + q(t)y = f(t)</span> via Systems</div>
+        <p>Write as first-order system with <span class="math">\mathbf{x} = (y,\,y')^\top</span>. The fundamental matrix is the <strong>Wronskian matrix</strong>:</p>
+        <div class="math-display">$$\Psi(t) = \begin{pmatrix}y_1(t) &amp; y_2(t) \\ y_1'(t) &amp; y_2'(t)\end{pmatrix}, \qquad W(t) = \det\Psi = y_1 y_2' - y_1' y_2$$</div>
+        <p>Its inverse is <span class="math">\Psi^{-1} = W^{-1}\begin{pmatrix}y_2' &amp; -y_2 \\ -y_1' &amp; y_1\end{pmatrix}</span>. Reading off the first component of <span class="math">\Psi\int\Psi^{-1}\mathbf{f}\,dt</span> (where <span class="math">\mathbf{f}=(0,f)^\top</span>) recovers the classical scalar formula:</p>
+        <div class="math-display">$$y_p = -y_1\int\frac{y_2 f}{W}\,dt + y_2\int\frac{y_1 f}{W}\,dt$$</div>
+      </div>
+
+      <div class="block note-block">
+        <strong>When to use which method:</strong>
+        <ul class="content-list" style="margin-top:0.3rem;">
+          <li><strong>VoP</strong>: works for any <span class="math">\mathbf{f}(t)</span>, including non-constant <span class="math">A(t)</span>. Most powerful but requires <span class="math">\Psi^{-1}</span> and integration.</li>
+          <li><strong>MUC</strong>: simpler algebra, but restricted to quasi-polynomial <span class="math">\mathbf{f}</span> and constant <span class="math">A</span>.</li>
+          <li><strong>Quasi-diagonalisation (Jordan form)</strong>: reduces to scalar equations first, then apply VoP or MUC to each.</li>
+        </ul>
+      </div>
+
+      <!-- Section nav -->
+      <div class="section-nav">
+        <button class="sec-nav-btn" onclick="showSection('s9')">← Set 9: Jordan Form</button>
+        <button class="sec-nav-btn" onclick="showView('home')">⌂ Back to Home</button>
+        <button class="sec-nav-btn" onclick="showSection('s10p')">Next → Set 10P: Wave Equation</button>
+      </div>
+    </div>
+
+    <!-- ════════════════════════════
+         S10P VIEW — PDEs: Wave Equation & d'Alembert
+    ════════════════════════════ -->
+    <div id="s10p-view" class="view">
+      <div class="section-header">
+        <p class="crumb">MATH221 · Set 10 Preliminary Reading (Week 12)</p>
+        <h2>PDEs: Waves, Initial Conditions &amp; Characteristics</h2>
+        <p class="section-meta">Wave equation · general solution · d'Alembert's formula · characteristic curves · semi-infinite domain</p>
+      </div>
+
+      <!-- §10P.1 The Wave Equation -->
+      <div class="subsec-heading">10P.1 The 1D Wave Equation</div>
+
+      <div class="block def-block">
+        <div class="block-label">The 1D Wave Equation</div>
+        <div class="math-display">$$\frac{\partial^2 u}{\partial t^2} = a^2\frac{\partial^2 u}{\partial x^2}, \quad a > 0$$</div>
+        <p>Here <span class="math">u(x,t)</span> is displacement and <span class="math">a</span> is wave speed. This is a <em>second-order hyperbolic</em> PDE.</p>
+        <p style="margin-top:0.5rem;"><strong>General solution:</strong> Change variables to <span class="math">\xi = x-at</span>, <span class="math">\eta = x+at</span>. The equation becomes <span class="math">u_{\xi\eta}=0</span>, integrating twice:</p>
+        <div class="math-display">$$u(x,t) = F(x+at) + G(x-at)$$</div>
+        <p>for arbitrary twice-differentiable functions <span class="math">F</span> and <span class="math">G</span>. <span class="math">F(x+at)</span> is a left-travelling wave; <span class="math">G(x-at)</span> travels right.</p>
+      </div>
+
+      <!-- §10P.2 Initial Conditions & d'Alembert -->
+      <div class="subsec-heading">10P.2 Initial Conditions &amp; d'Alembert's Formula</div>
+
+      <div class="block thm-block">
+        <div class="block-label">d'Alembert's Formula</div>
+        <p>For the Cauchy problem on <span class="math">-\infty &lt; x &lt; \infty</span>:</p>
+        <div class="math-display">$$u_{tt} = a^2 u_{xx}, \quad u(x,0) = f(x),\quad u_t(x,0) = g(x)$$</div>
+        <p>The unique solution is:</p>
+        <div class="math-display">$$\boxed{u(x,t) = \frac{1}{2}\bigl[f(x+at) + f(x-at)\bigr] + \frac{1}{2a}\int_{x-at}^{x+at} g(\xi)\,d\xi}$$</div>
+        <p><strong>Derivation:</strong> Applying ICs to <span class="math">u=F(x+at)+G(x-at)</span> gives two equations: <span class="math">F(x)+G(x)=f(x)</span> and <span class="math">aF'(x)-aG'(x)=g(x)</span>. Integrating the second and solving simultaneously gives the formula.</p>
+      </div>
+
+      <div class="block ex-block">
+        <div class="block-label">Example — d'Alembert with <span class="math">a=2</span>, <span class="math">u(x,0)=\sin x</span>, <span class="math">u_t(x,0)=0</span></div>
+        <div class="math-display">$$u(x,t) = \tfrac{1}{2}\sin(x+2t) + \tfrac{1}{2}\sin(x-2t) = \sin x\cos 2t$$</div>
+        <p>A standing wave: the initial sinusoidal profile oscillates at frequency 2 without translating.</p>
+      </div>
+
+      <div class="block ex-block">
+        <div class="block-label">Example — d'Alembert with <span class="math">f(x)=0</span>, non-zero initial velocity</div>
+        <p>For <span class="math">u_{tt}=a^2 u_{xx}</span>, <span class="math">u(x,0)=0</span>, <span class="math">u_t(x,0)=g(x)</span>:</p>
+        <div class="math-display">$$u(x,t) = \frac{1}{2a}\int_{x-at}^{x+at}g(\xi)\,d\xi$$</div>
+        <p>The disturbance at position <span class="math">x_0</span> at time <span class="math">t=0</span> influences <span class="math">u(x,t)</span> only when <span class="math">x-at \leq x_0 \leq x+at</span>.</p>
+      </div>
+
+      <!-- §10P.3 Characteristics -->
+      <div class="subsec-heading">10P.3 Characteristic Curves</div>
+
+      <div class="block def-block">
+        <div class="block-label">Characteristics of the Wave Equation</div>
+        <p>The two families of <strong>characteristic curves</strong> in the <span class="math">(x,t)</span> plane are:</p>
+        <div class="math-display">$$x - at = \text{const} \quad \text{(right-travelling)}, \qquad x + at = \text{const} \quad \text{(left-travelling)}$$</div>
+        <ul class="content-list">
+          <li><strong>Domain of dependence</strong> of <span class="math">(x_0,t_0)</span>: the interval <span class="math">[x_0-at_0,\,x_0+at_0]</span> on the <span class="math">t=0</span> axis. Only initial data in this segment affects the solution at <span class="math">(x_0,t_0)</span>.</li>
+          <li><strong>Domain of influence</strong> of <span class="math">x_0</span>: the cone <span class="math">|x-x_0|\leq at</span> for <span class="math">t\geq0</span>. Initial data at <span class="math">x_0</span> can only affect points within this cone.</li>
+          <li><strong>Finite speed of propagation:</strong> disturbances travel at speed exactly <span class="math">a</span>, not instantaneously (contrast with the heat equation).</li>
+        </ul>
+      </div>
+
+      <!-- §10P.4 Boundary Conditions — Semi-Infinite -->
+      <div class="subsec-heading">10P.4 Semi-Infinite Domain &amp; Method of Images</div>
+
+      <div class="block method-block">
+        <div class="block-label">Semi-Infinite String <span class="math">x \geq 0</span>, Fixed End <span class="math">u(0,t)=0</span></div>
+        <p>Extend the initial data as <em>odd functions</em> to all of <span class="math">\mathbb{R}</span>:</p>
+        <div class="math-display">$$\tilde{f}(x) = \begin{cases}f(x) &amp; x \geq 0 \\ -f(-x) &amp; x &lt; 0\end{cases}, \qquad \tilde{g}(x) = \begin{cases}g(x) &amp; x \geq 0 \\ -g(-x) &amp; x &lt; 0\end{cases}$$</div>
+        <p>Apply d'Alembert with <span class="math">\tilde{f}</span>, <span class="math">\tilde{g}</span>. The BC <span class="math">u(0,t)=0</span> holds automatically since the odd extension gives <span class="math">F(at)+G(-at)=\tilde{F}(at)+\tilde{G}(-at)=0</span>.</p>
+        <p style="margin-top:0.4rem;">For a free end <span class="math">u_x(0,t)=0</span>, extend as <em>even functions</em> instead.</p>
+      </div>
+
+      <!-- Section nav -->
+      <div class="section-nav">
+        <button class="sec-nav-btn" onclick="showSection('s9a')">← Set 9A: Variation of Parameters</button>
+        <button class="sec-nav-btn" onclick="showView('home')">⌂ Back to Home</button>
+        <button class="sec-nav-btn" onclick="showSection('s10')">Next → Set 10: Separation of Variables</button>
+      </div>
+    </div>
+
+    <!-- ════════════════════════════
+         S10 VIEW — PDEs: Separation of Variables
+    ════════════════════════════ -->
+    <div id="s10-view" class="view">
+      <div class="section-header">
+        <p class="crumb">MATH221 · Set 10 (Week 12)</p>
+        <h2>PDEs: Separation of Variables</h2>
+        <p class="section-meta">Wave · heat · Laplace equations via separation of variables · Fourier series coefficients</p>
+      </div>
+
+      <!-- §10.1 Three Important PDEs -->
+      <div class="subsec-heading">10.1 Three Classical PDEs</div>
+
+      <div class="block def-block">
+        <div class="block-label">The Three Classical PDEs of Mathematical Physics</div>
+        <div class="math-display">$$\text{Wave:}\quad u_{tt} = a^2 u_{xx} \qquad \text{Heat:}\quad u_t = \kappa\, u_{xx} \qquad \text{Laplace:}\quad u_{xx} + u_{yy} = 0$$</div>
+        <ul class="content-list">
+          <li><strong>Wave (hyperbolic):</strong> oscillations propagate at finite speed <span class="math">a</span>; no energy dissipation.</li>
+          <li><strong>Heat (parabolic):</strong> diffusion with diffusivity <span class="math">\kappa > 0</span>; initial data smooths out instantly.</li>
+          <li><strong>Laplace (elliptic):</strong> steady-state distributions; solutions are infinitely smooth (harmonic functions).</li>
+        </ul>
+      </div>
+
+      <!-- §10.2 Wave Equation via SoV -->
+      <div class="subsec-heading">10.2 Wave Equation via Separation of Variables</div>
+
+      <div class="block method-block">
+        <div class="block-label">SoV for Wave Equation on <span class="math">[0,L]</span> with Fixed Ends</div>
+        <p><strong>Problem:</strong> <span class="math">u_{tt}=a^2 u_{xx}</span>, <span class="math">0&lt;x&lt;L</span>, <span class="math">t&gt;0</span>; BCs <span class="math">u(0,t)=u(L,t)=0</span>; ICs <span class="math">u(x,0)=f(x)</span>, <span class="math">u_t(x,0)=g(x)</span>.</p>
+        <p style="margin-top:0.5rem;"><strong>Step 1 — Assume</strong> <span class="math">u(x,t)=X(x)T(t)</span>. Substituting and separating:</p>
+        <div class="math-display">$$\frac{X''}{X} = \frac{T''}{a^2 T} = \lambda$$</div>
+        <p><strong>Step 2 — Determine <span class="math">\lambda</span>:</strong> BCs require <span class="math">X(0)=X(L)=0</span>. For <span class="math">\lambda\geq 0</span>, only the trivial solution exists. For <span class="math">\lambda=-\mu^2&lt;0</span>:</p>
+        <div class="math-display">$$X_n(x) = \sin\!\left(\frac{n\pi x}{L}\right), \quad \mu_n = \frac{n\pi}{L}, \quad n=1,2,3,\ldots$$</div>
+        <p><strong>Step 3 — Time equation:</strong> <span class="math">T''+\omega_n^2 T=0</span> with <span class="math">\omega_n=n\pi a/L</span>:</p>
+        <div class="math-display">$$T_n(t) = A_n\cos\!\left(\frac{n\pi a}{L}t\right) + B_n\sin\!\left(\frac{n\pi a}{L}t\right)$$</div>
+        <p><strong>Step 4 — General solution</strong> (by superposition):</p>
+        <div class="math-display">$$u(x,t) = \sum_{n=1}^{\infty}\!\left[A_n\cos\!\left(\frac{n\pi a}{L}t\right) + B_n\sin\!\left(\frac{n\pi a}{L}t\right)\right]\sin\!\left(\frac{n\pi x}{L}\right)$$</div>
+        <p><strong>Step 5 — Fourier coefficients from ICs:</strong></p>
+        <div class="math-display">$$A_n = \frac{2}{L}\int_0^L f(x)\sin\!\left(\frac{n\pi x}{L}\right)dx, \qquad B_n = \frac{2}{n\pi a}\int_0^L g(x)\sin\!\left(\frac{n\pi x}{L}\right)dx$$</div>
+      </div>
+
+      <div class="block note-block">
+        <strong>Physical interpretation:</strong> Each term in the sum is a <em>normal mode</em> — a standing wave oscillating at frequency <span class="math">\omega_n = n\pi a/L</span>. The general solution is a superposition of all modes; the Fourier coefficients encode how much each mode is excited by the initial data.
+      </div>
+
+      <!-- §10.3 Heat Equation -->
+      <div class="subsec-heading">10.3 Heat Equation via Separation of Variables</div>
+
+      <div class="block method-block">
+        <div class="block-label">Heat Equation with Non-zero Boundary Temperatures</div>
+        <p><strong>Problem:</strong> <span class="math">u_t=\kappa u_{xx}</span>, <span class="math">0&lt;x&lt;L</span>; BCs <span class="math">u(0,t)=T_0</span>, <span class="math">u(L,t)=T_1</span>; IC <span class="math">u(x,0)=h(x)</span>.</p>
+        <p style="margin-top:0.5rem;"><strong>Step 1 — Find equilibrium <span class="math">u^e(x)</span>:</strong> Solve <span class="math">(u^e)''=0</span> with BCs — a linear function:</p>
+        <div class="math-display">$$u^e(x) = T_0 + (T_1-T_0)\frac{x}{L}$$</div>
+        <p><strong>Step 2 — Substitute <span class="math">u=u^e(x)+v(x,t)</span>:</strong> Then <span class="math">v</span> satisfies the heat equation with <em>homogeneous</em> BCs <span class="math">v(0,t)=v(L,t)=0</span> and IC <span class="math">v(x,0)=h(x)-u^e(x)</span>.</p>
+        <p><strong>Step 3 — SoV for <span class="math">v</span>:</strong> Separation gives <span class="math">X_n=\sin(n\pi x/L)</span> and <span class="math">T_n=e^{-\kappa(n\pi/L)^2 t}</span>:</p>
+        <div class="math-display">$$v(x,t) = \sum_{n=1}^{\infty}A_n\sin\!\left(\frac{n\pi x}{L}\right)\exp\!\left(-\frac{\kappa n^2\pi^2}{L^2}t\right)$$</div>
+        <p><strong>Step 4 — Fourier coefficients:</strong></p>
+        <div class="math-display">$$A_n = \frac{2}{L}\int_0^L\bigl[h(x)-u^e(x)\bigr]\sin\!\left(\frac{n\pi x}{L}\right)dx$$</div>
+        <p><strong>Step 5 — Full solution:</strong> <span class="math">u(x,t)=u^e(x)+v(x,t)</span>.</p>
+      </div>
+
+      <div class="block note-block">
+        <strong>Long-time behaviour:</strong> Each transient term decays as <span class="math">e^{-\kappa n^2\pi^2 t/L^2}</span>. As <span class="math">t\to\infty</span>, <span class="math">u(x,t)\to u^e(x)</span>. The <span class="math">n=1</span> mode (slowest decay rate <span class="math">\kappa\pi^2/L^2</span>) dominates the late-time approach to equilibrium.
+      </div>
+
+      <!-- §10.4 Laplace's Equation -->
+      <div class="subsec-heading">10.4 Laplace's Equation</div>
+
+      <div class="block method-block">
+        <div class="block-label">Laplace on a Rectangle <span class="math">[0,a]\times[0,b]</span></div>
+        <p><strong>Problem:</strong> <span class="math">u_{xx}+u_{yy}=0</span>, BCs <span class="math">u(0,y)=u(a,y)=u(x,0)=0</span>, <span class="math">u(x,b)=f(x)</span>.</p>
+        <p style="margin-top:0.5rem;"><strong>SoV:</strong> Write <span class="math">u=X(x)Y(y)</span>: <span class="math">X''/X = -Y''/Y = -\lambda^2</span>.</p>
+        <p><strong><span class="math">X</span>-equation</strong> with <span class="math">X(0)=X(a)=0</span>: <span class="math">X_n=\sin(n\pi x/a)</span>, <span class="math">\lambda_n=n\pi/a</span>.</p>
+        <p><strong><span class="math">Y</span>-equation:</strong> <span class="math">Y''-\lambda_n^2 Y=0</span>. With <span class="math">Y(0)=0</span>: <span class="math">Y_n=\sinh(n\pi y/a)</span>.</p>
+        <p><strong>General solution:</strong></p>
+        <div class="math-display">$$u(x,y) = \sum_{n=1}^{\infty}A_n\sin\!\left(\frac{n\pi x}{a}\right)\sinh\!\left(\frac{n\pi y}{a}\right)$$</div>
+        <p><strong>Coefficients from BC at <span class="math">y=b</span>:</strong></p>
+        <div class="math-display">$$A_n = \frac{1}{\sinh(n\pi b/a)}\cdot\frac{2}{a}\int_0^a f(x)\sin\!\left(\frac{n\pi x}{a}\right)dx$$</div>
+      </div>
+
+      <div class="block method-block">
+        <div class="block-label">Laplace on a Disc of Radius <span class="math">R</span> (Polar Coordinates)</div>
+        <p><strong>Problem:</strong> <span class="math">u_{rr}+\tfrac{1}{r}u_r+\tfrac{1}{r^2}u_{\theta\theta}=0</span> for <span class="math">r&lt;R</span>, <span class="math">u(R,\theta)=f(\theta)</span>.</p>
+        <p style="margin-top:0.5rem;"><strong>SoV:</strong> Write <span class="math">u=\mathcal{R}(r)\Theta(\theta)</span>. Periodicity forces <span class="math">\Theta''+n^2\Theta=0</span> with integer <span class="math">n\geq 0</span>:</p>
+        <div class="math-display">$$\Theta_n = A_n\cos n\theta + B_n\sin n\theta$$</div>
+        <p><strong>Euler equation</strong> for <span class="math">\mathcal{R}</span>: <span class="math">r^2\mathcal{R}''+r\mathcal{R}'-n^2\mathcal{R}=0</span>. Bounded solution at <span class="math">r=0</span>: <span class="math">\mathcal{R}_n=r^n</span>.</p>
+        <p><strong>General solution:</strong></p>
+        <div class="math-display">$$u(r,\theta) = A_0 + \sum_{n=1}^{\infty}r^n\bigl(A_n\cos n\theta + B_n\sin n\theta\bigr)$$</div>
+        <p><strong>Coefficients:</strong> Apply BC at <span class="math">r=R</span> — this is a full Fourier series for <span class="math">f(\theta)</span>:</p>
+        <div class="math-display">$$A_0 = \frac{1}{2\pi}\int_0^{2\pi}f(\theta)\,d\theta,\quad A_n = \frac{1}{\pi R^n}\int_0^{2\pi}f(\theta)\cos n\theta\,d\theta,\quad B_n = \frac{1}{\pi R^n}\int_0^{2\pi}f(\theta)\sin n\theta\,d\theta$$</div>
+      </div>
+
+      <div class="block note-block">
+        <strong>Mean Value Property:</strong> Setting <span class="math">r=0</span>: <span class="math">u(0,\theta) = A_0 = \frac{1}{2\pi}\int_0^{2\pi}f(\theta)\,d\theta</span>. The value of a harmonic function at the centre of a disc equals the average of its boundary values — a fundamental property of Laplace's equation.
+      </div>
+
+      <!-- Section nav -->
+      <div class="section-nav">
+        <button class="sec-nav-btn" onclick="showSection('s10p')">← Set 10P: Wave &amp; d'Alembert</button>
+        <button class="sec-nav-btn" onclick="showView('home')">⌂ Back to Home</button>
+        <button class="sec-nav-btn" onclick="showView('methods')">★ Method Guides</button>
       </div>
     </div>
 
@@ -2885,6 +3337,67 @@ body {
         </div>
       </div>
 
+      <!-- ── JORDAN FORM, VoP & PDEs ── -->
+      <div class="subsec-heading" style="margin-top:1.5rem;">Jordan Form, Variation of Parameters &amp; PDEs (Sets 9–10)</div>
+
+      <div class="method-guide-card" id="mg-jordan">
+        <div class="method-guide-header" onclick="toggleGuide('mg-jordan')">
+          <span class="method-guide-tag" style="background:#3a1a5c;color:#fff;">FA</span>
+          <span class="method-guide-title">Quasi-Diagonalisation via Jordan Form (Defective <span class="math">A</span>)</span>
+          <span class="method-guide-toggle">▾</span>
+        </div>
+        <div class="method-guide-body">
+          <div class="method-step"><div class="method-step-num">1</div><div><strong>Find eigenvalues.</strong> For each eigenvalue with alg. mult. &gt; geom. mult., you have a defective block — eigenvectors alone are insufficient.</div></div>
+          <div class="method-step"><div class="method-step-num">2</div><div><strong>Build Jordan chain(s).</strong> For defective <span class="math">\lambda</span> with geometric mult. 1 and alg. mult. 2: find eigenvector <span class="math">\mathbf{v}^{(0)}</span>, then solve <span class="math">(A-\lambda I)\mathbf{v}^{(1)} = \mathbf{v}^{(0)}</span> for the GEV <span class="math">\mathbf{v}^{(1)}</span>.</div></div>
+          <div class="method-step"><div class="method-step-num">3</div><div><strong>Form <span class="math">P</span> and <span class="math">J</span>.</strong> Put simple eigenvectors first, then each Jordan chain in order: <span class="math">P = [\mathbf{v}^1|\cdots|\mathbf{v}^{(0)}|\mathbf{v}^{(1)}|\cdots]</span>. Then <span class="math">J = P^{-1}AP</span> has Jordan blocks.</div></div>
+          <div class="method-step"><div class="method-step-num">4</div><div><strong>Substitute <span class="math">\mathbf{x}=P\mathbf{y}</span>.</strong> System becomes <span class="math">\dot{\mathbf{y}} = J\mathbf{y} + \mathbf{g}(t)</span>, <span class="math">\mathbf{g}=P^{-1}\mathbf{f}</span>. Solve from the <em>bottom row upward</em> (back-substitution in each Jordan block).</div></div>
+          <div class="method-step"><div class="method-step-num">5</div><div><strong>Recover <span class="math">\mathbf{x}=P\mathbf{y}</span>.</strong></div></div>
+          <div class="method-example-box">
+            <div class="ex-label">Intuition — why does Jordan form give <span class="math">te^{\lambda t}</span>?</div>
+            <p>A Jordan block <span class="math">J_{\lambda,2}</span> can be written as <span class="math">\lambda I + N</span> where <span class="math">N = \begin{pmatrix}0&amp;1\\0&amp;0\end{pmatrix}</span>. The matrix exponential splits as <span class="math">e^{Jt}=e^{\lambda t}e^{Nt}=e^{\lambda t}(I+Nt)</span> since <span class="math">N^2=0</span>. This is <em>exactly</em> why solutions involve <span class="math">te^{\lambda t}</span>: the nilpotent part <span class="math">N</span> contributes the polynomial <span class="math">t</span> factor. More generally, an <span class="math">m\times m</span> Jordan block produces polynomial factors <span class="math">1,t,t^2/2!,\ldots,t^{m-1}/(m-1)!</span>.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="method-guide-card" id="mg-vop-sys">
+        <div class="method-guide-header" onclick="toggleGuide('mg-vop-sys')">
+          <span class="method-guide-tag" style="background:#1a5c3a;color:#fff;">FA</span>
+          <span class="method-guide-title">Variation of Parameters for Systems</span>
+          <span class="method-guide-toggle">▾</span>
+        </div>
+        <div class="method-guide-body">
+          <div class="method-step"><div class="method-step-num">1</div><div><strong>Solve the homogeneous system</strong> <span class="math">\dot{\mathbf{x}}=A\mathbf{x}</span> to get <span class="math">n</span> LI solutions <span class="math">\mathbf{x}^1,\ldots,\mathbf{x}^n</span>.</div></div>
+          <div class="method-step"><div class="method-step-num">2</div><div><strong>Build the fundamental matrix</strong> <span class="math">\Psi(t)=[\mathbf{x}^1|\cdots|\mathbf{x}^n]</span>. Compute <span class="math">\Psi^{-1}(t)</span>.</div></div>
+          <div class="method-step"><div class="method-step-num">3</div><div><strong>Integrate:</strong> <span class="math">\mathbf{x}_p(t) = \Psi(t)\displaystyle\int_{t_0}^t\Psi^{-1}(s)\mathbf{f}(s)\,ds</span>.</div></div>
+          <div class="method-step"><div class="method-step-num">4</div><div><strong>General solution:</strong> <span class="math">\mathbf{x}=\Psi(t)\mathbf{C}+\mathbf{x}_p(t)</span>.</div></div>
+          <div class="method-example-box">
+            <div class="ex-label">Intuition — why does the <span class="math">A\Psi\mathbf{z}</span> cancel?</div>
+            <p>The ansatz <span class="math">\mathbf{x}=\Psi\mathbf{z}</span> is inspired by the scalar case <span class="math">y=u_1y_1+u_2y_2</span>. When we differentiate, we get <span class="math">\dot{\Psi}\mathbf{z}+\Psi\dot{\mathbf{z}}</span>. But <span class="math">\dot{\Psi}=A\Psi</span> (because each column of <span class="math">\Psi</span> solves the homogeneous system), so the <span class="math">A\Psi\mathbf{z}</span> terms cancel against the <span class="math">A\mathbf{x}</span> side — exactly as in the scalar case. What remains is <span class="math">\Psi\dot{\mathbf{z}}=\mathbf{f}</span>, which is trivially solvable since <span class="math">\Psi</span> is invertible. The key is that <em>the homogeneous structure does all the heavy lifting</em>.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="method-guide-card" id="mg-sov">
+        <div class="method-guide-header" onclick="toggleGuide('mg-sov')">
+          <span class="method-guide-tag" style="background:#1a3a5c;color:#fff;">FA</span>
+          <span class="method-guide-title">Separation of Variables for PDEs</span>
+          <span class="method-guide-toggle">▾</span>
+        </div>
+        <div class="method-guide-body">
+          <div class="method-step"><div class="method-step-num">1</div><div><strong>Assume a product solution</strong> <span class="math">u(x,t)=X(x)T(t)</span>. Substitute into the PDE and divide so each side depends on only one variable.</div></div>
+          <div class="method-step"><div class="method-step-num">2</div><div><strong>Introduce the separation constant <span class="math">\lambda</span>.</strong> Both sides must equal the same constant: <span class="math">X''/X = \cdots = \lambda</span>. Determine the sign of <span class="math">\lambda</span> from the boundary conditions (for homogeneous Dirichlet BCs, <span class="math">\lambda &lt; 0</span>).</div></div>
+          <div class="method-step"><div class="method-step-num">3</div><div><strong>Solve the <span class="math">X</span>-equation</strong> (eigenvalue problem) with BCs. The BCs force discrete values <span class="math">\lambda_n = -(n\pi/L)^2</span> and eigenfunctions <span class="math">X_n=\sin(n\pi x/L)</span>.</div></div>
+          <div class="method-step"><div class="method-step-num">4</div><div><strong>Solve the <span class="math">T</span>-equation</strong> for each <span class="math">\lambda_n</span>. For wave: <span class="math">T_n = A_n\cos\omega_n t+B_n\sin\omega_n t</span>. For heat: <span class="math">T_n = e^{-\kappa\lambda_n t}</span> (decaying).</div></div>
+          <div class="method-step"><div class="method-step-num">5</div><div><strong>Superpose all modes</strong> (valid by linearity): <span class="math">u=\sum_{n=1}^\infty X_n(x)T_n(t)</span>.</div></div>
+          <div class="method-step"><div class="method-step-num">6</div><div><strong>Determine coefficients</strong> by applying initial (or remaining boundary) conditions — this gives a Fourier sine series problem. Use <span class="math">A_n = \frac{2}{L}\int_0^L (\cdots)\sin(n\pi x/L)\,dx</span>.</div></div>
+          <div class="method-example-box">
+            <div class="ex-label">Intuition — why must <span class="math">\lambda &lt; 0</span> for Dirichlet BCs?</div>
+            <p>The <span class="math">X</span>-equation with <span class="math">X(0)=X(L)=0</span> is a Sturm-Liouville eigenvalue problem. For <span class="math">\lambda=0</span>: <span class="math">X''=0</span> gives <span class="math">X=ax+b</span>; BCs force <span class="math">X\equiv 0</span> (trivial). For <span class="math">\lambda=\mu^2&gt;0</span>: <span class="math">X=Ae^{\mu x}+Be^{-\mu x}</span>; BCs again give only <span class="math">X\equiv 0</span>. Only for <span class="math">\lambda=-\mu^2&lt;0</span> does <span class="math">X=A\cos\mu x+B\sin\mu x</span> have non-trivial solutions vanishing at both ends: <span class="math">\mu_n=n\pi/L</span>. In short, <em>oscillatory solutions require negative <span class="math">\lambda</span></em> — the sign is not a choice but a consequence of the geometry.</p>
+            <p style="margin-top:0.5rem;">For the heat equation this means exponential decay in time (<span class="math">e^{-\kappa\mu_n^2 t}\to 0</span>), consistent with physical expectation. For the wave equation, <span class="math">T''+\omega_n^2 T=0</span> gives oscillations at frequency <span class="math">\omega_n=n\pi a/L</span> — the natural frequencies of the string.</p>
+          </div>
+        </div>
+      </div>
+
     </div>
 
     <!-- ════════════════════════════
@@ -2901,6 +3414,7 @@ body {
       <div class="exam-tabs">
         <button class="exam-tab active" onclick="switchExamTab('ct1')">★ Class Test I</button>
         <button class="exam-tab" onclick="switchExamTab('ct2')">★ Class Test II</button>
+        <button class="exam-tab" onclick="switchExamTab('fa')">★ Final Assessment</button>
       </div>
 
       <!-- ── CLASS TEST I PANEL ── -->
@@ -2938,6 +3452,18 @@ body {
         <div class="exam-generate-bar">
           <button class="exam-generate-btn" onclick="generateExam('ct2')">⟳ Generate New Question Set</button>
           <span class="exam-generate-note">Shuffles and recombines questions for a fresh practice paper</span>
+        </div>
+      </div>
+
+      <!-- ── FINAL ASSESSMENT PANEL ── -->
+      <div id="exam-fa" class="exam-panel">
+        <div class="note-block" style="margin-bottom:1.5rem;">
+          <strong>Final Assessment</strong> covers the full module (Sets 1–10). Questions drawn from the FA 2022–23 main paper and 2022–23 resit. Click <em>Generate New Question Set</em> for a shuffled mixed paper.
+        </div>
+        <div id="fa-questions"></div>
+        <div class="exam-generate-bar">
+          <button class="exam-generate-btn" onclick="generateExam('fa')">⟳ Generate New Question Set</button>
+          <span class="exam-generate-note">Shuffles and recombines questions from both FA papers</span>
         </div>
       </div>
 
@@ -3263,7 +3789,120 @@ body {
         </tbody>
       </table>
 
-      <div class="note-block">More formulae will be added here as further PDF sets are uploaded.</div>
+      <div class="subsec-heading">Jordan Form &amp; Quasi-Diagonalisation (Set 9)</div>
+
+      <table class="formula-table">
+        <thead>
+          <tr><th>Name</th><th>Form / Formula</th><th>Notes</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="f-name">GEV of order m</td>
+            <td class="f-eq">(A−λI)^m v = 0,  (A−λI)^{m−1} v ≠ 0</td>
+            <td class="f-note">Order 1 = ordinary eigenvector</td>
+          </tr>
+          <tr>
+            <td class="f-name">Jordan chain</td>
+            <td class="f-eq">(A−λI)v^{(k)} = v^{(k−1)},  k=1,…,m</td>
+            <td class="f-note">Generate down from lead GEV v^{(m)}</td>
+          </tr>
+          <tr>
+            <td class="f-name">Jordan block J_{λ,k}</td>
+            <td class="f-eq">λ on diagonal, 1 on superdiagonal</td>
+            <td class="f-note">k×k; J = P⁻¹AP block-diagonal</td>
+          </tr>
+          <tr>
+            <td class="f-name">Quasi-diag. substitution</td>
+            <td class="f-eq">x = Py  ⟹  ẏ = Jy + P⁻¹f(t)</td>
+            <td class="f-note">Solve back-to-front within each block</td>
+          </tr>
+          <tr>
+            <td class="f-name">Homogeneous soln (chain)</td>
+            <td class="f-eq">x^{(k)} = e^{λt} Σ_{j=0}^{k} (t^j/j!) v^{(k−j)}</td>
+            <td class="f-note">Length-2: e^{λt}v⁽⁰⁾ and e^{λt}(tv⁽⁰⁾+v⁽¹⁾)</td>
+          </tr>
+          <tr>
+            <td class="f-name">Matrix exponential (block)</td>
+            <td class="f-eq">e^{J_{λ,2}t} = e^{λt}[[1,t],[0,1]]</td>
+            <td class="f-note">Nilpotent part N with N²=0 gives polynomial t</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="subsec-heading">Variation of Parameters for Systems (Set 9A)</div>
+
+      <table class="formula-table">
+        <thead>
+          <tr><th>Name</th><th>Form / Formula</th><th>Notes</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="f-name">Fundamental matrix</td>
+            <td class="f-eq">Ψ(t) = [x¹|⋯|xⁿ],  dΨ/dt = A(t)Ψ</td>
+            <td class="f-note">det Ψ ≠ 0 for all t (Liouville)</td>
+          </tr>
+          <tr>
+            <td class="f-name">Liouville's theorem</td>
+            <td class="f-eq">d/dt det Ψ = tr(A) · det Ψ</td>
+            <td class="f-note">det Ψ = det Ψ(t₀) exp(∫tr A dt)</td>
+          </tr>
+          <tr>
+            <td class="f-name">VoP general solution</td>
+            <td class="f-eq">x(t) = Ψ(t)C + Ψ(t)∫Ψ⁻¹(s)f(s)ds</td>
+            <td class="f-note">Ansatz x = Ψz → Ψż = f</td>
+          </tr>
+          <tr>
+            <td class="f-name">Wronskian matrix (2nd-order)</td>
+            <td class="f-eq">Ψ = [[y₁,y₂],[y₁′,y₂′]],  W = det Ψ</td>
+            <td class="f-note">yₚ = −y₁∫y₂f/W dt + y₂∫y₁f/W dt</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="subsec-heading">PDEs: Wave, Heat, Laplace (Sets 10P &amp; 10)</div>
+
+      <table class="formula-table">
+        <thead>
+          <tr><th>Name</th><th>Form / Formula</th><th>Notes</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="f-name">Wave equation</td>
+            <td class="f-eq">u_{tt} = a²u_{xx},  general soln: F(x+at)+G(x−at)</td>
+            <td class="f-note">Speed a; F left-travelling, G right</td>
+          </tr>
+          <tr>
+            <td class="f-name">d'Alembert's formula</td>
+            <td class="f-eq">u = ½[f(x+at)+f(x−at)] + (1/2a)∫_{x−at}^{x+at}g(ξ)dξ</td>
+            <td class="f-note">IC: u(x,0)=f(x), uₜ(x,0)=g(x)</td>
+          </tr>
+          <tr>
+            <td class="f-name">Wave SoV on [0,L]</td>
+            <td class="f-eq">u = Σ[Aₙcos(nπat/L)+Bₙsin(nπat/L)]sin(nπx/L)</td>
+            <td class="f-note">Aₙ,Bₙ from Fourier sine series of f,g</td>
+          </tr>
+          <tr>
+            <td class="f-name">Heat equation (Dirichlet)</td>
+            <td class="f-eq">u = u^e(x) + Σ Aₙsin(nπx/L)e^{−κn²π²t/L²}</td>
+            <td class="f-note">Equilibrium u^e = T₀+(T₁−T₀)x/L</td>
+          </tr>
+          <tr>
+            <td class="f-name">Heat Fourier coefficients</td>
+            <td class="f-eq">Aₙ = (2/L)∫₀ᴸ[h(x)−u^e(x)]sin(nπx/L)dx</td>
+            <td class="f-note">From IC u(x,0)=h(x)</td>
+          </tr>
+          <tr>
+            <td class="f-name">Laplace on rectangle</td>
+            <td class="f-eq">u = Σ Aₙsin(nπx/a)sinh(nπy/a)</td>
+            <td class="f-note">Aₙ = [2/a/sinh(nπb/a)]∫₀ᵃf sin(nπx/a)dx</td>
+          </tr>
+          <tr>
+            <td class="f-name">Laplace on disc</td>
+            <td class="f-eq">u = A₀ + Σ rⁿ(Aₙcos nθ + Bₙsin nθ)</td>
+            <td class="f-note">Mean value: u(0,θ) = A₀ = (1/2π)∫f dθ</td>
+          </tr>
+        </tbody>
+      </table>
 
       <div class="subsec-heading">Second-Order ODEs (Set 3)</div>
 
@@ -3446,7 +4085,7 @@ body {
 // ══════════════════════════════════════════
 // NAVIGATION
 // ══════════════════════════════════════════
-const VIEWS = ['home', 's1', 's2', 's3', 's4', 's5', 's6', 's7', 's8p', 's8', 'methods', 'exam', 'formulas', 'quiz'];
+const VIEWS = ['home', 's1', 's2', 's3', 's4', 's5', 's6', 's7', 's8p', 's8', 's9', 's9a', 's10p', 's10', 'methods', 'exam', 'formulas', 'quiz'];
 
 function showView(id) {
   VIEWS.forEach(v => {
@@ -4233,11 +4872,14 @@ function toggleGuide(id) {
 // EXAM PRACTICE — tab switching
 // ══════════════════════════════════════════
 function switchExamTab(tab) {
+  const tabs = ['ct1', 'ct2', 'fa'];
   document.querySelectorAll('.exam-tab').forEach((el, i) => {
-    el.classList.toggle('active', (i === 0 && tab === 'ct1') || (i === 1 && tab === 'ct2'));
+    el.classList.toggle('active', tabs[i] === tab);
   });
-  document.getElementById('exam-ct1').classList.toggle('active', tab === 'ct1');
-  document.getElementById('exam-ct2').classList.toggle('active', tab === 'ct2');
+  tabs.forEach(t => {
+    const panel = document.getElementById('exam-' + t);
+    if (panel) panel.classList.toggle('active', t === tab);
+  });
 }
 
 // ══════════════════════════════════════════
@@ -5008,6 +5650,120 @@ const EXAM_QUESTIONS = {
 <div class="math-display">x(t) = C₁[1, 2]ᵀ + C₂[2, −1]ᵀ e⁻⁵ᵗ + [0, −1/2]ᵀ eᵗ</div>
 <p style="margin-top:0.4rem;font-size:0.9rem;color:var(--ink-muted);font-style:italic;"><strong>Verification:</strong> Axₚ + f = [−4,2;2,−1][0,−1/2]eᵗ + [1,−1]eᵗ = [−1, 1/2]eᵗ + [1,−1]eᵗ = [0,−1/2]eᵗ = ẋₚ ✓</p>`
     }
+  ],
+  // ─── Final Assessment pool ────────────────────────────────────────────
+  fa: [
+    // ── FA 2022–23 Main ──
+    {
+      id: 'fa2023_q1',
+      q: '[FA 2022–23 Q1 — 10 marks] Solve the second-order linear inhomogeneous ODE d²y/dx² + y = tan(x), x ∈ (−π/2, π/2), by the method of variation of parameters. Start with the homogeneous solution yₕ = C₁cos x + C₂sin x and let C₁, C₂ become functions u₁(x), u₂(x). You may use ∫sec(x)dx = ln|sec x + tan x| + C.',
+      hint: 'Write the VoP system [[cos x, sin x],[−sin x, cos x]](u₁′,u₂′)ᵀ = (0, tan x)ᵀ. The Wronskian W = 1. Solve for u₁′ and u₂′, then integrate.',
+      marks: 10,
+      solution: `<p><strong>Homogeneous solution:</strong> yₕ = C₁cos x + C₂sin x (eigenvalues ±i from r²+1=0).</p>
+<p style="margin-top:0.5rem;"><strong>VoP ansatz:</strong> Let y = u₁(x)cos x + u₂(x)sin x. The VoP constraint and substitution into the equation give:</p>
+<div class="math-display">$$\\begin{pmatrix}\\cos x & \\sin x \\\\ -\\sin x & \\cos x\\end{pmatrix}\\begin{pmatrix}u_1' \\\\ u_2'\\end{pmatrix} = \\begin{pmatrix}0 \\\\ \\tan x\\end{pmatrix}$$</div>
+<p>Wronskian W = cos²x + sin²x = 1. Solving by Cramer's rule (or inverting):</p>
+<div class="math-display">$$u_1' = -\\sin x \\cdot \\tan x = -\\frac{\\sin^2 x}{\\cos x} = \\cos x - \\sec x, \\qquad u_2' = \\cos x \\cdot \\tan x = \\sin x$$</div>
+<p><strong>Integrate:</strong> u₁ = sin x − ln|sec x + tan x| + const, u₂ = −cos x + const.</p>
+<p style="margin-top:0.5rem;"><strong>General solution:</strong></p>
+<div class="math-display">$$y(x) = C_1\\cos x + C_2\\sin x - \\cos x\\ln|\\sec x + \\tan x|$$</div>
+<p>(The term sin x · cos x − cos x · sin x = 0 cancels; the surviving particular integral is −cos x · ln|sec x + tan x|.)</p>`
+    },
+    {
+      id: 'fa2023_q2a',
+      q: '[FA 2022–23 Q2(a) — 9 marks] For the system dx/dt = Ax + f where A = [[−3,1,0],[0,−3,1],[4,−8,2]] and f = (0,0,1)ᵀeᵗ, given that the characteristic polynomial is −(λ³+4λ²+5λ+2) and λ₁ = −2 is one eigenvalue: find the remaining eigenvalue(s) of A and, by constructing the corresponding eigenvectors and generalised eigenvectors, show that the transformation matrix P may be written as P = [[1,1,0],[1,2,1],[1,4,4]].',
+      hint: 'Factor −(λ+2)(λ+1)² = 0. For λ = −1: (A+I) has rank 2, so geometric mult = 1 < alg. mult = 2 — you need a GEV. Solve (A+I)v⁽⁰⁾ = 0 for the eigenvector, then (A+I)v⁽¹⁾ = v⁽⁰⁾ for the GEV.',
+      marks: 9,
+      solution: `<p><strong>Factoring:</strong> −(λ³+4λ²+5λ+2) = −(λ+2)(λ+1)² = 0. So λ₂,₃ = −1 with algebraic multiplicity 2.</p>
+<p style="margin-top:0.5rem;"><strong>Eigenvector for λ₁ = −2:</strong> (A+2I)v = 0. Augmented matrix row-reduces to give v¹ = (1,1,1)ᵀ.</p>
+<p style="margin-top:0.5rem;"><strong>Eigenvector for λ = −1:</strong> (A+I) row-reduces to rank 2, giving one eigenvector: w = v⁽⁰⁾ = (1,2,4)ᵀ.</p>
+<p style="margin-top:0.5rem;"><strong>Generalised eigenvector:</strong> Solve (A+I)v⁽¹⁾ = v⁽⁰⁾. The augmented matrix gives v⁽¹⁾ = (0,1,4)ᵀ (choosing the free parameter w₂′ = 1).</p>
+<p style="margin-top:0.5rem;"><strong>Transformation matrix:</strong> P = [v¹ | v⁽⁰⁾ | v⁽¹⁾]:</p>
+<div class="math-display">$$P = \\begin{pmatrix}1&1&0\\\\1&2&1\\\\1&4&4\\end{pmatrix}, \\qquad P^{-1} = \\begin{pmatrix}4&-4&1\\\\-3&4&-1\\\\2&-3&1\\end{pmatrix} \\text{ (given)}$$</div>`
+    },
+    {
+      id: 'fa2023_q2b',
+      q: '[FA 2022–23 Q2(b) — 16 marks] Using P⁻¹ = [[4,−4,1],[−3,4,−1],[2,−3,1]] and the substitution x = Py, quasi-diagonalise the system dx/dt = Ax + f (with A and f as in Q2a) to find the general solution in terms of the components y = (y₁,y₂,y₃)ᵀ. State the components yᵢ(t) explicitly.',
+      hint: 'Compute J = P⁻¹AP (Jordan form with blocks diag(−2) ⊕ J_{−1,2}) and g = P⁻¹f. Solve the back-substituted system: ẏ₃ first (scalar IF), then ẏ₁ (scalar IF), then ẏ₂ using y₃.',
+      marks: 16,
+      solution: `<p><strong>Jordan form and transformed forcing:</strong></p>
+<div class="math-display">$$J = P^{-1}AP = \\begin{pmatrix}-2&0&0\\\\0&-1&1\\\\0&0&-1\\end{pmatrix}, \\qquad P^{-1}\\mathbf{f} = \\begin{pmatrix}1\\\\-1\\\\1\\end{pmatrix}e^t$$</div>
+<p>The transformed system ẏ = Jy + P⁻¹f in components:</p>
+<div class="math-display">$$\\dot{y}_1 = -2y_1 + e^t, \\quad \\dot{y}_2 = -y_2 + y_3 - e^t, \\quad \\dot{y}_3 = -y_3 + e^t$$</div>
+<p><strong>Solve ẏ₃ (bottom row):</strong> IF = eᵗ → d/dt[y₃eᵗ] = e²ᵗ → y₃eᵗ = ½e²ᵗ + C₃:</p>
+<div class="math-display">$$y_3(t) = \\tfrac{1}{2}e^t + C_3 e^{-t}$$</div>
+<p><strong>Solve ẏ₁ (independent of y₂, y₃):</strong> IF = e²ᵗ → y₁e²ᵗ = ⅓e³ᵗ + C₁:</p>
+<div class="math-display">$$y_1(t) = \\tfrac{1}{3}e^t + C_1 e^{-2t}$$</div>
+<p><strong>Solve ẏ₂ (using y₃):</strong> ẏ₂ + y₂ = y₃ − eᵗ = −½eᵗ + C₃e⁻ᵗ. IF = eᵗ → d/dt[y₂eᵗ] = −½e²ᵗ + C₃:</p>
+<div class="math-display">$$y_2(t) = -\\tfrac{1}{4}e^t + C_2 e^{-t} + C_3 t e^{-t}$$</div>
+<p style="margin-top:0.5rem;"><strong>Original variables:</strong> x = Py gives x₁ = y₁+y₂, x₂ = y₁+2y₂+y₃, x₃ = y₁+4y₂+4y₃.</p>`
+    },
+    {
+      id: 'fa2023_q3',
+      q: '[FA 2022–23 Q3 — 25 marks] Consider the heat equation uₜ = κuₓₓ for x ∈ (0,L), t > 0, with homogeneous Dirichlet BCs u(0,t) = u(L,t) = 0 and IC u(x,0) = f(x). Suggest u(x,t) = X(x)T(t), derive the separated equations X″/X = (1/κ)T′/T = const, justify why both sides must equal a constant, and use the choice −μ² to obtain the complete solution.',
+      hint: 'LHS depends only on x, RHS only on t — so both equal a constant λ. BCs force λ = −μ² < 0. Solve X″ + μ²X = 0 with X(0)=X(L)=0 to get μₙ = nπ/L, Xₙ = sin(nπx/L). Then T′ + κμₙ²T = 0 gives exponential decay. Superpose and match IC by Fourier sine series.',
+      marks: 25,
+      solution: `<p><strong>Separation:</strong> Substituting u = X(x)T(t) into uₜ = κuₓₓ:</p>
+<div class="math-display">$$\\frac{X''(x)}{X(x)} = \\frac{1}{\\kappa}\\frac{T'(t)}{T(t)} = -\\mu^2$$</div>
+<p>Since the left side depends only on x and the right side only on t, and they are equal for all x,t, both must be equal to a constant. We choose the constant to be −μ² (justified below).</p>
+<p style="margin-top:0.5rem;"><strong>X-equation:</strong> X″ + μ²X = 0. With BCs X(0) = X(L) = 0:</p>
+<p>General solution X = C₁cos μx + C₂sin μx. X(0)=0 → C₁=0. X(L)=0 → C₂sin μL = 0. For non-trivial C₂: μₙ = nπ/L, n ∈ ℤ≥₁. Eigenfunctions:</p>
+<div class="math-display">$$X_n(x) = \\sin\\!\\left(\\frac{n\\pi x}{L}\\right), \\quad n = 1, 2, 3, \\ldots$$</div>
+<p>(The choice λ = 0 gives only the trivial solution; λ > 0 gives real exponentials which cannot satisfy both BCs non-trivially.)</p>
+<p style="margin-top:0.5rem;"><strong>T-equation:</strong> T′ + κ(nπ/L)²T = 0 → T′/T = −κ(nπ/L)². Integrating:</p>
+<div class="math-display">$$T_n(t) = D_n\\exp\\!\\left[-\\kappa\\left(\\frac{n\\pi}{L}\\right)^2 t\\right]$$</div>
+<p><strong>General solution</strong> (superposition, setting Aₙ = CₙDₙ):</p>
+<div class="math-display">$$u(x,t) = \\sum_{n=1}^{\\infty} A_n \\sin\\!\\left(\\frac{n\\pi x}{L}\\right)\\exp\\!\\left[-\\kappa\\left(\\frac{n\\pi}{L}\\right)^2 t\\right]$$</div>
+<p><strong>Initial condition</strong> u(x,0) = f(x): ∑Aₙ sin(nπx/L) = f(x). Multiply both sides by sin(mπx/L) and integrate over [0,L]. Orthogonality gives ∫₀ᴸsin²(nπx/L)dx = L/2, so:</p>
+<div class="math-display">$$A_n = \\frac{2}{L}\\int_0^L f(x)\\sin\\!\\left(\\frac{n\\pi x}{L}\\right)dx, \\quad n \\geq 1$$</div>`
+    },
+    // ── FA 2022–23 Resit ──
+    {
+      id: 'faresit2023_q1',
+      q: '[FA Resit 2022–23 Q1 — 10 marks] Solve the second-order linear inhomogeneous ODE with constant coefficients d²y/dx² − 2 dy/dx + y = 2sin(x).',
+      hint: 'Characteristic equation (m−1)² = 0 gives repeated root m=1, so yₕ = (C₁+C₂x)eˣ. For PI use complexification: let y = Im(z) where z satisfies the same ODE with RHS 2eⁱˣ. Try zₚ = Aeⁱˣ.',
+      marks: 10,
+      solution: `<p><strong>Characteristic equation:</strong> m²−2m+1 = (m−1)² = 0. Repeated root m=1:</p>
+<div class="math-display">$$y_h = (C_1 + C_2 x)e^x$$</div>
+<p><strong>Particular integral by complexification:</strong> Let y = Im(z) where z″−2z′+z = 2eⁱˣ. Try zₚ = Aeⁱˣ:</p>
+<p>(iA)² − 2(iA) + A = 2/(coefficient check) → −Aeⁱˣ − 2iAeⁱˣ + Aeⁱˣ = 2eⁱˣ → −2iA = 2 → A = i.</p>
+<p>So zₚ = ieⁱˣ = i(cos x + i sin x) = −sin x + i cos x.</p>
+<p>Therefore yₚ = Im(zₚ) = cos x.</p>
+<p style="margin-top:0.5rem;"><strong>General solution:</strong></p>
+<div class="math-display">$$y(x) = (C_1 + C_2 x)e^x + \\cos x$$</div>`
+    },
+    {
+      id: 'faresit2023_q2',
+      q: '[FA Resit 2022–23 Q2 — 25 marks] Given the inhomogeneous system dx₁/dt = x₁ − x₂ + eᵗ, dx₂/dt = 9x₁ + 7x₂, obtain its general solution by quasi-diagonalisation. You must find the eigenvalue(s), eigenvector(s) and generalised eigenvector(s) of the coefficient matrix A.',
+      hint: 'A = [[1,−1],[9,7]]. det(A−λI) = (λ−4)² = 0, so λ=4 is the only eigenvalue (alg. mult. 2). Find eigenvector v⁽⁰⁾ = (1,−3)ᵀ, then GEV v⁽¹⁾ = (0,−1)ᵀ. P = [[1,0],[−3,−1]] = P⁻¹. Back-substitute from the bottom row of the Jordan system.',
+      marks: 25,
+      solution: `<p><strong>Coefficient matrix:</strong> A = [[1,−1],[9,7]], f = (1,0)ᵀeᵗ.</p>
+<p>det(A−λI) = (1−λ)(7−λ)+9 = λ²−8λ+16 = (λ−4)² = 0. Only eigenvalue: λ = 4 (alg. mult. 2).</p>
+<p style="margin-top:0.5rem;"><strong>Eigenvector (λ=4):</strong> (A−4I) = [[−3,−1],[9,3]] → rank 1 → one eigenvector: v⁽⁰⁾ = (1,−3)ᵀ. Geometric mult. = 1 &lt; 2 — need a GEV.</p>
+<p style="margin-top:0.5rem;"><strong>GEV:</strong> Solve (A−4I)v⁽¹⁾ = v⁽⁰⁾: −3v₁−v₂=1. Choose v₂=−1 → v₁=0. So v⁽¹⁾ = (0,−1)ᵀ.</p>
+<p style="margin-top:0.5rem;"><strong>P and J:</strong></p>
+<div class="math-display">$$P = \\begin{pmatrix}1&0\\\\-3&-1\\end{pmatrix} = P^{-1}, \\qquad J = P^{-1}AP = \\begin{pmatrix}4&1\\\\0&4\\end{pmatrix}, \\qquad P^{-1}\\mathbf{f} = \\begin{pmatrix}1\\\\-3\\end{pmatrix}e^t$$</div>
+<p><strong>Back-substitution:</strong> System ẏ = Jy + P⁻¹f: ẏ₁ = 4y₁+y₂+eᵗ, ẏ₂ = 4y₂−3eᵗ.</p>
+<p>Solve ẏ₂ − 4y₂ = −3eᵗ: IF = e⁻⁴ᵗ → y₂ = eᵗ + C₂e⁴ᵗ.</p>
+<p>Solve ẏ₁ − 4y₁ = y₂+eᵗ = 2eᵗ+C₂e⁴ᵗ: IF = e⁻⁴ᵗ → y₁ = −⅔eᵗ + C₁e⁴ᵗ + C₂te⁴ᵗ.</p>
+<p style="margin-top:0.5rem;"><strong>General solution x = Py:</strong></p>
+<div class="math-display">$$\\mathbf{x}(t) = C_1\\begin{pmatrix}1\\\\-3\\end{pmatrix}e^{4t} + C_2\\left[\\begin{pmatrix}0\\\\-1\\end{pmatrix} + \\begin{pmatrix}1\\\\-3\\end{pmatrix}t\\right]e^{4t} + \\begin{pmatrix}-2/3\\\\1\\end{pmatrix}e^t$$</div>`
+    },
+    {
+      id: 'faresit2023_q3',
+      q: '[FA Resit 2022–23 Q3 — 25 marks] Consider the heat equation uₜ = κuₓₓ for x ∈ (0,L), t > 0, with mixed BCs u(0,t) = 0 and ∂u/∂x(L,t) = 0, and IC u(x,0) = f(x). Use separation of variables u = X(x)T(t) to obtain the complete solution. Note the BCs are u(0,t) = 0 (Dirichlet at x=0) and uₓ(L,t) = 0 (Neumann at x=L).',
+      hint: 'X(0)=0 forces C₁=0 so X = C₂sin(μx). The Neumann condition X′(L)=0 gives C₂μcos(μL)=0. For non-trivial C₂: cos(μL)=0 → μₙ = (2n+1)π/(2L), n=0,1,2,…',
+      marks: 25,
+      solution: `<p><strong>Separation:</strong> u = X(x)T(t) → X″/X = (1/κ)T′/T = −μ².</p>
+<p><strong>X-equation</strong> with X(0)=0 and X′(L)=0: X = C₁cos μx + C₂sin μx.</p>
+<p>X(0)=0 → C₁=0. X′(L)=0 → C₂μcos(μL)=0. For non-trivial solution: cos(μₙL)=0 → μₙL = π/2 + nπ = (2n+1)π/2, so:</p>
+<div class="math-display">$$\\mu_n = \\frac{(2n+1)\\pi}{2L}, \\quad n = 0, 1, 2, \\ldots, \\qquad X_n(x) = \\sin\\!\\left(\\frac{(2n+1)\\pi}{2L}x\\right)$$</div>
+<p><strong>T-equation:</strong> T′ + κμₙ²T = 0 → Tₙ(t) = Dₙexp[−κμₙ²t].</p>
+<p><strong>General solution:</strong></p>
+<div class="math-display">$$u(x,t) = \\sum_{n=0}^{\\infty} A_n \\sin\\!\\left(\\frac{(2n+1)\\pi}{2L}x\\right)\\exp\\!\\left[-\\kappa\\left(\\frac{(2n+1)\\pi}{2L}\\right)^2 t\\right]$$</div>
+<p><strong>Coefficients:</strong> Orthogonality of {sin(μₙx)} on [0,L] (with ∫₀ᴸ sin²(μₙx)dx = L/2):</p>
+<div class="math-display">$$A_n = \\frac{2}{L}\\int_0^L f(x)\\sin\\!\\left(\\frac{(2n+1)\\pi}{2L}x\\right)dx, \\quad n \\geq 0$$</div>`
+    }
   ]
 };
 
@@ -5053,11 +5809,12 @@ function renderExamQuestions(panel, questions) {
 
 function generateExam(panel) {
   const pool = EXAM_QUESTIONS[panel];
-  if (pool.length === 0) {
-    alert('Upload the ' + (panel === 'ct1' ? 'Class Test I' : 'Class Test II') + ' specimen paper first — questions will be populated automatically.');
+  if (!pool || pool.length === 0) {
+    alert('No questions available for this paper yet.');
     return;
   }
-  const count = panel === 'ct1' ? 4 : 3;
+  const countMap = { ct1: 4, ct2: 3, fa: 5 };
+  const count = countMap[panel] || 4;
   const shuffled = [...pool].sort(() => Math.random() - 0.5);
   const selected = shuffled.slice(0, Math.min(count, shuffled.length));
   renderExamQuestions(panel, selected);
@@ -5115,6 +5872,7 @@ function initMath() {
   });
   renderExamQuestions('ct1', [...EXAM_QUESTIONS.ct1].sort(() => Math.random() - 0.5).slice(0, 4));
   renderExamQuestions('ct2', [...EXAM_QUESTIONS.ct2].sort(() => Math.random() - 0.5).slice(0, 3));
+  renderExamQuestions('fa', [...EXAM_QUESTIONS.fa].sort(() => Math.random() - 0.5).slice(0, 5));
 }
 </script>
 </body>
