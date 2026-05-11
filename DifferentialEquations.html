@@ -3353,8 +3353,12 @@ body {
           <div class="method-step"><div class="method-step-num">4</div><div><strong>Substitute <span class="math">\mathbf{x}=P\mathbf{y}</span>.</strong> System becomes <span class="math">\dot{\mathbf{y}} = J\mathbf{y} + \mathbf{g}(t)</span>, <span class="math">\mathbf{g}=P^{-1}\mathbf{f}</span>. Solve from the <em>bottom row upward</em> (back-substitution in each Jordan block).</div></div>
           <div class="method-step"><div class="method-step-num">5</div><div><strong>Recover <span class="math">\mathbf{x}=P\mathbf{y}</span>.</strong></div></div>
           <div class="method-example-box">
-            <div class="ex-label">Intuition — why does Jordan form give <span class="math">te^{\lambda t}</span>?</div>
-            <p>A Jordan block <span class="math">J_{\lambda,2}</span> can be written as <span class="math">\lambda I + N</span> where <span class="math">N = \begin{pmatrix}0&amp;1\\0&amp;0\end{pmatrix}</span>. The matrix exponential splits as <span class="math">e^{Jt}=e^{\lambda t}e^{Nt}=e^{\lambda t}(I+Nt)</span> since <span class="math">N^2=0</span>. This is <em>exactly</em> why solutions involve <span class="math">te^{\lambda t}</span>: the nilpotent part <span class="math">N</span> contributes the polynomial <span class="math">t</span> factor. More generally, an <span class="math">m\times m</span> Jordan block produces polynomial factors <span class="math">1,t,t^2/2!,\ldots,t^{m-1}/(m-1)!</span>.</p>
+            <div class="ex-label">Intuition — where does <span class="math">te^{\lambda t}</span> come from?</div>
+            <p>A 2×2 Jordan block for eigenvalue <span class="math">\lambda</span> gives two coupled scalar equations after substituting <span class="math">\mathbf{x}=P\mathbf{y}</span>:</p>
+            <div class="math-display">$$\dot{y}_2 = \lambda y_2, \qquad \dot{y}_1 = \lambda y_1 + y_2$$</div>
+            <p>Solve the <em>bottom</em> equation first: integrating factor <span class="math">e^{-\lambda t}</span> gives <span class="math">y_2 = C_2 e^{\lambda t}</span>. Substitute into the top equation — it becomes <span class="math">\dot{y}_1 - \lambda y_1 = C_2 e^{\lambda t}</span>. Applying the same integrating factor:</p>
+            <div class="math-display">$$\frac{d}{dt}\!\left[y_1 e^{-\lambda t}\right] = C_2 \implies y_1 = (C_1 + C_2 t)\,e^{\lambda t}$$</div>
+            <p>The <span class="math">t</span> appears because integrating a constant gives a linear term. This is exactly the same reason a repeated root <span class="math">m</span> of a second-order ODE gives the pair <span class="math">e^{mx}</span> and <span class="math">xe^{mx}</span>: in both cases, one homogeneous solution feeds back as a forcing term and produces a polynomial factor.</p>
           </div>
         </div>
       </div>
@@ -3371,8 +3375,9 @@ body {
           <div class="method-step"><div class="method-step-num">3</div><div><strong>Integrate:</strong> <span class="math">\mathbf{x}_p(t) = \Psi(t)\displaystyle\int_{t_0}^t\Psi^{-1}(s)\mathbf{f}(s)\,ds</span>.</div></div>
           <div class="method-step"><div class="method-step-num">4</div><div><strong>General solution:</strong> <span class="math">\mathbf{x}=\Psi(t)\mathbf{C}+\mathbf{x}_p(t)</span>.</div></div>
           <div class="method-example-box">
-            <div class="ex-label">Intuition — why does the <span class="math">A\Psi\mathbf{z}</span> cancel?</div>
-            <p>The ansatz <span class="math">\mathbf{x}=\Psi\mathbf{z}</span> is inspired by the scalar case <span class="math">y=u_1y_1+u_2y_2</span>. When we differentiate, we get <span class="math">\dot{\Psi}\mathbf{z}+\Psi\dot{\mathbf{z}}</span>. But <span class="math">\dot{\Psi}=A\Psi</span> (because each column of <span class="math">\Psi</span> solves the homogeneous system), so the <span class="math">A\Psi\mathbf{z}</span> terms cancel against the <span class="math">A\mathbf{x}</span> side — exactly as in the scalar case. What remains is <span class="math">\Psi\dot{\mathbf{z}}=\mathbf{f}</span>, which is trivially solvable since <span class="math">\Psi</span> is invertible. The key is that <em>the homogeneous structure does all the heavy lifting</em>.</p>
+            <div class="ex-label">Intuition — why does the method work?</div>
+            <p>This is the vector version of the scalar variation of parameters from Set 4. In the scalar case (<span class="math">y''+py'+qy=f</span>), we replaced constants <span class="math">C_1, C_2</span> with unknown functions <span class="math">u_1(x), u_2(x)</span>. The key constraint <span class="math">u_1'y_1 + u_2'y_2 = 0</span> was imposed so that the <span class="math">y''</span>-term stayed simple — leaving a 2×2 system for <span class="math">u_1', u_2'</span> with Wronskian determinant.</p>
+            <p style="margin-top:0.4rem;">For systems, the same idea: let <span class="math">\mathbf{x} = \Psi(t)\mathbf{z}(t)</span> where the columns of <span class="math">\Psi</span> are the <span class="math">n</span> homogeneous solutions. When we differentiate and substitute into <span class="math">\dot{\mathbf{x}} = A\mathbf{x}+\mathbf{f}</span>, the term <span class="math">A\mathbf{x} = A\Psi\mathbf{z}</span> cancels against <span class="math">\dot{\Psi}\mathbf{z}</span> — because every column of <span class="math">\Psi</span> satisfies the homogeneous equation, so <span class="math">\dot{\Psi}=A\Psi</span>. What remains is <span class="math">\Psi\dot{\mathbf{z}}=\mathbf{f}</span>: invert <span class="math">\Psi</span> and integrate. The homogeneous solutions carry the whole structure; the forcing term <span class="math">\mathbf{f}</span> only needs to be integrated.</p>
           </div>
         </div>
       </div>
@@ -3391,9 +3396,14 @@ body {
           <div class="method-step"><div class="method-step-num">5</div><div><strong>Superpose all modes</strong> (valid by linearity): <span class="math">u=\sum_{n=1}^\infty X_n(x)T_n(t)</span>.</div></div>
           <div class="method-step"><div class="method-step-num">6</div><div><strong>Determine coefficients</strong> by applying initial (or remaining boundary) conditions — this gives a Fourier sine series problem. Use <span class="math">A_n = \frac{2}{L}\int_0^L (\cdots)\sin(n\pi x/L)\,dx</span>.</div></div>
           <div class="method-example-box">
-            <div class="ex-label">Intuition — why must <span class="math">\lambda &lt; 0</span> for Dirichlet BCs?</div>
-            <p>The <span class="math">X</span>-equation with <span class="math">X(0)=X(L)=0</span> is a Sturm-Liouville eigenvalue problem. For <span class="math">\lambda=0</span>: <span class="math">X''=0</span> gives <span class="math">X=ax+b</span>; BCs force <span class="math">X\equiv 0</span> (trivial). For <span class="math">\lambda=\mu^2&gt;0</span>: <span class="math">X=Ae^{\mu x}+Be^{-\mu x}</span>; BCs again give only <span class="math">X\equiv 0</span>. Only for <span class="math">\lambda=-\mu^2&lt;0</span> does <span class="math">X=A\cos\mu x+B\sin\mu x</span> have non-trivial solutions vanishing at both ends: <span class="math">\mu_n=n\pi/L</span>. In short, <em>oscillatory solutions require negative <span class="math">\lambda</span></em> — the sign is not a choice but a consequence of the geometry.</p>
-            <p style="margin-top:0.5rem;">For the heat equation this means exponential decay in time (<span class="math">e^{-\kappa\mu_n^2 t}\to 0</span>), consistent with physical expectation. For the wave equation, <span class="math">T''+\omega_n^2 T=0</span> gives oscillations at frequency <span class="math">\omega_n=n\pi a/L</span> — the natural frequencies of the string.</p>
+            <div class="ex-label">Intuition — why must <span class="math">-\mu^2 &lt; 0</span>?</div>
+            <p>The <span class="math">X</span>-equation with <span class="math">X(0)=X(L)=0</span> is a standard BVP (cf. Set 5). Testing the three cases:</p>
+            <ul style="margin:0.4rem 0 0 1.2rem;line-height:1.7;">
+              <li><strong>Constant = 0:</strong> <span class="math">X''=0 \Rightarrow X=ax+b</span>. BCs give <span class="math">b=0</span> and <span class="math">aL=0</span>, so <span class="math">X\equiv 0</span> (trivial).</li>
+              <li><strong>Constant = <span class="math">\mu^2 > 0</span>:</strong> <span class="math">X=Ae^{\mu x}+Be^{-\mu x}</span>. From <span class="math">X(0)=0</span>: <span class="math">A+B=0</span>. From <span class="math">X(L)=0</span>: <span class="math">A(e^{\mu L}-e^{-\mu L})=0</span>, so <span class="math">A=B=0</span> (trivial).</li>
+              <li><strong>Constant = <span class="math">-\mu^2 &lt; 0</span>:</strong> <span class="math">X=C_1\cos\mu x + C_2\sin\mu x</span>. From <span class="math">X(0)=0</span>: <span class="math">C_1=0</span>. From <span class="math">X(L)=0</span>: <span class="math">C_2\sin\mu L=0</span>. For non-trivial <span class="math">C_2</span>: <span class="math">\mu_n = n\pi/L</span>. ✓</li>
+            </ul>
+            <p style="margin-top:0.5rem;">Only oscillatory solutions (<span class="math">\cos, \sin</span>) can vanish at two different points without being zero everywhere. For the heat equation, the corresponding <span class="math">T</span>-equation then gives exponential decay <span class="math">e^{-\kappa\mu_n^2 t}\to 0</span> as <span class="math">t\to\infty</span> — physically correct. For the wave equation, <span class="math">T'' + \kappa\mu_n^2 T = 0</span> gives oscillations at the natural frequencies <span class="math">\omega_n = n\pi a/L</span>.</p>
           </div>
         </div>
       </div>
@@ -5652,10 +5662,14 @@ const EXAM_QUESTIONS = {
     }
   ],
   // ─── Final Assessment pool ────────────────────────────────────────────
+  // slot: 'q1' → first-order ODEs (10 marks)
+  // slot: 'q2' → second-order ODEs (25 marks)
+  // slot: 'q3' → systems / PDEs (25 marks)
   fa: [
     // ── FA 2022–23 Main ──
     {
       id: 'fa2023_q1',
+      slot: 'q2',
       q: '[FA 2022–23 Q1 — 10 marks] Solve the second-order linear inhomogeneous ODE d²y/dx² + y = tan(x), x ∈ (−π/2, π/2), by the method of variation of parameters. Start with the homogeneous solution yₕ = C₁cos x + C₂sin x and let C₁, C₂ become functions u₁(x), u₂(x). You may use ∫sec(x)dx = ln|sec x + tan x| + C.',
       hint: 'Write the VoP system [[cos x, sin x],[−sin x, cos x]](u₁′,u₂′)ᵀ = (0, tan x)ᵀ. The Wronskian W = 1. Solve for u₁′ and u₂′, then integrate.',
       marks: 10,
@@ -5671,6 +5685,7 @@ const EXAM_QUESTIONS = {
     },
     {
       id: 'fa2023_q2a',
+      slot: 'q3',
       q: '[FA 2022–23 Q2(a) — 9 marks] For the system dx/dt = Ax + f where A = [[−3,1,0],[0,−3,1],[4,−8,2]] and f = (0,0,1)ᵀeᵗ, given that the characteristic polynomial is −(λ³+4λ²+5λ+2) and λ₁ = −2 is one eigenvalue: find the remaining eigenvalue(s) of A and, by constructing the corresponding eigenvectors and generalised eigenvectors, show that the transformation matrix P may be written as P = [[1,1,0],[1,2,1],[1,4,4]].',
       hint: 'Factor −(λ+2)(λ+1)² = 0. For λ = −1: (A+I) has rank 2, so geometric mult = 1 < alg. mult = 2 — you need a GEV. Solve (A+I)v⁽⁰⁾ = 0 for the eigenvector, then (A+I)v⁽¹⁾ = v⁽⁰⁾ for the GEV.',
       marks: 9,
@@ -5683,6 +5698,7 @@ const EXAM_QUESTIONS = {
     },
     {
       id: 'fa2023_q2b',
+      slot: 'q3',
       q: '[FA 2022–23 Q2(b) — 16 marks] Using P⁻¹ = [[4,−4,1],[−3,4,−1],[2,−3,1]] and the substitution x = Py, quasi-diagonalise the system dx/dt = Ax + f (with A and f as in Q2a) to find the general solution in terms of the components y = (y₁,y₂,y₃)ᵀ. State the components yᵢ(t) explicitly.',
       hint: 'Compute J = P⁻¹AP (Jordan form with blocks diag(−2) ⊕ J_{−1,2}) and g = P⁻¹f. Solve the back-substituted system: ẏ₃ first (scalar IF), then ẏ₁ (scalar IF), then ẏ₂ using y₃.',
       marks: 16,
@@ -5700,6 +5716,7 @@ const EXAM_QUESTIONS = {
     },
     {
       id: 'fa2023_q3',
+      slot: 'q3',
       q: '[FA 2022–23 Q3 — 25 marks] Consider the heat equation uₜ = κuₓₓ for x ∈ (0,L), t > 0, with homogeneous Dirichlet BCs u(0,t) = u(L,t) = 0 and IC u(x,0) = f(x). Suggest u(x,t) = X(x)T(t), derive the separated equations X″/X = (1/κ)T′/T = const, justify why both sides must equal a constant, and use the choice −μ² to obtain the complete solution.',
       hint: 'LHS depends only on x, RHS only on t — so both equal a constant λ. BCs force λ = −μ² < 0. Solve X″ + μ²X = 0 with X(0)=X(L)=0 to get μₙ = nπ/L, Xₙ = sin(nπx/L). Then T′ + κμₙ²T = 0 gives exponential decay. Superpose and match IC by Fourier sine series.',
       marks: 25,
@@ -5720,6 +5737,7 @@ const EXAM_QUESTIONS = {
     // ── FA 2022–23 Resit ──
     {
       id: 'faresit2023_q1',
+      slot: 'q2',
       q: '[FA Resit 2022–23 Q1 — 10 marks] Solve the second-order linear inhomogeneous ODE with constant coefficients d²y/dx² − 2 dy/dx + y = 2sin(x).',
       hint: 'Characteristic equation (m−1)² = 0 gives repeated root m=1, so yₕ = (C₁+C₂x)eˣ. For PI use complexification: let y = Im(z) where z satisfies the same ODE with RHS 2eⁱˣ. Try zₚ = Aeⁱˣ.',
       marks: 10,
@@ -5734,6 +5752,7 @@ const EXAM_QUESTIONS = {
     },
     {
       id: 'faresit2023_q2',
+      slot: 'q3',
       q: '[FA Resit 2022–23 Q2 — 25 marks] Given the inhomogeneous system dx₁/dt = x₁ − x₂ + eᵗ, dx₂/dt = 9x₁ + 7x₂, obtain its general solution by quasi-diagonalisation. You must find the eigenvalue(s), eigenvector(s) and generalised eigenvector(s) of the coefficient matrix A.',
       hint: 'A = [[1,−1],[9,7]]. det(A−λI) = (λ−4)² = 0, so λ=4 is the only eigenvalue (alg. mult. 2). Find eigenvector v⁽⁰⁾ = (1,−3)ᵀ, then GEV v⁽¹⁾ = (0,−1)ᵀ. P = [[1,0],[−3,−1]] = P⁻¹. Back-substitute from the bottom row of the Jordan system.',
       marks: 25,
@@ -5751,6 +5770,7 @@ const EXAM_QUESTIONS = {
     },
     {
       id: 'faresit2023_q3',
+      slot: 'q3',
       q: '[FA Resit 2022–23 Q3 — 25 marks] Consider the heat equation uₜ = κuₓₓ for x ∈ (0,L), t > 0, with mixed BCs u(0,t) = 0 and ∂u/∂x(L,t) = 0, and IC u(x,0) = f(x). Use separation of variables u = X(x)T(t) to obtain the complete solution. Note the BCs are u(0,t) = 0 (Dirichlet at x=0) and uₓ(L,t) = 0 (Neumann at x=L).',
       hint: 'X(0)=0 forces C₁=0 so X = C₂sin(μx). The Neumann condition X′(L)=0 gives C₂μcos(μL)=0. For non-trivial C₂: cos(μL)=0 → μₙ = (2n+1)π/(2L), n=0,1,2,…',
       marks: 25,
@@ -5763,6 +5783,164 @@ const EXAM_QUESTIONS = {
 <div class="math-display">$$u(x,t) = \\sum_{n=0}^{\\infty} A_n \\sin\\!\\left(\\frac{(2n+1)\\pi}{2L}x\\right)\\exp\\!\\left[-\\kappa\\left(\\frac{(2n+1)\\pi}{2L}\\right)^2 t\\right]$$</div>
 <p><strong>Coefficients:</strong> Orthogonality of {sin(μₙx)} on [0,L] (with ∫₀ᴸ sin²(μₙx)dx = L/2):</p>
 <div class="math-display">$$A_n = \\frac{2}{L}\\int_0^L f(x)\\sin\\!\\left(\\frac{(2n+1)\\pi}{2L}x\\right)dx, \\quad n \\geq 0$$</div>`
+    },
+    // ── Q1 pool — First-order ODEs ──────────────────────────────────────
+    {
+      id: 'fa_q1_hom1',
+      slot: 'q1',
+      q: '[FA Practice Q1 — 10 marks] Find the general solution of the ODE dy/dx = (x² + xy + y²)/x², and hence find the particular solution satisfying y(1) = 0.',
+      hint: 'Write dy/dx = 1 + (y/x) + (y/x)². Substitute v = y/x so y = vx and dy/dx = v + x dv/dx. The equation becomes x dv/dx = 1 + v², which is separable.',
+      marks: 10,
+      solution: `<p><strong>Substitution v = y/x:</strong> Since y = vx, dy/dx = v + x dv/dx. The ODE becomes:</p>
+<p style="font-family:var(--mono);background:rgba(0,0,0,0.04);padding:0.3rem 0.6rem;margin:0.4rem 0;border-radius:2px;">v + x dv/dx = 1 + v + v²</p>
+<p>Simplifying: x dv/dx = 1 + v². This is <strong>separable</strong>:</p>
+<div class="math-display">$$\\frac{dv}{1+v^2} = \\frac{dx}{x} \\implies \\arctan v = \\ln|x| + C$$</div>
+<p>Back-substituting v = y/x: <strong>arctan(y/x) = ln|x| + C</strong>, or equivalently y = x tan(ln|x| + C).</p>
+<p style="margin-top:0.5rem;"><strong>Particular solution y(1) = 0:</strong> At x=1, ln 1 = 0, so arctan(0) = 0 + C → C = 0.</p>
+<p>Particular solution: <strong>y = x tan(ln x)</strong> (defined while |ln x| &lt; π/2, i.e. e^{−π/2} &lt; x &lt; e^{π/2}).</p>`
+    },
+    {
+      id: 'fa_q1_hom2',
+      slot: 'q1',
+      q: '[FA Practice Q1 — 10 marks] Find the general solution of the ODE dy/dx = (y² − x²)/(2xy). Hence find the particular solution satisfying y(1) = 2.',
+      hint: 'Substitute v = y/x. The equation becomes x dv/dx = (v²−1)/(2v) − v = −(v²+1)/(2v), which is separable. Separate and integrate using 2v/(v²+1).',
+      marks: 10,
+      solution: `<p><strong>Substitution v = y/x:</strong> dy/dx = v + x dv/dx. RHS = (v²−1)/(2v). So:</p>
+<p style="font-family:var(--mono);background:rgba(0,0,0,0.04);padding:0.3rem 0.6rem;margin:0.4rem 0;border-radius:2px;">x dv/dx = (v²−1)/(2v) − v = −(v²+1)/(2v)</p>
+<p><strong>Separate:</strong></p>
+<div class="math-display">$$\\frac{2v}{v^2+1}\\,dv = -\\frac{dx}{x} \\implies \\ln(v^2+1) = -\\ln|x| + C$$</div>
+<p>So (v²+1)·x = A (constant). Substituting back v = y/x:</p>
+<div class="math-display">$$\\left(\\frac{y^2}{x^2}+1\\right)x = A \\implies \\frac{y^2+x^2}{x} = A \\implies y^2 + x^2 = Ax$$</div>
+<p style="margin-top:0.5rem;"><strong>Particular solution y(1) = 2:</strong> 4 + 1 = A·1 → A = 5.</p>
+<p>Particular solution: <strong>x² + y² = 5x</strong>, i.e. y = √(5x − x²) (taking positive root).</p>`
+    },
+    {
+      id: 'fa_q1_exact1',
+      slot: 'q1',
+      q: '[FA Practice Q1 — 10 marks] Show that the equation (3x²y + 2xy²) dx + (x³ + 2x²y) dy = 0 is exact, and find its general solution.',
+      hint: 'Check ∂M/∂y = ∂N/∂x. To find F with F_x = M: integrate M with respect to x, keeping y fixed, to get F = x³y + x²y² + g(y). Then use F_y = N to find g(y).',
+      marks: 10,
+      solution: `<p><strong>Exactness test:</strong> M = 3x²y + 2xy², N = x³ + 2x²y.</p>
+<div class="math-display">$$\\frac{\\partial M}{\\partial y} = 3x^2 + 4xy = \\frac{\\partial N}{\\partial x} \\checkmark$$</div>
+<p>The equation is <strong>exact</strong>.</p>
+<p style="margin-top:0.5rem;"><strong>Find F with F_x = M:</strong></p>
+<div class="math-display">$$F = \\int(3x^2y + 2xy^2)\\,dx = x^3y + x^2y^2 + g(y)$$</div>
+<p><strong>Apply F_y = N:</strong> F_y = x³ + 2x²y + g′(y) = x³ + 2x²y → g′(y) = 0 → g = const.</p>
+<p style="margin-top:0.5rem;"><strong>General solution:</strong> <strong>x³y + x²y² = C</strong>, or equivalently x²y(x + y) = C.</p>`
+    },
+    {
+      id: 'fa_q1_exact2',
+      slot: 'q1',
+      q: '[FA Practice Q1 — 10 marks] Test the equation (2xy + cos y) dx + (x² − x sin y) dy = 0 for exactness. If exact, find the general solution and the particular solution satisfying y(0) = π/2.',
+      hint: 'M = 2xy + cos y, N = x² − x sin y. Compute ∂M/∂y and ∂N/∂x. If equal, integrate F_x = M with respect to x to find F. Determine g(y) from F_y = N.',
+      marks: 10,
+      solution: `<p><strong>Exactness test:</strong> M = 2xy + cos y, N = x² − x sin y.</p>
+<div class="math-display">$$\\frac{\\partial M}{\\partial y} = 2x - \\sin y = \\frac{\\partial N}{\\partial x} \\checkmark$$</div>
+<p><strong>Find F:</strong></p>
+<div class="math-display">$$F = \\int(2xy + \\cos y)\\,dx = x^2y + x\\cos y + g(y)$$</div>
+<p>Apply F_y = N: x² − x sin y + g′(y) = x² − x sin y → g′(y) = 0 → g = const.</p>
+<p><strong>General solution: x²y + x cos y = C.</strong></p>
+<p style="margin-top:0.5rem;"><strong>Particular solution y(0) = π/2:</strong> At x=0: 0 + 0 = C → C = 0.</p>
+<p>So x²y + x cos y = 0 → x(xy + cos y) = 0. The solution curve (excluding x = 0) is <strong>xy + cos y = 0</strong>.</p>`
+    },
+    // ── Q2 pool — Second-order ODEs ─────────────────────────────────────
+    {
+      id: 'fa_q2_bvp1',
+      slot: 'q2',
+      q: '[FA Practice Q2 — 25 marks] Find all eigenvalues and eigenfunctions of the boundary value problem y″ + λy = 0, y(0) = 0, y(1) = 0. Show carefully that no non-trivial solution exists for λ ≤ 0.',
+      hint: 'Test three cases: λ = 0 (linear X), λ = μ² > 0 (real exponentials), λ = −μ² < 0 (oscillatory). Only the third case admits non-trivial solutions satisfying both BCs. The BCs on sin(μx) force μₙ = nπ.',
+      marks: 25,
+      solution: `<p><strong>Case 1: λ = 0.</strong> y″ = 0 → y = ax + b. y(0) = 0 → b = 0; y(1) = 0 → a = 0. Only trivial solution.</p>
+<p style="margin-top:0.5rem;"><strong>Case 2: λ = μ² &gt; 0.</strong> y = Ae^{μx} + Be^{−μx}. y(0) = 0 → A + B = 0. y(1) = 0 → A(e^μ − e^{−μ}) = 0. Since e^μ ≠ e^{−μ} for μ ≠ 0, we get A = B = 0. Only trivial solution.</p>
+<p style="margin-top:0.5rem;"><strong>Case 3: λ = −μ² &lt; 0.</strong> y = C₁ cos μx + C₂ sin μx. y(0) = 0 → C₁ = 0. y(1) = 0 → C₂ sin μ = 0.</p>
+<p>For a non-trivial solution (C₂ ≠ 0): sin μ = 0 → μ = nπ, n = 1, 2, 3, ...</p>
+<p style="margin-top:0.5rem;"><strong>Eigenvalues and eigenfunctions:</strong></p>
+<div class="math-display">$$\\lambda_n = n^2\\pi^2, \\quad y_n(x) = \\sin(n\\pi x), \\quad n = 1, 2, 3, \\ldots$$</div>
+<p>Each eigenfunction is defined up to a constant multiple. The eigenvalues are <em>positive</em> and form a discrete, unbounded sequence.</p>`
+    },
+    {
+      id: 'fa_q2_bvp2',
+      slot: 'q2',
+      q: '[FA Practice Q2 — 25 marks] Find all eigenvalues and eigenfunctions of y″ + λy = 0 subject to y′(0) = 0 and y(L) = 0 (Neumann condition at the left end, Dirichlet at the right). Show that λ = 0 and λ < 0 lead only to trivial solutions.',
+      hint: 'y′(0)=0 with y = C₁cos(μx)+C₂sin(μx) gives C₂=0, so X = C₁cos(μx). The BC y(L)=0 then gives C₁cos(μL)=0. For non-trivial C₁: cos(μL)=0 → μL = π/2 + nπ.',
+      marks: 25,
+      solution: `<p><strong>Case λ = 0:</strong> y = ax + b. y′(0) = a = 0; y(L) = b = 0. Trivial.</p>
+<p style="margin-top:0.5rem;"><strong>Case λ = μ² &gt; 0:</strong> y = Ae^{μx}+Be^{−μx}. y′(0) = μ(A−B) = 0 → A = B. y(L) = A(e^{μL}+e^{−μL}) = 0 → A = 0. Trivial.</p>
+<p style="margin-top:0.5rem;"><strong>Case λ = −μ² &lt; 0:</strong> y = C₁cos(μx)+C₂sin(μx). y′(0) = μC₂ = 0 → C₂ = 0. So y = C₁cos(μx). y(L) = C₁cos(μL) = 0. For non-trivial C₁: cos(μL) = 0 → μL = π/2 + nπ for n = 0, 1, 2, ...</p>
+<div class="math-display">$$\\mu_n = \\frac{(2n+1)\\pi}{2L}, \\quad \\lambda_n = -\\mu_n^2 = -\\frac{(2n+1)^2\\pi^2}{4L^2}, \\quad y_n(x) = \\cos\\!\\left(\\frac{(2n+1)\\pi x}{2L}\\right)$$</div>
+<p style="margin-top:0.3rem;"><em>Note:</em> eigenvalues are negative here because the Neumann–Dirichlet BVP gives a negative spectrum in this sign convention. When used in the heat or wave equation (constant = −μ²), the equations become T′ + κμ²T = 0 and T″ + a²μ²T = 0, both physically meaningful.</p>`
+    },
+    {
+      id: 'fa_q2_roo1',
+      slot: 'q2',
+      q: '[FA Practice Q2 — 25 marks] Given that y₁(x) = e^{−x} is a solution of y″ − y′ − 2y = 0, use reduction of order to find a second linearly independent solution y₂(x). Hence write down the general solution. Verify your Wronskian W[y₁, y₂] using Abel\'s theorem.',
+      hint: 'Let y = u(x)e^{−x}. Compute y′ and y″, substitute into the ODE, and cancel the e^{−x} factor. You should obtain u″ − 3u′ = 0 (the u terms cancel). Set w = u′ to get a separable first-order ODE for w.',
+      marks: 25,
+      solution: `<p><strong>Reduction of order:</strong> Let y = u(x)e^{−x}.</p>
+<p>Then y′ = (u′ − u)e^{−x}, y″ = (u″ − 2u′ + u)e^{−x}. Substituting into y″ − y′ − 2y = 0 and dividing by e^{−x}:</p>
+<p style="font-family:var(--mono);background:rgba(0,0,0,0.04);padding:0.3rem 0.6rem;margin:0.4rem 0;border-radius:2px;">(u″ − 2u′ + u) − (u′ − u) − 2u = 0 → u″ − 3u′ = 0</p>
+<p>(The u terms all cancel, as expected — this is the key feature of reduction of order.)</p>
+<p style="margin-top:0.5rem;"><strong>Solve for u:</strong> Let w = u′. Then w′ = 3w → w = Ae^{3x} → u = (A/3)e^{3x} + B.</p>
+<p>So y = ue^{−x} = (A/3)e^{2x} + Be^{−x}. The <strong>second independent solution</strong> is y₂ = e^{2x}.</p>
+<p style="margin-top:0.5rem;"><strong>General solution: y = C₁e^{−x} + C₂e^{2x}.</strong></p>
+<p style="margin-top:0.5rem;"><strong>Abel's theorem check:</strong> Standard form is y″ − y′ − 2y = 0, so P(x) = −1.</p>
+<div class="math-display">$$W[y_1,y_2] = W(0)\,e^{\\int_0^x 1\\,dt} = W(0)\,e^x$$</div>
+<p>Direct calculation: W[e^{−x}, e^{2x}] = e^{−x}·2e^{2x} − (−e^{−x})·e^{2x} = 2e^x + e^x = 3e^x.</p>
+<p>So W(0) = 3 and Abel gives W = 3e^x ✓.</p>`
+    },
+    {
+      id: 'fa_q2_roo2',
+      slot: 'q2',
+      q: '[FA Practice Q2 — 25 marks] Verify that y₁ = eˣ is a solution of the ODE xy″ − (x+1)y′ + y = 0 (x > 0). Use reduction of order to find the general solution.',
+      hint: 'Let y = u(x)eˣ. After substituting y′ = (u′+u)eˣ and y″ = (u″+2u′+u)eˣ into the equation and simplifying, the u-terms cancel leaving xu″ + (x−1)u′ = 0. Set w = u′ and solve the separable equation xw′ + (x−1)w = 0.',
+      marks: 25,
+      solution: `<p><strong>Verification:</strong> y₁ = eˣ: y₁′ = eˣ, y₁″ = eˣ.</p>
+<p>xy₁″ − (x+1)y₁′ + y₁ = xeˣ − (x+1)eˣ + eˣ = (x − x − 1 + 1)eˣ = 0. ✓</p>
+<p style="margin-top:0.5rem;"><strong>Reduction of order:</strong> Let y = u(x)eˣ. Then y′ = (u′+u)eˣ, y″ = (u″+2u′+u)eˣ. Substituting:</p>
+<p style="font-family:var(--mono);background:rgba(0,0,0,0.04);padding:0.3rem 0.6rem;margin:0.4rem 0;border-radius:2px;">x(u″+2u′+u)eˣ − (x+1)(u′+u)eˣ + ueˣ = 0</p>
+<p>Dividing by eˣ and expanding: xu″ + 2xu′ + xu − (x+1)u′ − (x+1)u + u = 0.</p>
+<p>Collecting: xu″ + (2x − x − 1)u′ + (x − x − 1 + 1)u = xu″ + (x−1)u′ = 0. ✓ (u terms cancel)</p>
+<p style="margin-top:0.5rem;"><strong>Solve:</strong> Set w = u′: xw′ + (x−1)w = 0 → dw/w = (1−x)/x dx = (1/x − 1) dx.</p>
+<div class="math-display">$$\\ln|w| = \\ln x - x + C \\implies w = Axe^{-x}$$</div>
+<p>Integrate: u = A∫xe^{−x}dx = A[−xe^{−x} − e^{−x}] + B = −A(x+1)e^{−x} + B.</p>
+<p>So y = ueˣ = −A(x+1) + Beˣ. Writing C₁ = −A and C₂ = B:</p>
+<p style="margin-top:0.3rem;"><strong>General solution: y = C₁(x+1) + C₂eˣ.</strong></p>
+<p style="margin-top:0.3rem;font-size:0.9rem;color:var(--ink-muted);">Verification: y₂ = x+1: y₂″ = 0, y₂′ = 1. xy₂″ − (x+1)y₂′ + y₂ = 0 − (x+1) + (x+1) = 0 ✓</p>`
+    },
+    {
+      id: 'fa_q2_vop1',
+      slot: 'q2',
+      q: '[FA Practice Q2 — 25 marks] Solve y″ + 4y = sec(2x) by the method of variation of parameters, on an interval where sec(2x) is defined.',
+      hint: 'The homogeneous solution is yₕ = C₁cos(2x) + C₂sin(2x) with Wronskian W = 2. Set up the VoP system: u₁′cos2x + u₂′sin2x = 0 and −2u₁′sin2x + 2u₂′cos2x = sec2x. Solve for u₁′ and u₂′, then integrate.',
+      marks: 25,
+      solution: `<p><strong>Homogeneous solution:</strong> Characteristic equation m²+4=0 → m = ±2i. So yₕ = C₁cos 2x + C₂sin 2x.</p>
+<p style="margin-top:0.5rem;"><strong>Wronskian:</strong> W[cos 2x, sin 2x] = cos 2x · 2cos 2x − (−2sin 2x)·sin 2x = 2cos²2x + 2sin²2x = <strong>2</strong>.</p>
+<p style="margin-top:0.5rem;"><strong>VoP system:</strong> Let yₚ = u₁cos2x + u₂sin2x with the constraint u₁′cos2x + u₂′sin2x = 0. Substituting into y″+4y = sec2x gives −2u₁′sin2x + 2u₂′cos2x = sec2x. Solving:</p>
+<div class="math-display">$$u_1' = -\\frac{\\sin 2x \\cdot \\sec 2x}{2} = -\\frac{\\tan 2x}{2}, \\qquad u_2' = \\frac{\\cos 2x \\cdot \\sec 2x}{2} = \\frac{1}{2}$$</div>
+<p><strong>Integrate:</strong></p>
+<div class="math-display">$$u_1 = \\frac{1}{4}\\ln|\\cos 2x|, \\qquad u_2 = \\frac{x}{2}$$</div>
+<p><strong>Particular integral:</strong> yₚ = u₁cos2x + u₂sin2x:</p>
+<div class="math-display">$$y_p = \\frac{\\cos 2x}{4}\\ln|\\cos 2x| + \\frac{x\\sin 2x}{2}$$</div>
+<p><strong>General solution:</strong></p>
+<div class="math-display">$$y = C_1\\cos 2x + C_2\\sin 2x + \\frac{\\cos 2x}{4}\\ln|\\cos 2x| + \\frac{x\\sin 2x}{2}$$</div>`
+    },
+    {
+      id: 'fa_q2_vop2',
+      slot: 'q2',
+      q: '[FA Practice Q2 — 25 marks] Solve y″ − 2y′ + y = eˣ ln x (x > 0) by the method of variation of parameters.',
+      hint: 'The homogeneous solution is yₕ = (C₁ + C₂x)eˣ with Wronskian W = e²ˣ. Use u₁′ = −xy₁f/W and u₂′ = y₁f/W where f = eˣln x. You will need ∫x ln x dx = x²/2·ln x − x²/4 and ∫ln x dx = x ln x − x.',
+      marks: 25,
+      solution: `<p><strong>Homogeneous solution:</strong> Characteristic equation (m−1)²=0 → repeated root m=1. So yₕ = (C₁+C₂x)eˣ, with y₁=eˣ, y₂=xeˣ.</p>
+<p style="margin-top:0.5rem;"><strong>Wronskian:</strong> W[eˣ, xeˣ] = eˣ·(eˣ+xeˣ) − eˣ·xeˣ = e²ˣ.</p>
+<p style="margin-top:0.5rem;"><strong>VoP formulae</strong> (with f = eˣln x):</p>
+<div class="math-display">$$u_1' = -\\frac{y_2 f}{W} = -\\frac{xe^x \\cdot e^x \\ln x}{e^{2x}} = -x\\ln x, \\qquad u_2' = \\frac{y_1 f}{W} = \\frac{e^x \\cdot e^x \\ln x}{e^{2x}} = \\ln x$$</div>
+<p><strong>Integrate:</strong></p>
+<div class="math-display">$$u_1 = -\\int x\\ln x\\,dx = -\\frac{x^2}{2}\\ln x + \\frac{x^2}{4}, \\qquad u_2 = \\int\\ln x\\,dx = x\\ln x - x$$</div>
+<p><strong>Particular integral:</strong> yₚ = u₁eˣ + u₂xeˣ:</p>
+<div class="math-display">$$y_p = e^x\\!\\left(-\\tfrac{x^2}{2}\\ln x + \\tfrac{x^2}{4}\\right) + xe^x(x\\ln x - x) = e^x\\!\\left(\\tfrac{x^2}{2}\\ln x - \\tfrac{3x^2}{4}\\right)$$</div>
+<p>(Combining: −x²/2·lnx + x²/4 + x²·lnx − x² = x²/2·lnx − 3x²/4.)</p>
+<p><strong>General solution:</strong></p>
+<div class="math-display">$$y = (C_1 + C_2 x)e^x + \\frac{x^2 e^x}{2}\\!\\left(\\ln x - \\tfrac{3}{2}\\right)$$</div>`
     }
   ]
 };
@@ -5813,7 +5991,17 @@ function generateExam(panel) {
     alert('No questions available for this paper yet.');
     return;
   }
-  const countMap = { ct1: 4, ct2: 3, fa: 5 };
+  if (panel === 'fa') {
+    const pick = arr => arr[Math.floor(Math.random() * arr.length)];
+    const selected = ['q1', 'q2', 'q3'].map(slot => {
+      const slotPool = pool.filter(q => q.slot === slot);
+      return slotPool.length ? pick(slotPool) : null;
+    }).filter(Boolean);
+    renderExamQuestions('fa', selected);
+    document.getElementById('exam-fa').scrollIntoView({ behavior: 'smooth' });
+    return;
+  }
+  const countMap = { ct1: 4, ct2: 3 };
   const count = countMap[panel] || 4;
   const shuffled = [...pool].sort(() => Math.random() - 0.5);
   const selected = shuffled.slice(0, Math.min(count, shuffled.length));
@@ -5872,7 +6060,12 @@ function initMath() {
   });
   renderExamQuestions('ct1', [...EXAM_QUESTIONS.ct1].sort(() => Math.random() - 0.5).slice(0, 4));
   renderExamQuestions('ct2', [...EXAM_QUESTIONS.ct2].sort(() => Math.random() - 0.5).slice(0, 3));
-  renderExamQuestions('fa', [...EXAM_QUESTIONS.fa].sort(() => Math.random() - 0.5).slice(0, 5));
+  const faPick = arr => arr[Math.floor(Math.random() * arr.length)];
+  const faSelected = ['q1', 'q2', 'q3'].map(slot => {
+    const slotPool = EXAM_QUESTIONS.fa.filter(q => q.slot === slot);
+    return slotPool.length ? faPick(slotPool) : null;
+  }).filter(Boolean);
+  renderExamQuestions('fa', faSelected);
 }
 </script>
 </body>
