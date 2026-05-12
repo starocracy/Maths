@@ -1769,6 +1769,32 @@ $$J\varphi(x_0)=-(J_y f(x_0,y_0))^{-1}\cdot J_x f(x_0,y_0)$$</div>
       <div class="formula">$$d_\infty\leq d_2\leq d_1\leq n\cdot d_\infty\quad\text{(on }\mathbb{R}^n\text{)},\qquad d_\infty\leq d_2\leq\sqrt{n}\cdot d_\infty\quad\text{(tighter, via C–S)}$$</div>
     </div>
 
+    <div class="card">
+      <div class="card-title"><span class="tag">Type 15</span> Finding lim sup, lim inf, and Limit Points</div>
+      <p class="note" style="margin-bottom:10px">Given a real sequence (aₙ), determine lim sup, lim inf, and all subsequential limit points.</p>
+      <ul class="checklist">
+        <li><strong>Step 1 — Spot the pattern.</strong> Write out ~12 terms. Split by index mod 2, mod 4, etc. to find repeating sub-patterns.</li>
+        <li><strong>Step 2 — Compute each constant subsequence limit.</strong> E.g. for aₙ = (−1)ⁿ + sin(nπ/2), compute a₄ₙ, a₄ₙ₊₁, a₄ₙ₊₂, a₄ₙ₊₃ separately.</li>
+        <li><strong>Step 3 — lim sup = largest limit point</strong> = supremum of all subsequential limits (values attained infinitely often).</li>
+        <li><strong>Step 4 — lim inf = smallest limit point</strong> = infimum of all subsequential limits.</li>
+        <li><strong>If (aₙ) converges:</strong> lim sup = lim inf = lim aₙ. Exactly one limit point.</li>
+        <li><strong>Cite:</strong> lim inf ≤ lim sup always; equality iff (aₙ) converges.</li>
+      </ul>
+      <div class="formula"><span class="cmt">$\limsup a_n=\lim_{n\to\infty}\sup_{k\geq n}a_k$; $\;\liminf a_n=\lim_{n\to\infty}\inf_{k\geq n}a_k$.<br>Example: $a_n=(-1)^n$: $\limsup=1$, $\liminf=-1$, limit points $\{-1,1\}$.</span></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="tag">Type 16</span> Cauchy Sequences and Completeness Proofs</div>
+      <p class="note" style="margin-bottom:10px">Prove all convergent subsequences of a Cauchy sequence share a limit; prove or disprove a subset is complete.</p>
+      <ul class="checklist">
+        <li><strong>Shared limit — template:</strong> Let (xₙₖ) → a. For ε &gt; 0: by Cauchy ∃N with d(xₘ,xₙ) &lt; ε/2 for m,n &gt; N; by convergence ∃K with d(xₙₖ,a) &lt; ε/2 for k &gt; K. Pick k with nₖ &gt; max(N,K). Then for m &gt; max(N,K): d(xₘ,a) ≤ d(xₘ,xₙₖ) + d(xₙₖ,a) &lt; ε.</li>
+        <li><strong>Proving A ⊆ ℝ complete:</strong> Take Cauchy (xₙ) in A. ℝ is complete, so xₙ → L ∈ ℝ. Show L ∈ A using the structure of A.</li>
+        <li><strong>Strategy for A = {m + 1/n}:</strong> If not eventually constant, the limit L must be an integer (if L were non-integer, the isolation gap around L would contradict the Cauchy property).</li>
+        <li><strong>Proving A NOT complete:</strong> Exhibit a Cauchy sequence in A converging to L ∉ A.</li>
+      </ul>
+      <div class="formula"><span class="cmt">Complete: $(\mathbb{R},d_1)$, $(\mathbb{R}^n,d_2)$, $(C[a,b],d_{L^\infty})$, $\ell^p$ spaces, closed subsets of complete spaces.<br>Incomplete: $(0,1)$, $\mathbb{Q}$, $(C[0,1],d_{L^1})$.</span></div>
+    </div>
+
   </div>
 </div>
 <div class="section" id="examq">
@@ -1778,6 +1804,7 @@ $$J\varphi(x_0)=-(J_y f(x_0,y_0))^{-1}\cdot J_x f(x_0,y_0)$$</div>
   <div class="inner-tabs">
     <button class="inner-tab active" onclick="showExamTab('ct1-panel',this)">Class Test 1 — Practice Pool</button>
     <button class="inner-tab" onclick="showExamTab('ct2-panel',this)">Class Test 2 — Mock Papers</button>
+    <button class="inner-tab" onclick="showExamTab('fa-panel',this)">Final Assessment — Specimen Papers</button>
   </div>
 
   <div id="ct1-panel" class="exam-panel active">
@@ -1793,6 +1820,181 @@ $$J\varphi(x_0)=-(J_y f(x_0,y_0))^{-1}\cdot J_x f(x_0,y_0)$$</div>
       <button class="btn" onclick="generateCT2Questions()">⟳ Generate New Questions</button>
     </div>
   </div><!-- end ct2-panel -->
+
+  <div id="fa-panel" class="exam-panel">
+    <div class="paper-section-title">Specimen Paper 1</div>
+
+    <div class="eq-card">
+      <div class="eq-question"><strong>Q1.</strong> For each of the following continuous $f,g:[0,1]\to\mathbb{R}$, compute $d_{L^1}(f,g)$ and $d_{L^\infty}(f,g)$.<br>
+      <em>(a)</em> $f(x)=x^5+2x^2-x,\;g(x)=x^5-x-2$. &emsp; <em>(b)</em> $f(x)=e^x,\;g(x)=e^{-x}$.</div>
+      <details class="eq-answer">
+        <summary>▶ Show worked answer</summary>
+        <div class="eq-answer-body">
+          <strong>(a)</strong> $h(x)=f-g=2x^2+2>0$ on $[0,1]$. Since $h'(x)=4x\geq 0$, $h$ is increasing, so $\max h=h(1)=4$.<br>
+          $d_{L^\infty}(f,g)=\mathbf{4}$.<br>
+          $d_{L^1}(f,g)=\int_0^1(2x^2+2)\,dx=\bigl[\tfrac{2}{3}x^3+2x\bigr]_0^1=\tfrac{2}{3}+2=\mathbf{\tfrac{8}{3}}$.<br><br>
+          <strong>(b)</strong> $h(x)=e^x-e^{-x}\geq 0$, $h'(x)=e^x+e^{-x}>0$, so $h$ is increasing. Max at $x=1$.<br>
+          $d_{L^\infty}(f,g)=e-e^{-1}$.<br>
+          $d_{L^1}(f,g)=\int_0^1(e^x-e^{-x})\,dx=\bigl[e^x+e^{-x}\bigr]_0^1=(e+e^{-1})-2=\mathbf{e+e^{-1}-2}$.
+        </div>
+      </details>
+    </div>
+
+    <div class="eq-card">
+      <div class="eq-question"><strong>Q2.</strong> Let $f_n(x)=x^n$ in $C[0,1]$. Prove:<br>
+      <em>(a)</em> $(f_n)$ does not converge pointwise to any continuous $f\in C[0,1]$.<br>
+      <em>(b)</em> $(f_n)$ does not converge in $(C[0,1],d_{L^\infty})$.<br>
+      <em>(c)</em> $(f_n)$ converges to $0$ in $(C[0,1],d_{L^1})$.</div>
+      <details class="eq-answer">
+        <summary>▶ Show worked answer</summary>
+        <div class="eq-answer-body">
+          <strong>(a)</strong> For $x\in[0,1)$: $x^n\to 0$. For $x=1$: $x^n=1\to 1$. Any pointwise limit would be $f(x)=0$ $(x&lt;1)$, $f(1)=1$ — discontinuous. No continuous pointwise limit exists.<br><br>
+          <strong>(b)</strong> Convergence in $d_{L^\infty}$ implies pointwise convergence to a continuous function. Part (a) shows this is impossible.<br><br>
+          <strong>(c)</strong> Let $\varepsilon>0$; set $N=\lceil1/\varepsilon\rceil$. For $n>N$:
+          $$d_{L^1}(f_n,0)=\int_0^1 x^n\,dx=\frac{1}{n+1}&lt;\frac{1}{N}&lt;\varepsilon.\checkmark$$
+        </div>
+      </details>
+    </div>
+
+    <div class="eq-card">
+      <div class="eq-question"><strong>Q3.</strong> Find the interval of convergence (with endpoint check) of each power series.<br>
+      <em>(a)</em> $\displaystyle\sum_{n=1}^\infty\dfrac{x^n}{n!}$ &emsp;
+      <em>(b)</em> $\displaystyle\sum_{n=1}^\infty\dfrac{(-1)^{n-1}(x-1)^n}{n^3}$ &emsp;
+      <em>(c)</em> $\displaystyle\sum_{\text{n even}}2^n(x+1)^n+\sum_{\text{n odd}}3^n(x+1)^n$</div>
+      <details class="eq-answer">
+        <summary>▶ Show worked answer</summary>
+        <div class="eq-answer-body">
+          <strong>(a)</strong> Ratio: $|a_{n+1}/a_n|=1/(n+1)\to 0$. $R=\infty$. <strong>Interval: $(-\infty,\infty)$.</strong><br><br>
+          <strong>(b)</strong> Ratio: $n^3/(n+1)^3\to 1$, so $R=1$ (centre $x=1$). At $x=0$: $\sum(-1)^{n-1}(-1)^n/n^3=-\sum 1/n^3$ converges. At $x=2$: $\sum(-1)^{n-1}/n^3$ converges. <strong>Interval: $[0,2]$.</strong><br><br>
+          <strong>(c)</strong> $a_n=2^n$ (even), $3^n$ (odd). $\limsup\sqrt[n]{|a_n|}=3$, so $R=1/3$. At both extremes the general term fails to tend to $0$. <strong>Interval: $\bigl(-\tfrac{4}{3},-\tfrac{2}{3}\bigr)$.</strong>
+        </div>
+      </details>
+    </div>
+
+    <div class="eq-card">
+      <div class="eq-question"><strong>Q4.</strong> Let $f:\mathbb{R}^2\to\mathbb{R}^2$ be $f(x,y)=\bigl(\tfrac{x}{y},\,x^2+1\bigr)$.<br>
+      <em>(a)</em> Compute $Jf(x,y)$. &emsp;
+      <em>(b)</em> Does $f$ admit a local differentiable inverse near $p_1=(0,1)$? &emsp;
+      <em>(c)</em> $f$ admits a local differentiable inverse $\phi$ near $p_2=(-1,1)$. Compute $J\phi(f(p_2))$.</div>
+      <details class="eq-answer">
+        <summary>▶ Show worked answer</summary>
+        <div class="eq-answer-body">
+          <strong>(a)</strong> $Jf(x,y)=\begin{pmatrix}1/y & -x/y^2 \\ 2x & 0\end{pmatrix}$.<br><br>
+          <strong>(b)</strong> At $p_1=(0,1)$: $Jf(p_1)=\begin{pmatrix}1&0\\0&0\end{pmatrix}$, $\det=0$. By the Inverse Function Theorem, no local differentiable inverse exists at $f(p_1)$.<br><br>
+          <strong>(c)</strong> At $p_2=(-1,1)$: $Jf(p_2)=\begin{pmatrix}1&1\\-2&0\end{pmatrix}$, $\det=0-(-2)=2\neq 0$. Local inverse $\phi$ exists, and
+          $$J\phi(f(p_2))=(Jf(p_2))^{-1}=\tfrac{1}{2}\begin{pmatrix}0&-1\\2&1\end{pmatrix}=\begin{pmatrix}0&-\tfrac{1}{2}\\1&\tfrac{1}{2}\end{pmatrix}.$$
+        </div>
+      </details>
+    </div>
+
+    <div class="eq-card">
+      <div class="eq-question"><strong>Q5.</strong> Let $\mathcal{F}:C[0,1]\to C[0,1]$ be $\mathcal{F}(f)(x)=x^2+\tfrac{1}{3}\int_0^x f(t)\,dt$.<br>
+      <em>(a)</em> Define contraction; state the Contraction Mapping Theorem.<br>
+      <em>(b)</em> Prove $\mathcal{F}(f)$ is continuous using the $\varepsilon$-$\delta$ definition.<br>
+      <em>(c)</em> Prove $\mathcal{F}$ is a contraction on $(C[0,1],d_{L^\infty})$.<br>
+      <em>(d)</em> Explain why $f'(x)=2x+\tfrac{1}{3}f(x)$, $f(0)=0$ has a unique differentiable solution.</div>
+      <details class="eq-answer">
+        <summary>▶ Show worked answer</summary>
+        <div class="eq-answer-body">
+          <strong>(a)</strong> $\mathcal{F}$ is a <em>contraction</em> if $\exists\,0\leq L&lt;1$ such that $d_{L^\infty}(\mathcal{F}(f),\mathcal{F}(g))\leq L\cdot d_{L^\infty}(f,g)$ for all $f,g$. <strong>CMT:</strong> a contraction on a complete metric space has a unique fixed point.<br><br>
+          <strong>(b)</strong> Fix $x_0\in[0,1]$, $\varepsilon>0$, $M=\max|f|$. Then $|\mathcal{F}(f)(x)-\mathcal{F}(f)(x_0)|\leq|x^2-x_0^2|+\tfrac{M}{3}|x-x_0|\leq(2+\tfrac{M}{3})|x-x_0|$. Take $\delta=\varepsilon/(2+M/3)$.<br><br>
+          <strong>(c)</strong> $|\mathcal{F}(f_1)(x)-\mathcal{F}(f_2)(x)|=\tfrac{1}{3}\bigl|\int_0^x(f_1-f_2)\,dt\bigr|\leq\tfrac{x}{3}d_{L^\infty}(f_1,f_2)\leq\tfrac{1}{3}d_{L^\infty}(f_1,f_2)$. Taking sup: contraction with $L=\tfrac{1}{3}&lt;1$.<br><br>
+          <strong>(d)</strong> $(C[0,1],d_{L^\infty})$ is complete and $\mathcal{F}$ is a contraction, so CMT gives a unique fixed point $f^*$ with $\mathcal{F}(f^*)=f^*$. Differentiating $f^*(x)=x^2+\tfrac{1}{3}\int_0^x f^*(t)\,dt$ by FTC gives $f^{*\prime}=2x+\tfrac{1}{3}f^*$ with $f^*(0)=0$ — hence a unique differentiable solution.
+        </div>
+      </details>
+    </div>
+
+    <div class="paper-section-title" style="margin-top:40px;">Specimen Paper 2</div>
+
+    <div class="eq-card">
+      <div class="eq-question"><strong>Q1.</strong> In each case state whether $(a_n)\in\ell^1$, $\ell^2$, $\ell^\infty$. Justify.<br>
+      <em>(i)</em> $(a_n)=(2,-3,2,-3,\ldots)$ &emsp;
+      <em>(ii)</em> $(b_n)=\bigl(0,1,0,\tfrac{1}{2},0,\tfrac{1}{3},0,\tfrac{1}{4},\ldots\bigr)$ &emsp;
+      <em>(iii)</em> $(c_n)=(1,e^{-1},e^{-2},e^{-3},\ldots)$</div>
+      <details class="eq-answer">
+        <summary>▶ Show worked answer</summary>
+        <div class="eq-answer-body">
+          <strong>(i)</strong> $|a_n|\leq 3$ so $\in\ell^\infty$. $\sum|a_n|$ diverges (terms don't tend to $0$) $\Rightarrow\notin\ell^1$. $\sum a_n^2$ diverges similarly $\Rightarrow\notin\ell^2$.<br><br>
+          <strong>(ii)</strong> $\sum|b_n|=\sum 1/n$ diverges $\Rightarrow\notin\ell^1$. $\sum b_n^2=\sum 1/n^2&lt;\infty\Rightarrow\in\ell^2$. Bounded $\Rightarrow\in\ell^\infty$.<br><br>
+          <strong>(iii)</strong> $\sum|c_n|=\sum_{n=0}^\infty e^{-n}=\tfrac{1}{1-e^{-1}}&lt;\infty$ (geometric, ratio $e^{-1}&lt;1$) $\Rightarrow\in\ell^1$. Since $\ell^1\subseteq\ell^2\subseteq\ell^\infty$, also $\in\ell^2$ and $\in\ell^\infty$.
+        </div>
+      </details>
+    </div>
+
+    <div class="eq-card">
+      <div class="eq-question"><strong>Q2.</strong> In each case decide if $A$ is open and if $A$ is closed in $(X,d)$. Justify using definitions.<br>
+      <em>(i)</em> $(X,d)=(\mathbb{R},d_1)$, $A=\{x\in\mathbb{Z}_{>0}:4&lt;x&lt;8\}$.<br>
+      <em>(ii)</em> $(X,d)=(\mathbb{R}^2,d_2)$, $A=\{(x_1,x_2):(x_1-1)^2+5x_2^4\geq 0\}$.<br>
+      <em>(iii)</em> $(X,d)=(C[0,1],d_{L^\infty})$, $A=\{f\in C[0,1]:\max_{x\in[0,1]}|f(x)-x^2|\leq 1\}$.</div>
+      <details class="eq-answer">
+        <summary>▶ Show worked answer</summary>
+        <div class="eq-answer-body">
+          <strong>(i)</strong> $A=\{5,6,7\}$. <em>Not open</em>: for any $r>0$, $B_r(5)=(5-r,5+r)$ contains non-integer points $\notin A$. <em>Closed</em>: any sequence in $A$ takes values in $\{5,6,7\}$ and cannot converge to any real outside $\{5,6,7\}$.<br><br>
+          <strong>(ii)</strong> $(x_1-1)^2+5x_2^4\geq 0$ holds for all $(x_1,x_2)$, so $A=\mathbb{R}^2$. The whole space is <em>both open and closed</em>.<br><br>
+          <strong>(iii)</strong> $A=\bar{B}_1(f_0)$ with $f_0(x)=x^2$ (closed ball of radius 1). <em>Not open</em>: $f_0+1\in A$ but every ball around it exits $A$. <em>Closed</em>: if $f_n\to f$ in $d_{L^\infty}$ with $f_n\in A$, then by the triangle inequality $d_{L^\infty}(f,f_0)\leq d_{L^\infty}(f,f_n)+1\to 1$, so $f\in A$.
+        </div>
+      </details>
+    </div>
+
+    <div class="eq-card">
+      <div class="eq-question"><strong>Q3.</strong> Find $\limsup a_n$, $\liminf a_n$, and all limit points for:<br>
+      <em>(i)</em> $a_n=\dfrac{2n+3}{n^2}$ &emsp;
+      <em>(ii)</em> $a_n=(-1)^{n+1}+\dfrac{2}{n}$ &emsp;
+      <em>(iii)</em> $a_n=(-1)^n+\sin\!\bigl(\tfrac{n\pi}{2}\bigr)$</div>
+      <details class="eq-answer">
+        <summary>▶ Show worked answer</summary>
+        <div class="eq-answer-body">
+          <strong>(i)</strong> $a_n=(2n+3)/n^2\to 0$. Unique limit point $0$. $\limsup=\liminf=0$.<br><br>
+          <strong>(ii)</strong> Even terms: $a_{2n}=-1+\tfrac{1}{n}\to -1$. Odd terms: $a_{2n+1}=1+\tfrac{2}{2n+1}\to 1$. $\limsup=1$, $\liminf=-1$. Limit points: $\{-1,1\}$.<br><br>
+          <strong>(iii)</strong> Values (mod 4): $a_{4n}=1+0=1$; $a_{4n+1}=-1+1=0$; $a_{4n+2}=1+0=1$; $a_{4n+3}=-1+(-1)=-2$. Repeated values: $1,0,-2$. $\limsup=1$, $\liminf=-2$. Limit points: $\{-2,0,1\}$.
+        </div>
+      </details>
+    </div>
+
+    <div class="eq-card">
+      <div class="eq-question"><strong>Q4.</strong> Let $(X,d)$ be a metric space.<br>
+      <em>(i)</em> Define <em>Cauchy sequence</em>. &emsp;
+      <em>(ii)</em> Define <em>complete</em> metric space. &emsp;
+      <em>(iii)</em> Let $(x_n)$ be Cauchy. Prove all convergent subsequences converge to the same value. &emsp;
+      <em>(iv)</em> Prove or disprove: $A=\{m+\tfrac{1}{n}\mid m,n\in\mathbb{Z},\,n\geq 1\}$ is complete.</div>
+      <details class="eq-answer">
+        <summary>▶ Show worked answer</summary>
+        <div class="eq-answer-body">
+          <strong>(i)</strong> $(x_n)$ is Cauchy if $\forall\varepsilon>0\;\exists N$ such that $d(x_m,x_n)&lt;\varepsilon$ whenever $m,n>N$.<br><br>
+          <strong>(ii)</strong> $(X,d)$ is complete if every Cauchy sequence converges to a limit in $X$.<br><br>
+          <strong>(iii)</strong> Suppose $(x_{n_k})\to a$. For $\varepsilon>0$: by Cauchy $\exists N$ with $d(x_m,x_n)&lt;\varepsilon/2$ for $m,n>N$; by convergence $\exists K$ with $d(x_{n_k},a)&lt;\varepsilon/2$ for $k>K$. Choose $k$ with $n_k>\max(N,K)$. Then for all $m>\max(N,K)$:
+          $$d(x_m,a)\leq d(x_m,x_{n_k})+d(x_{n_k},a)&lt;\tfrac{\varepsilon}{2}+\tfrac{\varepsilon}{2}=\varepsilon.$$
+          So $x_n\to a$, and hence every convergent subsequence shares the limit $a$.<br><br>
+          <strong>(iv)</strong> $A$ <em>is complete</em>. Let $(x_n)$ be Cauchy in $A$. If eventually constant, it converges in $A$. Otherwise it converges (in $\mathbb{R}$, which is complete) to some $a\in\mathbb{R}$. If $a$ is non-integer, the gap $\varepsilon=\min(b-a,a-c)$ between $a$ and its nearest neighbours in $A$ would prevent infinitely many terms lying within $\varepsilon$ of $a$ — contradiction. So $a\in\mathbb{Z}\subset A$. Hence all Cauchy sequences converge in $A$.
+        </div>
+      </details>
+    </div>
+
+    <div class="eq-card">
+      <div class="eq-question"><strong>Q5.</strong> Let $f:\mathbb{R}^{m+n}\to\mathbb{R}^n$ be $C^1$ with $f(x_0,y_0)=0$.<br>
+      <em>(i)</em> State the Implicit Function Theorem.<br>
+      <em>(ii)</em> For $\begin{cases}x^2-3xy+y^3+zy=0\\y^2+z+1=0\end{cases}$, can we solve for $(y,z)$ as a function of $x$ near <em>(a)</em> $p_1=(1,1,2)$? &emsp; <em>(b)</em> $p_2=(2,2,1)$? Explain.<br>
+      <em>(iii)</em> Near $p_3=(2,1,2)$ the equations define $(y,z)=g(x)$. Compute $g'(2)$.</div>
+      <details class="eq-answer">
+        <summary>▶ Show worked answer</summary>
+        <div class="eq-answer-body">
+          <strong>(i)</strong> If $J_y f(x_0,y_0)$ is an invertible $n\times n$ matrix, then $f(x,y)=0$ locally defines $y=\varphi(x)$ as a $C^1$ function near $(x_0,y_0)$, with $J\varphi=-(J_yf)^{-1}J_xf$.<br><br>
+          <strong>(ii)</strong> $J_{y,z}f=\begin{pmatrix}-3x+3y^2+z & y \\ 2y & 1\end{pmatrix}$.<br>
+          <em>(a)</em> At $p_1$: $J_{y,z}f=\begin{pmatrix}2&1\\2&1\end{pmatrix}$, $\det=0$ — IMFT does <strong>not</strong> apply.<br>
+          <em>(b)</em> At $p_2$: $J_{y,z}f=\begin{pmatrix}7&2\\4&1\end{pmatrix}$, $\det=7-8=-1\neq 0$ — IMFT <strong>applies</strong>.<br><br>
+          <strong>(iii)</strong> At $p_3=(2,1,2)$: $J_{y,z}f=\begin{pmatrix}-1&1\\2&1\end{pmatrix}$. $\partial f_1/\partial x=2x-3y\big|_{p_3}=4-3=1$; $\partial f_2/\partial x=0$.
+          $$g'(2)=-\begin{pmatrix}-1&1\\2&1\end{pmatrix}^{-1}\!\begin{pmatrix}1\\0\end{pmatrix}=-\begin{pmatrix}-\tfrac{1}{3}&\tfrac{1}{3}\\\tfrac{2}{3}&\tfrac{1}{3}\end{pmatrix}\begin{pmatrix}1\\0\end{pmatrix}=\begin{pmatrix}\tfrac{1}{3}\\-\tfrac{2}{3}\end{pmatrix}.$$
+        </div>
+      </details>
+    </div>
+
+    <div class="paper-section-title" style="margin-top:40px;">Practice Questions</div>
+    <div class="section-sub" style="margin:0 0 16px 0;">One question per topic slot (distances · convergence · power series · calculus · contraction) — shuffles on each click.</div>
+    <div id="fa-container"></div>
+    <div style="text-align:center; margin-top:32px;">
+      <button class="btn" onclick="generateFAQuestions()">⟳ Generate New Questions</button>
+    </div>
+  </div><!-- end fa-panel -->
 </div>
 
 <style>
@@ -1882,6 +2084,14 @@ $$J\varphi(x_0)=-(J_y f(x_0,y_0))^{-1}\cdot J_x f(x_0,y_0)$$</div>
   .inner-tab:hover:not(.active) { color: var(--ink); background: #f0ece4; }
   .exam-panel { display: none; padding-top: 16px; }
   .exam-panel.active { display: block; }
+  .paper-section-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.1rem;
+    border-bottom: 2px solid var(--rule);
+    padding-bottom: 6px;
+    margin: 24px 0 16px;
+    color: var(--ink);
+  }
 </style>
 
 <script>
@@ -2524,6 +2734,154 @@ const ct2Pools = {
 
 };
 
+// ═══════════════════ FA QUESTION POOL ═══════════════════
+// Slot-based: one from each slot mirrors the 5-question FA structure
+
+const faPools = {
+
+  distances: [
+    {
+      q: `Let $f(x)=x^3$ and $g(x)=x^4$ on $[0,1]$. Compute $d_{L^\\infty}(f,g)$ and $d_{L^1}(f,g)$.`,
+      hint: `Set $h=x^3-x^4\\geq 0$. Find its max using calculus, then integrate.`,
+      answer: `$h'(x)=x^2(3-4x)=0$ at $x^*=3/4$. $h(3/4)=(3/4)^3\\cdot(1/4)=27/256$. Endpoints: $h(0)=h(1)=0$.<br>$d_{L^\\infty}(f,g)=\\mathbf{27/256}$.<br><br>$d_{L^1}(f,g)=\\int_0^1(x^3-x^4)\\,dx=\\bigl[\\tfrac{x^4}{4}-\\tfrac{x^5}{5}\\bigr]_0^1=\\tfrac{1}{4}-\\tfrac{1}{5}=\\mathbf{\\tfrac{1}{20}}$.`
+    },
+    {
+      q: `Let $f(x)=\\sin(\\pi x)$ and $g(x)=0$ on $[0,1]$. Compute $d_{L^\\infty}(f,g)$ and $d_{L^1}(f,g)$.`,
+      hint: `$\\sin(\\pi x)\\geq 0$ on $[0,1]$. Maximum at $x=1/2$; integrate directly.`,
+      answer: `$h(x)=\\sin(\\pi x)\\geq 0$, max at $x=1/2$ gives $h(1/2)=1$.<br>$d_{L^\\infty}(f,g)=\\mathbf{1}$.<br><br>$d_{L^1}(f,g)=\\int_0^1\\sin(\\pi x)\\,dx=\\bigl[-\\tfrac{\\cos(\\pi x)}{\\pi}\\bigr]_0^1=\\tfrac{1+1}{\\pi}=\\mathbf{\\tfrac{2}{\\pi}}$.`
+    },
+    {
+      q: `Let $f(x)=e^x-1$ and $g(x)=x$ on $[0,1]$. Compute $d_{L^\\infty}(f,g)$ and $d_{L^1}(f,g)$.`,
+      hint: `$h(x)=e^x-1-x$. Note $h(0)=0$ and $h'(x)=e^x-1\\geq 0$, so $h$ is non-decreasing. Max is at $x=1$.`,
+      answer: `$h(x)=e^x-1-x\\geq 0$ (non-decreasing). Max at $x=1$: $h(1)=e-2$.<br>$d_{L^\\infty}(f,g)=\\mathbf{e-2}$.<br><br>$d_{L^1}=\\int_0^1(e^x-1-x)\\,dx=\\bigl[e^x-x-\\tfrac{x^2}{2}\\bigr]_0^1=(e-1-\\tfrac{1}{2})-1=\\mathbf{e-\\tfrac{5}{2}}$.`
+    },
+    {
+      q: `Let $f(x)=x^4+3x$ and $g(x)=x^4+x+2$ on $[0,1]$. Compute $d_{L^\\infty}(f,g)$ and $d_{L^1}(f,g)$.`,
+      hint: `Simplify $h=f-g$ first. Is it always the same sign on $[0,1]$?`,
+      answer: `$h(x)=f-g=2x-2=2(x-1)\\leq 0$ on $[0,1]$. So $|h(x)|=2(1-x)$.<br>Max of $|h|$ at $x=0$: $|h(0)|=2$. <strong>$d_{L^\\infty}(f,g)=2$.</strong><br><br>$d_{L^1}=\\int_0^1 2(1-x)\\,dx=2\\bigl[x-\\tfrac{x^2}{2}\\bigr]_0^1=2\\cdot\\tfrac{1}{2}=\\mathbf{1}$.`
+    }
+  ],
+
+  convergence: [
+    {
+      q: `Let $f_n(x)=\\dfrac{x}{1+nx^2}$ on $[0,1]$. Prove $(f_n)$ converges uniformly to $0$.`,
+      hint: `Find the max of $f_n$ by differentiating. Show the max value tends to $0$.`,
+      answer: `$f_n'(x)=(1-nx^2)/(1+nx^2)^2=0$ at $x^*=1/\\sqrt{n}$. Max value: $f_n(1/\\sqrt{n})=1/(2\\sqrt{n})\\to 0$.<br>$d_{L^\\infty}(f_n,0)=1/(2\\sqrt{n})\\to 0$. <strong>$(f_n)$ converges uniformly to $0$.</strong>`
+    },
+    {
+      q: `Let $f_n(x)=\\dfrac{\\cos(nx)}{n}$ on $[0,1]$. Does $(f_n)$ converge uniformly? In $d_{L^1}$?`,
+      hint: `Bound $|\\cos(nx)|\\leq 1$ and estimate $d_{L^\\infty}(f_n,0)$ and $d_{L^1}(f_n,0)$ directly.`,
+      answer: `$|f_n(x)|=|\\cos(nx)|/n\\leq 1/n$, so $d_{L^\\infty}(f_n,0)\\leq 1/n\\to 0$. <strong>Uniform convergence holds.</strong><br><br>$d_{L^1}(f_n,0)\\leq \\int_0^1 1/n\\,dx=1/n\\to 0$. <strong>Also converges in $d_{L^1}$.</strong>`
+    },
+    {
+      q: `Let $f_n(x)=\\sqrt[n]{x}$ on $[0,1]$. Show $(f_n)$ does NOT converge in $(C[0,1],d_{L^\\infty})$ but DOES converge to $1$ in $(C[0,1],d_{L^1})$.`,
+      hint: `Pointwise limit: $x^{1/n}\\to 1$ for $x>0$, but $0^{1/n}=0$. The limit is discontinuous at $0$. For $d_{L^1}$, compute $\\int_0^1(1-x^{1/n})\\,dx$.`,
+      answer: `<strong>Pointwise limit:</strong> $f(x)=1$ for $x\\in(0,1]$, $f(0)=0$ — discontinuous. Uniform limit of continuous functions must be continuous, so no $d_{L^\\infty}$ convergence.<br><br><strong>$d_{L^1}$ convergence:</strong> $d_{L^1}(f_n,1)=\\int_0^1(1-x^{1/n})\\,dx=1-\\dfrac{n}{n+1}=\\dfrac{1}{n+1}\\to 0$. ✓`
+    },
+    {
+      q: `Let $f_n(x)=n^2 x^n(1-x)$ on $[0,1]$. Find the pointwise limit and determine whether convergence is uniform.`,
+      hint: `Pointwise: $n^2 x^n\\to 0$ for $x\\in[0,1)$ (exponential beats polynomial). For uniform: find the maximum of $f_n$ and check if it tends to $0$.`,
+      answer: `<strong>Pointwise limit $\\equiv 0$:</strong> For $x\\in[0,1)$, $n^2 x^n\\to 0$ since $x^n$ decays exponentially. For $x=1$: $f_n(1)=0$. So $f_n\\to 0$ pointwise.<br><br><strong>Not uniform:</strong> $f_n'=0$ at $x^*=n/(n+1)$. Max value: $f_n\\!\\left(\\tfrac{n}{n+1}\\right)=n^2\\!\\left(\\tfrac{n}{n+1}\\right)^{\\!n}\\!\\cdot\\tfrac{1}{n+1}\\approx n^2 e^{-1}/(n+1)\\to\\infty$. So $\\sup|f_n|\\to\\infty$. <strong>Not uniformly convergent.</strong>`
+    }
+  ],
+
+  powerSeries: [
+    {
+      q: `Find the radius of convergence and interval of convergence (with endpoint check) of $\\displaystyle\\sum_{n=1}^\\infty\\dfrac{(-1)^n(x+2)^n}{n^2}$.`,
+      hint: `Ratio test gives $R$. Test $x=-1$ and $x=-3$ using the $p$-series and alternating series tests.`,
+      answer: `Ratio: $|n^2/(n+1)^2|\\to 1$, so $R=1$ (centre $x=-2$).<br>$x=-1$: $\\sum(-1)^n/n^2$ — absolutely convergent ($p=2>1$). <strong>Converges.</strong><br>$x=-3$: $\\sum(-1)^n(-1)^n/n^2=\\sum 1/n^2$. <strong>Converges.</strong><br><strong>Interval: $[-3,-1]$.</strong>`
+    },
+    {
+      q: `Find the interval of convergence of $\\displaystyle\\sum_{n=1}^\\infty n^2 x^n$.`,
+      hint: `Ratio test; then test $x=\\pm 1$ by checking whether the general term tends to zero.`,
+      answer: `Ratio: $(n+1)^2|x|^{n+1}/(n^2|x|^n)\\to|x|$. So $R=1$.<br>$x=1$: $\\sum n^2\\to\\infty$. <strong>Diverges.</strong> $x=-1$: $\\sum n^2(-1)^n$ — terms $\\not\\to 0$. <strong>Diverges.</strong><br><strong>Interval: $(-1,1)$.</strong>`
+    },
+    {
+      q: `Find the interval of convergence (with endpoint check) of $\\displaystyle\\sum_{n=1}^\\infty\\dfrac{(x-3)^n}{n\\cdot 4^n}$.`,
+      hint: `Ratio test gives radius $R=4$ (centre $x=3$). At $x=7$ check for harmonic divergence; at $x=-1$ check for alternating harmonic convergence.`,
+      answer: `Ratio: $|x-3|/4\\cdot n/(n+1)\\to|x-3|/4$. So $R=4$.<br>$x=7$: $\\sum 1/n$ — harmonic, <strong>diverges</strong>.<br>$x=-1$: $\\sum(-1)^n/n$ — alternating harmonic, <strong>converges</strong> (AST).<br><strong>Interval: $[-1,7)$.</strong>`
+    },
+    {
+      q: `Find the radius of convergence of $\\displaystyle\\sum_{n=0}^\\infty\\dfrac{x^{2n}}{(2n)!}$ and state the interval of convergence.`,
+      hint: `Set $u=x^2$ and apply the ratio test on $u$. What famous function does this series represent?`,
+      answer: `Set $u=x^2$. Ratio: $|u|/[(2n+2)(2n+1)]\\to 0$ for any $u$. So $R=\\infty$.<br><strong>Interval: $(-\\infty,\\infty)$.</strong><br><em>(This is $\\cosh(x)=\\sum_{n=0}^\\infty x^{2n}/(2n)!$.)</em>`
+    }
+  ],
+
+  calculus: [
+    {
+      q: `Let $f(x,y)=(x^2-y,\\;xy)$. Compute $Jf(x,y)$. Does a local differentiable inverse exist near $p=(1,1)$? If so, compute $J\\phi(f(1,1))$.`,
+      hint: `Assemble the $2\\times 2$ Jacobian, compute $\\det Jf(p)$. If non-zero, $J\\phi=(Jf)^{-1}$.`,
+      answer: `$Jf=\\begin{pmatrix}2x&-1\\\\y&x\\end{pmatrix}$. At $(1,1)$: $\\begin{pmatrix}2&-1\\\\1&1\\end{pmatrix}$, $\\det=3\\neq 0$.<br><strong>INFT: local inverse $\\phi$ exists.</strong><br>$J\\phi(f(1,1))=\\dfrac{1}{3}\\begin{pmatrix}1&1\\\\-1&2\\end{pmatrix}$.`
+    },
+    {
+      q: `The equation $F(x,y,z)=x^2+y^2+z^2-1=0$ implicitly defines $z=\\varphi(x,y)$ near $(0,0,1)$. Compute $\\partial\\varphi/\\partial x$ at this point.`,
+      hint: `Compute $F_z$ at the point (must be non-zero), then $\\partial z/\\partial x = -F_x/F_z$.`,
+      answer: `$F_z=2z$. At $(0,0,1)$: $F_z=2\\neq 0$. IMFT applies.<br>$\\partial\\varphi/\\partial x=-F_x/F_z=-2x/(2z)\\big|_{(0,0,1)}=0/2=\\mathbf{0}$.`
+    },
+    {
+      q: `Let $f(x,y)=(e^x\\cos y,\\;e^x\\sin y)$. Compute $Jf$ and $\\det Jf$. Does $f$ have a local differentiable inverse everywhere?`,
+      hint: `Compute the $2\\times 2$ Jacobian and simplify $\\det Jf$ using $\\cos^2+\\sin^2=1$.`,
+      answer: `$Jf=\\begin{pmatrix}e^x\\cos y&-e^x\\sin y\\\\e^x\\sin y&e^x\\cos y\\end{pmatrix}$.<br>$\\det Jf=e^{2x}(\\cos^2 y+\\sin^2 y)=e^{2x}>0$ everywhere.<br><strong>Yes</strong> — INFT gives a local differentiable inverse at every point.`
+    },
+    {
+      q: `The equation $xy^3+y-x^2=0$ defines $y$ implicitly as a function of $x$ near $(1,0)$. Compute $y'(1)$.`,
+      hint: `Set $F(x,y)=xy^3+y-x^2$. Check $F_y(1,0)\\neq 0$, then use $y'=-F_x/F_y$.`,
+      answer: `$F_x=y^3-2x$, $F_y=3xy^2+1$. At $(1,0)$: $F_x=-2$, $F_y=1\\neq 0$. IMFT applies.<br>$y'(1)=-F_x/F_y=2/1=\\mathbf{2}$.`
+    }
+  ],
+
+  contraction: [
+    {
+      q: `Let $\\mathcal{F}:C[0,1]\\to C[0,1]$ be $\\mathcal{F}(f)(x)=1+\\dfrac{1}{4}\\int_0^x\\!f(t)\\,dt$. (a) Show $\\mathcal{F}$ is a contraction. (b) State what CMT gives. (c) Find the fixed point explicitly.`,
+      hint: `(a) Bound $|\\mathcal{F}(f)-\\mathcal{F}(g)|$ pointwise, then take sup. (c) Differentiate the fixed-point equation.`,
+      answer: `<strong>(a)</strong> $|\\mathcal{F}(f)(x)-\\mathcal{F}(g)(x)|\\leq\\tfrac{x}{4}d_{L^\\infty}(f,g)\\leq\\tfrac{1}{4}d_{L^\\infty}(f,g)$. Contraction with $L=\\tfrac{1}{4}$.<br><br><strong>(b)</strong> $(C[0,1],d_{L^\\infty})$ is complete, so CMT gives a unique fixed point $f^*$.<br><br><strong>(c)</strong> Differentiate $f^*=1+\\tfrac{1}{4}\\int_0^x f^*$: $(f^*)'=\\tfrac{1}{4}f^*$, $f^*(0)=1$. Solution: $\\boxed{f^*(x)=e^{x/4}}$.`
+    },
+    {
+      q: `Define $\\Phi:C[0,1]\\to C[0,1]$ by $\\Phi(f)(x)=x^2+\\dfrac{1}{2}\\int_0^x\\!f(t)\\,dt$. (a) Show $\\Phi$ is a contraction. (b) State the Cauchy problem the fixed point satisfies. (c) What is the contraction constant?`,
+      hint: `Pointwise bound on $|\\Phi f - \\Phi g|$. For (b), differentiate the fixed-point equation and note the initial value.`,
+      answer: `<strong>(a)</strong> $|\\Phi(f)(x)-\\Phi(g)(x)|\\leq\\tfrac{x}{2}d_{L^\\infty}(f,g)\\leq\\tfrac{1}{2}d_{L^\\infty}(f,g)$. Contraction. ✓<br><br><strong>(b)</strong> Differentiating $f^*=x^2+\\tfrac{1}{2}\\int_0^x f^*$: $\\;f^{*\\prime}=2x+\\tfrac{1}{2}f^*$, $\\;f^*(0)=0$.<br><br><strong>(c)</strong> $L=\\tfrac{1}{2}$.`
+    },
+    {
+      q: `Let $G:C[0,1]\\to C[0,1]$ be $G(f)(x)=e^{-x}+\\dfrac{x}{3}f\\!\\left(\\dfrac{x}{2}\\right)$. Prove $G$ is a contraction on $(C[0,1],d_{L^\\infty})$.`,
+      hint: `Compute $|G(f)(x)-G(g)(x)|$. Use $x\\leq 1$ to bound, then take sup.`,
+      answer: `$|G(f)(x)-G(g)(x)|=\\tfrac{x}{3}\\bigl|f(x/2)-g(x/2)\\bigr|\\leq\\tfrac{x}{3}d_{L^\\infty}(f,g)\\leq\\tfrac{1}{3}d_{L^\\infty}(f,g)$.<br>Taking sup: $d_{L^\\infty}(Gf,Gg)\\leq\\tfrac{1}{3}d_{L^\\infty}(f,g)$. Contraction with $L=\\tfrac{1}{3}&lt;1$. ✓<br>$(C[0,1],d_{L^\\infty})$ is complete, so CMT gives a <strong>unique fixed point</strong>.`
+    },
+    {
+      q: `Let $T:C[0,1]\\to C[0,1]$ be $T(f)(x)=\\sin x+\\dfrac{1}{5}\\int_0^1\\!f(t)\\,dt$ (upper limit is $1$). Show $T$ is a contraction and find its fixed point.`,
+      hint: `The integral $\\int_0^1(f-g)$ is a constant. Bound it by $d_{L^\\infty}(f,g)$. For the fixed point, let $c=\\int_0^1 f^*(t)\\,dt$ and find the self-consistent value of $c$.`,
+      answer: `$|T(f)(x)-T(g)(x)|=\\tfrac{1}{5}\\bigl|\\int_0^1(f-g)\\bigr|\\leq\\tfrac{1}{5}d_{L^\\infty}(f,g)$. Contraction with $L=\\tfrac{1}{5}$. ✓<br><br><strong>Fixed point:</strong> $f^*(x)=\\sin x+c/5$ where $c=\\int_0^1 f^*(t)\\,dt=\\int_0^1(\\sin t+c/5)\\,dt=(1-\\cos 1)+c/5$.<br>$c\\cdot\\tfrac{4}{5}=1-\\cos 1\\Rightarrow c=\\tfrac{5(1-\\cos 1)}{4}$. So $f^*(x)=\\sin x+\\dfrac{1-\\cos 1}{4}$.`
+    }
+  ]
+
+};
+
+function generateFAQuestions() {
+  const container = document.getElementById('fa-container');
+  container.innerHTML = '';
+
+  const slots = ['distances', 'convergence', 'powerSeries', 'calculus', 'contraction'];
+  const chosen = slots.map(slot => {
+    const pool = faPools[slot];
+    return pool[Math.floor(Math.random() * pool.length)];
+  });
+
+  chosen.forEach((item, i) => {
+    const card = document.createElement('div');
+    card.className = 'eq-card';
+    card.innerHTML = `
+      <div class="eq-question"><strong>Q${i+1}.</strong> ${item.q}</div>
+      <div class="eq-hint">${item.hint}</div>
+      <details class="eq-answer">
+        <summary>▶ Show worked answer</summary>
+        <div class="eq-answer-body">${item.answer}</div>
+      </details>
+    `;
+    container.appendChild(card);
+    if (window.renderMathInElement) renderMathInElement(card, {delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],throwOnError:false});
+  });
+}
+
 function generateCT2Questions() {
   const container = document.getElementById('ct2-container');
   container.innerHTML = '';
@@ -2593,6 +2951,9 @@ function showExamTab(id, btn) {
   }
   if (id === 'ct2-panel' && !document.getElementById('ct2-container').hasChildNodes()) {
     generateCT2Questions();
+  }
+  if (id === 'fa-panel' && !document.getElementById('fa-container').hasChildNodes()) {
+    generateFAQuestions();
   }
   if (window.renderMathInElement) {
     renderMathInElement(panel, {
