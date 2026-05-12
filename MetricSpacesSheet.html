@@ -1822,174 +1822,6 @@ $$J\varphi(x_0)=-(J_y f(x_0,y_0))^{-1}\cdot J_x f(x_0,y_0)$$</div>
   </div><!-- end ct2-panel -->
 
   <div id="fa-panel" class="exam-panel">
-    <div class="paper-section-title">Specimen Paper 1</div>
-
-    <div class="eq-card">
-      <div class="eq-question"><strong>Q1.</strong> For each of the following continuous $f,g:[0,1]\to\mathbb{R}$, compute $d_{L^1}(f,g)$ and $d_{L^\infty}(f,g)$.<br>
-      <em>(a)</em> $f(x)=x^5+2x^2-x,\;g(x)=x^5-x-2$. &emsp; <em>(b)</em> $f(x)=e^x,\;g(x)=e^{-x}$.</div>
-      <details class="eq-answer">
-        <summary>▶ Show worked answer</summary>
-        <div class="eq-answer-body">
-          <strong>(a)</strong> $h(x)=f-g=2x^2+2>0$ on $[0,1]$. Since $h'(x)=4x\geq 0$, $h$ is increasing, so $\max h=h(1)=4$.<br>
-          $d_{L^\infty}(f,g)=\mathbf{4}$.<br>
-          $d_{L^1}(f,g)=\int_0^1(2x^2+2)\,dx=\bigl[\tfrac{2}{3}x^3+2x\bigr]_0^1=\tfrac{2}{3}+2=\mathbf{\tfrac{8}{3}}$.<br><br>
-          <strong>(b)</strong> $h(x)=e^x-e^{-x}\geq 0$, $h'(x)=e^x+e^{-x}>0$, so $h$ is increasing. Max at $x=1$.<br>
-          $d_{L^\infty}(f,g)=e-e^{-1}$.<br>
-          $d_{L^1}(f,g)=\int_0^1(e^x-e^{-x})\,dx=\bigl[e^x+e^{-x}\bigr]_0^1=(e+e^{-1})-2=\mathbf{e+e^{-1}-2}$.
-        </div>
-      </details>
-    </div>
-
-    <div class="eq-card">
-      <div class="eq-question"><strong>Q2.</strong> Let $f_n(x)=x^n$ in $C[0,1]$. Prove:<br>
-      <em>(a)</em> $(f_n)$ does not converge pointwise to any continuous $f\in C[0,1]$.<br>
-      <em>(b)</em> $(f_n)$ does not converge in $(C[0,1],d_{L^\infty})$.<br>
-      <em>(c)</em> $(f_n)$ converges to $0$ in $(C[0,1],d_{L^1})$.</div>
-      <details class="eq-answer">
-        <summary>▶ Show worked answer</summary>
-        <div class="eq-answer-body">
-          <strong>(a)</strong> For $x\in[0,1)$: $x^n\to 0$. For $x=1$: $x^n=1\to 1$. Any pointwise limit would be $f(x)=0$ $(x&lt;1)$, $f(1)=1$ — discontinuous. No continuous pointwise limit exists.<br><br>
-          <strong>(b)</strong> Convergence in $d_{L^\infty}$ implies pointwise convergence to a continuous function. Part (a) shows this is impossible.<br><br>
-          <strong>(c)</strong> Let $\varepsilon>0$; set $N=\lceil1/\varepsilon\rceil$. For $n>N$:
-          $$d_{L^1}(f_n,0)=\int_0^1 x^n\,dx=\frac{1}{n+1}&lt;\frac{1}{N}&lt;\varepsilon.\checkmark$$
-        </div>
-      </details>
-    </div>
-
-    <div class="eq-card">
-      <div class="eq-question"><strong>Q3.</strong> Find the interval of convergence (with endpoint check) of each power series.<br>
-      <em>(a)</em> $\displaystyle\sum_{n=1}^\infty\dfrac{x^n}{n!}$ &emsp;
-      <em>(b)</em> $\displaystyle\sum_{n=1}^\infty\dfrac{(-1)^{n-1}(x-1)^n}{n^3}$ &emsp;
-      <em>(c)</em> $\displaystyle\sum_{\text{n even}}2^n(x+1)^n+\sum_{\text{n odd}}3^n(x+1)^n$</div>
-      <details class="eq-answer">
-        <summary>▶ Show worked answer</summary>
-        <div class="eq-answer-body">
-          <strong>(a)</strong> Ratio: $|a_{n+1}/a_n|=1/(n+1)\to 0$. $R=\infty$. <strong>Interval: $(-\infty,\infty)$.</strong><br><br>
-          <strong>(b)</strong> Ratio: $n^3/(n+1)^3\to 1$, so $R=1$ (centre $x=1$). At $x=0$: $\sum(-1)^{n-1}(-1)^n/n^3=-\sum 1/n^3$ converges. At $x=2$: $\sum(-1)^{n-1}/n^3$ converges. <strong>Interval: $[0,2]$.</strong><br><br>
-          <strong>(c)</strong> $a_n=2^n$ (even), $3^n$ (odd). $\limsup\sqrt[n]{|a_n|}=3$, so $R=1/3$. At both extremes the general term fails to tend to $0$. <strong>Interval: $\bigl(-\tfrac{4}{3},-\tfrac{2}{3}\bigr)$.</strong>
-        </div>
-      </details>
-    </div>
-
-    <div class="eq-card">
-      <div class="eq-question"><strong>Q4.</strong> Let $f:\mathbb{R}^2\to\mathbb{R}^2$ be $f(x,y)=\bigl(\tfrac{x}{y},\,x^2+1\bigr)$.<br>
-      <em>(a)</em> Compute $Jf(x,y)$. &emsp;
-      <em>(b)</em> Does $f$ admit a local differentiable inverse near $p_1=(0,1)$? &emsp;
-      <em>(c)</em> $f$ admits a local differentiable inverse $\phi$ near $p_2=(-1,1)$. Compute $J\phi(f(p_2))$.</div>
-      <details class="eq-answer">
-        <summary>▶ Show worked answer</summary>
-        <div class="eq-answer-body">
-          <strong>(a)</strong> $Jf(x,y)=\begin{pmatrix}1/y & -x/y^2 \\ 2x & 0\end{pmatrix}$.<br><br>
-          <strong>(b)</strong> At $p_1=(0,1)$: $Jf(p_1)=\begin{pmatrix}1&0\\0&0\end{pmatrix}$, $\det=0$. By the Inverse Function Theorem, no local differentiable inverse exists at $f(p_1)$.<br><br>
-          <strong>(c)</strong> At $p_2=(-1,1)$: $Jf(p_2)=\begin{pmatrix}1&1\\-2&0\end{pmatrix}$, $\det=0-(-2)=2\neq 0$. Local inverse $\phi$ exists, and
-          $$J\phi(f(p_2))=(Jf(p_2))^{-1}=\tfrac{1}{2}\begin{pmatrix}0&-1\\2&1\end{pmatrix}=\begin{pmatrix}0&-\tfrac{1}{2}\\1&\tfrac{1}{2}\end{pmatrix}.$$
-        </div>
-      </details>
-    </div>
-
-    <div class="eq-card">
-      <div class="eq-question"><strong>Q5.</strong> Let $\mathcal{F}:C[0,1]\to C[0,1]$ be $\mathcal{F}(f)(x)=x^2+\tfrac{1}{3}\int_0^x f(t)\,dt$.<br>
-      <em>(a)</em> Define contraction; state the Contraction Mapping Theorem.<br>
-      <em>(b)</em> Prove $\mathcal{F}(f)$ is continuous using the $\varepsilon$-$\delta$ definition.<br>
-      <em>(c)</em> Prove $\mathcal{F}$ is a contraction on $(C[0,1],d_{L^\infty})$.<br>
-      <em>(d)</em> Explain why $f'(x)=2x+\tfrac{1}{3}f(x)$, $f(0)=0$ has a unique differentiable solution.</div>
-      <details class="eq-answer">
-        <summary>▶ Show worked answer</summary>
-        <div class="eq-answer-body">
-          <strong>(a)</strong> $\mathcal{F}$ is a <em>contraction</em> if $\exists\,0\leq L&lt;1$ such that $d_{L^\infty}(\mathcal{F}(f),\mathcal{F}(g))\leq L\cdot d_{L^\infty}(f,g)$ for all $f,g$. <strong>CMT:</strong> a contraction on a complete metric space has a unique fixed point.<br><br>
-          <strong>(b)</strong> Fix $x_0\in[0,1]$, $\varepsilon>0$, $M=\max|f|$. Then $|\mathcal{F}(f)(x)-\mathcal{F}(f)(x_0)|\leq|x^2-x_0^2|+\tfrac{M}{3}|x-x_0|\leq(2+\tfrac{M}{3})|x-x_0|$. Take $\delta=\varepsilon/(2+M/3)$.<br><br>
-          <strong>(c)</strong> $|\mathcal{F}(f_1)(x)-\mathcal{F}(f_2)(x)|=\tfrac{1}{3}\bigl|\int_0^x(f_1-f_2)\,dt\bigr|\leq\tfrac{x}{3}d_{L^\infty}(f_1,f_2)\leq\tfrac{1}{3}d_{L^\infty}(f_1,f_2)$. Taking sup: contraction with $L=\tfrac{1}{3}&lt;1$.<br><br>
-          <strong>(d)</strong> $(C[0,1],d_{L^\infty})$ is complete and $\mathcal{F}$ is a contraction, so CMT gives a unique fixed point $f^*$ with $\mathcal{F}(f^*)=f^*$. Differentiating $f^*(x)=x^2+\tfrac{1}{3}\int_0^x f^*(t)\,dt$ by FTC gives $f^{*\prime}=2x+\tfrac{1}{3}f^*$ with $f^*(0)=0$ — hence a unique differentiable solution.
-        </div>
-      </details>
-    </div>
-
-    <div class="paper-section-title" style="margin-top:40px;">Specimen Paper 2</div>
-
-    <div class="eq-card">
-      <div class="eq-question"><strong>Q1.</strong> In each case state whether $(a_n)\in\ell^1$, $\ell^2$, $\ell^\infty$. Justify.<br>
-      <em>(i)</em> $(a_n)=(2,-3,2,-3,\ldots)$ &emsp;
-      <em>(ii)</em> $(b_n)=\bigl(0,1,0,\tfrac{1}{2},0,\tfrac{1}{3},0,\tfrac{1}{4},\ldots\bigr)$ &emsp;
-      <em>(iii)</em> $(c_n)=(1,e^{-1},e^{-2},e^{-3},\ldots)$</div>
-      <details class="eq-answer">
-        <summary>▶ Show worked answer</summary>
-        <div class="eq-answer-body">
-          <strong>(i)</strong> $|a_n|\leq 3$ so $\in\ell^\infty$. $\sum|a_n|$ diverges (terms don't tend to $0$) $\Rightarrow\notin\ell^1$. $\sum a_n^2$ diverges similarly $\Rightarrow\notin\ell^2$.<br><br>
-          <strong>(ii)</strong> $\sum|b_n|=\sum 1/n$ diverges $\Rightarrow\notin\ell^1$. $\sum b_n^2=\sum 1/n^2&lt;\infty\Rightarrow\in\ell^2$. Bounded $\Rightarrow\in\ell^\infty$.<br><br>
-          <strong>(iii)</strong> $\sum|c_n|=\sum_{n=0}^\infty e^{-n}=\tfrac{1}{1-e^{-1}}&lt;\infty$ (geometric, ratio $e^{-1}&lt;1$) $\Rightarrow\in\ell^1$. Since $\ell^1\subseteq\ell^2\subseteq\ell^\infty$, also $\in\ell^2$ and $\in\ell^\infty$.
-        </div>
-      </details>
-    </div>
-
-    <div class="eq-card">
-      <div class="eq-question"><strong>Q2.</strong> In each case decide if $A$ is open and if $A$ is closed in $(X,d)$. Justify using definitions.<br>
-      <em>(i)</em> $(X,d)=(\mathbb{R},d_1)$, $A=\{x\in\mathbb{Z}_{>0}:4&lt;x&lt;8\}$.<br>
-      <em>(ii)</em> $(X,d)=(\mathbb{R}^2,d_2)$, $A=\{(x_1,x_2):(x_1-1)^2+5x_2^4\geq 0\}$.<br>
-      <em>(iii)</em> $(X,d)=(C[0,1],d_{L^\infty})$, $A=\{f\in C[0,1]:\max_{x\in[0,1]}|f(x)-x^2|\leq 1\}$.</div>
-      <details class="eq-answer">
-        <summary>▶ Show worked answer</summary>
-        <div class="eq-answer-body">
-          <strong>(i)</strong> $A=\{5,6,7\}$. <em>Not open</em>: for any $r>0$, $B_r(5)=(5-r,5+r)$ contains non-integer points $\notin A$. <em>Closed</em>: any sequence in $A$ takes values in $\{5,6,7\}$ and cannot converge to any real outside $\{5,6,7\}$.<br><br>
-          <strong>(ii)</strong> $(x_1-1)^2+5x_2^4\geq 0$ holds for all $(x_1,x_2)$, so $A=\mathbb{R}^2$. The whole space is <em>both open and closed</em>.<br><br>
-          <strong>(iii)</strong> $A=\bar{B}_1(f_0)$ with $f_0(x)=x^2$ (closed ball of radius 1). <em>Not open</em>: $f_0+1\in A$ but every ball around it exits $A$. <em>Closed</em>: if $f_n\to f$ in $d_{L^\infty}$ with $f_n\in A$, then by the triangle inequality $d_{L^\infty}(f,f_0)\leq d_{L^\infty}(f,f_n)+1\to 1$, so $f\in A$.
-        </div>
-      </details>
-    </div>
-
-    <div class="eq-card">
-      <div class="eq-question"><strong>Q3.</strong> Find $\limsup a_n$, $\liminf a_n$, and all limit points for:<br>
-      <em>(i)</em> $a_n=\dfrac{2n+3}{n^2}$ &emsp;
-      <em>(ii)</em> $a_n=(-1)^{n+1}+\dfrac{2}{n}$ &emsp;
-      <em>(iii)</em> $a_n=(-1)^n+\sin\!\bigl(\tfrac{n\pi}{2}\bigr)$</div>
-      <details class="eq-answer">
-        <summary>▶ Show worked answer</summary>
-        <div class="eq-answer-body">
-          <strong>(i)</strong> $a_n=(2n+3)/n^2\to 0$. Unique limit point $0$. $\limsup=\liminf=0$.<br><br>
-          <strong>(ii)</strong> Even terms: $a_{2n}=-1+\tfrac{1}{n}\to -1$. Odd terms: $a_{2n+1}=1+\tfrac{2}{2n+1}\to 1$. $\limsup=1$, $\liminf=-1$. Limit points: $\{-1,1\}$.<br><br>
-          <strong>(iii)</strong> Values (mod 4): $a_{4n}=1+0=1$; $a_{4n+1}=-1+1=0$; $a_{4n+2}=1+0=1$; $a_{4n+3}=-1+(-1)=-2$. Repeated values: $1,0,-2$. $\limsup=1$, $\liminf=-2$. Limit points: $\{-2,0,1\}$.
-        </div>
-      </details>
-    </div>
-
-    <div class="eq-card">
-      <div class="eq-question"><strong>Q4.</strong> Let $(X,d)$ be a metric space.<br>
-      <em>(i)</em> Define <em>Cauchy sequence</em>. &emsp;
-      <em>(ii)</em> Define <em>complete</em> metric space. &emsp;
-      <em>(iii)</em> Let $(x_n)$ be Cauchy. Prove all convergent subsequences converge to the same value. &emsp;
-      <em>(iv)</em> Prove or disprove: $A=\{m+\tfrac{1}{n}\mid m,n\in\mathbb{Z},\,n\geq 1\}$ is complete.</div>
-      <details class="eq-answer">
-        <summary>▶ Show worked answer</summary>
-        <div class="eq-answer-body">
-          <strong>(i)</strong> $(x_n)$ is Cauchy if $\forall\varepsilon>0\;\exists N$ such that $d(x_m,x_n)&lt;\varepsilon$ whenever $m,n>N$.<br><br>
-          <strong>(ii)</strong> $(X,d)$ is complete if every Cauchy sequence converges to a limit in $X$.<br><br>
-          <strong>(iii)</strong> Suppose $(x_{n_k})\to a$. For $\varepsilon>0$: by Cauchy $\exists N$ with $d(x_m,x_n)&lt;\varepsilon/2$ for $m,n>N$; by convergence $\exists K$ with $d(x_{n_k},a)&lt;\varepsilon/2$ for $k>K$. Choose $k$ with $n_k>\max(N,K)$. Then for all $m>\max(N,K)$:
-          $$d(x_m,a)\leq d(x_m,x_{n_k})+d(x_{n_k},a)&lt;\tfrac{\varepsilon}{2}+\tfrac{\varepsilon}{2}=\varepsilon.$$
-          So $x_n\to a$, and hence every convergent subsequence shares the limit $a$.<br><br>
-          <strong>(iv)</strong> $A$ <em>is complete</em>. Let $(x_n)$ be Cauchy in $A$. If eventually constant, it converges in $A$. Otherwise it converges (in $\mathbb{R}$, which is complete) to some $a\in\mathbb{R}$. If $a$ is non-integer, the gap $\varepsilon=\min(b-a,a-c)$ between $a$ and its nearest neighbours in $A$ would prevent infinitely many terms lying within $\varepsilon$ of $a$ — contradiction. So $a\in\mathbb{Z}\subset A$. Hence all Cauchy sequences converge in $A$.
-        </div>
-      </details>
-    </div>
-
-    <div class="eq-card">
-      <div class="eq-question"><strong>Q5.</strong> Let $f:\mathbb{R}^{m+n}\to\mathbb{R}^n$ be $C^1$ with $f(x_0,y_0)=0$.<br>
-      <em>(i)</em> State the Implicit Function Theorem.<br>
-      <em>(ii)</em> For $\begin{cases}x^2-3xy+y^3+zy=0\\y^2+z+1=0\end{cases}$, can we solve for $(y,z)$ as a function of $x$ near <em>(a)</em> $p_1=(1,1,2)$? &emsp; <em>(b)</em> $p_2=(2,2,1)$? Explain.<br>
-      <em>(iii)</em> Near $p_3=(2,1,2)$ the equations define $(y,z)=g(x)$. Compute $g'(2)$.</div>
-      <details class="eq-answer">
-        <summary>▶ Show worked answer</summary>
-        <div class="eq-answer-body">
-          <strong>(i)</strong> If $J_y f(x_0,y_0)$ is an invertible $n\times n$ matrix, then $f(x,y)=0$ locally defines $y=\varphi(x)$ as a $C^1$ function near $(x_0,y_0)$, with $J\varphi=-(J_yf)^{-1}J_xf$.<br><br>
-          <strong>(ii)</strong> $J_{y,z}f=\begin{pmatrix}-3x+3y^2+z & y \\ 2y & 1\end{pmatrix}$.<br>
-          <em>(a)</em> At $p_1$: $J_{y,z}f=\begin{pmatrix}2&1\\2&1\end{pmatrix}$, $\det=0$ — IMFT does <strong>not</strong> apply.<br>
-          <em>(b)</em> At $p_2$: $J_{y,z}f=\begin{pmatrix}7&2\\4&1\end{pmatrix}$, $\det=7-8=-1\neq 0$ — IMFT <strong>applies</strong>.<br><br>
-          <strong>(iii)</strong> At $p_3=(2,1,2)$: $J_{y,z}f=\begin{pmatrix}-1&1\\2&1\end{pmatrix}$. $\partial f_1/\partial x=2x-3y\big|_{p_3}=4-3=1$; $\partial f_2/\partial x=0$.
-          $$g'(2)=-\begin{pmatrix}-1&1\\2&1\end{pmatrix}^{-1}\!\begin{pmatrix}1\\0\end{pmatrix}=-\begin{pmatrix}-\tfrac{1}{3}&\tfrac{1}{3}\\\tfrac{2}{3}&\tfrac{1}{3}\end{pmatrix}\begin{pmatrix}1\\0\end{pmatrix}=\begin{pmatrix}\tfrac{1}{3}\\-\tfrac{2}{3}\end{pmatrix}.$$
-        </div>
-      </details>
-    </div>
-
-    <div class="paper-section-title" style="margin-top:40px;">Practice Questions</div>
-    <div class="section-sub" style="margin:0 0 16px 0;">One question per topic slot (distances · convergence · power series · calculus · contraction) — shuffles on each click.</div>
     <div id="fa-container"></div>
     <div style="text-align:center; margin-top:32px;">
       <button class="btn" onclick="generateFAQuestions()">⟳ Generate New Questions</button>
@@ -2760,6 +2592,16 @@ const faPools = {
       q: `Let $f(x)=x^4+3x$ and $g(x)=x^4+x+2$ on $[0,1]$. Compute $d_{L^\\infty}(f,g)$ and $d_{L^1}(f,g)$.`,
       hint: `Simplify $h=f-g$ first. Is it always the same sign on $[0,1]$?`,
       answer: `$h(x)=f-g=2x-2=2(x-1)\\leq 0$ on $[0,1]$. So $|h(x)|=2(1-x)$.<br>Max of $|h|$ at $x=0$: $|h(0)|=2$. <strong>$d_{L^\\infty}(f,g)=2$.</strong><br><br>$d_{L^1}=\\int_0^1 2(1-x)\\,dx=2\\bigl[x-\\tfrac{x^2}{2}\\bigr]_0^1=2\\cdot\\tfrac{1}{2}=\\mathbf{1}$.`
+    },
+    {
+      q: `Let $f(x)=x^5+2x^2-x$ and $g(x)=x^5-x-2$ on $[0,1]$. Compute $d_{L^\\infty}(f,g)$ and $d_{L^1}(f,g)$.`,
+      hint: `Simplify $h=f-g$. Check the sign and find the maximum via $h'$.`,
+      answer: `$h(x)=2x^2+2>0$ always. $h'(x)=4x\\geq 0$ on $[0,1]$, so $h$ is increasing with max at $x=1$: $h(1)=4$.<br><strong>$d_{L^\\infty}(f,g)=4$.</strong><br><br>$d_{L^1}=\\int_0^1(2x^2+2)\\,dx=\\bigl[\\tfrac{2x^3}{3}+2x\\bigr]_0^1=\\tfrac{2}{3}+2=\\mathbf{\\tfrac{8}{3}}$.`
+    },
+    {
+      q: `Let $f(x)=e^x$ and $g(x)=e^{-x}$ on $[0,1]$. Compute $d_{L^\\infty}(f,g)$ and $d_{L^1}(f,g)$.`,
+      hint: `$h(x)=e^x-e^{-x}$. Compute $h'$ to confirm $h$ is non-decreasing, then find the max and integrate.`,
+      answer: `$h(x)=e^x-e^{-x}$, $h'(x)=e^x+e^{-x}>0$, so $h$ is increasing. Max at $x=1$: $h(1)=e-e^{-1}$.<br><strong>$d_{L^\\infty}(f,g)=e-e^{-1}$.</strong><br><br>$d_{L^1}=\\int_0^1(e^x-e^{-x})\\,dx=\\bigl[e^x+e^{-x}\\bigr]_0^1=(e+e^{-1})-2=\\mathbf{e+e^{-1}-2}$.`
     }
   ],
 
@@ -2783,6 +2625,11 @@ const faPools = {
       q: `Let $f_n(x)=n^2 x^n(1-x)$ on $[0,1]$. Find the pointwise limit and determine whether convergence is uniform.`,
       hint: `Pointwise: $n^2 x^n\\to 0$ for $x\\in[0,1)$ (exponential beats polynomial). For uniform: find the maximum of $f_n$ and check if it tends to $0$.`,
       answer: `<strong>Pointwise limit $\\equiv 0$:</strong> For $x\\in[0,1)$, $n^2 x^n\\to 0$ since $x^n$ decays exponentially. For $x=1$: $f_n(1)=0$. So $f_n\\to 0$ pointwise.<br><br><strong>Not uniform:</strong> $f_n'=0$ at $x^*=n/(n+1)$. Max value: $f_n\\!\\left(\\tfrac{n}{n+1}\\right)=n^2\\!\\left(\\tfrac{n}{n+1}\\right)^{\\!n}\\!\\cdot\\tfrac{1}{n+1}\\approx n^2 e^{-1}/(n+1)\\to\\infty$. So $\\sup|f_n|\\to\\infty$. <strong>Not uniformly convergent.</strong>`
+    },
+    {
+      q: `Let $f_n(x)=x^n$ in $(C[0,1],d_{L^\\infty})$. (a) Does $(f_n)$ converge pointwise to a continuous function? (b) Does $(f_n)$ converge in $(C[0,1],d_{L^\\infty})$? (c) Does $(f_n)$ converge in $(C[0,1],d_{L^1})$?`,
+      hint: `Pointwise limit: $x^n\\to 0$ for $x&lt;1$ and $1^n=1$. For (b): uniform limit of continuous functions must be continuous. For (c): compute $\\int_0^1 x^n\\,dx$.`,
+      answer: `<strong>(a)</strong> Pointwise limit is $f(x)=0$ for $x\\in[0,1)$ and $f(1)=1$ — discontinuous. So $(f_n)$ does <em>not</em> converge pointwise to any $f\\in C[0,1]$.<br><br><strong>(b)</strong> If $(f_n)$ converged in $d_{L^\\infty}$ it would converge pointwise to a continuous function. It doesn't, so <strong>no</strong> $d_{L^\\infty}$ convergence.<br><br><strong>(c)</strong> $d_{L^1}(f_n,0)=\\int_0^1 x^n\\,dx=\\tfrac{1}{n+1}\\to 0$. <strong>Yes</strong>, $(f_n)\\to 0$ in $d_{L^1}$.`
     }
   ],
 
@@ -2806,6 +2653,21 @@ const faPools = {
       q: `Find the radius of convergence of $\\displaystyle\\sum_{n=0}^\\infty\\dfrac{x^{2n}}{(2n)!}$ and state the interval of convergence.`,
       hint: `Set $u=x^2$ and apply the ratio test on $u$. What famous function does this series represent?`,
       answer: `Set $u=x^2$. Ratio: $|u|/[(2n+2)(2n+1)]\\to 0$ for any $u$. So $R=\\infty$.<br><strong>Interval: $(-\\infty,\\infty)$.</strong><br><em>(This is $\\cosh(x)=\\sum_{n=0}^\\infty x^{2n}/(2n)!$.)</em>`
+    },
+    {
+      q: `Find the interval of convergence of $\\displaystyle\\sum_{n=1}^\\infty\\dfrac{x^n}{n!}$. Start with the radius of convergence.`,
+      hint: `Ratio test: compute $|a_{n+1}/a_n|$ where $a_n=1/n!$.`,
+      answer: `Ratio: $\\left|\\frac{1/(n+1)!}{1/n!}\\right|=\\frac{1}{n+1}\\to 0$. So $R=\\infty$.<br><strong>Interval: $(-\\infty,\\infty)$.</strong><br><em>(This is $e^x-1$.)</em>`
+    },
+    {
+      q: `Find the interval of convergence of $\\displaystyle\\sum_{n=1}^\\infty\\dfrac{(-1)^{n-1}(x-1)^n}{n^3}$. Check endpoints.`,
+      hint: `Ratio test gives $R$ and centre. At endpoints substitute $x-1=\\pm 1$ and use absolute convergence ($p$-series).`,
+      answer: `Ratio: $\\left|\\frac{n^3}{(n+1)^3}\\right|\\to 1$. $R=1$, centre $x=1$.<br>$x=2$: $\\sum(-1)^{n-1}/n^3$ — absolutely convergent ($p=3$). ✓<br>$x=0$: $\\sum(-1)^{n-1}(-1)^n/n^3=-\\sum 1/n^3$ — absolutely convergent. ✓<br><strong>Interval: $[0,2]$.</strong>`
+    },
+    {
+      q: `Find the interval of convergence of $\\displaystyle\\sum_{n\\text{ even}}2^n(x+1)^n+\\sum_{n\\text{ odd}}3^n(x+1)^n$.`,
+      hint: `The coefficients alternate between $2^n$ and $3^n$. Use $\\limsup_n\\sqrt[n]{|a_n|}$ to find $R$. Check whether endpoints converge.`,
+      answer: `$a_n=2^n$ (even) or $3^n$ (odd). $\\limsup_n\\sqrt[n]{|a_n|}=3$, so $R=1/3$, centre $x=-1$.<br>At endpoints $|x+1|=1/3$: general term $|a_n(x+1)^n|$ stays at $1$ or oscillates — does not tend to $0$. <strong>Diverges at both endpoints.</strong><br><strong>Interval: $(-4/3,\\,-2/3)$.</strong>`
     }
   ],
 
@@ -2829,6 +2691,16 @@ const faPools = {
       q: `The equation $xy^3+y-x^2=0$ defines $y$ implicitly as a function of $x$ near $(1,0)$. Compute $y'(1)$.`,
       hint: `Set $F(x,y)=xy^3+y-x^2$. Check $F_y(1,0)\\neq 0$, then use $y'=-F_x/F_y$.`,
       answer: `$F_x=y^3-2x$, $F_y=3xy^2+1$. At $(1,0)$: $F_x=-2$, $F_y=1\\neq 0$. IMFT applies.<br>$y'(1)=-F_x/F_y=2/1=\\mathbf{2}$.`
+    },
+    {
+      q: `Let $f:\\mathbb{R}^2\\to\\mathbb{R}^2$ be $f(x,y)=\\bigl(\\tfrac{x}{y},\\,x^2+1\\bigr)$. (a) Compute $Jf(x,y)$. (b) Does a differentiable local inverse exist near $p_1=(0,1)$? (c) A local inverse $\\phi$ exists near $p_2=(-1,1)$. Compute $J\\phi(f(p_2))$.`,
+      hint: `(a) Differentiate each component. (b) Compute $\\det Jf(p_1)$; if zero, INFT gives nothing. (c) Use $J\\phi=(Jf)^{-1}$ evaluated at $p_2$.`,
+      answer: `<strong>(a)</strong> $Jf(x,y)=\\begin{pmatrix}1/y&-x/y^2\\\\2x&0\\end{pmatrix}$.<br><br><strong>(b)</strong> $Jf(0,1)=\\begin{pmatrix}1&0\\\\0&0\\end{pmatrix}$, $\\det=0$. INFT gives no guarantee of a <em>differentiable</em> local inverse.<br><br><strong>(c)</strong> $Jf(-1,1)=\\begin{pmatrix}1&1\\\\-2&0\\end{pmatrix}$, $\\det=2\\neq 0$. $J\\phi(f(p_2))=(Jf(p_2))^{-1}=\\dfrac{1}{2}\\begin{pmatrix}0&-1\\\\2&1\\end{pmatrix}=\\begin{pmatrix}0&-1/2\\\\1&1/2\\end{pmatrix}$.`
+    },
+    {
+      q: `Consider the system $\\begin{cases}x^2-3xy+y^3+zy=0,\\\\ y^2+z+1=0.\\end{cases}$ Does the IMFT guarantee $(y,z)$ as a differentiable function of $x$ near (a) $p_1=(1,1,2)$? (b) $p_2=(2,2,1)$? (c) At $p_3=(2,1,2)$, the IMFT applies. Compute $g'(2)$ where $g=(y,z)$.`,
+      hint: `Compute $J_{y,z}f=\\partial(f_1,f_2)/\\partial(y,z)$ and evaluate its determinant at each point. For (c) use $g'=-J_{y,z}f^{-1}\\cdot\\partial f/\\partial x$.`,
+      answer: `$J_{y,z}f=\\begin{pmatrix}-3x+3y^2+z&y\\\\2y&1\\end{pmatrix}$.<br><br><strong>(a)</strong> At $p_1$: $\\begin{pmatrix}2&1\\\\2&1\\end{pmatrix}$, $\\det=0$. <strong>IMFT does not apply.</strong><br><br><strong>(b)</strong> At $p_2$: $\\begin{pmatrix}7&2\\\\4&1\\end{pmatrix}$, $\\det=-1\\neq 0$. <strong>IMFT applies — yes.</strong><br><br><strong>(c)</strong> At $p_3$: $J_{y,z}f=\\begin{pmatrix}-1&1\\\\2&1\\end{pmatrix}$, $\\det=-3$. $\\partial f_1/\\partial x=2x-3y=1$, $\\partial f_2/\\partial x=0$.<br>$g'(2)=-\\frac{1}{-3}\\begin{pmatrix}1&-1\\\\-2&-1\\end{pmatrix}\\begin{pmatrix}1\\\\0\\end{pmatrix}=\\begin{pmatrix}1/3\\\\-2/3\\end{pmatrix}$.`
     }
   ],
 
@@ -2852,6 +2724,103 @@ const faPools = {
       q: `Let $T:C[0,1]\\to C[0,1]$ be $T(f)(x)=\\sin x+\\dfrac{1}{5}\\int_0^1\\!f(t)\\,dt$ (upper limit is $1$). Show $T$ is a contraction and find its fixed point.`,
       hint: `The integral $\\int_0^1(f-g)$ is a constant. Bound it by $d_{L^\\infty}(f,g)$. For the fixed point, let $c=\\int_0^1 f^*(t)\\,dt$ and find the self-consistent value of $c$.`,
       answer: `$|T(f)(x)-T(g)(x)|=\\tfrac{1}{5}\\bigl|\\int_0^1(f-g)\\bigr|\\leq\\tfrac{1}{5}d_{L^\\infty}(f,g)$. Contraction with $L=\\tfrac{1}{5}$. ✓<br><br><strong>Fixed point:</strong> $f^*(x)=\\sin x+c/5$ where $c=\\int_0^1 f^*(t)\\,dt=\\int_0^1(\\sin t+c/5)\\,dt=(1-\\cos 1)+c/5$.<br>$c\\cdot\\tfrac{4}{5}=1-\\cos 1\\Rightarrow c=\\tfrac{5(1-\\cos 1)}{4}$. So $f^*(x)=\\sin x+\\dfrac{1-\\cos 1}{4}$.`
+    },
+    {
+      q: `Let $\\mathcal{F}:C[0,1]\\to C[0,1]$ be $\\mathcal{F}(f)(x)=x^2+\\dfrac{1}{3}\\int_0^x\\!f(t)\\,dt$. (a) Prove $\\mathcal{F}$ is a contraction on $(C[0,1],d_{L^\\infty})$. (b) State what CMT gives. (c) What Cauchy problem does the fixed point satisfy?`,
+      hint: `(a) Bound $|\\mathcal{F}(f)(x)-\\mathcal{F}(g)(x)|$ pointwise using $x\\leq 1$. (c) Differentiate the fixed-point equation and read off the ODE.`,
+      answer: `<strong>(a)</strong> $|\\mathcal{F}(f)(x)-\\mathcal{F}(g)(x)|=\\tfrac{1}{3}\\bigl|\\int_0^x(f-g)\\bigr|\\leq\\tfrac{x}{3}d_{L^\\infty}(f,g)\\leq\\tfrac{1}{3}d_{L^\\infty}(f,g)$. Contraction with $L=\\tfrac{1}{3}&lt;1$. ✓<br><br><strong>(b)</strong> Since $(C[0,1],d_{L^\\infty})$ is complete, CMT guarantees a <strong>unique fixed point</strong> $f^*\\in C[0,1]$.<br><br><strong>(c)</strong> Differentiating $f^*=x^2+\\tfrac{1}{3}\\int_0^x f^*$: $(f^*)'=2x+\\tfrac{1}{3}f^*$, $f^*(0)=0$.`
+    }
+  ],
+
+  lpSpaces: [
+    {
+      q: `For each sequence, state whether it belongs to $\\ell^1$, $\\ell^2$, and $\\ell^\\infty$. Justify. (i) $(2,-3,2,-3,\\ldots)$. (ii) $(0,1,0,\\tfrac{1}{2},0,\\tfrac{1}{3},0,\\tfrac{1}{4},\\ldots)$. (iii) $(1,e^{-1},e^{-2},e^{-3},\\ldots)$.`,
+      hint: `Recall $\\ell^1\\subseteq\\ell^2\\subseteq\\ell^\\infty$. For each: check boundedness ($\\ell^\\infty$), then absolute summability ($\\ell^1$), then square-summability ($\\ell^2$).`,
+      answer: `<strong>(i)</strong> $|a_n|\\leq 3$ so $\\in\\ell^\\infty$. $\\sum|a_n|$ diverges (terms stay at $2$ or $3$) so $\\notin\\ell^1$. $\\sum a_n^2$ diverges similarly, so $\\notin\\ell^2$.<br><br><strong>(ii)</strong> Non-zero terms are $1/n$: $\\sum 1/n$ diverges so $\\notin\\ell^1$; $\\sum 1/n^2$ converges so $\\in\\ell^2\\subset\\ell^\\infty$.<br><br><strong>(iii)</strong> $\\sum e^{1-n}$ is geometric (ratio $e^{-1}&lt;1$), converges. So $\\in\\ell^1\\subset\\ell^2\\subset\\ell^\\infty$.`
+    },
+    {
+      q: `Classify the sequence $\\bigl(1/n^2\\bigr)_{n=1}^\\infty$ into $\\ell^1$, $\\ell^2$, $\\ell^\\infty$.`,
+      hint: `Use the $p$-series test: $\\sum 1/n^p$ converges iff $p>1$.`,
+      answer: `$\\sum 1/n^2$ converges ($p=2>1$) so $(1/n^2)\\in\\ell^1$. Since $\\ell^1\\subseteq\\ell^2\\subseteq\\ell^\\infty$, the sequence belongs to <strong>all three</strong>: $\\ell^1,\\ell^2,\\ell^\\infty$.`
+    },
+    {
+      q: `Classify the sequence $\\bigl((-1)^n/\\sqrt{n}\\bigr)$ into $\\ell^1$, $\\ell^2$, $\\ell^\\infty$.`,
+      hint: `Check each condition separately. $\\sum 1/\\sqrt{n}$ is a $p$-series with $p=1/2$.`,
+      answer: `$|a_n|=1/\\sqrt{n}\\to 0$, so $(a_n)$ is bounded: $\\in\\ell^\\infty$.<br>$\\sum|a_n|=\\sum 1/\\sqrt{n}$ diverges ($p=1/2&lt;1$): $\\notin\\ell^1$.<br>$\\sum a_n^2=\\sum 1/n$ diverges (harmonic): $\\notin\\ell^2$.`
+    },
+    {
+      q: `Classify the sequence $\\bigl(n\\cdot 2^{-n}\\bigr)$ into $\\ell^1$, $\\ell^2$, $\\ell^\\infty$.`,
+      hint: `Apply the ratio test to $\\sum n/2^n$.`,
+      answer: `Ratio test on $\\sum n/2^n$: $(n+1)/2^{n+1}\\div n/2^n=(n+1)/(2n)\\to 1/2&lt;1$. Converges.<br>So $(n\\cdot 2^{-n})\\in\\ell^1$. Since $\\ell^1\\subseteq\\ell^2\\subseteq\\ell^\\infty$, it belongs to <strong>all three</strong>.`
+    }
+  ],
+
+  openClosed: [
+    {
+      q: `In each case decide whether $A$ is open, closed, both, or neither. (i) $(X,d)=(\\mathbb{R},d_1)$, $A=\\{x\\in\\mathbb{Z}_{>0}:4&lt;x&lt;8\\}$. (ii) $(X,d)=(\\mathbb{R}^2,d_2)$, $A=\\{(x_1,x_2):(x_1-1)^2+5x_2^4\\geq 0\\}$. (iii) $(X,d)=(C[0,1],d_{L^\\infty})$, $A=\\{f:\\max|f(x)-x^2|\\leq 1\\}$.`,
+      hint: `(i) $A=\\{5,6,7\\}$ — can you fit any open ball inside it? (ii) Observe when the inequality holds. (iii) Recognise $A$ as a closed ball.`,
+      answer: `<strong>(i)</strong> $A=\\{5,6,7\\}$. <em>Not open</em>: $B_\\varepsilon(5)$ contains non-integers $\\notin A$. <em>Closed</em>: any convergent sequence in $A$ has all terms in $\\{5,6,7\\}$ so limit $\\in A$.<br><br><strong>(ii)</strong> $(x_1-1)^2+5x_2^4\\geq 0$ always, so $A=\\mathbb{R}^2$. <strong>Both open and closed.</strong><br><br><strong>(iii)</strong> $A=\\bar{B}_1(x^2)$ in $C[0,1]$. A closed ball is <em>closed</em>. <em>Not open</em>: $B_R(x^2+1)$ contains $f=x^2+1+R/2\\notin A$.`
+    },
+    {
+      q: `Let $(X,d)=(\\mathbb{R},d_2)$ and $A=(0,1)$. Is $A$ open? Is $A$ closed?`,
+      hint: `Try to fit an open ball around every point. What about limit points near $0$ and $1$?`,
+      answer: `<strong>Open:</strong> For any $x\\in(0,1)$ take $\\varepsilon=\\min(x,1-x)>0$; then $B_\\varepsilon(x)\\subset A$. <strong>$A$ is open.</strong><br><br><strong>Not closed:</strong> The sequence $1/n\\in A$ converges to $0\\notin A$, so $A$ is <em>not closed</em>.`
+    },
+    {
+      q: `Let $(X,d)=(\\mathbb{R}^2,d_2)$ and $A=\\{(x,y):x^2+y^2\\leq 1\\}$. Is $A$ open? Is $A$ closed?`,
+      hint: `Points on the boundary circle $x^2+y^2=1$ are in $A$. Can you fit an open ball around them inside $A$? For closed, consider sequences in $A$ converging to a limit.`,
+      answer: `<strong>Not open:</strong> At $(1,0)\\in A$, every ball $B_\\varepsilon(1,0)$ contains points with $x^2+y^2>1$ (outside $A$).<br><br><strong>Closed:</strong> $A^c=\\{(x,y):x^2+y^2>1\\}$ is open (for any point $p\\in A^c$, $d_2(p,0)>1$; take $\\varepsilon=d_2(p,0)-1$). So $A$ is <strong>closed</strong>.`
+    },
+    {
+      q: `Let $(X,d)=(C[0,1],d_{L^\\infty})$ and $A=\\{f\\in C[0,1]:f(0)=0\\}$. Is $A$ open? Is $A$ closed?`,
+      hint: `For open: is every ball $B_\\varepsilon(f_0)$ contained in $A$ when $f_0\\in A$? For closed: if $f_n\\to f$ uniformly and each $f_n(0)=0$, what can you say about $f(0)$?`,
+      answer: `<strong>Not open:</strong> Take $f_0\\equiv 0\\in A$. The ball $B_\\varepsilon(0)$ contains $g(x)=\\varepsilon/2\\notin A$ (since $g(0)\\neq 0$).<br><br><strong>Closed:</strong> If $f_n\\in A$ and $d_{L^\\infty}(f_n,f)\\to 0$, then $|f_n(0)-f(0)|\\leq d_{L^\\infty}(f_n,f)\\to 0$. Since $f_n(0)=0$, we get $f(0)=0$, so $f\\in A$. <strong>$A$ is closed.</strong>`
+    }
+  ],
+
+  limSupInf: [
+    {
+      q: `Find $\\limsup a_n$, $\\liminf a_n$, and all limit points for: (i) $a_n=\\dfrac{2n+3}{n^2}$. (ii) $a_n=(-1)^{n+1}+\\dfrac{2}{n}$. (iii) $a_n=(-1)^n+\\sin\\!\\bigl(\\tfrac{n\\pi}{2}\\bigr)$.`,
+      hint: `(i) Does the sequence converge? (ii) Split into even/odd subsequences. (iii) Use mod-4 subsequences: $a_{4n},a_{4n+1},a_{4n+2},a_{4n+3}$.`,
+      answer: `<strong>(i)</strong> $a_n\\to 0$. $\\limsup=\\liminf=0$; unique limit point $0$.<br><br><strong>(ii)</strong> Even: $a_{2n}=-1+1/n\\to -1$. Odd: $a_{2n+1}=1+2/(2n+1)\\to 1$. $\\limsup=1$, $\\liminf=-1$; limit points $\\{-1,1\\}$.<br><br><strong>(iii)</strong> $a_{4n}=1$, $a_{4n+1}=0$, $a_{4n+2}=1$, $a_{4n+3}=-2$. $\\limsup=1$, $\\liminf=-2$; limit points $\\{-2,0,1\\}$.`
+    },
+    {
+      q: `Let $a_n=\\sin\\!\\bigl(\\tfrac{n\\pi}{2}\\bigr)$. Find $\\limsup a_n$, $\\liminf a_n$, and all limit points.`,
+      hint: `Compute $a_1,a_2,a_3,a_4$ and observe the period-4 cycle.`,
+      answer: `$a_{4n}=0,\\;a_{4n+1}=1,\\;a_{4n+2}=0,\\;a_{4n+3}=-1$ (repeating).<br>$\\limsup a_n=\\mathbf{1}$,\\;$\\liminf a_n=\\mathbf{-1}$.<br>Limit points: $\\{-1,\\,0,\\,1\\}$.`
+    },
+    {
+      q: `Let $a_n=\\dfrac{n}{n+1}\\cdot(-1)^n$. Find $\\limsup a_n$, $\\liminf a_n$, and all limit points.`,
+      hint: `Split into even/odd subsequences. Each is monotone — find its limit.`,
+      answer: `Even terms: $a_{2n}=\\dfrac{2n}{2n+1}\\to 1$ (increasing).<br>Odd terms: $a_{2n+1}=-\\dfrac{2n+1}{2n+2}\\to -1$ (decreasing).<br>$\\limsup a_n=\\mathbf{1}$,\\;$\\liminf a_n=\\mathbf{-1}$. Limit points: $\\{-1,1\\}$.`
+    },
+    {
+      q: `Let $a_n=2+\\dfrac{(-1)^n}{n}$. Find $\\limsup a_n$, $\\liminf a_n$, and all limit points.`,
+      hint: `Even and odd subsequences both converge. To what?`,
+      answer: `Even: $a_{2n}=2+\\tfrac{1}{2n}\\searrow 2$. Odd: $a_{2n+1}=2-\\tfrac{1}{2n+1}\\nearrow 2$. Both tend to $2$.<br>$(a_n)$ converges to $2$, so $\\limsup=\\liminf=\\mathbf{2}$. Unique limit point: $2$.`
+    }
+  ],
+
+  cauchyComplete: [
+    {
+      q: `(i) State the definition of a Cauchy sequence in $(X,d)$. (ii) State the definition of a complete metric space. (iii) If $(x_n)$ is Cauchy and a subsequence $(x_{n_k})\\to a$, prove $x_n\\to a$. (iv) Prove $A=\\{m+1/n:m,n\\in\\mathbb{Z},\\,n\\geq 1\\}$ is complete.`,
+      hint: `(iii) Use triangle inequality: $d(x_m,a)\\leq d(x_m,x_{n_k})+d(x_{n_k},a)$, choosing $n_k>N$. (iv) Show any Cauchy sequence in $A$ must converge to an integer, which lies in $A$.`,
+      answer: `<strong>(i)</strong> $(x_n)$ is Cauchy if $\\forall\\varepsilon>0,\\exists N$ s.t. $m,n>N\\Rightarrow d(x_m,x_n)&lt;\\varepsilon$.<br><br><strong>(ii)</strong> $(X,d)$ is complete if every Cauchy sequence in $X$ converges to a limit in $X$.<br><br><strong>(iii)</strong> Given $\\varepsilon>0$, pick $N$ s.t. $d(x_m,x_n)&lt;\\varepsilon/2$ for $m,n>N$, and $K$ s.t. $d(x_{n_k},a)&lt;\\varepsilon/2$ for $k>K$. Choose $k$ with $n_k>N,K$. Then $d(x_m,a)\\leq d(x_m,x_{n_k})+d(x_{n_k},a)&lt;\\varepsilon$.<br><br><strong>(iv)</strong> A Cauchy sequence not eventually constant converges in $\\mathbb{R}$ to some $a$. If $a\\notin\\mathbb{Z}$, take $\\varepsilon=\\min(a-\\lfloor a\\rfloor,\\lceil a\\rceil-a)>0$; $B_\\varepsilon(a)$ contains $\\leq 1$ element of $A$, contradicting non-eventually-constant. So $a\\in\\mathbb{Z}=a+\\tfrac{1}{1}\\in A$. Hence $A$ is complete.`
+    },
+    {
+      q: `Is $(\\mathbb{Q},d_2)$ complete? Give a proof or counterexample.`,
+      hint: `Try to find a sequence of rationals that is Cauchy in $\\mathbb{Q}$ but whose limit is irrational.`,
+      answer: `<strong>Not complete.</strong> The decimal approximations $1,\\,1.4,\\,1.41,\\,1.414,\\ldots$ to $\\sqrt{2}$ form a Cauchy sequence in $(\\mathbb{Q},d_2)$ (terms eventually within any $\\varepsilon>0$ of each other), but their limit $\\sqrt{2}\\notin\\mathbb{Q}$.`
+    },
+    {
+      q: `Is $(C[0,1],d_{L^\\infty})$ complete? Justify briefly.`,
+      hint: `Recall: uniform Cauchy $\\Rightarrow$ uniform convergence; uniform limit of continuous functions is continuous.`,
+      answer: `<strong>Yes, it is complete.</strong> If $(f_n)$ is Cauchy in $d_{L^\\infty}$, then for each $x$, $(f_n(x))$ is Cauchy in $\\mathbb{R}$ so converges to some $f(x)$. The convergence is uniform (from the Cauchy condition), and the uniform limit of continuous functions is continuous. Hence $f\\in C[0,1]$ and $d_{L^\\infty}(f_n,f)\\to 0$.`
+    },
+    {
+      q: `Let $(x_n)$ be a Cauchy sequence in $(X,d)$, and suppose $(x_{n_k})$ is a subsequence with $x_{n_k}\\to L$. Prove that $x_n\\to L$.`,
+      hint: `Split $d(x_n,L)$ using the triangle inequality via any $x_{n_k}$ with $n_k$ large.`,
+      answer: `Let $\\varepsilon>0$. Since $(x_n)$ is Cauchy, $\\exists N_1$ s.t. $m,n>N_1\\Rightarrow d(x_m,x_n)&lt;\\varepsilon/2$. Since $x_{n_k}\\to L$, $\\exists K$ s.t. $k>K\\Rightarrow d(x_{n_k},L)&lt;\\varepsilon/2$. Pick $k$ s.t. $n_k>\\max(N_1,K)$. For any $n>N_1$:<br>$d(x_n,L)\\leq d(x_n,x_{n_k})+d(x_{n_k},L)&lt;\\varepsilon/2+\\varepsilon/2=\\varepsilon$. Hence $x_n\\to L$. $\\square$`
     }
   ]
 
@@ -2861,11 +2830,11 @@ function generateFAQuestions() {
   const container = document.getElementById('fa-container');
   container.innerHTML = '';
 
-  const slots = ['distances', 'convergence', 'powerSeries', 'calculus', 'contraction'];
-  const chosen = slots.map(slot => {
-    const pool = faPools[slot];
-    return pool[Math.floor(Math.random() * pool.length)];
-  });
+  const allQuestions = [];
+  Object.keys(faPools).forEach(key => { faPools[key].forEach(q => allQuestions.push(q)); });
+
+  const shuffled = allQuestions.slice().sort(() => Math.random() - 0.5);
+  const chosen = shuffled.slice(0, 5);
 
   chosen.forEach((item, i) => {
     const card = document.createElement('div');
