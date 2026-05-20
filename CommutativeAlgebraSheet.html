@@ -352,6 +352,8 @@
   ═══════════════════════════════════ */
   #panel-quiz { display: none; }
   #panel-quiz.active { display: block; }
+  #panel-classtest { display: none; }
+  #panel-classtest.active { display: block; }
 
   .quiz-header {
     display: flex;
@@ -771,7 +773,10 @@
       <span class="nav-num" style="color:var(--red)">★</span> Common Methods
     </button>
     <button class="nav-btn" style="background:rgba(26,107,114,0.10);color:#7ecdd4;border-left:3px solid var(--teal)" onclick="showPanel('exam')">
-      <span class="nav-num" style="color:var(--teal)">✎</span> Exam Practice
+      <span class="nav-num" style="color:var(--teal)">✎</span> Final Exam
+    </button>
+    <button class="nav-btn" style="background:rgba(26,107,114,0.06);color:#7ecdd4;border-left:3px solid var(--teal)" onclick="showPanel('classtest')">
+      <span class="nav-num" style="color:var(--teal)">✎</span> Class Test
     </button>
     <div class="sidebar-divider"></div>
     <button class="quiz-nav-btn" onclick="showPanel('quiz')">
@@ -3809,7 +3814,7 @@ so b is invertible.</div>
     <div id="panel-exam" class="section-panel">
       <div class="section-header">
         <div class="section-eyebrow">Exam Preparation</div>
-        <div class="section-title">Exam Practice</div>
+        <div class="section-title">Final Exam</div>
         <div class="section-desc">Authentic questions from MATH247 specimen examinations, complete with full worked solutions. Attempt each question fully before revealing the solution.</div>
       </div>
 
@@ -4061,6 +4066,26 @@ so b is invertible.</div>
           <p><strong>Q4/Q5 (field extensions):</strong> Express each power of \(\alpha\) by repeatedly using \(\alpha^3 = -a_2\alpha^2 - a_1\alpha - a_0\) (from the minimal polynomial). Verify each step.</p>
           <p><strong>Q5 (tridiagonal determinant):</strong> State the recurrence explicitly, identify roots of the characteristic equation, determine constants from \(d_1\) and \(d_2\).</p>
         </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════
+         CLASS TEST PANEL
+    ══════════════════════════════════════════ -->
+    <div id="panel-classtest" class="section-panel">
+      <div class="section-header">
+        <div class="section-eyebrow">Exam Preparation</div>
+        <div class="section-title">Class Test</div>
+        <div class="section-desc">Practice questions drawn from the MATH247 class test question bank &mdash; GCD in \(\mathbb{Z}[i]\), primary decomposition, CRT inverse, and zero divisors. A fresh random set is generated each time.</div>
+      </div>
+
+      <div id="exam-questions-container"></div>
+
+      <div style="margin-top:24px;text-align:center">
+        <button class="btn-gold" onclick="generateExamQuestions()" style="font-size:1rem;padding:13px 32px;border-radius:8px;letter-spacing:0.04em">
+          &#10227; &nbsp;Generate New Questions
+        </button>
+        <p style="margin-top:10px;font-size:0.78rem;color:#999;font-style:italic">Generates a fresh random selection from the question bank</p>
       </div>
     </div>
 
