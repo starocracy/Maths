@@ -131,6 +131,27 @@ footer { margin-top:4rem;padding-top:1.5rem;border-top:1px solid var(--panel-bor
 .fma-leg-item .lm { color:var(--accent-gold); }
 .fma-leg-item .la { color:var(--accent-teal); }
 
+/* ── HERO COLOUR VARIANTS ── */
+.fma-hero.red {
+  background:linear-gradient(135deg,rgba(255,107,107,.08) 0%,rgba(255,107,107,.03) 100%);
+  border-color:rgba(255,107,107,.3);
+}
+.fma-hero.red::before,.fma-hero.red::after {
+  background:linear-gradient(90deg,transparent,rgba(255,107,107,.5),transparent);
+}
+.fma-hero.gold {
+  background:linear-gradient(135deg,rgba(240,185,66,.08) 0%,rgba(240,185,66,.03) 100%);
+  border-color:rgba(240,185,66,.3);
+}
+.fma-hero.gold::before,.fma-hero.gold::after {
+  background:linear-gradient(90deg,transparent,rgba(240,185,66,.5),transparent);
+}
+/* equations block inside hero — multiple lines, smaller than F=ma */
+.fma-equations-block {
+  font-family:'Space Mono',monospace;font-size:clamp(.8rem,1.9vw,1.1rem);
+  font-weight:700;line-height:2.6;margin-bottom:1rem;letter-spacing:.02em;
+}
+
 /* ── CONTENT SECTIONS ── */
 .content-section { margin-bottom:2.5rem; }
 .content-section-title {
@@ -385,6 +406,11 @@ footer { margin-top:4rem;padding-top:1.5rem;border-top:1px solid var(--panel-bor
       <div class="checkpoint-grid" id="checkpoint-grid"></div>
     </div>
 
+    <div style="margin-top:3.5rem">
+      <p class="section-label">// Final Exam</p>
+      <div class="checkpoint-grid" id="final-checkpoint-grid"></div>
+    </div>
+
     <footer>
       <span class="footer-mono"><span class="footer-dot"></span>Classical Mechanics · Cheatsheet v0.1</span>
     </footer>
@@ -409,6 +435,21 @@ footer { margin-top:4rem;padding-top:1.5rem;border-top:1px solid var(--panel-bor
 <!-- ══ PRACTICE VIEW ══ -->
 <div id="view-practice" class="view">
   <div class="page" id="practice-page-inner"></div>
+</div>
+
+<!-- ══ FINAL QUIZ VIEW ══ -->
+<div id="view-final-quiz" class="view">
+  <div class="page" id="final-quiz-page-inner"></div>
+</div>
+
+<!-- ══ FINAL METHODS VIEW ══ -->
+<div id="view-final-methods" class="view">
+  <div class="page" id="final-methods-page-inner"></div>
+</div>
+
+<!-- ══ FINAL PRACTICE VIEW ══ -->
+<div id="view-final-practice" class="view">
+  <div class="page" id="final-practice-page-inner"></div>
 </div>
 
 <script>
@@ -436,6 +477,27 @@ const CHAPTERS = [
     icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="color:var(--accent-teal)"><ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(-30 12 12)"/><circle cx="12" cy="12" r="2.5" fill="currentColor" opacity=".5"/><circle cx="19.5" cy="8" r="1.5" fill="currentColor"/></svg>`,
     status: 'live',
     render: renderChapter3
+  },
+  {
+    title: 'Rigid Bodies & Inertia Tensor',
+    desc: 'Moment of inertia, rolling bodies, angular momentum conservation, and the full 3×3 inertia tensor with principal axes.',
+    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="color:var(--accent-red)"><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/><path d="M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>`,
+    status: 'live',
+    render: renderChapter4
+  },
+  {
+    title: "Euler's Equations & Tumbling",
+    desc: "Free rotation in the body-fixed frame, Euler's equations, the Chandler wobble, and stability of rotation about principal axes.",
+    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="color:var(--accent-gold)"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>`,
+    status: 'live',
+    render: renderChapter5
+  },
+  {
+    title: 'Rotating Frames & Pseudo-Forces',
+    desc: "Non-inertial frames, centrifugal and Coriolis forces derived via the Lagrangian, the Foucault pendulum, and Earth's rotation.",
+    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="color:var(--accent-teal)"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>`,
+    status: 'live',
+    render: renderChapter6
   }
 ];
 
@@ -922,6 +984,43 @@ function renderChapter2() {
         </div>
       </div>
     </div>
+
+    <!-- HAMILTONIAN MECHANICS -->
+    <div class="content-section">
+      <div class="content-section-title">// Hamiltonian Mechanics</div>
+
+      <div class="cards-grid" style="margin-bottom:1rem">
+
+        <div class="info-card law-card">
+          <div class="info-card-title">Generalised Momentum</div>
+          <div class="info-card-body" style="line-height:2.1">
+            Each generalised coordinate qᵢ has an associated canonical momentum:<br><br>
+            <span class="formula-pill">pᵢ = ∂L/∂q̇ᵢ</span><br><br>
+            For Cartesian coordinates this equals ordinary linear momentum p = mẋ; for angular coordinates it gives angular momentum.
+          </div>
+        </div>
+
+        <div class="info-card law-card gold">
+          <div class="info-card-title">The Hamiltonian H</div>
+          <div class="info-card-body" style="line-height:2.1">
+            Constructed from the Lagrangian by a Legendre transform — all velocities q̇ᵢ must be replaced by momenta pᵢ:<br><br>
+            <span class="formula-pill gold">H(qᵢ, pᵢ) = Σ pᵢq̇ᵢ − L</span><br><br>
+            For conservative systems: H = T + V = total mechanical energy.
+          </div>
+        </div>
+
+      </div>
+
+      <div class="info-card law-card teal">
+        <div class="info-card-title">Hamilton's Equations of Motion</div>
+        <div class="info-card-body" style="line-height:2.3">
+          Two first-order equations replace each second-order Euler-Lagrange equation:<br>
+          <span class="formula-pill teal">q̇ᵢ = ∂H/∂pᵢ</span> &nbsp; (velocity from Hamiltonian)<br>
+          <span class="formula-pill teal">ṗᵢ = −∂H/∂qᵢ</span> &nbsp; (force from Hamiltonian)<br><br>
+          These are equivalent to the Euler-Lagrange equations but formulated in phase space (qᵢ, pᵢ) rather than configuration space.
+        </div>
+      </div>
+    </div>
   `;
 }
 
@@ -1208,6 +1307,463 @@ function renderChapter3() {
 }
 
 /* ═══════════════════════════════════════
+   CHAPTER 4 CONTENT — Rigid Bodies & Inertia Tensor
+═══════════════════════════════════════ */
+function renderChapter4() {
+  return `
+    <!-- J = Iω HERO -->
+    <div class="fma-hero red">
+      <div class="fma-label" style="color:var(--accent-red)">The Inertia Tensor · Core Relationship</div>
+      <div class="fma-equation">
+        <span style="color:var(--accent-gold)">J</span><span class="eq-op">=</span><span style="color:var(--accent-red)">I</span><span style="color:var(--accent-teal)">ω</span>
+      </div>
+      <div class="fma-sub">For a rigid body free to rotate about any axis, angular momentum and angular velocity are related by the 3×3 inertia tensor I — they need not point in the same direction.</div>
+      <div class="fma-legend">
+        <div class="fma-leg-item"><span style="color:var(--accent-gold)">J</span> — Angular momentum (vector)</div>
+        <div class="fma-leg-item"><span style="color:var(--accent-red)">I</span> — Inertia tensor (3×3 matrix)</div>
+        <div class="fma-leg-item"><span style="color:var(--accent-teal)">ω</span> — Angular velocity (vector)</div>
+      </div>
+    </div>
+
+    <!-- RIGID BODIES INTRO -->
+    <div class="content-section">
+      <div class="content-section-title">// Rigid Body Rotation</div>
+      <div class="cards-grid" style="margin-bottom:1rem">
+
+        <div class="info-card law-card">
+          <div class="info-card-title">What is a Rigid Body?</div>
+          <div class="info-card-body">
+            An extended object in which all parts maintain fixed relative positions. When rotating, all parts share the same angular velocity ω about the same axis. Until now we treated objects as points at the centre of mass; rigid body mechanics accounts for rotation as well as translation.<br><br>
+            Tangential velocity of each point: <span class="formula-pill">v = rω</span>
+          </div>
+        </div>
+
+        <div class="info-card">
+          <div class="info-card-title">Angular Momentum Recap</div>
+          <div class="info-card-body" style="line-height:2.2">
+            For a single point mass at distance r from the axis:<br>
+            <span class="formula-pill">J = mr²ω = mrv</span><br>
+            <span class="formula-pill">J = mr × v</span> &nbsp; (vector form)<br>
+            <span class="formula-pill">Γ = r × F</span> &nbsp; (torque)<br>
+            <span class="formula-pill">dJ/dt = Γ</span> &nbsp; (torque = rate of change of angular momentum)
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- MOMENT OF INERTIA -->
+    <div class="content-section">
+      <div class="content-section-title">// Moment of Inertia</div>
+
+      <div class="info-card law-card teal" style="margin-bottom:1rem">
+        <div class="info-card-title">Definition — Scalar Moment of Inertia</div>
+        <div class="info-card-body" style="line-height:2.3">
+          For a collection of point masses all rotating rigidly about a common axis, add up each mass times its squared distance from the axis:<br>
+          <span class="formula-pill teal">I = Σ mᵢrᵢ²</span> &nbsp; where rᵢ = distance from the axis<br>
+          <span class="formula-pill teal">J = Iω</span> &nbsp; angular momentum<br>
+          <span class="formula-pill teal">T = ½Iω²</span> &nbsp; rotational kinetic energy<br>
+          For a continuous body: &nbsp;<span class="formula-pill teal">I<sub>zz</sub> = ∭ ρ(x² + y²) dV</span>
+        </div>
+      </div>
+
+      <div class="cards-grid" style="margin-bottom:1rem">
+
+        <div class="info-card law-card">
+          <div class="info-card-title">Axis Convention — I<sub>xx</sub>, I<sub>yy</sub>, I<sub>zz</sub></div>
+          <div class="info-card-body" style="line-height:2.2">
+            The distance from an axis equals the sum of squares of the <em>other two</em> coordinates:<br>
+            <span class="formula-pill">I<sub>xx</sub> = Σ mᵢ(yᵢ² + zᵢ²)</span><br>
+            <span class="formula-pill">I<sub>yy</sub> = Σ mᵢ(xᵢ² + zᵢ²)</span><br>
+            <span class="formula-pill">I<sub>zz</sub> = Σ mᵢ(xᵢ² + yᵢ²)</span><br>
+            For rotation about the z-axis: r² = x² + y²
+          </div>
+        </div>
+
+        <div class="info-card law-card gold">
+          <div class="info-card-title">Example — Uniform Disk, Radius R</div>
+          <div class="info-card-body" style="line-height:2.2">
+            In polar coordinates, dV = r dr dθ:<br>
+            <span class="formula-pill gold">M = πρR²</span><br>
+            <span class="formula-pill gold">I = ½MR²</span><br>
+            Angular momentum: J = ½MR²ω<br>
+            Rotational KE: T = ¼MR²ω²
+          </div>
+        </div>
+
+      </div>
+
+      <div class="cards-grid">
+
+        <div class="info-card law-card teal">
+          <div class="info-card-title">Rolling Body — Two Kinds of KE</div>
+          <div class="info-card-body" style="line-height:2.2">
+            A rolling body has both translational and rotational kinetic energy:<br>
+            <span class="formula-pill teal">T = ½Mv² + ½Iω²</span><br>
+            Using rolling constraint v = Rω:<br>
+            <span class="formula-pill teal">T = ½(M + I/R²)v²</span><br>
+            Heavier rim → larger I → more energy for same v.
+          </div>
+        </div>
+
+        <div class="info-card">
+          <div class="info-card-title">Conservation of Angular Momentum</div>
+          <div class="info-card-body">
+            With no external torque, J = Iω is conserved. Changing the mass distribution changes I and therefore ω:<br><br>
+            <strong>Ice skater:</strong> arms spread out → large I, slow ω. Arms pulled in → small I, large ω. J = Iω stays constant throughout.
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- INERTIA TENSOR -->
+    <div class="content-section">
+      <div class="content-section-title">// The Inertia Tensor</div>
+
+      <div class="info-card law-card teal" style="margin-bottom:1rem">
+        <div class="info-card-title">Why a Tensor? — J and ω Can Point in Different Directions</div>
+        <div class="info-card-body">
+          For a sphere, a single number I describes rotation about any axis. For an <strong>asymmetric body free to rotate about any axis</strong>, J and ω are generally not parallel — the body "wobbles". The inertia tensor I is a <strong>3×3 matrix</strong> relating the angular momentum vector to the angular velocity vector:<br><br>
+          <span class="formula-pill teal">J = Iω</span> &nbsp; with I a 3×3 symmetric matrix
+        </div>
+      </div>
+
+      <div class="info-card law-card" style="margin-bottom:1rem">
+        <div class="info-card-title">Building Blocks — the S<sub>ij</sub> Sums</div>
+        <div class="info-card-body" style="line-height:2.2">
+          <span class="formula-pill">S<sub>xx</sub> = Σ mᵢxᵢ²</span> &nbsp;or&nbsp; <span class="formula-pill">∭ ρ x² dV</span><br>
+          <span class="formula-pill">S<sub>yy</sub> = Σ mᵢyᵢ²</span> &nbsp;or&nbsp; <span class="formula-pill">∭ ρ y² dV</span><br>
+          <span class="formula-pill">S<sub>zz</sub> = Σ mᵢzᵢ²</span> &nbsp;or&nbsp; <span class="formula-pill">∭ ρ z² dV</span><br>
+          <span class="formula-pill gold">S<sub>xy</sub> = Σ mᵢxᵢyᵢ</span> &nbsp;or&nbsp; <span class="formula-pill gold">∭ ρ xy dV</span><br>
+          and similarly S<sub>xz</sub>, S<sub>yz</sub> &nbsp;·&nbsp; All coordinates measured from the centre of mass.
+        </div>
+      </div>
+
+      <div class="info-card law-card gold" style="margin-bottom:1rem">
+        <div class="info-card-title">The Inertia Tensor Matrix</div>
+        <div class="info-card-body" style="line-height:2.2">
+          Diagonal terms are <strong>positive</strong> and use the <em>other two</em> S-components. Off-diagonal terms are <strong>negative</strong>:<br><br>
+          <table style="width:100%;border-collapse:collapse;font-family:'Space Mono',monospace;font-size:12px;margin:.5rem 0;color:var(--text-secondary)">
+            <tr>
+              <td style="padding:.35rem .5rem">I<sub>xx</sub> = S<sub>yy</sub> + S<sub>zz</sub></td>
+              <td style="padding:.35rem .5rem;color:var(--accent-red)">I<sub>xy</sub> = −S<sub>xy</sub></td>
+              <td style="padding:.35rem .5rem;color:var(--accent-red)">I<sub>xz</sub> = −S<sub>xz</sub></td>
+            </tr>
+            <tr>
+              <td style="padding:.35rem .5rem;color:var(--accent-red)">I<sub>yx</sub> = −S<sub>xy</sub></td>
+              <td style="padding:.35rem .5rem">I<sub>yy</sub> = S<sub>xx</sub> + S<sub>zz</sub></td>
+              <td style="padding:.35rem .5rem;color:var(--accent-red)">I<sub>yz</sub> = −S<sub>yz</sub></td>
+            </tr>
+            <tr>
+              <td style="padding:.35rem .5rem;color:var(--accent-red)">I<sub>zx</sub> = −S<sub>xz</sub></td>
+              <td style="padding:.35rem .5rem;color:var(--accent-red)">I<sub>zy</sub> = −S<sub>yz</sub></td>
+              <td style="padding:.35rem .5rem">I<sub>zz</sub> = S<sub>xx</sub> + S<sub>yy</sub></td>
+            </tr>
+          </table>
+          For example: I<sub>zz</sub> = ∭ ρ(x² + y²) dxdydz &nbsp;·&nbsp; I<sub>xy</sub> = I<sub>yx</sub> = −∭ ρ xy dxdydz
+        </div>
+      </div>
+
+      <div class="info-card law-card" style="margin-bottom:1rem">
+        <div class="info-card-title">Worked Example — Dumbbell</div>
+        <div class="info-card-body" style="line-height:2.2">
+          Two masses m at (L/2, L/2, 0) and (−L/2, −L/2, 0):<br>
+          <span class="formula-pill">S<sub>xx</sub> = S<sub>yy</sub> = mL²</span> &nbsp; <span class="formula-pill">S<sub>zz</sub> = 0</span> &nbsp; <span class="formula-pill">S<sub>xy</sub> = mL²</span> &nbsp; S<sub>xz</sub> = S<sub>yz</sub> = 0<br><br>
+          Diagonal elements: I<sub>xx</sub> = I<sub>yy</sub> = mL², &nbsp;I<sub>zz</sub> = 2mL²<br>
+          Full tensor: &nbsp;<span class="formula-pill gold">I = mL² · [[1,−1,0],[−1,1,0],[0,0,2]]</span><br><br>
+          Spin about z-axis: ω = (0,0,Ω) → J = (0, 0, 2mL²Ω) — J ∥ ω ✓<br>
+          Spin about another axis → J ∦ ω (off-diagonal terms matter).
+        </div>
+      </div>
+
+      <div class="info-card law-card teal">
+        <div class="info-card-title">Principal Axes — Eigenvectors of I</div>
+        <div class="info-card-body" style="line-height:2.2">
+          Special axes exist along which J ∥ ω — the <strong>principal axes</strong>. These are the eigenvectors of I, found by solving det(I − λ𝟙) = 0:<br><br>
+          For the dumbbell, eigenvalues: λ = 0, 2mL², 2mL²<br>
+          Eigenvectors: (1,1,0)/√2,&nbsp; (1,−1,0)/√2,&nbsp; (0,0,1)<br><br>
+          Kinetic energy via the tensor:<br>
+          <span class="formula-pill teal">T = ½ω<sup>T</sup>Iω = ½ω·J = ½J<sup>T</sup>I<sup>−1</sup>J</span>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+/* ═══════════════════════════════════════
+   CHAPTER 5 CONTENT — Euler's Equations & Tumbling
+═══════════════════════════════════════ */
+function renderChapter5() {
+  return `
+    <!-- EULER'S EQUATIONS HERO -->
+    <div class="fma-hero gold">
+      <div class="fma-label" style="color:var(--accent-gold)">Euler's Equations · Body-Fixed Principal-Axis Frame</div>
+      <div class="fma-equations-block">
+        <span style="color:var(--accent-blue)">I<sub>xx</sub></span> ω̇<sub>x</sub> + (<span style="color:var(--accent-blue)">I<sub>zz</sub></span> − <span style="color:var(--accent-blue)">I<sub>yy</sub></span>) <span style="color:var(--accent-teal)">ω<sub>y</sub>ω<sub>z</sub></span> = <span style="color:var(--accent-gold)">Γ<sub>x</sub></span><br>
+        <span style="color:var(--accent-blue)">I<sub>yy</sub></span> ω̇<sub>y</sub> + (<span style="color:var(--accent-blue)">I<sub>xx</sub></span> − <span style="color:var(--accent-blue)">I<sub>zz</sub></span>) <span style="color:var(--accent-teal)">ω<sub>x</sub>ω<sub>z</sub></span> = <span style="color:var(--accent-gold)">Γ<sub>y</sub></span><br>
+        <span style="color:var(--accent-blue)">I<sub>zz</sub></span> ω̇<sub>z</sub> + (<span style="color:var(--accent-blue)">I<sub>yy</sub></span> − <span style="color:var(--accent-blue)">I<sub>xx</sub></span>) <span style="color:var(--accent-teal)">ω<sub>x</sub>ω<sub>y</sub></span> = <span style="color:var(--accent-gold)">Γ<sub>z</sub></span>
+      </div>
+      <div class="fma-sub">In the body-fixed principal-axis frame, these three coupled non-linear equations describe how ω evolves under external torque Γ. For free rotation, set Γ = 0.</div>
+      <div class="fma-legend">
+        <div class="fma-leg-item"><span style="color:var(--accent-blue)">I</span> — Principal moments of inertia</div>
+        <div class="fma-leg-item"><span style="color:var(--text-secondary)">ω̇</span> — Angular acceleration</div>
+        <div class="fma-leg-item"><span style="color:var(--accent-teal)">ωω</span> — Non-linear coupling terms</div>
+        <div class="fma-leg-item"><span style="color:var(--accent-gold)">Γ</span> — External torque</div>
+      </div>
+    </div>
+
+    <!-- EULER'S EQUATIONS SETUP -->
+    <div class="content-section">
+      <div class="content-section-title">// Euler's Equations of Motion</div>
+
+      <div class="info-card law-card teal" style="margin-bottom:1rem">
+        <div class="info-card-title">Body-Fixed Frame & Principal Axes</div>
+        <div class="info-card-body">
+          For free rotation it is simpler to use coordinates <strong>fixed to the rotating body</strong>, with axes aligned to the <strong>principal axes</strong> of the inertia tensor. In this frame I is diagonal with no off-diagonal terms:<br><br>
+          I = diag(I<sub>xx</sub>, I<sub>yy</sub>, I<sub>zz</sub>) &nbsp; — principal moments only.<br><br>
+          The axes x, y, z rotate with the body. ω is the angular velocity of the body in this co-rotating frame.
+        </div>
+      </div>
+
+      <div class="info-card law-card" style="margin-bottom:1rem">
+        <div class="info-card-title">Euler's Equations</div>
+        <div class="info-card-body" style="line-height:2.3">
+          In the principal-axis body frame, with external torque Γ:<br>
+          <span class="formula-pill">I<sub>xx</sub>ω̇<sub>x</sub> + (I<sub>zz</sub> − I<sub>yy</sub>)ω<sub>y</sub>ω<sub>z</sub> = Γ<sub>x</sub></span><br>
+          <span class="formula-pill">I<sub>yy</sub>ω̇<sub>y</sub> + (I<sub>xx</sub> − I<sub>zz</sub>)ω<sub>x</sub>ω<sub>z</sub> = Γ<sub>y</sub></span><br>
+          <span class="formula-pill">I<sub>zz</sub>ω̇<sub>z</sub> + (I<sub>yy</sub> − I<sub>xx</sub>)ω<sub>x</sub>ω<sub>y</sub> = Γ<sub>z</sub></span><br><br>
+          These are <strong>non-linear</strong> (contain products of ω components). We focus mainly on <strong>free rotation: Γ = 0</strong>.
+        </div>
+      </div>
+
+      <div class="info-card">
+        <div class="info-card-title">Cyclic Permutation Symmetry</div>
+        <div class="info-card-body">
+          The three equations are related by cyclic permutation: x → y → z → x. Starting from one equation, applying this relabelling twice gives all three. This reflects that the choice of which axis is called "x" is arbitrary — the physics must be the same for each principal axis.
+        </div>
+      </div>
+    </div>
+
+    <!-- SYMMETRIC BODY -->
+    <div class="content-section">
+      <div class="content-section-title">// Symmetric Body — I<sub>xx</sub> = I<sub>yy</sub> ≠ I<sub>zz</sub></div>
+
+      <div class="info-card law-card teal" style="margin-bottom:1rem">
+        <div class="info-card-title">Examples: Rugby Ball, American Football, Earth</div>
+        <div class="info-card-body">
+          A body with one axis of rotational symmetry has two equal principal moments: I<sub>xx</sub> = I<sub>yy</sub> ≠ I<sub>zz</sub>. This symmetry factorises the non-linear Euler equations into linear ones, allowing an exact solution. The Earth is slightly flattened at the poles, so it also falls into this category.
+        </div>
+      </div>
+
+      <div class="info-card law-card gold" style="margin-bottom:1rem">
+        <div class="info-card-title">Solution — Constant Spin & Circular Wobble</div>
+        <div class="info-card-body" style="line-height:2.3">
+          From the z-equation with I<sub>xx</sub> = I<sub>yy</sub>: I<sub>zz</sub>ω̇<sub>z</sub> = 0, so:<br>
+          <span class="formula-pill gold">ω<sub>z</sub> = const ≡ Ω<sub>z</sub></span><br><br>
+          The x and y equations become linear, giving simple harmonic motion:<br>
+          <span class="formula-pill gold">ω<sub>x</sub> = A cos(βt) + B sin(βt)</span><br>
+          <span class="formula-pill gold">ω<sub>y</sub> = −A sin(βt) + B cos(βt)</span><br><br>
+          Precession frequency: &nbsp;<span class="formula-pill gold">β = (I<sub>xx</sub> − I<sub>zz</sub>) Ω<sub>z</sub> / I<sub>xx</sub></span><br><br>
+          ω<sub>z</sub> is constant; ω<sub>x</sub> and ω<sub>y</sub> trace a circle — the spin axis <strong>wobbles with period 2π/β</strong>.
+        </div>
+      </div>
+
+      <div class="info-card">
+        <div class="info-card-title">The Chandler Wobble — Earth</div>
+        <div class="info-card-body">
+          The Earth has I<sub>xx</sub> = I<sub>yy</sub> ≠ I<sub>zz</sub> due to its equatorial bulge. Euler's equations predict a wobble of the rotation axis — observed as the <strong>Chandler Wobble</strong>, with a measured period of about 433 days. The theoretical Euler period is closer to 305 days; the discrepancy arises because the Earth is not perfectly rigid.
+        </div>
+      </div>
+    </div>
+
+    <!-- STABILITY ANALYSIS -->
+    <div class="content-section">
+      <div class="content-section-title">// Three Different Eigenvalues — Stability</div>
+
+      <div class="info-card law-card teal" style="margin-bottom:1rem">
+        <div class="info-card-title">Exact Solutions — Rotation About a Principal Axis</div>
+        <div class="info-card-body" style="line-height:2.1">
+          One exact solution to the free Euler equations is rotation purely about a single principal axis, e.g. ω = (0, 0, Ω<sub>z</sub>). With ω<sub>x</sub> = ω<sub>y</sub> = 0 all three equations give ω̇ = 0 — constant spin. The question is whether this solution is <strong>stable</strong> against small perturbations.
+        </div>
+      </div>
+
+      <div class="info-card law-card" style="margin-bottom:1rem">
+        <div class="info-card-title">Linear Stability Analysis</div>
+        <div class="info-card-body" style="line-height:2.2">
+          Let ω<sub>z</sub> = Ω<sub>z</sub> (large), while ω<sub>x</sub> and ω<sub>y</sub> are small perturbations. Neglect the product ω<sub>x</sub>ω<sub>y</sub>. The linearised equations yield a single oscillator equation:<br><br>
+          <span class="formula-pill">ω̈<sub>x</sub> + λ²ω<sub>x</sub> = 0</span><br><br>
+          with &nbsp;<span class="formula-pill">λ² = − (I<sub>xx</sub> − I<sub>zz</sub>)(I<sub>yy</sub> − I<sub>zz</sub>) Ω<sub>z</sub>² / (I<sub>xx</sub>I<sub>yy</sub>)</span>
+        </div>
+      </div>
+
+      <div class="info-card law-card gold">
+        <div class="info-card-title">The Tennis Racket Theorem</div>
+        <div class="info-card-body" style="line-height:2.3">
+          Whether λ² is negative (trig, stable) or positive (exponential growth, unstable) depends on whether I<sub>zz</sub> is the smallest, middle, or largest principal moment:<br><br>
+          <span class="formula-pill teal">I<sub>zz</sub> = smallest eigenvalue</span> → λ² &lt; 0 → <strong style="color:var(--accent-teal)">stable</strong><br>
+          <span class="formula-pill teal">I<sub>zz</sub> = largest eigenvalue</span> → λ² &lt; 0 → <strong style="color:var(--accent-teal)">stable</strong><br>
+          <span class="formula-pill gold">I<sub>zz</sub> = middle eigenvalue</span> → λ² &gt; 0 → <strong style="color:var(--accent-red)">unstable</strong><br><br>
+          Rotation about the axis of smallest or largest moment is stable; rotation about the <strong>intermediate axis leads to chaotic tumbling</strong>. This is demonstrated dramatically by the T-handle experiment on the International Space Station.
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+/* ═══════════════════════════════════════
+   CHAPTER 6 CONTENT — Rotating Frames & Pseudo-Forces
+═══════════════════════════════════════ */
+function renderChapter6() {
+  return `
+    <!-- NON-INERTIAL FRAMES -->
+    <div class="content-section">
+      <div class="content-section-title">// Non-Inertial Frames & Fictitious Forces</div>
+
+      <div class="cards-grid" style="margin-bottom:1rem">
+
+        <div class="info-card law-card">
+          <div class="info-card-title">Inertial vs Non-Inertial Frames</div>
+          <div class="info-card-body">
+            Newton's Laws hold only in <strong>inertial frames</strong> (non-accelerating, non-rotating). We can still work in accelerating or rotating frames by adding <strong>fictitious (pseudo) forces</strong> — extra terms that account for the frame's own acceleration. These forces are real in the sense that they affect motion, but they vanish when viewed from an inertial frame.
+          </div>
+        </div>
+
+        <div class="info-card law-card gold">
+          <div class="info-card-title">Accelerating Frame — Pseudo-Gravity</div>
+          <div class="info-card-body" style="line-height:2.1">
+            In a lift accelerating upward at a, the floor pushes with m(g + a):<br><br>
+            <span class="formula-pill gold">g<sub>eff</sub> = g + a</span> &nbsp; (apparent gravity)<br><br>
+            A phone dropped in this lift hits the floor faster — the floor accelerates up to meet it. The pseudo force is proportional to mass m, just like gravity.<br><br>
+            Time to hit floor: &nbsp;<span class="formula-pill gold">t = √(2h/(g+a))</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- CENTRIFUGAL FORCE -->
+    <div class="content-section">
+      <div class="content-section-title">// Centrifugal Force</div>
+
+      <div class="info-card law-card teal" style="margin-bottom:1rem">
+        <div class="info-card-title">Outward Pseudo-Force in a Rotating Frame</div>
+        <div class="info-card-body" style="line-height:2.2">
+          An observer in a frame rotating with angular velocity Ω about the z-axis experiences an outward centrifugal force proportional to distance from the axis:<br><br>
+          <span class="formula-pill teal">F<sub>cent</sub> = mΩ²(x, y, 0)</span> &nbsp; (z-axis rotation)<br>
+          <span class="formula-pill teal">F<sub>cent</sub> = −mω × (ω × r)</span> &nbsp; (general rotation axis ω)
+        </div>
+      </div>
+
+      <div class="info-card">
+        <div class="info-card-title">Applications</div>
+        <div class="info-card-body" style="line-height:1.9">
+          • <strong>Centrifuge:</strong> separates biological samples by density — denser materials experience greater effective gravity<br>
+          • <strong>Rotating space station:</strong> simulates artificial gravity at radius R; force F = mRΩ² acts through the astronaut's feet<br>
+          • <strong>Earth's rotation:</strong> produces the equatorial bulge and reduces the effective value of g at the equator
+        </div>
+      </div>
+    </div>
+
+    <!-- CORIOLIS FORCE -->
+    <div class="content-section">
+      <div class="content-section-title">// Coriolis Force</div>
+
+      <div class="info-card law-card gold" style="margin-bottom:1rem">
+        <div class="info-card-title">Velocity-Dependent Pseudo-Force</div>
+        <div class="info-card-body" style="line-height:2.2">
+          A second pseudo force acts on objects that are <em>moving</em> as viewed from the rotating frame. It is perpendicular to the velocity and to the spin axis:<br><br>
+          <span class="formula-pill gold">F<sub>Cor</sub> = −2mω × v</span> &nbsp; (general, vector form)<br>
+          <span class="formula-pill gold">F<sub>Cor</sub> = 2mΩ(ẏ, −ẋ, 0)</span> &nbsp; (z-axis rotation, Cartesian)<br><br>
+          On Earth: deflects moving objects to the <strong>right in the Northern Hemisphere</strong>, left in the Southern.
+        </div>
+      </div>
+
+      <div class="cards-grid" style="margin-bottom:1rem">
+
+        <div class="info-card law-card">
+          <div class="info-card-title">Foucault Pendulum</div>
+          <div class="info-card-body">
+            A freely swinging pendulum appears to rotate its plane of oscillation over hours. The Coriolis force gradually shifts the swing direction — a direct measurement of Earth's rotation. The rotation rate depends on latitude; at the poles the plane completes one full rotation per day.
+          </div>
+        </div>
+
+        <div class="info-card">
+          <div class="info-card-title">Weather & Ocean Currents</div>
+          <div class="info-card-body">
+            The Coriolis force drives the characteristic spiral structure of cyclones and anticyclones, and deflects large-scale ocean currents such as the Gulf Stream.<br><br>
+            <strong>Myth:</strong> Coriolis is <em>not</em> responsible for bath water spiralling — it is far too weak at that scale.
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- LAGRANGIAN DERIVATION -->
+    <div class="content-section">
+      <div class="content-section-title">// Lagrangian Derivation of Rotating-Frame Forces</div>
+
+      <div class="info-card law-card teal" style="margin-bottom:1rem">
+        <div class="info-card-title">Setup — Cylindrical Coordinates</div>
+        <div class="info-card-body" style="line-height:2.2">
+          The inertial and rotating frames agree on r and z, but differ on the angle θ:<br>
+          <span class="formula-pill teal">θ₀ = Ωt + θ</span> &nbsp;→&nbsp; <span class="formula-pill teal">θ̇₀ = Ω + θ̇</span><br><br>
+          Inertial kinetic energy expressed in rotating-frame coordinates (with V = 0):<br>
+          <span class="formula-pill teal">L = T = ½m[ṙ² + r²(Ω + θ̇)² + ż²]</span>
+        </div>
+      </div>
+
+      <div class="info-card law-card" style="margin-bottom:1rem">
+        <div class="info-card-title">Equations of Motion from Euler-Lagrange</div>
+        <div class="info-card-body" style="line-height:2.2">
+          Applying the Euler-Lagrange equations to L gives effective accelerations in the rotating frame:<br>
+          <span class="formula-pill">ma<sub>r</sub> = 2mΩv<sub>θ</sub> + mΩ²r</span> &nbsp; (centrifugal + radial Coriolis)<br>
+          <span class="formula-pill">ma<sub>θ</sub> = −2mΩv<sub>r</sub></span> &nbsp; (transverse Coriolis)<br>
+          <span class="formula-pill">ma<sub>z</sub> = 0</span><br><br>
+          The same result follows from Cartesian coordinates via a rotating-frame substitution.
+        </div>
+      </div>
+
+      <div class="info-card law-card gold">
+        <div class="info-card-title">Complete Force Formulae</div>
+        <div class="info-card-body" style="line-height:2.3">
+          <strong>Rotation axis = z, angular speed Ω (rad s⁻¹):</strong><br>
+          <span class="formula-pill gold">F<sub>Cor</sub> = (2mΩẏ, −2mΩẋ, 0)</span><br>
+          <span class="formula-pill gold">F<sub>cent</sub> = (mΩ²x, mΩ²y, 0)</span><br><br>
+          <strong>General rotation axis ω:</strong><br>
+          <span class="formula-pill gold">F<sub>Cor</sub> = −2mω × v</span><br>
+          <span class="formula-pill gold">F<sub>cent</sub> = −mω × (ω × r)</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- EARTH ROTATION + DEEP QUESTION -->
+    <div class="content-section">
+      <div class="content-section-title">// Earth's Rotation</div>
+
+      <div class="cards-grid">
+
+        <div class="info-card">
+          <div class="info-card-title">Earth's Angular Velocity</div>
+          <div class="info-card-body" style="line-height:2.1">
+            <span class="formula-pill">Ω = 2π / (24 × 3600) rad s⁻¹</span><br><br>
+            Note: one full rotation relative to the stars (a sidereal day) takes about 23 h 56 min, not exactly 24 hours. The difference arises because Earth also advances ~1° along its orbit each day.
+          </div>
+        </div>
+
+        <div class="info-card law-card gold">
+          <div class="info-card-title">A Profound Observation</div>
+          <div class="info-card-body">
+            Both centrifugal and Coriolis pseudo-forces are proportional to mass m — just like gravity. This means all objects follow the same path in a rotating frame regardless of their mass. This equivalence between inertial and gravitational mass is a seed of Einstein's General Theory of Relativity.
+          </div>
+        </div>
+
+      </div>
+    </div>
+  `;
+}
+
+/* ═══════════════════════════════════════
    PLACEHOLDER RENDERER
 ═══════════════════════════════════════ */
 function renderPlaceholder() {
@@ -1278,7 +1834,10 @@ const chapterInner=document.getElementById('chapter-page-inner');
 const ALL_VIEWS = [viewHome, viewChapter,
   document.getElementById('view-quiz'),
   document.getElementById('view-methods'),
-  document.getElementById('view-practice')
+  document.getElementById('view-practice'),
+  document.getElementById('view-final-quiz'),
+  document.getElementById('view-final-methods'),
+  document.getElementById('view-final-practice')
 ];
 
 function transition(fn){ veil.classList.add('show'); setTimeout(()=>{ fn(); setTimeout(()=>veil.classList.remove('show'),50); },300); }
@@ -1350,7 +1909,7 @@ CHAPTERS.forEach((ch,i)=>{
   const btn=document.createElement('button');
   btn.className=`chapter-btn${ch.status==='live'?' ready':''}`;
   btn.innerHTML=`
-    <span class="btn-tag ${ch.status==='live'?'live':'soon'}">${ch.status==='live'?`Chapter ${['I','II','III','IV','V'][i]}`:'coming soon'}</span>
+    <span class="btn-tag ${ch.status==='live'?'live':'soon'}">${ch.status==='live'?`Chapter ${['I','II','III','IV','V','VI'][i]}`:'coming soon'}</span>
     <div class="btn-icon">${ch.icon}</div>
     <div class="btn-text">
       <div class="btn-title">${ch.title}</div>
@@ -2840,6 +3399,676 @@ function cycleSet(){
 function toggleAnswer(i){
   const ans = document.getElementById('answer-'+i);
   const btn = document.getElementById('reveal-'+i);
+  const open = ans.classList.toggle('show');
+  btn.classList.toggle('open', open);
+  btn.innerHTML = `
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="transform:${open?'rotate(180deg)':'rotate(0)'};transition:transform .25s"><polyline points="6 9 12 15 18 9"/></svg>
+    ${open ? 'Hide solution' : 'Show worked solution'}
+  `;
+}
+
+/* ═══════════════════════════════════════
+   FINAL EXAM — CHECKPOINT GRID
+═══════════════════════════════════════ */
+const FINAL_CHECKPOINTS = [
+  {
+    title: 'Self Quiz',
+    desc: 'Test your knowledge across Chapters IV, V & VI — rigid bodies, Euler\'s equations, and rotating frames.',
+    accent: 'quiz',
+    iconClass: 'quiz-icon',
+    tag: 'checkpoint',
+    tagLabel: 'Final Exam',
+    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>`,
+    fn: openFinalQuiz
+  },
+  {
+    title: 'Common Methods',
+    desc: 'Step-by-step guides for the techniques seen across the specimen exam papers.',
+    accent: 'methods',
+    iconClass: 'methods-icon',
+    tag: 'class test',
+    tagLabel: 'Final Exam',
+    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>`,
+    fn: openFinalMethods
+  },
+  {
+    title: 'Exam Practice',
+    desc: 'Pool of 16 exam-style questions drawn from specimen papers and generated examples. 4 shown at a time.',
+    accent: 'practice',
+    iconClass: 'practice-icon',
+    tag: 'live',
+    tagLabel: 'Final Exam',
+    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>`,
+    fn: openFinalPractice
+  }
+];
+
+const fcpGrid = document.getElementById('final-checkpoint-grid');
+FINAL_CHECKPOINTS.forEach(cp => {
+  const btn = document.createElement('button');
+  btn.className = `checkpoint-btn ${cp.accent}`;
+  btn.innerHTML = `
+    <span class="btn-tag ${cp.tag}">${cp.tagLabel}</span>
+    <div class="btn-icon ${cp.iconClass}">${cp.icon}</div>
+    <div class="btn-text">
+      <div class="btn-title">${cp.title}</div>
+      <div class="btn-desc">${cp.desc}</div>
+    </div>
+    <span class="btn-arrow">&#8250;</span>
+  `;
+  btn.addEventListener('click', cp.fn);
+  fcpGrid.appendChild(btn);
+});
+
+function finalTopbar(title, subtitle){
+  return `
+    <div class="chapter-topbar">
+      <button class="home-btn" onclick="goHome()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12L12 3l9 9"/><path d="M9 21V12h6v9"/></svg>
+        Home
+      </button>
+      <div class="chapter-topbar-meta">
+        <div class="chapter-number">Final Exam</div>
+        <div class="chapter-title-top">${title}</div>
+      </div>
+    </div>
+    <div class="chapter-hero">
+      <p class="chapter-hero-eyebrow">Final Exam · Classical Mechanics</p>
+      <h2>${title}</h2>
+      <p>${subtitle}</p>
+    </div>
+  `;
+}
+
+/* ═══════════════════════════════════════
+   FINAL EXAM — SELF QUIZ
+═══════════════════════════════════════ */
+const FINAL_QUIZ_QUESTIONS = [
+  // ── Chapter IV: Rigid Bodies & Inertia Tensor ──
+  {
+    q: "A uniform disk of mass M and radius R spins about its symmetry axis. What is its moment of inertia?",
+    opts: ["MR²", "½MR²", "⅔MR²", "¼MR²"],
+    ans: 1,
+    fb: "I = ½MR² for a uniform disk about its symmetry axis. Derived by integrating r² dm = r²·(2M/R²)·r dr from 0 to R. The factor ½ arises because mass is concentrated closer to the centre than the rim."
+  },
+  {
+    q: "Three equal masses m are placed at (a,0,0), (0,a,0) and (0,0,a). What is Ixx (the moment of inertia about the x-axis)?",
+    opts: ["2ma²", "3ma²", "ma²", "4ma²"],
+    ans: 0,
+    fb: "Ixx = Σ mᵢ(yᵢ²+zᵢ²). Mass at (a,0,0): contributes 0. Mass at (0,a,0): contributes ma². Mass at (0,0,a): contributes ma². Total = 2ma²."
+  },
+  {
+    q: "A solid sphere of mass M and radius R rolls without slipping. What fraction of its total kinetic energy is rotational?",
+    opts: ["2/7", "1/2", "2/5", "3/7"],
+    ans: 0,
+    fb: "For a solid sphere I = 2MR²/5. Rolling: v=Rω, so KE_rot = ½·(2/5)MR²·(v/R)² = Mv²/5. KE_total = ½Mv² + Mv²/5 = 7Mv²/10. Fraction = (Mv²/5)/(7Mv²/10) = 2/7."
+  },
+  {
+    q: "In the principal-axis frame, the inertia tensor I is diagonal. What is the physical meaning of this?",
+    opts: [
+      "Angular momentum J is always parallel to ω",
+      "If ω lies along a principal axis, J = Iω is parallel to ω",
+      "The body cannot precess",
+      "All principal moments are equal"
+    ],
+    ans: 1,
+    fb: "In the principal-axis frame all off-diagonal elements Iᵢⱼ (i≠j) vanish. This means that if ω points along a principal axis, then J = Iω is parallel to ω. In general J and ω are not parallel — this is what causes precession."
+  },
+  // ── Chapter V: Euler's Equations & Tumbling ──
+  {
+    q: "Euler's equations for torque-free rotation are written in the body-fixed frame. Which is the correct first equation?",
+    opts: [
+      "I₁ω̇₁ + (I₂−I₃)ω₂ω₃ = 0",
+      "I₁ω̇₁ − (I₂−I₃)ω₂ω₃ = 0",
+      "I₁ω̇₁ + (I₃−I₂)ω₂ω₃ = 0",
+      "I₁ω̇₁ = I₂ω₂·I₃ω₃"
+    ],
+    ans: 0,
+    fb: "The first Euler equation is I₁ω̇₁ + (I₂−I₃)ω₂ω₃ = 0. The coupling coefficient is (I₂−I₃), not (I₃−I₂). The two wrong-sign options are a common error. Cyclic permutations give the other two equations."
+  },
+  {
+    q: "For torque-free rotation of a symmetric top (I₁ = I₂ ≠ I₃), which quantity is conserved from Euler's equations?",
+    opts: ["ω₃", "ω₁", "ω₁²+ω₂²", "I₁ω₁"],
+    ans: 0,
+    fb: "When I₁=I₂, the third Euler equation gives I₃ω̇₃ + (I₁−I₁)ω₁ω₂ = 0, so ω̇₃=0 and ω₃ is constant. The body precesses with wobble frequency β = (I₁−I₃)ω₃/I₁ around the symmetry axis."
+  },
+  {
+    q: "The Tennis Racket Theorem says rotation about the intermediate axis is unstable. Mathematically, why?",
+    opts: [
+      "The linearised perturbation has real exponential solutions",
+      "The angular momentum is not conserved",
+      "The kinetic energy diverges",
+      "The principal moments become equal"
+    ],
+    ans: 0,
+    fb: "Linearising about ω = (ε₁, ε₂, Ω) with Ω along axis 2 gives λ² = (I₂−I₁)(I₂−I₃)/(I₁I₃)·Ω². When I₁ < I₂ < I₃, both factors are positive so λ² > 0, giving real (exponential) solutions — unstable growth. For extreme axes λ² < 0 (oscillatory, stable)."
+  },
+  // ── Chapter VI: Rotating Frames & Pseudo-Forces ──
+  {
+    q: "A particle of mass m moves with velocity v in a frame rotating at ω. What is the Coriolis force?",
+    opts: ["−2mω×v", "+2mω×v", "−mω×v", "+mω×v"],
+    ans: 0,
+    fb: "The Coriolis force is F_Cor = −2mω×v. The factor of 2 comes from the frame-derivative transformation. Note the minus sign: it is −2m(ω×v), not +2m(ω×v). In the Northern Hemisphere ω points north, so the force deflects moving objects to the right."
+  },
+  {
+    q: "The centrifugal force in a rotating frame points in which direction?",
+    opts: [
+      "Radially outward from the rotation axis",
+      "Radially inward toward the rotation axis",
+      "Opposite to ω",
+      "Along ω"
+    ],
+    ans: 0,
+    fb: "The centrifugal acceleration is +Ω²ρ̂ρ, where ρ is the perpendicular distance from the rotation axis. It points radially outward from the axis (not from the Earth's centre). On Earth it has a component opposing gravity and a component toward the equator."
+  },
+  {
+    q: "A Foucault pendulum at latitude λ (Earth's rotation rate Ω) has precession period T_F. What is T_F?",
+    opts: ["2π/(Ω sin λ)", "2π/(Ω cos λ)", "2π/Ω", "24 h · cos λ"],
+    ans: 0,
+    fb: "The effective vertical component of Ω at latitude λ is Ω_z = Ω sin λ. The pendulum's swing plane rotates at this rate, so T_F = 2π/(Ω sin λ). At the North Pole (λ=90°) this gives 24 h. At the equator sin λ=0 so there is no precession."
+  },
+  {
+    q: "Using the Lagrangian in 2D polar coords for a turntable rotating at Ω, L = ½m[ṙ²+r²(Ω+φ̇)²]. What is the r equation of motion?",
+    opts: ["r̈ − r(Ω+φ̇)² = 0", "r̈ + rΩ² = 0", "mr̈ = 0", "r̈ + 2Ωṙ = 0"],
+    ans: 0,
+    fb: "∂L/∂ṙ = mṙ → d/dt = mr̈. ∂L/∂r = mr(Ω+φ̇)². E-L gives mr̈ − mr(Ω+φ̇)² = 0, i.e. r̈ = r(Ω+φ̇)². When φ̇=0 this reduces to r̈ = rΩ² — the centrifugal term drives the particle outward."
+  },
+  {
+    q: "A lift accelerates upward with acceleration a₀. A person of mass m stands on its floor. What effective weight do they feel?",
+    opts: ["m(g+a₀)", "m(g−a₀)", "mg", "m·a₀"],
+    ans: 0,
+    fb: "In the accelerating frame, the effective gravity is g_eff = g − a₀ (pointing up), so g_eff has magnitude g+a₀ downward. The normal force N = m(g+a₀) — you feel heavier. If a₀ = −g (free fall), N = 0 and you feel weightless."
+  }
+];
+
+let finalQuizActive=[], finalQuizCurrent=0, finalQuizScore=0, finalQuizAnsweredCurrent=false;
+
+function openFinalQuiz(){
+  finalQuizActive = shuffle(FINAL_QUIZ_QUESTIONS).slice(0,10);
+  finalQuizCurrent = 0;
+  finalQuizScore = 0;
+  finalQuizAnsweredCurrent = false;
+  const inner = document.getElementById('final-quiz-page-inner');
+  inner.innerHTML = finalTopbar('Self Quiz','12 questions covering Chapters IV–VI. Get scored instantly.') + `
+    <div class="quiz-sticky-header">
+      <div class="quiz-sticky-top">
+        <span class="quiz-counter" id="fq-counter">Question 1 / 10</span>
+        <span class="quiz-score-live">Score: <span id="fq-score">0</span> / <span id="fq-of">10</span></span>
+      </div>
+      <div class="quiz-progress-bar"><div class="quiz-progress-fill" id="fq-progress" style="width:0%"></div></div>
+    </div>
+    <div id="fq-card-area"></div>
+    <div class="quiz-score-panel" id="fq-score-panel">
+      <div class="quiz-score-big" id="fq-big">0</div>
+      <span class="quiz-score-denom"> / 10</span>
+      <div class="quiz-score-label" id="fq-grade-label"></div>
+      <div class="quiz-score-bar-wrap"><div class="quiz-score-bar-fill" id="fq-score-bar" style="width:0%"></div></div>
+      <button class="quiz-retry-btn" onclick="openFinalQuiz()">// New Quiz</button>
+    </div>
+  `;
+  renderFinalQuizCard();
+  showView(document.getElementById('view-final-quiz'));
+  window.scrollTo({top:0,behavior:'instant'});
+}
+
+function renderFinalQuizCard(){
+  const q = finalQuizActive[finalQuizCurrent];
+  const area = document.getElementById('fq-card-area');
+  const pct = (finalQuizCurrent / finalQuizActive.length) * 100;
+  document.getElementById('fq-counter').textContent = `Question ${finalQuizCurrent+1} / ${finalQuizActive.length}`;
+  document.getElementById('fq-progress').style.width = pct + '%';
+  finalQuizAnsweredCurrent = false;
+  area.innerHTML = `
+    <div class="quiz-card" id="fq-card">
+      <div class="quiz-q-label">Question ${finalQuizCurrent+1}</div>
+      <div class="quiz-q-text">${q.q}</div>
+      <div class="quiz-options">
+        ${q.opts.map((o,i)=>`
+          <button class="quiz-opt" id="fq-opt-${i}" onclick="answerFinalQuiz(${i})">
+            <span class="quiz-opt-letter">${'ABCD'[i]}</span>${o}
+          </button>`).join('')}
+      </div>
+      <div class="quiz-feedback" id="fq-feedback"></div>
+      <button class="quiz-next-btn" id="fq-next" onclick="nextFinalQuiz()">
+        ${finalQuizCurrent < finalQuizActive.length-1 ? 'Next Question →' : 'See Results →'}
+      </button>
+    </div>
+  `;
+}
+
+function answerFinalQuiz(chosen){
+  if(finalQuizAnsweredCurrent) return;
+  finalQuizAnsweredCurrent = true;
+  const q = finalQuizActive[finalQuizCurrent];
+  const correct = chosen === q.ans;
+  if(correct) finalQuizScore++;
+  document.getElementById('fq-score').textContent = finalQuizScore;
+  const card = document.getElementById('fq-card');
+  card.classList.add(correct ? 'answered-correct' : 'answered-wrong');
+  q.opts.forEach((_,i)=>{
+    const opt = document.getElementById('fq-opt-'+i);
+    opt.classList.add('disabled');
+    if(i===q.ans) opt.classList.add(chosen===i ? 'correct' : 'reveal-correct');
+    else if(i===chosen) opt.classList.add('wrong');
+  });
+  const fb = document.getElementById('fq-feedback');
+  fb.textContent = q.fb;
+  fb.className = 'quiz-feedback show ' + (correct ? 'correct' : 'wrong');
+  document.getElementById('fq-next').classList.add('show');
+}
+
+function nextFinalQuiz(){
+  finalQuizCurrent++;
+  if(finalQuizCurrent >= finalQuizActive.length){
+    document.getElementById('fq-card-area').style.display = 'none';
+    document.getElementById('fq-progress').style.width = '100%';
+    const pct = Math.round(finalQuizScore / finalQuizActive.length * 100);
+    const grade = pct>=80 ? 'Excellent!' : pct>=60 ? 'Good work.' : 'Keep revising.';
+    document.getElementById('fq-big').textContent = finalQuizScore;
+    document.getElementById('fq-grade-label').textContent = grade + ` You scored ${pct}%.`;
+    const panel = document.getElementById('fq-score-panel');
+    panel.classList.add('show');
+    setTimeout(()=>{ document.getElementById('fq-score-bar').style.width = pct+'%'; }, 80);
+  } else {
+    renderFinalQuizCard();
+  }
+}
+
+/* ═══════════════════════════════════════
+   FINAL EXAM — COMMON METHODS
+═══════════════════════════════════════ */
+function openFinalMethods(){
+  const inner = document.getElementById('final-methods-page-inner');
+  inner.innerHTML = finalTopbar('Common Methods','Systematic step-by-step guides for the techniques appearing most frequently across the specimen papers.') + `
+
+    <!-- METHOD 1 -->
+    <div class="content-section">
+      <div class="content-section-title">// Method 1 — Finding the Inertia Tensor</div>
+      <div class="info-card law-card" style="margin-bottom:1rem">
+        <div class="info-card-title">When to use</div>
+        <div class="info-card-body">Any question asking you to "find the inertia tensor" for point masses or a continuous body about a given origin.</div>
+      </div>
+      <div class="info-card" style="margin-bottom:1rem">
+        <div class="info-card-title">Steps</div>
+        <div class="info-card-body" style="line-height:2.2">
+          <strong>1.</strong> Write down each mass mᵢ and its position (xᵢ, yᵢ, zᵢ).<br>
+          <strong>2.</strong> Diagonal elements: <span class="formula-pill">Ixx = Σmᵢ(yᵢ²+zᵢ²)</span>, and cyclically for Iyy, Izz.<br>
+          <strong>3.</strong> Off-diagonal elements: <span class="formula-pill gold">Ixy = −Σmᵢxᵢyᵢ</span> (note the minus sign), and similarly Ixz, Iyz.<br>
+          <strong>4.</strong> Assemble the symmetric 3×3 matrix.<br>
+          <strong>5.</strong> Check: I is symmetric (Iᵢⱼ = Iⱼᵢ) and positive semi-definite.
+        </div>
+      </div>
+      <div class="note-block"><strong>Tip:</strong> If any mass lies on a coordinate axis (e.g. the x-axis), both y=z=0 so it contributes nothing to Ixx but contributes mᵢxᵢ² to Iyy and Izz.</div>
+    </div>
+
+    <!-- METHOD 2 -->
+    <div class="content-section">
+      <div class="content-section-title">// Method 2 — Finding Principal Moments &amp; Axes</div>
+      <div class="info-card law-card gold" style="margin-bottom:1rem">
+        <div class="info-card-title">When to use</div>
+        <div class="info-card-body">After finding I — whenever the question asks for "principal moments of inertia" or "principal axes".</div>
+      </div>
+      <div class="info-card" style="margin-bottom:1rem">
+        <div class="info-card-title">Steps</div>
+        <div class="info-card-body" style="line-height:2.2">
+          <strong>1.</strong> Solve the characteristic equation <span class="formula-pill gold">det(I − λ𝟙) = 0</span> to find eigenvalues λ₁, λ₂, λ₃ (the principal moments).<br>
+          <strong>2.</strong> For each eigenvalue λₖ, solve <span class="formula-pill">(I − λₖ𝟙)nₖ = 0</span> for the eigenvector nₖ (the principal axis direction).<br>
+          <strong>3.</strong> Normalise: nₖ → nₖ/|nₖ|.<br>
+          <strong>4.</strong> Check eigenvectors are orthogonal (they must be for a real symmetric matrix).
+        </div>
+      </div>
+      <div class="note-block"><strong>Shortcut:</strong> If I is block-diagonal (e.g. a zero row/column), factor the determinant directly rather than expanding the full 3×3. See Spec 2 Q2 where the y-row is decoupled.</div>
+    </div>
+
+    <!-- METHOD 3 -->
+    <div class="content-section">
+      <div class="content-section-title">// Method 3 — Lagrangian to Hamiltonian</div>
+      <div class="info-card law-card teal" style="margin-bottom:1rem">
+        <div class="info-card-title">When to use</div>
+        <div class="info-card-body">Any question that gives you L(qᵢ, q̇ᵢ) and asks you to construct H and Hamilton's equations.</div>
+      </div>
+      <div class="info-card" style="margin-bottom:1rem">
+        <div class="info-card-title">Steps</div>
+        <div class="info-card-body" style="line-height:2.2">
+          <strong>1.</strong> Find generalised momenta: <span class="formula-pill teal">pᵢ = ∂L/∂q̇ᵢ</span>.<br>
+          <strong>2.</strong> Invert to express each q̇ᵢ as a function of qᵢ and pᵢ.<br>
+          <strong>3.</strong> Form the Hamiltonian: <span class="formula-pill gold">H = Σpᵢq̇ᵢ − L</span>, substituting q̇ᵢ from step 2 so that H is a function of qᵢ and pᵢ only.<br>
+          <strong>4.</strong> Write Hamilton's equations: <span class="formula-pill">q̇ᵢ = ∂H/∂pᵢ</span> and <span class="formula-pill">ṗᵢ = −∂H/∂qᵢ</span>.<br>
+          <strong>5.</strong> Verify q̇ᵢ from step 4 matches the expression from step 2.
+        </div>
+      </div>
+      <div class="note-block"><strong>Watch out:</strong> When L has cross terms (e.g. ẋẏ), inverting for q̇ requires solving a system of linear equations. Write the momenta as a matrix equation and invert. See Spec 2 Q3.</div>
+    </div>
+
+    <!-- METHOD 4 -->
+    <div class="content-section">
+      <div class="content-section-title">// Method 4 — Euler's Equations for a Symmetric Body</div>
+      <div class="info-card law-card" style="margin-bottom:1rem">
+        <div class="info-card-title">When to use</div>
+        <div class="info-card-body">When I₁=I₂ (symmetric top / rugby ball shape) and you need to find ω(t) for torque-free motion.</div>
+      </div>
+      <div class="info-card" style="margin-bottom:1rem">
+        <div class="info-card-title">Steps</div>
+        <div class="info-card-body" style="line-height:2.2">
+          <strong>1.</strong> Write the three Euler equations; the third gives I₃ω̇₃ = 0 so <span class="formula-pill">ω₃ = const = Ω</span>.<br>
+          <strong>2.</strong> Substitute into eq. 1 &amp; 2: ω̇₁ = +βω₂, ω̇₂ = −βω₁, where <span class="formula-pill gold">β = (I₁−I₃)Ω/I₁</span>.<br>
+          <strong>3.</strong> Recognise the coupled ODE as circular motion in the ω₁-ω₂ plane: <span class="formula-pill teal">ω₁+iω₂ = A e^{iβt}</span>.<br>
+          <strong>4.</strong> Apply initial conditions: if ω(0) = (ω₁₀, ω₂₀, Ω), then A = ω₁₀+iω₂₀ → |A| = √(ω₁₀²+ω₂₀²).<br>
+          <strong>5.</strong> Write out ω(t) = (|A|cos(βt+φ), |A|sin(βt+φ), Ω).
+        </div>
+      </div>
+    </div>
+
+    <!-- METHOD 5 -->
+    <div class="content-section">
+      <div class="content-section-title">// Method 5 — Stability Analysis of Euler's Equations</div>
+      <div class="info-card law-card gold" style="margin-bottom:1rem">
+        <div class="info-card-title">When to use</div>
+        <div class="info-card-body">Any question asking whether rotation about a given principal axis is stable (Tennis Racket Theorem).</div>
+      </div>
+      <div class="info-card" style="margin-bottom:1rem">
+        <div class="info-card-title">Steps</div>
+        <div class="info-card-body" style="line-height:2.2">
+          <strong>1.</strong> Suppose rotation is primarily about axis k with angular speed Ω; write ω = (ε₁, ε₂, Ω) (with axis k = 3 w.l.o.g.).<br>
+          <strong>2.</strong> Linearise Euler's equations discarding products of small quantities ε.<br>
+          <strong>3.</strong> You get ε̈₁ = λ²ε₁ where <span class="formula-pill gold">λ² = (I₁−I₃)(I₂−I₃)Ω²/(I₁I₂)</span>.<br>
+          <strong>4.</strong> If λ² &lt; 0: solutions are oscillatory → <strong>stable</strong>.<br>
+          <strong>5.</strong> If λ² &gt; 0: solutions grow exponentially → <strong>unstable</strong> (intermediate axis).
+        </div>
+      </div>
+      <div class="note-block"><strong>Rule of thumb:</strong> Rotation about the axis with the <em>largest</em> or <em>smallest</em> principal moment is always stable. Rotation about the intermediate axis is always unstable.</div>
+    </div>
+  `;
+  showView(document.getElementById('view-final-methods'));
+  window.scrollTo({top:0,behavior:'instant'});
+}
+
+/* ═══════════════════════════════════════
+   FINAL EXAM — PRACTICE POOL (16 Qs)
+═══════════════════════════════════════ */
+const FINAL_PRACTICE_SETS = [
+  // ── Set 1: Specimen 1 Q1 + Q2, Specimen 2 Q2, Generated A1 ──
+  [
+    {
+      num: "Spec 1 · Q1",
+      q: "Three point masses m are placed at A = (0,0,0), B = (L,0,0), C = (0,L,0). (a) Find the centre of mass. (b) Find the inertia tensor I about the centre of mass. (c) Find the principal moments and the direction of each principal axis.",
+      hint: "For (a) use R_CM = (1/3M)Σmᵢrᵢ. For (b) translate all positions by −R_CM before computing Iᵢⱼ. For (c) find eigenvalues of I — the characteristic polynomial factors nicely.",
+      steps: [
+        "<strong>(a) Centre of mass:</strong> R_CM = (1/3)(0+L+0, 0+0+L, 0) = (L/3, L/3, 0).",
+        "<strong>(b) Translate positions:</strong> A' = (−L/3,−L/3,0), B' = (2L/3,−L/3,0), C' = (−L/3,2L/3,0).",
+        "<strong>Ixx = Σm(y'²+z'²):</strong> m[(L/3)²+(2L/3)²+(L/3)²·0... wait — z'=0 for all, so Ixx = m[(L/3)²+(L/3)²+(2L/3)²] = m·(2L²/9) = 2mL²/9... let me restate for clarity.",
+        "<strong>Diagonal:</strong> Ixx = m(1/9+1/9+4/9)L² = 6mL²/9 = 2mL²/3. Similarly Iyy = 2mL²/3. Izz = m(4/9+4/9+1/9+1/9)L² = ... evaluates to 4mL²/3.",
+        "<strong>Off-diagonal:</strong> Ixy = −Σmx'y' = −m[(−L/3)(−L/3)+(2L/3)(−L/3)+(−L/3)(2L/3)] = −m[L²/9−2L²/9−2L²/9] = −m(−3L²/9) = mL²/3. So Ixy = mL²/3; Ixz=Iyz=0.",
+        "<strong>(c) I = (mL²/3)·[[2,−1,0],[−1,2,0],[0,0,4]].</strong> Eigenvalue equation for the 2×2 block: (2−λ)²−1=0 → λ=1 or λ=3. Third eigenvalue = 4.",
+        "<strong>Principal moments:</strong> I₁ = mL²/3 (axis (1,1,0)/√2), I₂ = mL² (axis (1,−1,0)/√2), I₃ = 4mL²/3 (axis (0,0,1))."
+      ],
+      result: "R_CM = (L/3, L/3, 0). Principal moments: mL²/3, mL², 4mL²/3. Principal axes: (1,1,0)/√2, (1,−1,0)/√2, (0,0,1)."
+    },
+    {
+      num: "Spec 1 · Q2",
+      q: "A skier descends a slope described by z = Ae^{−αx}. (a) Write the kinetic energy T in terms of ẋ. (b) Find the generalised momentum p conjugate to x. (c) Construct the Hamiltonian H(x,p) and write Hamilton's equations.",
+      hint: "For (a) use z = Ae^{−αx} so ż = −Aαe^{−αx}ẋ, then T = ½m(ẋ²+ż²). For (c) invert p = ∂L/∂ẋ to get ẋ(x,p), then substitute into H = pẋ − L.",
+      steps: [
+        "<strong>(a) T:</strong> ż = −Aαe^{−αx}ẋ, so T = ½m(ẋ²+A²α²e^{−2αx}ẋ²) = ½m(1+A²α²e^{−2αx})ẋ².",
+        "<strong>V = mgz = mgAe^{−αx},</strong> so L = T − V.",
+        "<strong>(b) p = ∂L/∂ẋ = m(1+A²α²e^{−2αx})ẋ.</strong>",
+        "<strong>(c) Invert:</strong> ẋ = p / [m(1+A²α²e^{−2αx})] ≡ p/f(x), where f(x)=m(1+A²α²e^{−2αx}).",
+        "<strong>H = pẋ − L = p²/f(x) − [½p²/f(x) − V] = p²/(2f(x)) + mgAe^{−αx}.</strong>",
+        "<strong>Hamilton's equations:</strong> ẋ = ∂H/∂p = p/f(x). ṗ = −∂H/∂x = −p²mA²α³e^{−2αx}/f(x)² + mAαge^{−αx}."
+      ],
+      result: "T = ½m(1+A²α²e^{−2αx})ẋ². H = p²/[2m(1+A²α²e^{−2αx})] + mgAe^{−αx}."
+    },
+    {
+      num: "Spec 2 · Q2",
+      q: "Find the principal moments of inertia and the direction of each principal axis for I = [[7,0,−4],[0,12,0],[−4,0,13]].",
+      hint: "Notice the (1,3) block is 2×2 and the y-row is already decoupled. Factor the characteristic polynomial as (12−λ)·[(7−λ)(13−λ)−16] = 0.",
+      steps: [
+        "<strong>Characteristic polynomial:</strong> det(I−λ𝟙) = (12−λ)·[(7−λ)(13−λ)−(−4)(−4)] = 0.",
+        "<strong>Factor 1:</strong> λ = 12. Factor 2: (7−λ)(13−λ)−16 = λ²−20λ+75 = (λ−5)(λ−15) = 0 → λ=5,15.",
+        "<strong>Principal moments:</strong> I₁=5, I₂=12, I₃=15.",
+        "<strong>Axis for λ=5:</strong> (I−5𝟙)n=0 → [[2,0,−4],[0,7,0],[−4,0,8]]n=0. Row 1: 2n₁−4n₃=0 → n₁=2n₃. Row 2: n₂=0. Normalising: n = (2,0,1)/√5.",
+        "<strong>Axis for λ=12:</strong> (I−12𝟙)n=0 → [[−5,0,−4],[0,0,0],[−4,0,1]]n=0. n₂ free → axis = (0,1,0).",
+        "<strong>Axis for λ=15:</strong> n₁=2n₃ with opposite phase → n = (−1,0,2)/√5."
+      ],
+      result: "λ = 5, 12, 15. Axes: (2,0,1)/√5, (0,1,0), (−1,0,2)/√5."
+    },
+    {
+      num: "Generated · A1",
+      q: "Four equal masses m are placed at the corners of a square: (±a/2, ±a/2, 0). (a) Find Izz. (b) Find Ixx. (c) Are the x and y axes principal axes? Justify your answer.",
+      hint: "Use Iij definitions directly. For (c), check whether the off-diagonal element Ixy = −Σmxᵢyᵢ vanishes.",
+      steps: [
+        "<strong>(a) Izz = Σm(xᵢ²+yᵢ²):</strong> each mass contributes m(a²/4+a²/4) = ma²/2. Four masses → Izz = 2ma².",
+        "<strong>(b) Ixx = Σm(yᵢ²+zᵢ²):</strong> z=0 for all, each yᵢ² = a²/4. Four masses → Ixx = ma².",
+        "<strong>(c) Ixy = −Σmxᵢyᵢ:</strong> corners are (±a/2)(±a/2). Products: (+a/2)(+a/2) = a²/4, (+a/2)(−a/2) = −a²/4, (−a/2)(+a/2) = −a²/4, (−a/2)(−a/2) = +a²/4. Sum = 0 → Ixy = 0.",
+        "<strong>Since Ixy = Ixz = Iyz = 0,</strong> the x, y, z axes are all principal axes.",
+        "<strong>By symmetry:</strong> Iyy = Ixx = ma² (same calculation by symmetry of the square)."
+      ],
+      result: "Izz = 2ma², Ixx = Iyy = ma². All off-diagonal elements vanish — the coordinate axes are principal axes."
+    }
+  ],
+  // ── Set 2: Specimen 1 Q3 + Q4, Specimen 2 Q1, Generated B1 ──
+  [
+    {
+      num: "Spec 1 · Q3",
+      q: "A particle of mass M slides on a frictionless ramp of height H and angle θ. Write the Lagrangian and equation of motion using three different coordinates: (a) x = horizontal displacement from base, (b) y = vertical displacement downward from top, (c) s = distance along the slope.",
+      hint: "Express T and V in terms of each coordinate using the geometry: on the slope, horizontal moves tan θ per unit vertical, and the slope length to horizontal ratio is 1/cosθ. The equation of motion should give the component of g along the relevant direction.",
+      steps: [
+        "<strong>(a) x-coordinate:</strong> height fallen = x tan θ, so V = −Mg·x tan θ + const. ẋ is horizontal, but the particle moves along the slope so ṡ = ẋ/cos θ, hence T = ½M(ẋ/cosθ)² = ½Mẋ²sec²θ. L = ½Mẋ²sec²θ + Mgx tanθ (taking V=0 at base). EOM: Mẍsec²θ = Mg tanθ → ẍ = g sin θ cos θ.",
+        "<strong>(b) y-coordinate (y=0 at top, positive down):</strong> horizontal displacement = y/tan θ = y cot θ. ṡ = ẏ/sinθ, so T = ½M(ẏ/sinθ)² = ½Mẏ²csc²θ. V = −Mgy. L = ½Mẏ²csc²θ + Mgy. EOM: Mÿcsc²θ = Mg → ÿ = g sin²θ.",
+        "<strong>(c) s-coordinate (arc length along slope):</strong> T = ½Mṡ², V = −Mgs sinθ. L = ½Mṡ² + Mgs sinθ. EOM: Ms̈ = Mg sinθ → s̈ = g sinθ."
+      ],
+      result: "ẍ = g sinθ cosθ, ÿ = g sin²θ, s̈ = g sinθ. These are consistent: s̈ cosθ = ẍ (horizontal projection), s̈ sinθ = ÿ (vertical projection)."
+    },
+    {
+      num: "Spec 1 · Q4 ★",
+      q: "A rigid body has inertia tensor I = diag(6,3,4) (in units of kg·m²). Its angular velocity is ω = (A/cosh αt, 2A/cosh αt, B tanh αt). (a) Find A and B by substituting into Euler's torque-free equations. (b) Show J² = |Iω|² is constant. (c) What happens as t → −∞?",
+      hint: "For (a) compute ω̇ components using d/dt(sech) = −sech tanh and d/dt(tanh) = sech², then plug into Euler's equations. You'll get two equations in A and B. For (c) as t→−∞, tanh→−1 and sech→0.",
+      steps: [
+        "<strong>ω̇₁ = −Aα sinh αt/cosh²αt = −Aα tanhαt sechαt.</strong> Similarly ω̇₂ = −2Aα tanhαt sechαt. ω̇₃ = Bα sech²αt.",
+        "<strong>Euler eq. 1:</strong> I₁ω̇₁+(I₂−I₃)ω₂ω₃ = 6(−Aα tanh sech)+(3−4)(2A sech)(B tanh) = −6Aα tanh sech − 2AB tanh sech = 0. Dividing: 6Aα = −2AB → B = −3α.",
+        "<strong>Euler eq. 3:</strong> I₃ω̇₃+(I₁−I₂)ω₁ω₂ = 4Bα sech²+(6−3)(A sech)(2A sech) = 4Bα sech²+6A²sech² = 0. Dividing: 4Bα+6A²=0. Substitute B=−3α: −12α²+6A²=0 → A²=2α² → A=√2 α.",
+        "<strong>(b) J = Iω = (6A sech, 6A sech, 4B tanh). Wait — J₁=I₁ω₁=6A/coshαt.</strong> |J|² = 36A²sech² + 36·4A²sech²/4 ... let me redo: J=(6A sech, 3·2A sech, 4B tanh) = (6A sech, 6A sech, 4B tanh). |J|² = 72A²sech² + 16B²tanh². Using sech²+tanh²=1 and B=−3α, A²=2α²: 72·2α²sech²+16·9α²tanh² = 144α²sech²+144α²tanh² = 144α²(sech²+tanh²) = 144α² = const. ✓",
+        "<strong>(c) t→−∞:</strong> tanh αt→−1, sech αt→0. So ω₁,ω₂→0, ω₃→B·(−1)=3α. ω grows without bound? No — ω₃→−B=3α, finite. But ω₁,ω₂ → 0 from above, implying the body was tumbling about the intermediate axis (I₂=3 is the middle value between 4 and 6), which is consistent with the Tennis Racket instability — it approaches pure rotation about the intermediate axis as t→−∞ and departs from it as t→+∞."
+      ],
+      result: "A = √2·α, B = −3α. |J|² = 144α² = constant. As t→−∞ the body approached unstable rotation about the intermediate axis (I₂=3)."
+    },
+    {
+      num: "Spec 2 · Q1",
+      q: "Two masses collide: m₁=20 kg moving at 30 m/s and m₂=60 kg moving at 10 m/s in the same direction. They coalesce (perfectly inelastic). (a) Find v_f. (b) Find T_i and T_f; is energy conserved? (c) If the collision lasts 0.1 s, find a₁ and a₂. Verify Newton's Third Law.",
+      hint: "For (a) conserve momentum: (m₁+m₂)v_f = m₁v₁+m₂v₂. For (c) use impulse-momentum: F·Δt = m·Δv for each object, then check F₁ = −F₂.",
+      steps: [
+        "<strong>(a) Momentum conservation:</strong> (20+60)v_f = 20×30+60×10 = 600+600 = 1200. v_f = 15 m/s.",
+        "<strong>(b) T_i = ½·20·30²+½·60·10² = 9000+3000 = 12000 J. T_f = ½·80·15² = 9000 J. ΔT = −3000 J — energy is NOT conserved (inelastic).",
+        "<strong>(c) Δv₁ = 15−30 = −15 m/s. a₁ = Δv₁/Δt = −15/0.1 = −150 m/s²... wait, let me recheck: F₁=m₁a₁=20×(−150)=−3000 N.",
+        "<strong>Δv₂ = 15−10 = +5 m/s. a₂ = 5/0.1 = 50 m/s². F₂ = 60×50 = +3000 N.",
+        "<strong>Newton's 3rd Law check:</strong> F₁ = −3000 N (on m₁ from m₂), F₂ = +3000 N (on m₂ from m₁). F₁ = −F₂ ✓"
+      ],
+      result: "v_f = 15 m/s. T_i = 12000 J, T_f = 9000 J (3000 J lost). a₁ = −150 m/s² (F₁=−3000 N), a₂ = 50 m/s² (F₂=+3000 N). Newton's 3rd Law: F₁ = −F₂ ✓"
+    },
+    {
+      num: "Generated · B1",
+      q: "A particle of mass m moves on a frictionless spherical bowl of radius R (constrained to the surface, free to move in θ and φ). (a) Write the Lagrangian using spherical polar coordinates. (b) Find both generalised momenta. (c) Show that pφ is conserved and identify its physical meaning.",
+      hint: "The constraint r=R means ṙ=0. The kinetic energy on a sphere is T = ½mR²(θ̇²+sin²θ·φ̇²). Potential energy: V = −mgR cosθ (taking V=0 at equator, or V=mgR(1−cosθ) measuring from the bottom).",
+      steps: [
+        "<strong>(a) With r=R, L = ½mR²(θ̇²+sin²θ·φ̇²) − mgR(1−cosθ),</strong> taking V=0 at the bottom of the bowl (θ=π).",
+        "<strong>(b) pθ = ∂L/∂θ̇ = mR²θ̇.</strong>",
+        "<strong>pφ = ∂L/∂φ̇ = mR²sin²θ·φ̇.</strong>",
+        "<strong>(c) L does not depend on φ,</strong> so ∂L/∂φ = 0, which means ṗφ = d/dt(∂L/∂φ̇) = ∂L/∂φ = 0. Therefore pφ = const.",
+        "<strong>Physical meaning:</strong> pφ = mR²sin²θ·φ̇ = m(R sinθ)²φ̇. Since R sinθ is the perpendicular distance from the vertical axis, pφ is the component of angular momentum about the vertical axis — it is conserved because the bowl has azimuthal symmetry."
+      ],
+      result: "L = ½mR²(θ̇²+sin²θ·φ̇²) − mgR(1−cosθ). pθ = mR²θ̇, pφ = mR²sin²θ·φ̇. pφ = const (azimuthal angular momentum, by axial symmetry)."
+    }
+  ],
+  // ── Set 3: Spec 2 Q3 + Q4, Generated A2 + C1 ──
+  [
+    {
+      num: "Spec 2 · Q3",
+      q: "A system has Lagrangian L = 3mẋ² + 2mẋẏ + mẏ² − ½k(x²+y²). (a) Find generalised momenta pₓ and py. (b) Invert to find ẋ and ẏ, then construct H. (c) Write all four Hamilton's equations and verify the Euler-Lagrange equations are recovered.",
+      hint: "For (b), the momentum equations pₓ=6mẋ+2mẏ and py=2mẋ+2mẏ form a 2×2 linear system. Subtract to isolate ẋ, then back-substitute. For (c) ṗₓ=−∂H/∂x=−kx.",
+      steps: [
+        "<strong>(a) pₓ = ∂L/∂ẋ = 6mẋ+2mẏ. py = ∂L/∂ẏ = 2mẋ+2mẏ.</strong>",
+        "<strong>(b) Subtract: pₓ−py = 4mẋ → ẋ = (pₓ−py)/(4m). Then py = 2m·(pₓ−py)/(4m)+2mẏ = (pₓ−py)/2+2mẏ → ẏ = (−pₓ+3py)/(4m).</strong>",
+        "<strong>H = pₓẋ+pyẏ−L. Substitute and simplify: H = (pₓ²−2pₓpy+3py²)/(8m) + ½k(x²+y²).</strong>",
+        "<strong>(c) ẋ = ∂H/∂pₓ = (2pₓ−2py)/(8m) = (pₓ−py)/(4m) ✓. ẏ = ∂H/∂py = (−2pₓ+6py)/(8m) = (−pₓ+3py)/(4m) ✓.",
+        "<strong>ṗₓ = −∂H/∂x = −kx. ṗy = −∂H/∂y = −ky.</strong>",
+        "<strong>Check EOM from L:</strong> d/dt(pₓ)=∂L/∂x → 6mẍ+2mÿ = −kx. This matches ṗₓ=−kx when substituted ✓."
+      ],
+      result: "H = (pₓ²−2pₓpy+3py²)/(8m) + ½k(x²+y²). Hamilton's equations: ẋ=(pₓ−py)/(4m), ẏ=(−pₓ+3py)/(4m), ṗₓ=−kx, ṗy=−ky."
+    },
+    {
+      num: "Spec 2 · Q4",
+      q: "A symmetric top has I = diag(3,3,5) kg·m² and initial angular velocity ω(0) = (3,4,5) rad/s. (a) Show ω₃ = const. (b) Find ω(t). (c) Compute J² and kinetic energy KE.",
+      hint: "For (a) use the I₁=I₂ argument from Euler's 3rd equation. For (b) the wobble frequency is β = (I₁−I₃)ω₃/I₁. For (c) J = Iω — compute each component and square.",
+      steps: [
+        "<strong>(a) Euler eq. 3: I₃ω̇₃+(I₁−I₂)ω₁ω₂ = 5ω̇₃+0 = 0 → ω̇₃=0 → ω₃=5 rad/s = const. ✓</strong>",
+        "<strong>(b) β = (I₁−I₃)ω₃/I₁ = (3−5)·5/3 = −10/3 rad/s.</strong>",
+        "<strong>ω₁+iω₂ = A e^{iβt}, A = 3+4i = 5e^{iφ} where φ=arctan(4/3).</strong>",
+        "<strong>ω(t) = (3cos βt − 4sin βt, 3sin βt + 4cos βt, 5)</strong> with β = −10/3.",
+        "<strong>(c) J = Iω = (3ω₁, 3ω₂, 5·5) = (3ω₁, 3ω₂, 25). |J|² = 9(ω₁²+ω₂²)+625.</strong> Since ω₁²+ω₂² = 9+16=25 (conserved): |J|² = 9·25+625 = 225+625 = 850 kg²m⁴s⁻².",
+        "<strong>KE = ½Σ Iᵢωᵢ² = ½(3·9+3·16+5·25) = ½(27+48+125) = ½·200 = 100 J.</strong>"
+      ],
+      result: "ω₃=5=const. ω(t)=(3cos βt−4sin βt, 3sin βt+4cos βt, 5), β=−10/3. J²=850 kg²m⁴s⁻², KE=100 J."
+    },
+    {
+      num: "Generated · A2",
+      q: "A dumbbell consists of two equal masses m separated by distance d, placed at (0,0,+d/2) and (0,0,−d/2). (a) Find the full inertia tensor about the origin. (b) Identify the principal moments and principal axes. (c) A force-free torque causes the dumbbell to rotate with ω=(ω₀,0,0) — is J parallel to ω?",
+      hint: "Use the Iᵢⱼ definitions. The symmetry axis is the z-axis. For (c) compute J=Iω directly.",
+      steps: [
+        "<strong>(a) Positions:</strong> r₁=(0,0,d/2), r₂=(0,0,−d/2).",
+        "<strong>Ixx = Σm(yᵢ²+zᵢ²) = m(0+d²/4)+m(0+d²/4) = md²/2.</strong> Similarly Iyy = md²/2.",
+        "<strong>Izz = Σm(xᵢ²+yᵢ²) = m(0+0)+m(0+0) = 0.</strong>",
+        "<strong>Off-diagonals all zero</strong> (all cross products vanish since x=y=0 for both masses).",
+        "<strong>I = diag(md²/2, md²/2, 0).</strong>",
+        "<strong>(b) Principal moments:</strong> I₁=I₂=md²/2 (any axis perpendicular to z), I₃=0 (symmetry axis z). The z-axis has zero moment — no resistance to spinning about it.",
+        "<strong>(c) ω=(ω₀,0,0). J = Iω = (md²/2·ω₀, 0, 0) = (md²ω₀/2)x̂.</strong> J is parallel to ω ✓ — x is a principal axis."
+      ],
+      result: "I = diag(md²/2, md²/2, 0). Principal moments: md²/2, md²/2, 0. For ω along x: J ∥ ω since x is a principal axis."
+    },
+    {
+      num: "Generated · C1",
+      q: "A rigid body has I = diag(2,3,5) kg·m². It rotates primarily about the z-axis with ω ≈ (ε₁, ε₂, Ω) where Ω is large and ε₁, ε₂ ≪ Ω. (a) Linearise Euler's equations. (b) Determine the stability of this rotation. (c) Which axis of this body has unstable rotation?",
+      hint: "Linearise by dropping products of small quantities. You'll get ε̈₁ = λ²ε₁. Compute λ². The sign determines stability. Compare I values: 2 < 3 < 5.",
+      steps: [
+        "<strong>(a) Euler eq. 1:</strong> I₁ε̇₁+(I₂−I₃)ε₂Ω = 2ε̇₁+(3−5)ε₂Ω = 2ε̇₁−2ε₂Ω = 0 → ε̇₁ = ε₂Ω.",
+        "<strong>Euler eq. 2:</strong> I₂ε̇₂+(I₃−I₁)ε₁Ω = 3ε̇₂+(5−2)ε₁Ω = 3ε̇₂+3ε₁Ω = 0 → ε̇₂ = −ε₁Ω.",
+        "<strong>Combine:</strong> ε̈₁ = Ωε̇₂ = −Ω²ε₁. So λ² = −Ω² < 0.",
+        "<strong>(b) λ² < 0 → solutions are oscillatory (e^{iΩt} type) → rotation about z is STABLE.</strong>",
+        "<strong>(c) The intermediate axis has I₂=3 (between I₁=2 and I₃=5).</strong> For rotation about y: λ² = (I₂−I₁)(I₂−I₃)/(I₁I₃)·Ω² = (3−2)(3−5)/(2·5)·Ω² = (1)(−2)/10·Ω² = −Ω²/5... wait that's negative too.",
+        "<strong>Re-check:</strong> Axes are labelled by principal moment — 'intermediate' is the axis with middle moment I₂=3. For rotation ≈ Ω along axis 2: λ² = (I₁−I₂)(I₃−I₂)/(I₁I₃)·Ω² = (2−3)(5−3)/(2·5)·Ω² = (−1)(2)/10·Ω² < 0 — also stable! Actually here I₁=2<I₂=3<I₃=5 — intermediate is I₂=3. λ² = (I₁−I₂)(I₃−I₂)/(I₁I₃)·Ω²... the standard formula gives sign: for the intermediate axis (I₂−I₁)(I₂−I₃) = (1)(−2) = −2 < 0... wait. The formula is λ² = [(I₂−I₁)(I₂−I₃)/(I₁I₃)]·Ω². With I₁=2,I₂=3,I₃=5: (3−2)(3−5)/(2·5) = (1)(−2)/10 = −1/5 < 0 → stable? That contradicts the theorem. Oh wait — I need to rotate about the correct axis: the UNSTABLE rotation is about the axis labeled 'intermediate'. Here I labelled the axes incorrectly. The intermediate moment is I₂=3. Rotation primarily about that axis: ω≈(ε₁,Ω,ε₃). Linearise: ε̈₁ = [(I₂−I₃)(I₃−I₁)/(I₁I₃)]Ω²·ε₁. The sign is (I₂−I₃)(I₃−I₁) = (−2)(3) = −6 < 0... still stable.",
+        "<strong>Conclusion:</strong> With I=diag(2,3,5), the unstable axis is y (I₂=3). λ² = [(I₁−I₂)(I₃−I₂)/(I₁I₃)]Ω² = [(2−3)(5−3)/(10)]Ω² = [(−1)(2)/10]Ω² = −Ω²/5 < 0 → actually stable too?! Re-examine the standard formula carefully: stability about axis k requires λ² = [(Iᵢ−Iₖ)(Iⱼ−Iₖ)/(IᵢIⱼ)]Ω² where {i,j,k} cyclic. For k=y (I_k=3): λ² = (Ix−Iy)(Iz−Iy)/(IxIz)·Ω² = (2−3)(5−3)/(10)·Ω² = −0.2Ω² < 0 → stable. For k=z (I_k=5): λ² = (2−5)(3−5)/(6)·Ω² = (−3)(−2)/6·Ω² = +Ω² > 0 → UNSTABLE! So axis z (I=5, the LARGEST moment) is unstable?! No — the Tennis Racket theorem says the INTERMEDIATE axis is unstable. With I=2<3<5, I_z=5 is the LARGEST, not intermediate. So rotation about z IS stable. The unstable axis is y (I_y=3, intermediate). But we computed λ² < 0 for y... Let me recompute for the case ω≈(ε₁,Ω,ε₃) (rotation about y axis, I_y=3 intermediate). Euler eq. 1: 2ε̇₁+(I_y−I_z)ε_yΩ... ε_y=Ω: 2ε̇₁+(3−5)Ω·ε₃=0 → ε̇₁=−ε₃Ω. Euler eq. 3: 5ε̇₃+(I_x−I_y)ε₁Ω=0 → 5ε̇₃+(2−3)Ωε₁=0 → ε̇₃=Ωε₁/5. Then ε̈₁=−Ω·(Ωε₁/5)=−Ω²ε₁/5 → λ²=−Ω²/5 < 0 → stable? This is wrong. There must be an error in my setup. Oh wait: Euler eq 1 is I₁ω̇₁+(I₂-I₃)ω₂ω₃=0. If ω≈(ε₁,Ω,ε₃): I₁ε̇₁+(I₂-I₃)Ωε₃=0 → 2ε̇₁+(3-5)Ωε₃=0 → 2ε̇₁=2Ωε₃ → ε̇₁=Ωε₃. Euler eq 3: I₃ε̇₃+(I₁-I₂)ε₁Ω=0 → 5ε̇₃+(2-3)Ωε₁=0 → 5ε̇₃=Ωε₁ → ε̇₃=Ωε₁/5. Then ε̈₁=Ωε̇₃=Ω²ε₁/5 → λ²=+Ω²/5 > 0 → UNSTABLE! That's the sign I was looking for. So I had a sign error earlier. The y-axis (intermediate moment I₂=3) IS unstable."
+      ],
+      result: "Rotation about z (I=5, largest) is STABLE — λ²=−Ω²<0. The UNSTABLE axis is y (intermediate moment I₂=3): λ²=+Ω²/5>0 → exponential growth."
+    }
+  ],
+  // ── Set 4: Generated B2, C2, D1, D2 ──
+  [
+    {
+      num: "Generated · B2",
+      q: "A mass m on a horizontal spring (constant k, natural length 0) has Lagrangian L = ½mẋ² − ½kx². (a) Find the generalised momentum p. (b) Construct H(x,p). (c) Write Hamilton's equations and verify you recover standard SHM.",
+      hint: "This is the simplest possible Hamiltonian system. The momentum is just p=mẋ. Inverting gives ẋ=p/m. Hamilton's equations will give ẋ=p/m and ṗ=−kx.",
+      steps: [
+        "<strong>(a) p = ∂L/∂ẋ = mẋ.</strong>",
+        "<strong>(b) H = pẋ − L = p·(p/m) − [½m(p/m)² − ½kx²] = p²/m − p²/(2m) + ½kx² = p²/(2m) + ½kx².</strong>",
+        "<strong>(c) ẋ = ∂H/∂p = p/m. ṗ = −∂H/∂x = −kx.</strong>",
+        "<strong>Verify SHM:</strong> differentiate ẋ = p/m w.r.t. t: ẍ = ṗ/m = −kx/m. So mẍ = −kx → ẍ + (k/m)x = 0. This is SHM with ω² = k/m ✓",
+        "<strong>H = p²/(2m)+½kx² is conserved:</strong> Ḣ = (p/m)ṗ + kxẋ = (p/m)(−kx) + kx(p/m) = 0 ✓"
+      ],
+      result: "p=mẋ, H=p²/(2m)+½kx². Hamilton's equations: ẋ=p/m, ṗ=−kx. Combining: ẍ=−(k/m)x — standard SHM ✓"
+    },
+    {
+      num: "Generated · C2",
+      q: "A symmetric top has I₁=I₂=2I and I₃=3I. It is initially spinning purely about the symmetry axis with ω₃=Ω₀. A small perturbation gives ω₁=ε, ω₂=0 at t=0. (a) Find the wobble frequency. (b) Write ω(t). (c) What is the half-angle of the wobble cone?",
+      hint: "Wobble frequency β=(I₁−I₃)ω₃/I₁. The solution is ω₁+iω₂=εe^{iβt}. The half-angle α of the wobble cone satisfies tan α=|ω⊥|/ω₃=ε/Ω₀.",
+      steps: [
+        "<strong>(a) β = (I₁−I₃)ω₃/I₁ = (2I−3I)Ω₀/(2I) = −Ω₀/2.</strong>",
+        "<strong>(b) ω₁+iω₂ = ε·e^{iβt} = ε·e^{−iΩ₀t/2}.</strong> So ω₁(t)=ε cos(Ω₀t/2), ω₂(t)=−ε sin(Ω₀t/2). ω₃(t)=Ω₀=const.",
+        "<strong>(c) |ω⊥| = ε (constant). Wobble cone half-angle: tan α = ε/Ω₀, i.e. α = arctan(ε/Ω₀).</strong> For small ε, α ≈ ε/Ω₀ radians — the ω vector precesses at frequency |β|=Ω₀/2 on a narrow cone.",
+        "<strong>Note:</strong> Since I₃>I₁ (prolate body), β<0 — the precession is retrograde (opposite to spin direction). If I₃<I₁ (oblate), β>0 (prograde)."
+      ],
+      result: "β=−Ω₀/2. ω(t)=(ε cos(Ω₀t/2), −ε sin(Ω₀t/2), Ω₀). Wobble cone half-angle α=arctan(ε/Ω₀) ≈ ε/Ω₀ for small ε."
+    },
+    {
+      num: "Generated · D1",
+      q: "A particle of mass m rests on a frictionless horizontal turntable rotating at angular velocity Ω (about the vertical z-axis). At t=0 the particle is at distance r₀ from the centre with zero velocity relative to the turntable. (a) Write the equations of motion in the rotating frame (include all pseudo-forces). (b) Show that the particle moves in a straight line in the inertial frame. (c) What does an observer on the turntable see?",
+      hint: "In the rotating frame: F_cent = mΩ²r r̂ and F_Cor = −2mΩ×v_rot. With initial velocity zero in the rotating frame, v_rot=0 at t=0. However you may find it easier to solve first in the inertial frame and then transform.",
+      steps: [
+        "<strong>Inertial frame:</strong> no force on particle (frictionless). So it moves in a straight line at constant velocity. At t=0, position is (r₀,0,0) and velocity in inertial frame is v_inertial = ω×r = Ω·ẑ×(r₀x̂) = Ωr₀ŷ.",
+        "<strong>Inertial trajectory:</strong> x(t)=r₀, y(t)=Ωr₀t — a straight horizontal line at x=r₀.",
+        "<strong>(a) Rotating frame:</strong> r_rot at t=0: r_rot=(r₀,0,0), v_rot=0. Forces: F_cent=mΩ²r₀x̂ (outward). F_Cor=−2mΩ×v_rot=0 at t=0 (since v_rot=0 initially).",
+        "<strong>As the particle moves,</strong> it gains v_rot, which generates Coriolis force, and the coupled equations produce curved motion in the rotating frame.",
+        "<strong>(b) In the inertial frame:</strong> no force → straight-line motion at constant velocity Ωr₀ŷ from position (r₀,0,0) ✓",
+        "<strong>(c) In the rotating frame:</strong> the particle appears to curve. Starting at rest and moving outward, the Coriolis force deflects it to the right (for Ω pointing up). The observer sees the particle follow a curved path — an inward spiral if viewed for long enough as the turntable angle rotates."
+      ],
+      result: "Inertial frame: straight line x=r₀, y=Ωr₀t. Rotating frame: initially thrust outward by centrifugal force, then deflected by Coriolis — the particle traces a curved path on the turntable."
+    },
+    {
+      num: "Generated · D2",
+      q: "Show that the Foucault pendulum at the North Pole has a precession period of exactly 24 hours. Then estimate the precession period at Edinburgh (latitude ≈ 56°) and at the equator (latitude = 0°).",
+      hint: "The precession period is T_F=2π/(Ω sinλ) where Ω=2π/T_Earth, T_Earth=24 hours. At the North Pole λ=90°. At the equator sinλ=0 — what does that mean physically?",
+      steps: [
+        "<strong>Earth's angular velocity:</strong> Ω = 2π / (24×3600 s) = 7.27×10⁻⁵ rad/s.",
+        "<strong>North Pole (λ=90°):</strong> T_F = 2π/(Ω·1) = 2π/Ω = 24 h. The pendulum makes one full precession per sidereal day ✓",
+        "<strong>Edinburgh (λ≈56°):</strong> sin 56° ≈ 0.829. T_F = 2π/(Ω×0.829) = 24/0.829 ≈ 28.9 h ≈ 29 hours.",
+        "<strong>Equator (λ=0°):</strong> sin 0° = 0. T_F = 2π/0 → ∞. The pendulum does NOT precess at the equator.",
+        "<strong>Physics:</strong> At the equator, Ω is horizontal — it has no component along the local vertical. The Foucault mechanism requires a vertical component of Earth's spin to cause precession. At the equator this component vanishes."
+      ],
+      result: "North Pole: T_F = 24 h exactly. Edinburgh (56°): T_F ≈ 29 h. Equator: T_F = ∞ (no precession, since the vertical component of Ω vanishes)."
+    }
+  ]
+];
+
+let finalPracticeIdx = 0;
+
+function openFinalPractice(){
+  finalPracticeIdx = 0;
+  renderFinalPractice();
+  showView(document.getElementById('view-final-practice'));
+  window.scrollTo({top:0,behavior:'instant'});
+}
+
+function renderFinalPractice(){
+  const set = FINAL_PRACTICE_SETS[finalPracticeIdx];
+  const inner = document.getElementById('final-practice-page-inner');
+  const qs = set.map((q,i)=>`
+    <div class="exam-q-block">
+      <div class="exam-q-num">${q.num}</div>
+      <div class="exam-q-text">${q.q}</div>
+      <div class="exam-q-hint">Hint: ${q.hint}</div>
+      <button class="exam-reveal-btn" id="fp-reveal-${i}" onclick="toggleFinalAnswer(${i})">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        Show worked solution
+      </button>
+      <div class="exam-answer" id="fp-answer-${i}">
+        ${q.steps.map((s,j)=>`<div class="step"><span style="font-family:'Space Mono',monospace;font-size:10px;color:var(--text-muted);margin-right:.5rem">0${j+1}</span>${s}</div>`).join('')}
+        <div class="result">∴ &nbsp;${q.result}</div>
+      </div>
+    </div>
+  `).join('');
+
+  inner.innerHTML = finalTopbar('Exam Practice','Four questions in exam style from specimen papers and generated examples. Attempt each, then reveal the worked solution.') + `
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;flex-wrap:wrap;gap:.75rem;">
+      <span style="font-family:'Space Mono',monospace;font-size:11px;color:var(--text-muted);">Question Set ${finalPracticeIdx+1} of ${FINAL_PRACTICE_SETS.length}</span>
+      <div style="display:flex;gap:.5rem;">
+        ${FINAL_PRACTICE_SETS.map((_,i)=>`<div style="width:28px;height:4px;border-radius:2px;background:${i===finalPracticeIdx?'var(--accent-blue)':'var(--panel-border)'};transition:background .2s"></div>`).join('')}
+      </div>
+    </div>
+    ${qs}
+    <button class="gen-btn" onclick="cycleFinalSet()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.76"/></svg>
+      Generate New Questions
+    </button>
+  `;
+}
+
+function cycleFinalSet(){
+  finalPracticeIdx = (finalPracticeIdx + 1) % FINAL_PRACTICE_SETS.length;
+  renderFinalPractice();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function toggleFinalAnswer(i){
+  const ans = document.getElementById('fp-answer-'+i);
+  const btn = document.getElementById('fp-reveal-'+i);
   const open = ans.classList.toggle('show');
   btn.classList.toggle('open', open);
   btn.innerHTML = `
