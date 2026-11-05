@@ -1,0 +1,1261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MATH323 — Further Methods Cheat Sheet</title>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" onload="initMath();"></script>
+<style>
+:root {
+  --ink: #1f1c17;
+  --ink-soft: #4a453d;
+  --ink-muted: #7a7468;
+  --rule: #e4dccd;
+  --page: #faf7f2;
+  --page-deep: #f1ebdf;
+  --card: #fffdf9;
+  --teal: #2e7d6b;   --teal-tint: #e9f3f0;
+  --gold: #8f6a05;   --gold-tint: #f7f0dc;
+  --red:  #8b2f2f;   --red-tint:  #f6e9e6;
+  --accent: var(--teal);
+  --tint: var(--teal-tint);
+  --serif: 'EB Garamond', Georgia, serif;
+  --mono: 'DM Mono', Consolas, monospace;
+}
+[data-ch="I"]   { --accent: var(--teal); --tint: var(--teal-tint); }
+[data-ch="II"]  { --accent: var(--gold); --tint: var(--gold-tint); }
+[data-ch="III"] { --accent: var(--red);  --tint: var(--red-tint); }
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--page); color: var(--ink);
+  font-family: var(--serif); font-size: 19px; line-height: 1.6;
+}
+a { color: var(--accent); }
+.wrap { max-width: 880px; margin: 0 auto; padding: 0 1.5rem 5rem; }
+.view { display: none; }
+.view.active { display: block; animation: rise .28s ease; }
+@keyframes rise { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+
+/* ── Home ── */
+.masthead {
+  display: grid; grid-template-columns: 1fr 280px; gap: 1.5rem; align-items: center;
+  padding: 4rem 0 2.5rem; border-bottom: 1px solid var(--rule); margin-bottom: 2.5rem;
+}
+.eyebrow {
+  font-family: var(--mono); font-size: 12px; letter-spacing: .16em; text-transform: uppercase;
+  color: var(--ink-muted); margin-bottom: .75rem;
+}
+h1 { font-weight: 500; font-size: clamp(2.5rem, 7vw, 3.6rem); line-height: 1.05; letter-spacing: -.01em; }
+h1 em { color: var(--gold); font-style: italic; }
+.subtitle { color: var(--ink-soft); margin-top: .9rem; max-width: 30em; }
+#logo { width: 100%; height: auto; display: block; }
+
+.ch-group { margin-bottom: 2.75rem; }
+.ch-head { display: flex; align-items: baseline; gap: .75rem; margin-bottom: 1rem; }
+.ch-num { font-family: var(--mono); font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); }
+.ch-title { font-size: 1.45rem; font-weight: 500; }
+.topic-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: .75rem; }
+.topic-card {
+  display: flex; gap: .85rem; align-items: flex-start; padding: .9rem 1rem;
+  background: var(--card); border: 1px solid var(--rule); border-radius: 10px;
+  color: inherit; text-decoration: none;
+  transition: border-color .15s, transform .15s, box-shadow .15s;
+}
+.topic-card:hover, .topic-card:focus-visible {
+  border-color: var(--accent); transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(60, 45, 20, .08); outline: none;
+}
+.icon {
+  flex: none; width: 42px; height: 42px; border-radius: 9px; padding: 8px;
+  background: var(--tint); color: var(--accent);
+}
+.icon svg { width: 100%; height: 100%; display: block; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.topic-card b { display: block; font-weight: 500; line-height: 1.25; font-size: 1.08rem; }
+.topic-card span.d { display: block; color: var(--ink-muted); font-size: .86rem; line-height: 1.35; margin-top: 3px; }
+
+/* ── Topic pages ── */
+.topbar {
+  position: sticky; top: 0; z-index: 5; background: var(--page);
+  display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+  padding: .85rem 0; border-bottom: 1px solid var(--rule); margin-bottom: 2.25rem;
+  font-family: var(--mono); font-size: 12px;
+}
+.topbar a { color: var(--ink-soft); text-decoration: none; white-space: nowrap; }
+.topbar a:hover { color: var(--accent); }
+.topbar .where { color: var(--ink-muted); letter-spacing: .08em; text-align: right; }
+.topic-head { display: flex; gap: 1rem; align-items: center; margin-bottom: 1.5rem; }
+.topic-head .icon { width: 56px; height: 56px; padding: 11px; border-radius: 12px; }
+h2.topic-title { font-size: clamp(1.8rem, 5vw, 2.4rem); font-weight: 500; line-height: 1.12; }
+.lede { color: var(--ink-soft); font-size: 1.1rem; margin-bottom: 1.75rem; }
+h3 {
+  font-family: var(--mono); font-weight: 500; font-size: 12.5px; letter-spacing: .13em; text-transform: uppercase;
+  color: var(--accent); margin: 2.25rem 0 .75rem; padding-bottom: .35rem; border-bottom: 1px solid var(--rule);
+}
+p { margin-bottom: .8rem; }
+ul, ol { margin: 0 0 .9rem 1.4rem; }
+li { margin-bottom: .35rem; }
+
+/* Hero cell */
+.hero {
+  background: var(--tint); border: 1px solid var(--accent); border-radius: 12px;
+  padding: 1.15rem 1.25rem 1rem; margin: 1.4rem 0; text-align: center;
+}
+.hero-label {
+  font-family: var(--mono); font-size: 11.5px; letter-spacing: .15em; text-transform: uppercase;
+  color: var(--accent); margin-bottom: .2rem;
+}
+.hero .katex-display { margin: .7rem 0; }
+.hero .katex { font-size: 1.28em; }
+.hero p { font-size: .98rem; color: var(--ink-soft); margin: .25rem auto .15rem; max-width: 36em; }
+.hero p .katex { font-size: 1.05em; }
+
+/* Cards, callouts, tables */
+.box { background: var(--card); border: 1px solid var(--rule); border-radius: 10px; padding: .85rem 1.1rem; margin: 1rem 0; }
+.box > :last-child { margin-bottom: 0; }
+.box-title { font-weight: 600; margin-bottom: .3rem; }
+.note {
+  border-left: 3px solid var(--accent); background: var(--card);
+  padding: .55rem 1rem; margin: 1rem 0; border-radius: 0 8px 8px 0; font-size: .98rem;
+}
+.note b:first-child { font-weight: 600; }
+.steps { counter-reset: s; list-style: none; margin-left: 0; }
+.steps > li { counter-increment: s; position: relative; padding-left: 2.2rem; margin-bottom: .65rem; }
+.steps > li::before {
+  content: counter(s); position: absolute; left: 0; top: .12rem; width: 1.5rem; height: 1.5rem; border-radius: 50%;
+  background: var(--tint); color: var(--accent); font-family: var(--mono); font-size: 12px;
+  display: flex; align-items: center; justify-content: center; border: 1px solid var(--accent);
+}
+.tbl { overflow-x: auto; margin: 1rem 0; }
+table { border-collapse: collapse; width: 100%; background: var(--card); font-size: .98rem; }
+th {
+  font-family: var(--mono); font-weight: 500; font-size: 11.5px; letter-spacing: .08em; text-transform: uppercase;
+  text-align: left; color: var(--ink-muted); background: var(--page-deep);
+}
+th, td { padding: .5rem .75rem; border: 1px solid var(--rule); vertical-align: middle; }
+
+details.ex { background: var(--card); border: 1px solid var(--rule); border-radius: 10px; margin: .8rem 0; }
+details.ex > summary {
+  cursor: pointer; padding: .65rem 1.1rem; list-style: none; display: flex; gap: .7rem; align-items: baseline;
+}
+details.ex > summary::-webkit-details-marker { display: none; }
+details.ex > summary::before { content: '›'; color: var(--accent); font-weight: 600; transition: transform .15s; display: inline-block; }
+details.ex[open] > summary::before { transform: rotate(90deg); }
+details.ex > summary:hover { color: var(--accent); }
+.ex-tag { font-family: var(--mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); flex: none; }
+.ex-body { padding: .2rem 1.2rem .9rem; border-top: 1px solid var(--rule); }
+.ex-body > :first-child { margin-top: .7rem; }
+
+/* Long equations scroll sideways, but the bar only shows when one really does not fit */
+.katex-display { overflow-x: auto; overflow-y: hidden; padding: .15rem 0 .35rem; scrollbar-width: none; }
+.katex-display::-webkit-scrollbar { display: none; }
+.katex-display.scrolls { scrollbar-width: thin; }
+.katex-display.scrolls::-webkit-scrollbar { display: block; height: 6px; }
+.katex-display.scrolls::-webkit-scrollbar-thumb { background: var(--rule); border-radius: 3px; }
+.katex { font-size: 1.08em; }
+
+figure { margin: 1.2rem 0; text-align: center; }
+figure svg { width: 100%; max-width: 620px; height: auto; background: var(--card); border: 1px solid var(--rule); border-radius: 10px; }
+figcaption { font-size: .92rem; color: var(--ink-muted); margin-top: .35rem; }
+svg text { font-family: var(--serif); font-style: italic; font-size: 15px; fill: var(--ink-soft); }
+
+.pager { display: flex; justify-content: space-between; gap: 1rem; margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--rule); }
+.pager a { text-decoration: none; color: var(--ink-soft); max-width: 48%; }
+.pager a:hover { color: var(--accent); }
+.pager small { display: block; font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-muted); }
+.pager .nx { text-align: right; margin-left: auto; }
+
+footer { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--rule); color: var(--ink-muted); font-family: var(--mono); font-size: 12px; display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+footer a { color: inherit; }
+
+@media (max-width: 680px) {
+  body { font-size: 18px; }
+  .wrap { padding: 0 1rem 4rem; }
+  .masthead { grid-template-columns: 1fr; padding-top: 2.5rem; }
+  #logo { max-width: 280px; }
+  .hero { padding: 1rem .75rem; }
+  .hero .katex { font-size: 1.12em; }
+  /* Equation numbers go on their own line, so they cannot collide with the equation */
+  .katex-display > .katex > .katex-html > .tag { position: static; display: block; text-align: right; font-size: .82em; color: var(--ink-muted); }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .view.active { animation: none; }
+  .topic-card { transition: none; }
+}
+@media print {
+  .topbar, .pager, #home, footer { display: none !important; }
+  .view { display: block !important; page-break-after: always; }
+  .ex-body { display: block !important; }
+  body { background: #fff; }
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+<!-- ═══════════ HOME ═══════════ -->
+<main id="home" class="view active">
+  <header class="masthead">
+    <div>
+      <p class="eyebrow">MATH323 · Cheat Sheet</p>
+      <h1>Further Methods <em>of Applied Mathematics</em></h1>
+      <p class="subtitle">ODE techniques, the calculus of variations and first-order PDE systems. Pick a topic to begin.</p>
+    </div>
+    <svg id="logo" viewBox="0 0 280 150" role="img" aria-label="A circle rolling beneath a line, tracing the cycloid curve of fastest descent"></svg>
+  </header>
+  <div id="contents"></div>
+  <footer>
+    <span>starocracy · 2026–27</span>
+    <a href="index.html">← Revision Hub</a>
+  </footer>
+</main>
+
+<!-- ═══════════ CHAPTER I: ODEs ═══════════ -->
+
+<article class="view" id="second-order" data-ch="I">
+  <p class="lede">The foundation for the whole chapter: split the problem into a homogeneous part and one particular solution.</p>
+
+  <div class="hero">
+    <div class="hero-label">General solution</div>
+    \[ a(x)\,y'' + b(x)\,y' + c(x)\,y = f(x) \quad\Longrightarrow\quad y = y_{\mathrm{CF}} + y_{\mathrm{PI}} \]
+    <p>\(y_{\mathrm{CF}} = Ay_1 + By_2\) is the general solution of the homogeneous equation, with \(y_1 \neq y_2\) independent. \(y_{\mathrm{PI}}\) is <em>any</em> one solution of the full equation.</p>
+  </div>
+
+  <h3>Constant coefficients</h3>
+  <p>When \(a, b, c\) are constants, the ansatz \(y = e^{mx}\) gives the indicial (auxiliary, characteristic) equation</p>
+  \[ am^2 + bm + c = 0. \]
+  <div class="tbl"><table>
+    <tr><th>Roots</th><th>Complementary function</th></tr>
+    <tr><td>Distinct \(m_1 \neq m_2\)</td><td>\(y_{\mathrm{CF}} = Ae^{m_1 x} + Be^{m_2 x}\)</td></tr>
+    <tr><td>Complex \(m = \alpha \pm i\beta\) (real \(a,b,c\))</td><td>\(y_{\mathrm{CF}} = e^{\alpha x}\big(A\cos\beta x + B\sin\beta x\big)\)</td></tr>
+    <tr><td>Repeated \(m_1 = m_2 = m\)</td><td>\(y_{\mathrm{CF}} = Ae^{mx} + Bxe^{mx}\)</td></tr>
+  </table></div>
+
+  <h3>When the coefficients are not constant</h3>
+  <p>The rest of the chapter covers what to do next:</p>
+  <ul>
+    <li><a href="#euler-ode">Euler's ODE</a> has a known form for its solutions.</li>
+    <li><a href="#reduction">Reduction of order</a> gives \(y_2\) once you have \(y_1\).</li>
+    <li><a href="#particular-integrals">Trial solutions</a> and <a href="#variation-of-parameters">variation of parameters</a> find \(y_{\mathrm{PI}}\).</li>
+  </ul>
+  <div class="note"><b>Worth knowing.</b> Many important ODEs have no solution in elementary functions, such as Bessel's ODE \(x^2y'' + xy' + (x^2 - n^2)y = 0\). These lead to the subject of special functions, defined through their Taylor or Laurent expansions.</div>
+</article>
+
+<article class="view" id="euler-ode" data-ch="I">
+  <p class="lede">The one variable-coefficient equation you can always solve: each power of \(x\) matches the order of its derivative.</p>
+
+  <div class="hero">
+    <div class="hero-label">Euler's ODE and its indicial equation</div>
+    \begin{equation} ax^2y'' + bxy' + cy = 0 \quad (x \neq 0) \tag{1.3} \end{equation}
+    \begin{equation} y = Ax^n \;\Longrightarrow\; an^2 + (b-a)n + c = 0 \tag{1.4} \end{equation}
+    <p>Note the middle coefficient is \(b - a\), not \(b\). It comes from \(an(n-1) + bn + c\).</p>
+  </div>
+
+  <div class="tbl"><table>
+    <tr><th>Roots of (1.4)</th><th>Complementary function</th></tr>
+    <tr><td>Distinct \(n_1 \neq n_2\)</td><td>\(y_{\mathrm{CF}} = c_1x^{n_1} + c_2x^{n_2}\)</td></tr>
+    <tr><td>Complex \(n = \alpha \pm i\beta\)</td><td>\(y_{\mathrm{CF}} = x^\alpha\big[A\cos(\beta\ln x) + B\sin(\beta\ln x)\big]\)</td></tr>
+    <tr><td>Repeated \(n\)</td><td>\(y_{\mathrm{CF}} = c_1x^n + c_2x^n\ln x\)</td></tr>
+  </table></div>
+  <p>The complex case uses \(x^{i\beta} = e^{i\beta\ln x} = \cos(\beta\ln x) + i\sin(\beta\ln x)\).</p>
+
+  <h3>Alternative: change of variable</h3>
+  <p>Setting \(t = \ln x\) and \(y(x) = \phi(t)\) gives</p>
+  \[ \frac{dy}{dx} = \frac{1}{x}\frac{d\phi}{dt}, \qquad \frac{d^2y}{dx^2} = \frac{1}{x^2}\left(\frac{d^2\phi}{dt^2} - \frac{d\phi}{dt}\right), \]
+  <p>which turns Euler's ODE into a constant-coefficient equation with the same characteristic equation as (1.4):</p>
+  \[ a\frac{d^2\phi}{dt^2} + (b-a)\frac{d\phi}{dt} + c\phi = 0. \]
+
+  <h3>Inhomogeneous Euler equations</h3>
+  <div class="tbl"><table>
+    <tr><th>Right-hand side</th><th>Trial \(y_{\mathrm{PI}}\)</th><th>Condition</th></tr>
+    <tr><td>\(\alpha = \text{const.}\)</td><td>\(\lambda\), giving \(\lambda = \alpha/c\)</td><td>\(c \neq 0\)</td></tr>
+    <tr><td>\(\alpha x^n\)</td><td>\(\lambda x^n\)</td><td>\(n\) is not a root of (1.4)</td></tr>
+    <tr><td>\(\alpha x^n\)</td><td>\(\lambda x^n\ln x\)</td><td>\(n\) is a root, non-degenerate case</td></tr>
+  </table></div>
+  <p>More generally there are two routes: substitute \(t = \ln x\) and use undetermined coefficients or variation of parameters, or <a href="#variation-of-parameters">apply variation of parameters</a> directly.</p>
+
+  <details class="ex"><summary><span class="ex-tag">Example</span><span>\(x^2y'' + 6xy' + 6y = 0\)</span></summary><div class="ex-body">
+    <p>Here \(a = 1\), \(b = 6\), \(c = 6\), so (1.4) becomes</p>
+    \[ n^2 + 5n + 6 = 0 \quad\Longrightarrow\quad n = -2 \text{ or } -3. \]
+    \[ y_{\mathrm{CF}}(x) = \frac{A}{x^2} + \frac{B}{x^3}. \]
+  </div></details>
+</article>
+
+<article class="view" id="reduction" data-ch="I">
+  <p class="lede">Finding even one solution can be hard, but once you have it, the second always follows.</p>
+
+  <div class="hero">
+    <div class="hero-label">Reduction of order</div>
+    \[ y_2 = z(x)\,y_1 \quad\Longrightarrow\quad ay_1\,z'' + \big(2ay_1' + by_1\big)\,z' = 0 \]
+    <p>This is a first-order linear ODE for \(w(x) = z'(x)\), which can always be solved.</p>
+  </div>
+
+  <h3>Why it works</h3>
+  <p>Substituting \(y_2 = zy_1\) into \(ay'' + by' + cy = 0\) gives</p>
+  \begin{equation} az''y_1 + 2az'y_1' + bz'y_1 + z\underbrace{\big(ay_1'' + by_1' + cy_1\big)}_{=\,0} = 0, \tag{1.5} \end{equation}
+  <p>and the term in \(z\) vanishes because \(y_1\) solves the homogeneous equation.</p>
+
+  <h3>Method</h3>
+  <ol class="steps">
+    <li>Find \(y_1\), often by trying \(y = x^n\) or \(y = e^{mx}\).</li>
+    <li>Write the first-order equation for \(w = z'\) and solve it.</li>
+    <li>Integrate \(w\) to get \(z\). Then \(y_2 = zy_1\) and \(y_{\mathrm{CF}} = Ay_1 + By_2\).</li>
+  </ol>
+
+  <details class="ex" open><summary><span class="ex-tag">Example</span><span>\(x^2(1-x)y'' + 2x(2-x)y' + 2(1+x)y = 0\)</span></summary><div class="ex-body">
+    <p>The form resembles Euler's ODE, so try \(y = x^n\):</p>
+    \[ x^n\big\{(1-x)n(n-1) + 2(2-x)n + 2(1+x)\big\} = 0 \]
+    \[ n(n-1) + 4n + 2 - x\big[n(n-1) + 2n - 2\big] = 0. \]
+    <p>The \(x\)-independent part is \((n+1)(n+2)\) and the square bracket is \((n-1)(n+2)\). Both vanish for \(n = -2\), so \(y_1 = 1/x^2\).</p>
+    <p>Now use the reduced equation:</p>
+    \[ x^2(1-x)x^{-2}\,w' + \big(2x^2(1-x)(-2x^{-3}) + 2x(2-x)x^{-2}\big)w = 0 \]
+    \[ \Longrightarrow\quad w' + \frac{2}{1-x}\,w = 0 \quad\Longrightarrow\quad w = (x-1)^2 \quad\Longrightarrow\quad z = \tfrac13(x-1)^3. \]
+    <p>Absorbing the factor of \(\tfrac13\) into the constant \(B\):</p>
+    \[ y_{\mathrm{CF}}(x) = \frac{A}{x^2} + B\,\frac{(x-1)^3}{x^2}. \]
+  </div></details>
+</article>
+
+<article class="view" id="particular-integrals" data-ch="I">
+  <p class="lede">The quickest route to \(y_{\mathrm{PI}}\): make an educated guess. This only works in special cases, but they are common.</p>
+
+  <div class="hero">
+    <div class="hero-label">The resonance rule</div>
+    \[ y_{\mathrm{PI}} = x\,y_p(x) \]
+    <p>Use this when the first trial \(y_p\) solves the homogeneous equation. A trial that already appears in \(y_{\mathrm{CF}}\) contributes nothing, so it cannot produce the right-hand side.</p>
+  </div>
+
+  <h3>Standard trials (constant coefficients)</h3>
+  <div class="tbl"><table>
+    <tr><th>Right-hand side of \(ay'' + by' + cy\)</th><th>Trial \(y_{\mathrm{PI}}\)</th></tr>
+    <tr><td>\(C\sin\omega x\) or \(C\cos\omega x\)</td><td>\(A\sin\omega x + B\cos\omega x\)</td></tr>
+    <tr><td>\(Ce^{\mu x}\)</td><td>\(Ae^{\mu x}\)</td></tr>
+    <tr><td>\(e^{\mu x}\sin\omega x\) or \(e^{\mu x}\cos\omega x\)</td><td>\(e^{\mu x}(A\sin\omega x + B\cos\omega x)\)</td></tr>
+  </table></div>
+  <p>Find the constants by inserting the trial into the ODE.</p>
+
+  <details class="ex" open><summary><span class="ex-tag">Example</span><span>\(y'' - 4y' + 3y = e^x\)</span></summary><div class="ex-body">
+    <p>The complementary function is \(y_{\mathrm{CF}} = Ae^x + Be^{3x}\). The trial \(y_{\mathrm{PI}} = ae^x\) gives \(e^x(a - 4a + 3a) = e^x\), which has no solution, since \(e^x\) already appears in \(y_{\mathrm{CF}}\). So use \(y_{\mathrm{PI}} = axe^x\):</p>
+    \[ y_{\mathrm{PI}}' = ae^x + axe^x, \qquad y_{\mathrm{PI}}'' = 2ae^x + axe^x. \]
+    \[ xe^x(a - 4a + 3a) + e^x(2a - 4a) = e^x \quad\Longrightarrow\quad a = -\tfrac12. \]
+    \[ y(x) = Ae^x + Be^{3x} - \tfrac12 xe^x. \]
+  </div></details>
+</article>
+
+<article class="view" id="variation-of-parameters" data-ch="I">
+  <p class="lede">The general-purpose method. Promote the constants in \(y_{\mathrm{CF}}\) to functions, then pick them to fit the right-hand side. It needs neither constant coefficients nor a special \(f(x)\).</p>
+
+  <div class="hero">
+    <div class="hero-label">Variation of parameters</div>
+    \[ y = L_1(x)\,y_1 + L_2(x)\,y_2, \qquad
+       \begin{cases} L_1'y_1 + L_2'y_2 = 0 \\[2pt] L_1'y_1' + L_2'y_2' = \dfrac{f(x)}{a(x)} \end{cases} \]
+    <p>Equations (1.8). The first is a free choice that keeps \(L_i''\) out of \(y''\). The second is what the ODE then requires.</p>
+  </div>
+
+  <div class="hero">
+    <div class="hero-label">Solution formula</div>
+    \begin{equation} y(x) = -y_1(x)\int\!dx\,\frac{f(x)\,y_2(x)}{W(x)\,a(x)} + y_2(x)\int\!dx\,\frac{f(x)\,y_1(x)}{W(x)\,a(x)} \tag{1.9} \end{equation}
+    \[ W(x) = y_1y_2' - y_2y_1' \]
+    <p>\(W \neq 0\) because \(y_1, y_2\) are linearly independent. Keeping the two integration constants gives the general solution.</p>
+  </div>
+
+  <div class="note"><b>Watch the \(a(x)\).</b> The right-hand side of the second condition is \(f/a\), not \(f\). This matters whenever the leading coefficient is not 1, as in Euler equations.</div>
+
+  <h3>Where it comes from</h3>
+  <ol class="steps">
+    <li>Differentiate: \(y' = L_1'y_1 + L_1y_1' + L_2'y_2 + L_2y_2'\). Impose \(L_1'y_1 + L_2'y_2 = 0\).</li>
+    <li>Then \(y' = L_1y_1' + L_2y_2'\) and \(y'' = L_1'y_1' + L_1y_1'' + L_2'y_2' + L_2y_2''\).</li>
+    <li>Insert into the ODE. The terms in \(L_1, L_2\) vanish since \(y_1, y_2\) solve the homogeneous equation, leaving \(a(L_1'y_1' + L_2'y_2') = f\).</li>
+    <li>Compute (I)\(\times y_2'\) \(-\) (II)\(\times y_2\) to get \((y_1y_2' - y_2y_1')L_1' = -fy_2/a\). The same approach gives \(L_2'\). Hence
+    \[ L_1 = -\int\!dx\,\frac{fy_2}{Wa}, \qquad L_2 = \int\!dx\,\frac{fy_1}{Wa}. \]</li>
+  </ol>
+
+  <h3>Green's function form</h3>
+  <p>For \(y'' + y = f(x)\), we have \(a = 1\) and \(W = 1\). Using \(-\cos x\sin t + \sin x\cos t = \sin(x-t)\), formula (1.9) becomes</p>
+  \begin{equation} y_{\mathrm{PI}}(x) = \int_a^x dt\,\sin(x-t)\,f(t). \tag{1.11} \end{equation}
+  <p>This satisfies \(y_{\mathrm{PI}}(a) = y_{\mathrm{PI}}'(a) = 0\), which makes \(\sin(x-t)\) the Green's function of the initial-value problem. To check it, use</p>
+  \[ \frac{d}{dx}\int_a^x dt\,G(x,t)f(t) = \int_a^x dt\,\frac{\partial G}{\partial x}(x,t)\,f(t) + G(x,x)f(x). \]
+
+  <h3>Worked examples</h3>
+  <details class="ex"><summary><span class="ex-tag">Example 1</span><span>\(y'' - 2y' = e^x\sin x\)</span></summary><div class="ex-body">
+    <p>\(y_{\mathrm{CF}} = c_1 + c_2e^{2x}\), so take \(y = L_1(x) + L_2(x)e^{2x}\). The condition is \(L_1' + L_2'e^{2x} = 0\). Then \(y' = 2L_2e^{2x}\) and \(y'' = 2L_2'e^{2x} + 4L_2e^{2x}\). The ODE gives</p>
+    \[ 2L_2'e^{2x} = e^x\sin x \quad\Longrightarrow\quad L_2' = \tfrac12e^{-x}\sin x. \]
+    <p>Integrating by parts twice, or using complex exponentials:</p>
+    \[ L_2 = -\tfrac14e^{-x}(\cos x + \sin x) + c_2. \]
+    \[ L_1' = -L_2'e^{2x} = -\tfrac12e^x\sin x \quad\Longrightarrow\quad L_1 = \tfrac14e^x(\cos x - \sin x) + c_1. \]
+    \[ y(x) = c_1 + c_2e^{2x} - \tfrac12e^x\sin x. \]
+  </div></details>
+
+  <details class="ex"><summary><span class="ex-tag">Example 2</span><span>\(y'' + y = \sec x\)</span></summary><div class="ex-body">
+    <p>With \(y = L_1\cos x + L_2\sin x\), the conditions (1.8) are</p>
+    \[ \text{(I)}\;\; L_1'\cos x + L_2'\sin x = 0, \qquad \text{(II)}\;\; -L_1'\sin x + L_2'\cos x = \sec x. \]
+    <p>Using \(\cos^2 x + \sin^2 x = 1\), the combinations (I)\(\times\cos x -\) (II)\(\times\sin x\) and (I)\(\times\sin x +\) (II)\(\times\cos x\) give</p>
+    \[ L_2' = 1 \;\Rightarrow\; L_2 = x + c_2, \qquad L_1' = -\tan x \;\Rightarrow\; L_1 = \ln(\cos x) + c_1. \]
+    \[ y(x) = \big[c_1 + \ln(\cos x)\big]\cos x + (c_2 + x)\sin x. \]
+    <p>No trial solution would have found this.</p>
+  </div></details>
+
+  <details class="ex"><summary><span class="ex-tag">Example 3</span><span>\(y'' - 2y' + y = \dfrac{e^x}{x+1}\)</span></summary><div class="ex-body">
+    <p>The auxiliary equation \(m^2 - 2m + 1 = 0\) gives \(y_{\mathrm{CF}} = c_1e^x + c_2xe^x\). Conditions (1.8):</p>
+    \[ L_1'e^x + L_2'xe^x = 0, \qquad L_1'e^x + L_2'(xe^x + e^x) = \frac{e^x}{x+1}. \]
+    <p>Subtracting:</p>
+    \[ L_2' = \frac{1}{x+1} \;\Rightarrow\; L_2 = \ln(x+1) + c_2, \]
+    \[ L_1' = -\frac{x}{x+1} = -1 + \frac{1}{x+1} \;\Rightarrow\; L_1 = -x + \ln(x+1) + c_1. \]
+    \[ y(x) = c_1e^x + \tilde c_2\,xe^x + (x+1)\ln(x+1)\,e^x. \]
+  </div></details>
+
+  <details class="ex"><summary><span class="ex-tag">Example 4</span><span>\(x^2y'' - 2xy' + 2y = x^2\sin x\)</span></summary><div class="ex-body">
+    <p>This is an Euler ODE with indicial equation \(n^2 - 3n + 2 = (n-1)(n-2) = 0\), so \(y_{\mathrm{CF}} = c_1x + c_2x^2\). Using (1.9) with \(a(x) = x^2\):</p>
+    \[ W(x) = \begin{vmatrix} x & x^2 \\ 1 & 2x \end{vmatrix} = x^2. \]
+    \[ y_{\mathrm{PI}}(x) = -x\int^x dt\,\frac{t^2\sin t\cdot t^2}{t^2\cdot t^2} + x^2\int^x dt\,\frac{t^2\sin t\cdot t}{t^2\cdot t^2} \]
+    \[ = -x\int^x dt\,\sin t + x^2\int_0^x dt\,\frac{\sin t}{t} = x\cos x + x^2\,\mathrm{Si}(x). \]
+    <p>The second integral has no elementary form. It defines the <em>sine integral</em>, \(\mathrm{Si}(x)\).</p>
+  </div></details>
+
+  <h3>Higher-order ODEs</h3>
+  <p>For \(a_n(x)y^{(n)} + \dots + a_1(x)y' + a_0(x)y = f(x)\), use \(y = L_1(x)y_1 + \dots + L_n(x)y_n\), with conditions</p>
+  \[ \begin{aligned}
+    L_1'y_1 + L_2'y_2 + \dots + L_n'y_n &= 0 \\
+    L_1'y_1' + L_2'y_2' + \dots + L_n'y_n' &= 0 \\
+    &\;\;\vdots \\
+    L_1'y_1^{(n-2)} + L_2'y_2^{(n-2)} + \dots + L_n'y_n^{(n-2)} &= 0 \\
+    L_1'y_1^{(n-1)} + L_2'y_2^{(n-1)} + \dots + L_n'y_n^{(n-1)} &= \frac{f(x)}{a_n(x)}.
+  \end{aligned} \tag{1.13} \]
+  <p>This can be solved because the Wronskian determinant of the coefficients does not vanish, by linear independence of the \(y_i\). For \(n = 3\):</p>
+  \[ W(x) = \begin{vmatrix} y_1 & y_2 & y_3 \\ y_1' & y_2' & y_3' \\ y_1'' & y_2'' & y_3'' \end{vmatrix}. \]
+
+  <details class="ex"><summary><span class="ex-tag">Example</span><span>\(y''' + y'' + y' + y = f(x)\)</span></summary><div class="ex-body">
+    <p>The indicial equation is \(m^3 + m^2 + m + 1 = (m+1)(m^2+1) = 0\), so \(m = -1\) or \(m = \pm i\). Hence</p>
+    \[ y_{\mathrm{CF}} = c_1\cos x + c_2\sin x + c_3e^{-x}, \qquad y = L_1\cos x + L_2\sin x + L_3e^{-x}. \]
+    <p>The three conditions for \(L_1', L_2', L_3'\) are:</p>
+    \[ \begin{aligned}
+      L_1'\cos x + L_2'\sin x + L_3'e^{-x} &= 0 \\
+      -L_1'\sin x + L_2'\cos x - L_3'e^{-x} &= 0 \\
+      -L_1'\cos x - L_2'\sin x + L_3'e^{-x} &= f(x).
+    \end{aligned} \]
+    <p>Solve this system for the \(L_i'\), then integrate to obtain the \(L_i\).</p>
+  </div></details>
+</article>
+
+<!-- ═══════════ CHAPTER II: CALCULUS OF VARIATIONS ═══════════ -->
+
+<article class="view" id="functionals" data-ch="II">
+  <p class="lede">Ordinary calculus finds the numbers that make a function stationary. The calculus of variations finds the <em>functions</em> that make a functional stationary.</p>
+
+  <div class="hero">
+    <div class="hero-label">The basic problem</div>
+    \begin{equation} I[y] = \int_a^b dx\; F\!\left(x,\, y,\, \frac{dy}{dx}\right), \qquad y(a) = \alpha,\quad y(b) = \beta \tag{2.1} \end{equation}
+    <p>Given \(F\) and the endpoint values, find the function \(y(x)\) that makes \(I[y]\) extremal (stationary).</p>
+  </div>
+
+  <h3>Function vs functional</h3>
+  <div class="tbl"><table>
+    <tr><th></th><th>Function \(f\)</th><th>Functional \(J\)</th></tr>
+    <tr><td>Takes in</td><td>A number \(x\)</td><td>A function \(y(x)\)</td></tr>
+    <tr><td>Gives back</td><td>A number \(f(x)\)</td><td>A number \(J[y]\)</td></tr>
+    <tr><td>Increment</td><td>\(\Delta y = y(x + \Delta x) - y(x)\)</td><td>\(\Delta J = J[y + \delta y] - J[y]\)</td></tr>
+    <tr><td>Stationary when</td><td>\(df = 0\)</td><td>\(\delta J = 0\)</td></tr>
+  </table></div>
+  <p>The notation \(J[y]\) shows that \(J\) depends on the whole function \(y\), not on \(x\). You can think of it as a function of infinitely many variables, because it depends on every value \(y\) takes on \((a,b)\).</p>
+
+  <details class="ex"><summary><span class="ex-tag">Example</span><span>Evaluating a functional on three functions</span></summary><div class="ex-body">
+    <p>Take \(I[y] = \displaystyle\int_0^{1/2} dx\,\{(y')^2 - \pi^2y^2\}\). Each trial function below satisfies \(y(0) = 1\), \(y(\tfrac12) = 0\).</p>
+    <div class="tbl"><table>
+      <tr><th>\(y(x)\)</th><th>\(I[y]\)</th><th>Value</th></tr>
+      <tr><td>\(1 - 2x\)</td><td>\(2 - \dfrac{\pi^2}{6}\)</td><td>\(\approx 0.355\)</td></tr>
+      <tr><td>\(1 - 4x^2\)</td><td>\(\dfrac83 - \dfrac{4\pi^2}{15}\)</td><td>\(\approx 0.0348\)</td></tr>
+      <tr><td>\(\cos\pi x\)</td><td>\(-\pi^2\displaystyle\int_0^{1/2}\cos 2\pi x\,dx\)</td><td>\(0\)</td></tr>
+    </table></div>
+  </div></details>
+
+  <h3>Classic variational problems</h3>
+  <div class="box"><div class="box-title">Shortest path in the plane</div>
+    <p>Minimise arc length between \((a,\alpha)\) and \((b,\beta)\):</p>
+    \begin{equation} I[y] = \int_{P_1}^{P_2} ds = \int_a^b dx\,\sqrt{1 + (y')^2}. \tag{2.2} \end{equation}
+  </div>
+  <div class="box"><div class="box-title">Fermat's principle</div>
+    <p>Light takes the path of least travel time. With speed \(c(x,y)\) in the medium:</p>
+    \begin{equation} T[u] = \int_0^T dt = \int_a^b \frac{\sqrt{1 + u'(x)^2}}{c(x, u(x))}\,dx. \tag{2.5} \end{equation}
+    <p>If \(c\) is constant, this is a multiple of the arc length.</p>
+  </div>
+  <div class="box"><div class="box-title">Brachistochrone</div>
+    <p>Which slide shape minimises the descent time under gravity? With \(y\) measured downwards:</p>
+    \begin{equation} I[y] = \int_{x_1}^{x_2} dx\,\sqrt{\frac{1 + y'^2}{y}}. \tag{2.6} \end{equation}
+    <p>See the <a href="#brachistochrone">full solution</a>.</p>
+  </div>
+
+  <h3>Variations</h3>
+  <p>Compare with the Taylor expansion of a function. For a functional:</p>
+  \[ \Delta J = J[y + \delta y] - J[y] = \frac{\partial J}{\partial y}\,\delta y + \frac{1}{2!}\frac{\partial^2 J}{\partial y^2}(\delta y)^2 + \dots = \delta J + \tfrac{1}{2!}\,\delta^2 J + \dots \]
+  <p>Here \(\delta J\) is the <strong>first variation</strong> and \(\delta^2 J\) the <strong>second variation</strong>.</p>
+  <p>\(J\) has a <strong>local minimum</strong> at \(y_0\) if there is an \(\varepsilon > 0\) such that, for all \(y \in C^2\) with \(|y(x) - y_0(x)| \lt \varepsilon\),</p>
+  \begin{equation} \Delta J = J[y] - J[y_0] \geq 0, \tag{4.9} \end{equation}
+  <p>and a <strong>local maximum</strong> if \(\Delta J \leq 0\). If this holds for arbitrarily large \(\varepsilon\), the extremum is global.</p>
+
+  <h3>Notation to be careful with</h3>
+  <ul>
+    <li><strong>\(\partial F/\partial y'\)</strong> is a formal derivative: treat \(y\) and \(y'\) as unconnected variables. For \(F = x(y'^2 - y^2)\), we get \(\partial F/\partial y = -2xy\) and \(\partial F/\partial y' = 2xy'\).</li>
+    <li><strong>\(\partial/\partial x\)</strong> keeps \(y\) and \(y'\) constant, while <strong>\(d/dx\)</strong> differentiates them too.</li>
+    <li><strong>\(\delta y\) vs \(dy\):</strong> \(\delta y\) changes the function itself, while \(dy\) is the change along a given function caused by \(dx\). Only \(y\) is varied, so \(\delta x = 0\).</li>
+    <li><strong>Admissible functions</strong> are those allowed as inputs. We start with \(C^1[a,b]\).</li>
+  </ul>
+</article>
+
+<article class="view" id="euler-lagrange" data-ch="II">
+  <p class="lede">The central result of the chapter: the stationarity of a functional becomes a differential equation.</p>
+
+  <div class="hero">
+    <div class="hero-label">Euler–Lagrange equation</div>
+    \begin{equation} \frac{\partial F}{\partial y} - \frac{d}{dx}\left(\frac{\partial F}{\partial y'}\right) = 0 \tag{4.18} \end{equation}
+    <p>Any minimiser of \(J[y] = \int_a^b F(x,y,y')\,dx\) with \(F \in C^2\), subject to the boundary conditions, must satisfy this equation.</p>
+  </div>
+
+  <p>Expanding \(d/dx\) by the chain rule shows it is a second-order ODE:</p>
+  \begin{equation} \frac{\partial F}{\partial y} - \frac{\partial^2 F}{\partial x\,\partial y'} - y'\frac{\partial^2 F}{\partial y\,\partial y'} - y''\frac{\partial^2 F}{\partial y'^2} = 0. \tag{4.19} \end{equation}
+
+  <h3>Derivation</h3>
+  <figure id="fig-variation"><figcaption>The minimiser \(y_0\) and a neighbouring curve. Both pass through the fixed endpoints.</figcaption></figure>
+  <ol class="steps">
+    <li>Suppose \(y_0\) is a minimiser, and consider the family \(u(x,\varepsilon) = y_0(x) + \varepsilon v(x)\), where \(v\) is an arbitrary differentiable curve with \(v(a) = v(b) = 0\).</li>
+    <li>For fixed \(v\), the functional is an ordinary function of \(\varepsilon\): \(\Phi(\varepsilon) = J[y_0 + \varepsilon v]\).</li>
+    <li>Expand: \(\Delta J = \varepsilon\,\Phi'(0) + \tfrac12\Phi''(0)\,\varepsilon^2 + O(\varepsilon^3) \geq 0\). Since \(\varepsilon\) can have either sign, dividing by \(\varepsilon\) and taking \(\varepsilon \to 0\) forces \(\Phi'(0) = 0\). This is \(\delta J = 0\).</li>
+    <li>Differentiate under the integral with the chain rule, then set \(\varepsilon = 0\):
+    \begin{equation} \left.\frac{d}{d\varepsilon}\right|_{\varepsilon=0} J[y + \varepsilon v] = \int_a^b \left(v\,\frac{\partial F}{\partial y} + v'\,\frac{\partial F}{\partial y'}\right)dx = 0. \tag{4.14} \end{equation}</li>
+    <li>Integrate the \(v'\) term by parts. The boundary term vanishes because \(v(a) = v(b) = 0\):
+    \begin{equation} \int_a^b v\left(\frac{\partial F}{\partial y} - \frac{d}{dx}\frac{\partial F}{\partial y'}\right)dx = 0. \tag{4.17} \end{equation}</li>
+    <li>Apply the fundamental lemma below.</li>
+  </ol>
+
+  <div class="box"><div class="box-title">Fundamental lemma of the calculus of variations</div>
+    <p>If \(f\) is continuous on \([a,b]\) and \(\int_a^b f(x)\,v(x)\,dx = 0\) for every \(v \in C^0(a,b)\) with \(v(a) = v(b) = 0\), then \(f(x) = 0\) for all \(x \in [a,b]\).</p>
+  </div>
+
+  <h3>Is it a minimum?</h3>
+  <p>Solutions of the E–L equation are called <strong>extremals</strong> or extremising functions. Satisfying the equation and the boundary conditions only shows that a function is a critical function, which is a candidate for either a minimum or a maximum. To decide, you can:</p>
+  <ul>
+    <li>compare \(I\) with its value on a nearby function, such as the straight line through the endpoints;</li>
+    <li>use the Legendre condition below.</li>
+  </ul>
+  <div class="hero">
+    <div class="hero-label">Legendre condition</div>
+    \begin{equation} \frac{\partial^2 F}{\partial y'^2} \gt 0 \;\;\text{(minimum)} \qquad \frac{\partial^2 F}{\partial y'^2} \lt 0 \;\;\text{(maximum)} \tag{4.21} \end{equation}
+    <p>A necessary condition: it must hold along the function for all \(a \leq x \leq b\).</p>
+  </div>
+
+  <details class="ex" open><summary><span class="ex-tag">Example</span><span>The shortest path is a straight line</span></summary><div class="ex-body">
+    <p>For \(F = \sqrt{1 + y'^2}\), we have \(\dfrac{\partial F}{\partial y} = 0\) and \(\dfrac{\partial F}{\partial y'} = \dfrac{y'}{\sqrt{1 + y'^2}}\), so (4.18) reads</p>
+    \[ 0 = -\frac{d}{dx}\frac{y'}{\sqrt{1 + y'^2}} = -\frac{y''}{(1 + y'^2)^{3/2}}. \]
+    <p>The denominator never vanishes, so \(y'' = 0\) and \(y = cx + d\). The boundary conditions give</p>
+    \begin{equation} y = \frac{\beta - \alpha}{b - a}(x - a) + \alpha. \tag{4.20} \end{equation}
+  </div></details>
+</article>
+
+<article class="view" id="first-integrals" data-ch="II">
+  <p class="lede">If \(F\) is missing a variable, the second-order E–L equation drops to first order. Always check this before doing anything else.</p>
+
+  <div class="hero">
+    <div class="hero-label">Case 1: \(F = F(x, y')\), no explicit \(y\)</div>
+    \begin{equation} \frac{d}{dx}\frac{\partial F}{\partial y'} = 0 \quad\Longrightarrow\quad \frac{\partial F}{\partial y'} = \text{const.} \tag{4.22} \end{equation}
+  </div>
+  <div class="hero">
+    <div class="hero-label">Case 2: \(F = F(y, y')\), no explicit \(x\)</div>
+    \begin{equation} F - y'\frac{\partial F}{\partial y'} = \text{const.} \tag{4.24} \end{equation}
+    <p>This first integral is often called the Beltrami identity.</p>
+  </div>
+
+  <h3>Why case 2 works</h3>
+  <p>If \(F\) has no explicit \(x\)-dependence, then the chain rule and the E–L equation give</p>
+  \[ \frac{dF}{dx} = y'\frac{\partial F}{\partial y} + y''\frac{\partial F}{\partial y'} = y'\frac{d}{dx}\frac{\partial F}{\partial y'} + \frac{\partial F}{\partial y'}\frac{d}{dx}y' = \frac{d}{dx}\left(y'\frac{\partial F}{\partial y'}\right), \]
+  <p>so \(\dfrac{d}{dx}\left(F - y'\dfrac{\partial F}{\partial y'}\right) = 0\).</p>
+
+  <h3>Worked examples</h3>
+  <details class="ex"><summary><span class="ex-tag">Example 1</span><span>\(F = \sqrt{1 + y'^2}\), using both cases</span></summary><div class="ex-body">
+    <p><strong>Via (4.22):</strong> \(F\) is independent of \(y\), so</p>
+    \[ \frac{y'}{\sqrt{1 + y'^2}} = \tilde k \;\Rightarrow\; y'^2 = \tilde k^2(1 + y'^2) \;\Rightarrow\; y' = \pm\frac{\tilde k}{\sqrt{1 - \tilde k^2}} = m. \]
+    <p><strong>Via (4.24):</strong> \(F\) is also independent of \(x\), so</p>
+    \[ \sqrt{1 + y'^2} - \frac{y'^2}{\sqrt{1 + y'^2}} = \frac{1}{\sqrt{1 + y'^2}} = k \;\Rightarrow\; y' = \pm\frac{\sqrt{1 - k^2}}{k} = m. \]
+    <p>Either way, the solutions are straight lines \(y = mx + c\).</p>
+  </div></details>
+
+  <details class="ex"><summary><span class="ex-tag">Example 2</span><span>\(I_\pm[y] = \int_0^1 dx\,(12xy \pm y'^2)\), with \(y(0) = 0\), \(y(1) = 1\)</span></summary><div class="ex-body">
+    <p>Here \(\dfrac{\partial F}{\partial y} = 12x\) and \(\dfrac{d}{dx}\dfrac{\partial F}{\partial y'} = \pm 2y''\), so (4.18) gives</p>
+    \[ 12x \mp 2y'' = 0 \;\Rightarrow\; y'' = \pm 6x \;\Rightarrow\; y = \pm x^3 + cx + d. \]
+    <p>The boundary conditions give \(d = 0\) and \(1 = \pm 1 + c\), hence</p>
+    \[ y_+(x) = x^3, \qquad y_-(x) = 2x - x^3. \]
+    <p>Compare with the straight line \(y = x\), for which \(I_\pm[x] = 4 \pm 1\):</p>
+    <div class="tbl"><table>
+      <tr><th>Functional</th><th>Extremal</th><th>Straight line</th><th>Conclusion</th></tr>
+      <tr><td>\(I_+\)</td><td>\(I_+[x^3] = \tfrac{21}{5}\)</td><td>\(5\)</td><td>Smaller, so a minimum</td></tr>
+      <tr><td>\(I_-\)</td><td>\(I_-[2x - x^3] = \tfrac{19}{5}\)</td><td>\(3\)</td><td>Larger, so a maximum</td></tr>
+    </table></div>
+  </div></details>
+
+  <details class="ex" open><summary><span class="ex-tag">Example 3</span><span>\(I = \int_2^3 dx\,y'^2y^2\), with \(y(2) = 3\), \(y(3) = 4\)</span></summary><div class="ex-body">
+    <p>\(F\) is independent of \(x\), so use (4.24):</p>
+    \[ F - y'\frac{\partial F}{\partial y'} = y'^2y^2 - y'\cdot 2y'y^2 = -y'^2y^2 = -c^2. \]
+    \[ yy' = \tfrac12\frac{d}{dx}y^2 = c \;\Rightarrow\; y^2 = 2cx + d. \]
+    <p>The boundary conditions \(9 = 4c + d\) and \(16 = 6c + d\) give \(c = \tfrac72\), \(d = -5\). So</p>
+    \[ y = \sqrt{7x - 5}, \qquad I[y] = \int_2^3 dx\,(yy')^2 = \int_2^3 dx\,\left(\tfrac72\right)^2 = \frac{49}{4}. \]
+    <p>The straight line through the endpoints is \(y = x + 1\), with</p>
+    \[ I[x+1] = \int_2^3 dx\,(x+1)^2 = \left[\tfrac13(x+1)^3\right]_2^3 = \frac{37}{3} \gt \frac{49}{4}. \]
+    <p>So the extremal gives a minimum. Legendre agrees: \(\dfrac{\partial^2 F}{\partial y'^2} = 2y^2 = 2(7x - 5) \gt 0\) on \([2,3]\).</p>
+  </div></details>
+
+  <details class="ex"><summary><span class="ex-tag">Example 4</span><span>When no extremal exists: \(I = \int_{-1}^{1/2} dx\,(y' + x^2y'^2)\)</span></summary><div class="ex-body">
+    <p>Take \(y(-1) = 2\) and \(y(\tfrac12) = 0\). \(F\) is independent of \(y\), so</p>
+    \[ \frac{\partial F}{\partial y'} = 1 + 2x^2y' = c = c_1 + 1 \;\Rightarrow\; y' = \frac{c_1}{2x^2} \;\Rightarrow\; y = -\frac{c_1}{2x} + c_2. \]
+    <p>The boundary conditions \(2 = \tfrac{c_1}{2} + c_2\) and \(0 = -c_1 + c_2\) give \(c_1 = c_2 = \tfrac43\), so</p>
+    \[ y(x) = -\frac{2}{3x} + \frac43. \]
+    <p>This has a pole at \(x = 0\), inside the interval, so it is not a continuous curve between the points and there is <strong>no extremal</strong>. With \(y(1) = 2\) and \(y(\tfrac12) = 0\) instead, there is one.</p>
+  </div></details>
+</article>
+
+<article class="view" id="brachistochrone" data-ch="II">
+  <p class="lede">The problem that started the subject. Bernoulli asked in 1696: what wire shape takes a sliding bead from one point to another in the least time?</p>
+
+  <div class="hero">
+    <div class="hero-label">The cycloid: curve of fastest descent</div>
+    \begin{equation} x = A(\phi - \sin\phi), \qquad y = A(1 - \cos\phi) \tag{4.26} \end{equation}
+    <p>An inverted cycloid with cusps on the \(x\)-axis, with \(y\) pointing downwards. \(A\) is set by the far endpoint \((b, \beta)\).</p>
+  </div>
+
+  <h3>Setting up the functional</h3>
+  <p>Start at the origin, with the \(y\)-axis pointing down. The bead starts at rest, there is no friction, and the initial height has zero potential energy, so energy conservation gives</p>
+  \[ \tfrac12mv^2 - mgy = 0 \quad\Longrightarrow\quad \left(\frac{ds}{dt}\right)^2 = 2gy. \]
+  <p>With \(ds = \sqrt{1 + y'^2}\,dx\):</p>
+  \begin{equation} dt = \frac{1}{\sqrt{2g}}\frac{ds}{\sqrt y} = \frac{1}{\sqrt{2g}}\,dx\,\sqrt{\frac{1 + y'^2}{y}} \quad\Longrightarrow\quad F = \left(\frac{1 + y'^2}{y}\right)^{1/2}. \tag{4.25} \end{equation}
+
+  <h3>Solving it</h3>
+  <ol class="steps">
+    <li>The full E–L equation is the nonlinear \(2yy'' + y'^2 + 1 = 0\). Avoid it: \(F\) has no explicit \(x\), so use the first integral (4.24):
+    \[ F - y'\frac{\partial F}{\partial y'} = \sqrt{\frac{1 + y'^2}{y}} - \frac{y'^2}{\sqrt{y(1 + y'^2)}} = \frac{1}{\sqrt{y(1 + y'^2)}} = \text{const.} \]</li>
+    <li>Therefore \(y(1 + y'^2) = C\) with \(C \gt 0\), which rearranges to
+    \[ \frac{dy}{dx} = \sqrt{\frac{C - y}{y}} \quad\Longrightarrow\quad dx = dy\,\sqrt{\frac{y}{C - y}}. \]</li>
+    <li>Substitute \(y = C\sin^2\theta = \tfrac{C}{2}(1 - \cos 2\theta)\), with \(dy = 2C\sin\theta\cos\theta\,d\theta\):
+    \[ dx = 2C\sin^2\theta\,d\theta = C(1 - \cos 2\theta)\,d\theta \quad\Longrightarrow\quad x = \tfrac{C}{2}(2\theta - \sin 2\theta) + D. \]</li>
+    <li>Rename \(2\theta = \phi\) and \(C/2 = A\). Starting at the origin gives \(D = 0\), which is (4.26).</li>
+  </ol>
+
+  <figure id="fig-cycloid"><figcaption>Cycloids for \(A = 1\) and \(A = 2\), with \(y\) downwards. The lowest points lie on the dashed line \(y = 2x/\pi\).</figcaption></figure>
+
+  <h3>Geometry and travel time</h3>
+  <p>The lowest points are at \(\phi = \pi\), where \(y = 2A\) and \(x = \pi A\). Along the cycloid,</p>
+  \[ x'(\phi)^2 + y'(\phi)^2 = A^2(1 - \cos\phi)^2 + A^2\sin^2\phi = 2A^2(1 - \cos\phi) = 2A\,y(\phi). \]
+  <p>Defining \(\bar t \equiv \sqrt{2g}\,t\) and using (4.25), the time to reach a point \(P\) satisfies</p>
+  \[ \bar t = \int_0^{\phi(P)} d\phi\,\frac{\sqrt{x'(\phi)^2 + y'(\phi)^2}}{\sqrt{y(\phi)}} = \sqrt{2A}\;\phi(P) \quad\Longrightarrow\quad \sqrt g\,t = \sqrt A\;\phi(P). \]
+
+  <details class="ex"><summary><span class="ex-tag">Example</span><span>Going lower is faster</span></summary><div class="ex-body">
+    <p>Take \(P_1\) (the lowest point with \(A = 1\)), \(P_2\) (the lowest point with \(A = 2\)) and \(Q\) (\(A = 2\), \(\phi = 3\pi/2\), at height \(y = 2\), with \(x = 2(3\pi/2 + 1) \approx 11.42\)).</p>
+    \[ \bar t(P_1) = \sqrt2\,\pi, \qquad \bar t(P_2) = 2\pi, \qquad \bar t(Q) = 3\pi. \]
+    <p>The particle runs down as far as \(y = 4\) on the fastest route to \(Q\), which is at \(y = 2\). The alternative is to follow \(A = 1\) to \(P_1\), then go horizontally to \(Q\) at constant speed:</p>
+    \[ \bar t(0P_1Q) = \bar t(P_1) + \frac{x(Q) - x(P_1)}{\sqrt{y(Q)}} = \sqrt2\,\pi + \frac{3\pi + 2 - \pi}{\sqrt2} = \sqrt2\,(2\pi + 1) \approx 10.30 \gt 3\pi. \]
+  </div></details>
+</article>
+
+<article class="view" id="isoperimetric" data-ch="II">
+  <p class="lede">Extremise one integral while holding another fixed. The Lagrange multiplier from ordinary calculus carries over directly.</p>
+
+  <div class="hero">
+    <div class="hero-label">Isoperimetric problems</div>
+    \[ \text{Extremise } \int_a^b F(x,y,y')\,dx \quad\text{subject to}\quad \int_a^b G(x,y,y')\,dx = C \]
+    \begin{equation} \frac{\partial H}{\partial y} - \frac{d}{dx}\frac{\partial H}{\partial y'} = 0, \qquad H = F + \lambda G \tag{5.31} \end{equation}
+    <p>\(\lambda\) is the Lagrange multiplier. Its sign is free, so \(H = F - \lambda G\) works too.</p>
+  </div>
+
+  <h3>Why this works</h3>
+  <p>On admissible functions the constraint integral is fixed, so</p>
+  \begin{equation} \int_a^b H\,dx = \int_a^b F\,dx + \lambda\int_a^b G\,dx = \int_a^b F\,dx + \lambda C. \tag{5.30} \end{equation}
+  <p>The two integrals differ only by a constant, so an extremal of one is an extremal of the other.</p>
+
+  <h3>Method</h3>
+  <ol class="steps">
+    <li>Form \(H = F + \lambda G\).</li>
+    <li>Solve its E–L equation. If \(H\) has no explicit \(x\), use the first integral \(H - y'\,\partial H/\partial y' = c_1\).</li>
+    <li>Find the constants and \(\lambda\) from \(y(a)\), \(y(b)\) and the constraint.</li>
+  </ol>
+
+  <h3>Worked examples</h3>
+  <details class="ex" open><summary><span class="ex-tag">Example 1</span><span>Rope of fixed length: maximum enclosed area</span></summary><div class="ex-body">
+    <figure id="fig-rope"><figcaption>A rope of fixed length \(l\) over a segment of the \(x\)-axis takes the shape of a circular arc.</figcaption></figure>
+    <p>Maximise the area under a curve \(y(x) \geq 0\) of fixed length \(l\):</p>
+    \begin{equation} I[y] = \int_a^b y\,dx \quad\text{for}\quad J[y] = \int_a^b \sqrt{1 + y'^2}\,dx = l. \tag{5.29} \end{equation}
+    <p>Take \(H = y - \lambda\sqrt{1 + y'^2}\), which has no explicit \(x\), so the first integral gives</p>
+    \[ y - \lambda(1 + y'^2)^{1/2} + y'\lambda(1 + y'^2)^{-1/2}y' = c_1 \quad\Longrightarrow\quad y - c_1 = \lambda(1 + y'^2)^{-1/2}. \]
+    <p>Let \(z = y - c_1\). Then \(z = \lambda/\sqrt{1 + z'^2}\), so \(\dfrac{dz}{dx} = \dfrac{\sqrt{\lambda^2 - z^2}}{z}\) and</p>
+    \[ \int\frac{z\,dz}{\sqrt{\lambda^2 - z^2}} = x - c_2. \]
+    <p>Substituting \(z = \lambda\cos\theta\) gives \(x - c_2 = -\lambda\sin\theta\) and \(y - c_1 = \lambda\cos\theta\), so</p>
+    \begin{equation} (x - c_2)^2 + (y - c_1)^2 = \lambda^2. \tag{5.32} \end{equation}
+    <p>The solution is an arc of a circle of radius \(|\lambda|\) and length \(l\).</p>
+    <p><strong>Case \(a = -1\), \(b = 1\).</strong> From \(y(\pm1) = 0\), we get \(c_2 = 0\) and \(\lambda^2 = 1 + c_1^2\), so \(x^2 + (y - c_1)^2 = 1 + c_1^2\). The constraint is</p>
+    \[ l = \int_{-\theta}^{\theta}\lambda\,d\theta = 2\lambda\theta = 2\theta\sqrt{1 + c_1^2}, \]
+    <p>and the boundary condition gives \(\tan\theta = 1/c_1\), so</p>
+    \begin{equation} l = 2\sqrt{1 + c_1^2}\,\tan^{-1}\frac{1}{c_1}, \tag{5.34} \end{equation}
+    <p>which can be solved numerically for \(c_1\). As \(c_1 \to 0\) we get a unit semicircle, with \(l \to \pi\) and \(A_{\max} = \pi/2\). For comparison, a rectangle with the same rope has \(h = \pi/2 - 1\) and \(A = \pi - 2 \lt \pi/2\).</p>
+  </div></details>
+
+  <details class="ex"><summary><span class="ex-tag">Example 2</span><span>The hanging chain (catenary)</span></summary><div class="ex-body">
+    <p>A chain of length \(L\) and density \(\rho\) hangs between two points, minimising its potential energy:</p>
+    \begin{equation} V = \rho g\int y\sqrt{1 + y'^2}\,dx \quad\text{subject to}\quad \int\sqrt{1 + y'^2}\,dx = L. \tag{5.35} \end{equation}
+    <p>The function is \(H = (y + \lambda)\sqrt{1 + y'^2}\), with no explicit \(x\):</p>
+    \[ H - y'\frac{\partial H}{\partial y'} = \frac{y + \lambda}{\sqrt{1 + y'^2}} = c_1 \quad\Longrightarrow\quad \frac{dy}{dx} = \sqrt{\left(\frac{y + \lambda}{c_1}\right)^2 - 1}. \]
+    <p>Substituting \(y + \lambda = c_1\cosh\theta\) gives \(dx = c_1\,d\theta\), so \(x = c_1\theta + c_2\). This gives the <strong>catenary</strong>:</p>
+    \[ y(x) = c_1\cosh\frac{x - c_2}{c_1} - \lambda. \]
+    <p>The three constants come from \(y(x_1) = y_1\), \(y(x_2) = y_2\) and the length constraint.</p>
+    <figure id="fig-catenary"><figcaption>The worked case below, with \(y\) pointing down: the chain sags to \(y \approx 0.796\) at \(x = \tfrac12\).</figcaption></figure>
+    <p><strong>Case \(y(0) = y(1) = 0\), \(L = 2\).</strong> The boundary conditions give \(c_2 = \tfrac12\), and the length gives</p>
+    \[ 2 = \int_0^1\cosh\frac{x - \frac12}{c_1}\,dx = 2c_1\sinh\frac{1}{2c_1} \quad\Longrightarrow\quad c_1\sinh\frac{1}{2c_1} = 1 \quad\Longrightarrow\quad c_1 = \pm 0.2296. \]
+    <p>As in the notes, \(y\) points down here, and the energy-minimising case is \(c_1 = -0.2296\). Then \(\lambda = c_1\cosh\frac{1}{2c_1} = -1.026\), and the lowest point at \(x = \tfrac12\) is \(y = c_1 - \lambda = 0.796\).</p>
+  </div></details>
+</article>
+
+<article class="view" id="natural-bc" data-ch="II">
+  <p class="lede">What if an endpoint is left free? The variation itself supplies the missing boundary condition.</p>
+
+  <div class="hero">
+    <div class="hero-label">Natural boundary condition</div>
+    \begin{equation} \left.\frac{\partial L}{\partial y'}\right|_{x = x_1} = 0 \quad\text{and/or}\quad \left.\frac{\partial L}{\partial y'}\right|_{x = x_2} = 0 \tag{6.43} \end{equation}
+    <p>Applied at any end where \(y\) is not prescribed, alongside the unchanged Euler–Lagrange equation.</p>
+  </div>
+
+  <h3>Where it comes from</h3>
+  <p>Repeating the derivation for \(h(\varepsilon) = J[y + \varepsilon v]\), but keeping the boundary term:</p>
+  \begin{equation} \left.\frac{dh}{d\varepsilon}\right|_{\varepsilon=0} = \left[\frac{\partial L}{\partial y'}\,v\right]_{x_1}^{x_2} + \int_{x_1}^{x_2} v\left(\frac{\partial L}{\partial y} - \frac{d}{dx}\frac{\partial L}{\partial y'}\right)dx = 0. \tag{6.41} \end{equation}
+  <p>If the E–L equation holds, the boundary term must vanish on its own. At a free end \(v\) is arbitrary, so the coefficient \(\partial L/\partial y'\) has to vanish there.</p>
+
+  <div class="tbl"><table>
+    <tr><th>Type</th><th>Also called</th><th>Condition at the end</th></tr>
+    <tr><td>Essential</td><td>Dirichlet</td><td>\(y\) specified, so \(v = 0\) there</td></tr>
+    <tr><td>Natural</td><td>Neumann</td><td>\(y\) free, so \(\partial L/\partial y' = 0\) there</td></tr>
+    <tr><td>Mixed</td><td></td><td>One of each</td></tr>
+  </table></div>
+
+  <details class="ex" open><summary><span class="ex-tag">Example</span><span>Galilei's problem: fastest route to a vertical wall</span></summary><div class="ex-body">
+    <figure id="fig-galilei"><figcaption>The bead reaches the wall \(x = b\) at the cycloid's lowest point, where the slope is zero.</figcaption></figure>
+    <p>This is the brachistochrone with a free end on the wall \(x = b\). The E–L equation is unchanged, so the curve is again the cycloid (4.26). The natural condition gives</p>
+    \[ \left.\frac{\partial F}{\partial y'}\right|_{x=b} = \left.\frac{y'}{\sqrt{y(1 + y'^2)}}\right|_{x=b} = 0 \quad\Longrightarrow\quad y'\big|_{x=b} = 0. \]
+    <p>So \(x = b\) is the stationary point of the cycloid, at \(\phi = \pi\). Hence \(A = b/\pi\), and the wall is reached at \(y = 2b/\pi\).</p>
+  </div></details>
+</article>
+
+<article class="view" id="generalisations" data-ch="II">
+  <p class="lede">The same idea extends in three directions. Each gives a variation on the E–L equation.</p>
+
+  <h3>(a) Several functions</h3>
+  <div class="hero">
+    <div class="hero-label">One E–L equation per function</div>
+    \[ I[y,z] = \int_a^b dx\,F(x,y,y',z,z') \]
+    \[ \frac{\partial F}{\partial y} - \frac{d}{dx}\frac{\partial F}{\partial y'} = 0, \qquad \frac{\partial F}{\partial z} - \frac{d}{dx}\frac{\partial F}{\partial z'} = 0 \]
+    <p>A system of coupled second-order ODEs: generally \(n\) equations for \(n\) functions.</p>
+  </div>
+  <details class="ex"><summary><span class="ex-tag">Example</span><span>\(F = y^2z^2 + y'^2z^3 + z'^2\)</span></summary><div class="ex-body">
+    \[ \frac{\partial F}{\partial y} = 2yz^2, \quad \frac{\partial F}{\partial y'} = 2y'z^3, \quad \frac{\partial F}{\partial z} = 2y^2z + 3y'^2z^2, \quad \frac{\partial F}{\partial z'} = 2z'. \]
+    <p>The E–L equations are:</p>
+    \[ 2yz^2 - 2y''z^3 - 6y'z^2z' = 0, \qquad 2y^2z + 3y'^2z^2 - 2z'' = 0. \]
+    <p>The term \(6y'z^2z'\) comes from differentiating \(z^3\) with the product rule, which is easy to miss.</p>
+  </div></details>
+
+  <h3>(b) Higher derivatives</h3>
+  <div class="hero">
+    <div class="hero-label">\(F\) depends on \(y''\)</div>
+    \begin{equation} \frac{\partial F}{\partial y} - \frac{d}{dx}\frac{\partial F}{\partial y'} + \frac{d^2}{dx^2}\frac{\partial F}{\partial y''} = 0 \tag{6.46} \end{equation}
+    <p>A fourth-order ODE, so \(y(a)\), \(y(b)\), \(y'(a)\) and \(y'(b)\) must all be fixed. Note the alternating signs.</p>
+  </div>
+  <details class="ex"><summary><span class="ex-tag">Example</span><span>\(I[y] = \int_0^1 dx\,(y'' - y)^2\)</span></summary><div class="ex-body">
+    \[ \frac{\partial F}{\partial y} = 2(y - y''), \qquad \frac{\partial F}{\partial y'} = 0, \qquad \frac{\partial F}{\partial y''} = 2(y'' - y). \]
+    <p>So (6.46) gives \(y^{(iv)} - 2y'' + y = 0\). The indicial equation has double roots at \(m = 1\) and \(m = -1\), so</p>
+    \[ y(x) = (c_1 + c_2x)e^x + (c_3 + c_4x)e^{-x}, \]
+    <p>with the four constants fixed by \(y(0)\), \(y(1)\), \(y'(0)\) and \(y'(1)\).</p>
+  </div></details>
+
+  <h3>(c) Several independent variables</h3>
+  <div class="hero">
+    <div class="hero-label">From an ODE to a PDE</div>
+    \[ I[\phi] = \iint dx\,dy\;F(x,y,\phi,\phi_x,\phi_y) \]
+    \begin{equation} \frac{\partial F}{\partial\phi} - \frac{d}{dx}\frac{\partial F}{\partial\phi_x} - \frac{d}{dy}\frac{\partial F}{\partial\phi_y} = 0 \tag{6.47} \end{equation}
+    <p>Here \(\phi\) is fixed everywhere on the boundary of the integration region.</p>
+  </div>
+  <details class="ex"><summary><span class="ex-tag">Example</span><span>\(F = \phi_x^2 + \phi_y^2\) gives Laplace's equation</span></summary><div class="ex-body">
+    <p>From (6.47), \(\phi_{xx} + \phi_{yy} = 0\). This is the two-dimensional Laplace equation, one of the most important PDEs. In three dimensions, the Laplace operator is</p>
+    \[ \Delta = \frac{\partial^2}{\partial x^2} + \frac{\partial^2}{\partial y^2} + \frac{\partial^2}{\partial z^2}. \]
+  </div></details>
+</article>
+
+<article class="view" id="hamilton" data-ch="II">
+  <p class="lede">All of mechanics follows from one variational statement.</p>
+
+  <div class="hero">
+    <div class="hero-label">Hamilton's principle</div>
+    \[ \delta I = \delta\int_{t_1}^{t_2} L\,dt = 0, \qquad L = T - V \]
+    <p>Of all possible paths between \(t_1\) and \(t_2\), the actual path makes the action stationary. \(L\) is the Lagrangian, with \(T\) the kinetic and \(V\) the potential energy.</p>
+  </div>
+
+  <div class="hero">
+    <div class="hero-label">Equations of motion</div>
+    \[ \frac{\partial L}{\partial q_i} - \frac{d}{dt}\frac{\partial L}{\partial\dot q_i} = 0, \qquad i = 1, 2, \dots, N \]
+    <p>The \(q_i\) are generalised coordinates and the \(\dot q_i\) their time derivatives.</p>
+  </div>
+
+  <h3>From Newton to Hamilton</h3>
+  <ol class="steps">
+    <li>Start from Newton's law \(m_i\ddot{\mathbf r}_i - \mathbf F_i = \mathbf 0\). Dot with \(\delta\mathbf r_i\) and sum over the \(N\) particles:
+    \begin{equation} \sum_{i=1}^N m_i\ddot{\mathbf r}_i\cdot\delta\mathbf r_i - \sum_{i=1}^N \mathbf F_i\cdot\delta\mathbf r_i = 0. \tag{7.49} \end{equation}</li>
+    <li>The second sum is the total work \(\delta W\). Rewrite the first, using that variation and differentiation are interchangeable:
+    \begin{equation} \sum_{i=1}^N m_i\ddot{\mathbf r}_i\cdot\delta\mathbf r_i = \sum_{i=1}^N\left[m_i\frac{d}{dt}\big(\dot{\mathbf r}_i\cdot\delta\mathbf r_i\big) - \delta\left(\frac{m_i}{2}\,\dot{\mathbf r}_i\cdot\dot{\mathbf r}_i\right)\right]. \tag{7.50} \end{equation}
+    The last term is the variation of kinetic energy \(\delta T\), which gives
+    \begin{equation} \delta T + \delta W = \sum_{i=1}^N m_i\frac{d}{dt}\big(\dot{\mathbf r}_i\cdot\delta\mathbf r_i\big). \tag{7.51} \end{equation}</li>
+    <li>Integrate from \(t_1\) to \(t_2\). With \(\delta\mathbf r_i(t_1) = \delta\mathbf r_i(t_2) = \mathbf 0\), the right-hand side vanishes:
+    \begin{equation} \int_{t_1}^{t_2}(\delta T + \delta W)\,dt = 0. \tag{7.52} \end{equation}</li>
+    <li>If a potential \(V\) exists with \(\delta W = -\delta V\), this is \(\int_{t_1}^{t_2}\delta(T - V)\,dt = 0\), which is Hamilton's principle.</li>
+  </ol>
+
+  <details class="ex" open><summary><span class="ex-tag">Example</span><span>Projectile motion</span></summary><div class="ex-body">
+    \[ V = mgz, \qquad T = \tfrac12m(\dot x^2 + \dot z^2), \qquad L = \tfrac12m(\dot x^2 + \dot z^2) - mgz. \]
+    <p><strong>In \(z\):</strong></p>
+    \[ \frac{\partial L}{\partial z} = -mg, \quad \frac{\partial L}{\partial\dot z} = m\dot z \quad\Longrightarrow\quad -mg - m\ddot z = 0 \quad\Longrightarrow\quad \ddot z = -g. \]
+    <p><strong>In \(x\):</strong></p>
+    \[ \frac{\partial L}{\partial x} = 0, \quad \frac{\partial L}{\partial\dot x} = m\dot x \quad\Longrightarrow\quad -m\ddot x = 0 \quad\Longrightarrow\quad \ddot x = 0. \]
+    <p>These are the same equations of motion as from Newton's laws.</p>
+  </div></details>
+
+  <h3>Why use it over Newton?</h3>
+  <ul>
+    <li>It gives equations of motion where Newton's laws are hard to apply directly, for instance when the form of the forces is unknown. For a bead on a curved wire, the force between wire and bead is not known.</li>
+    <li>The Lagrangian is a scalar, whereas Newton's laws are vector equations, so the same result follows whichever coordinates you choose.</li>
+  </ul>
+</article>
+
+<!-- ═══════════ CHAPTER III: SYSTEMS OF FIRST-ORDER PDEs ═══════════ -->
+
+<article class="view" id="first-order-pdes" data-ch="III">
+  <p class="lede">The key idea for the chapter: follow special curves in the plane, and a PDE collapses into an ODE along each one.</p>
+
+  <div class="hero">
+    <div class="hero-label">Characteristics of a first-order PDE</div>
+    \[ a\,\frac{\partial u}{\partial x} + b\,\frac{\partial u}{\partial y} = f \quad\Longrightarrow\quad \frac{dy}{dx} = \frac{b(x,y)}{a(x,y)} \]
+    <p>The solutions \(\eta(x,y) = k\) of this ODE are the <strong>characteristics</strong>. Using \(\eta\) as a coordinate reduces the PDE to \(\partial u/\partial\xi = k(\xi,\eta)\).</p>
+  </div>
+
+  <h3>General setting</h3>
+  <p>A typical linear first-order system for \(u^{(1)}, \dots, u^{(n)}\), with \(u_x = \partial u/\partial x\) and \(u_y = \partial u/\partial y\), is</p>
+  \begin{equation} \sum_{j=1}^n\left(a_{ij}u_x^{(j)} + b_{ij}u_y^{(j)}\right) = c_i, \qquad i = 1, 2, \dots, n, \tag{3.1} \end{equation}
+  <p>or in matrix form, with \(n \times n\) matrices \(A\) and \(B\),</p>
+  \begin{equation} A\mathbf u_x + B\mathbf u_y = \mathbf c. \tag{3.2} \end{equation}
+  <p>The \(a_{ij}, b_{ij}\) depend only on \(x, y\), while the \(c_i\) may also involve the \(u^{(k)}\).</p>
+
+  <h3>The single equation</h3>
+  <p>For \(au_x + bu_y = f\), with \(a(x,y)\), \(b(x,y)\), \(f(x,y,u)\) continuous, change to \(\xi = \xi(x,y)\), \(\eta = \eta(x,y)\) with nonzero Jacobian:</p>
+  \[ J = \frac{\partial(\xi,\eta)}{\partial(x,y)} \neq 0. \]
+  <p>The chain rule gives</p>
+  \begin{equation} \left(a\frac{\partial\xi}{\partial x} + b\frac{\partial\xi}{\partial y}\right)\frac{\partial u}{\partial\xi} + \left(a\frac{\partial\eta}{\partial x} + b\frac{\partial\eta}{\partial y}\right)\frac{\partial u}{\partial\eta} = f. \tag{3.8} \end{equation}
+  <p>Choose \(\eta\) so the second bracket vanishes. If \(\eta(x,y) = k\), then \(d\eta = \eta_x\,dx + \eta_y\,dy = 0\), so \(dy/dx = -\eta_x/\eta_y = b/a\).</p>
+  <p>\(\xi\) is free, as long as \(J \neq 0\). The obvious choice is \(\xi = x\), which gives \(a\,\partial u/\partial\xi = f\). Then rewrite everything in \(\xi, \eta\) and divide by the coefficient.</p>
+
+  <h3>Method</h3>
+  <ol class="steps">
+    <li>Solve \(dy/dx = b/a\) and write the solution as \(\eta(x,y) = k\).</li>
+    <li>Take \(\xi = x\), and express \(x, y\) in terms of \(\xi, \eta\).</li>
+    <li>Transform \(u_x, u_y\) to reach \(u_\xi = k(\xi,\eta)\), then integrate. The "constant" is an arbitrary function \(g(\eta)\).</li>
+    <li>Apply the condition given on a curve to fix \(g\).</li>
+  </ol>
+
+  <details class="ex" open><summary><span class="ex-tag">Example</span><span>\(x^2u_x + yu_y = 1\), with \(u(x,1) = x\)</span></summary><div class="ex-body">
+    <p>The characteristic equation is \(\dfrac{dy}{dx} = \dfrac{y}{x^2}\). Separating:</p>
+    \[ \int\frac{dy}{y} = \int\frac{dx}{x^2} \quad\Longrightarrow\quad \ln y + \frac1x = k \qquad (y \gt 0,\ x \neq 0). \]
+    <p>Choose \(\xi = x\) and \(\eta = \ln y + \dfrac1x\), so \(J = \eta_y = 1/y \neq 0\). Since \(y = e^{\eta - 1/\xi}\):</p>
+    \[ u_x = u_\xi - \frac{1}{\xi^2}u_\eta, \qquad u_y = e^{-(\eta - 1/\xi)}u_\eta. \]
+    <p>Substituting, the \(u_\eta\) terms cancel:</p>
+    \[ \xi^2u_\xi - u_\eta + u_\eta = 1 \quad\Longrightarrow\quad u_\xi = \frac{1}{\xi^2} \quad\Longrightarrow\quad u(\xi,\eta) + \frac1\xi = g(\eta). \]
+    <p>Back in the original variables, with \(g\) any differentiable function:</p>
+    \begin{equation} u(x,y) = -\frac1x + g\!\left(\ln y + \frac1x\right). \tag{3.11} \end{equation}
+    <p>On \(y = 1\), we need \(u(x,1) = -\tfrac1x + g(\tfrac1x) = x\), so \(g(\tfrac1x) = x + \tfrac1x\). With \(t = \tfrac1x\), this is \(g(t) = \tfrac1t + t\). Hence</p>
+    \[ u(x,y) = -\frac1x + \ln y + \frac1x + \frac{1}{\ln y + \frac1x} = \ln y + \frac{1}{\ln y + \frac1x}. \]
+  </div></details>
+</article>
+
+<article class="view" id="classification" data-ch="III">
+  <p class="lede">Before solving a system, find out what type it is. The eigenvalues of one matrix decide everything.</p>
+
+  <h3>Standard form</h3>
+  <p>For two unknowns \(u(x,y)\), \(v(x,y)\):</p>
+  \[ \begin{aligned} au_x + bu_y + pv_x + qv_y &= f(u,v,x,y) \\ cu_x + du_y + rv_x + sv_y &= g(u,v,x,y) \end{aligned} \]
+  \[ A = \begin{pmatrix} a & p \\ c & r \end{pmatrix}, \quad B = \begin{pmatrix} b & q \\ d & s \end{pmatrix}, \quad \mathbf u = \begin{pmatrix} u \\ v \end{pmatrix}, \quad \mathbf c = \begin{pmatrix} f \\ g \end{pmatrix}. \]
+  <p>Assuming \(A\) is non-singular, at least in some region of the plane, multiply (3.2) by \(A^{-1}\):</p>
+  \begin{equation} \mathbf u_x + D\mathbf u_y = \mathbf d, \qquad D = A^{-1}B, \quad \mathbf d = A^{-1}\mathbf c. \tag{3.12} \end{equation}
+
+  <div class="hero">
+    <div class="hero-label">Classification equation</div>
+    \begin{equation} \det(\lambda I - D) = 0 \tag{3.13} \end{equation}
+    <p>Equivalently \(\det(\lambda A - B) = 0\), which avoids computing \(A^{-1}\).</p>
+  </div>
+
+  <div class="tbl"><table>
+    <tr><th>Type</th><th>Roots of (3.13), for \(n\) equations</th></tr>
+    <tr><td><strong>Elliptic</strong></td><td>No real roots</td></tr>
+    <tr><td><strong>Hyperbolic</strong></td><td>\(n\) different real roots, <em>or</em> \(n\) real roots with a repeat but \(n\) linearly independent eigenvectors</td></tr>
+    <tr><td><strong>Parabolic</strong></td><td>\(n\) real roots with a repeat and <em>fewer</em> than \(n\) linearly independent eigenvectors</td></tr>
+    <tr><td>Unclassified</td><td>A mixture of real and complex roots</td></tr>
+  </table></div>
+
+  <div class="note"><b>Position dependence.</b> \(A\) and \(B\) can depend on \(x\) and \(y\), so the type of a system can change from one region of the plane to another.</div>
+
+  <h3>Examples</h3>
+  <details class="ex" open><summary><span class="ex-tag">Example 1</span><span>Parabolic: \(u_x + v_y = x^2 + y^2\), \(v_x = xy\)</span></summary><div class="ex-body">
+    \[ A = \begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix}, \quad B = \begin{pmatrix} 0 & 1 \\ 0 & 0 \end{pmatrix}, \quad D = A^{-1}B = \begin{pmatrix} 0 & 1 \\ 0 & 0 \end{pmatrix}. \]
+    \[ \det(\lambda I - D) = \det\begin{pmatrix} \lambda & -1 \\ 0 & \lambda \end{pmatrix} = \lambda^2 = 0, \]
+    <p>a double root \(\lambda = 0\). For the eigenvectors:</p>
+    \[ (\lambda I - D)\mathbf e = \begin{pmatrix} 0 & -1 \\ 0 & 0 \end{pmatrix}\begin{pmatrix} e_1 \\ e_2 \end{pmatrix} = \mathbf 0 \quad\Longrightarrow\quad \mathbf e = \begin{pmatrix} 1 \\ 0 \end{pmatrix}. \]
+    <p>There is only one eigenvector, so the system is parabolic.</p>
+  </div></details>
+
+  <details class="ex"><summary><span class="ex-tag">Example 2</span><span>Hyperbolic with a repeated root: \(A = B\)</span></summary><div class="ex-body">
+    \[ \det(\lambda A - B) = \det\big[(\lambda - 1)A\big] = 0 \quad\Longrightarrow\quad \lambda = 1 \text{ (repeated)}. \]
+    <p>Now \(\lambda I - D = 0\), so any vector is an eigenvector. We can choose \((1,0)^T\) and \((0,1)^T\). That gives two independent eigenvectors, so the system is hyperbolic.</p>
+  </div></details>
+</article>
+
+<article class="view" id="hyperbolic-systems" data-ch="III">
+  <p class="lede">A hyperbolic system decouples along its characteristics, so information travels along two families of curves.</p>
+
+  <div class="hero">
+    <div class="hero-label">Canonical form</div>
+    \[ \mathbf u = P\mathbf v, \quad P = [\mathbf e_1, \mathbf e_2], \quad P^{-1}DP = \Lambda = \begin{pmatrix} \lambda_1 & 0 \\ 0 & \lambda_2 \end{pmatrix} \]
+    \[ v_x^{i} + \lambda_i\,v_y^{i} = q_i, \qquad i = 1, 2 \]
+    <p>Each equation involves only one component of \(\mathbf v\). The characteristics are \(dy/dx = \lambda_i\).</p>
+  </div>
+
+  <h3>Getting there</h3>
+  <p>We consider hyperbolic systems: \(D\) has two distinct real eigenvalues with \(D\mathbf e_i = \lambda_i\mathbf e_i\), at least in some region, so \(D\) is diagonalisable. Substituting \(\mathbf u = P\mathbf v\) into (3.12) and multiplying by \(P^{-1}\) gives</p>
+  \[ P^{-1}P\mathbf v_x + P^{-1}P_x\mathbf v + P^{-1}DP\mathbf v_y + P^{-1}DP_y\mathbf v = P^{-1}\mathbf d, \]
+  <p>which is</p>
+  \[ \mathbf v_x + \Lambda\mathbf v_y = \mathbf q, \qquad \mathbf q = P^{-1}\mathbf d - P^{-1}P_x\mathbf v - P^{-1}DP_y\mathbf v. \]
+
+  <h3>Solution method</h3>
+  <p>Write the system in the form (3.2) \(A\mathbf u_x + B\mathbf u_y = \mathbf c\), then:</p>
+  <ol class="steps">
+    <li><strong>Eigenvalues.</strong> Solve \(\det(\lambda A - B) = 0\) for \(\lambda_i\), the gradients of the characteristics. If they are real and different, the system is hyperbolic.</li>
+    <li><strong>Characteristics.</strong> Solve \(y'(x) = \lambda_i\). For constant \(\lambda_i\), this gives \(y - \lambda_ix = \text{const.} = \alpha_i\). Otherwise the solution can always be written \(f_i(x,y) = \text{const.} = \alpha_i\).</li>
+    <li><strong>Change variables</strong> from \(x, y\) to \(\alpha_i(x,y)\), using the chain rule. \(A\mathbf u_x + B\mathbf u_y = \mathbf c\) reduces to a pair of equations in which each \(\alpha_i\) appears in only one equation.</li>
+    <li><strong>Riemann invariants.</strong> Integrate to find quantities that are constant on the characteristics.</li>
+    <li><strong>General solution.</strong> Construct it from the Riemann invariants, using the boundary conditions.</li>
+  </ol>
+
+  <div class="hero">
+    <div class="hero-label">Riemann invariant</div>
+    \[ f(u,v,x,y) = \text{constant on } \alpha_1 = \text{const.} \]
+    <p>A combination of the unknowns that does not change along a characteristic. In the inhomogeneous case it also involves \(x\) and \(y\).</p>
+  </div>
+
+  <h3>The picture</h3>
+  <figure id="fig-pqr"><figcaption>Characteristics from \(P\) reach the initial line at \(Q\) and \(R\). The value at \(P\) depends only on the data at those two points.</figcaption></figure>
+  <p>Each characteristic through a point \(P\) carries one invariant from the line \(y = 0\). Two invariants give two equations for \(u_P\) and \(v_P\). See the <a href="#riemann-examples">worked examples</a>.</p>
+</article>
+
+<article class="view" id="riemann-examples" data-ch="III">
+  <p class="lede">The five-step method in full, on the three standard cases from the notes.</p>
+
+  <details class="ex" open><summary><span class="ex-tag">Example 1</span><span>Constant coefficients, homogeneous</span></summary><div class="ex-body">
+    \[ \begin{aligned} 2u_x - 2v_x + u_y - 3v_y &= 0 \\ u_x - 4v_x + v_y &= 0 \end{aligned}
+       \qquad u(x,0) = u_0(x), \quad v(x,0) = v_0(x) \]
+    \[ \begin{pmatrix} 2 & -2 \\ 1 & -4 \end{pmatrix}\begin{pmatrix} u_x \\ v_x \end{pmatrix} + \begin{pmatrix} 1 & -3 \\ 0 & 1 \end{pmatrix}\begin{pmatrix} u_y \\ v_y \end{pmatrix} = \mathbf 0 \]
+    <p><strong>Step 1: eigenvalues.</strong></p>
+    \[ \det(\lambda A - B) = \det\begin{pmatrix} 2\lambda - 1 & -2\lambda + 3 \\ \lambda & -4\lambda - 1 \end{pmatrix} = -6\lambda^2 - \lambda + 1 = 0 \]
+    \[ \Longrightarrow\quad (2\lambda + 1)(3\lambda - 1) = 0 \quad\Longrightarrow\quad \lambda = \tfrac13 \text{ or } \lambda = -\tfrac12. \]
+    <p><strong>Step 2: characteristics.</strong></p>
+    \[ y' = \tfrac13 \;\Rightarrow\; x - 3y = \alpha, \qquad y' = -\tfrac12 \;\Rightarrow\; x + 2y = \beta. \]
+    <p><strong>Step 3: change variables.</strong> The chain rule gives</p>
+    \[ u_x = u_\alpha\alpha_x + u_\beta\beta_x = u_\alpha + u_\beta, \qquad u_y = u_\alpha\alpha_y + u_\beta\beta_y = -3u_\alpha + 2u_\beta, \]
+    <p>and the same for \(v\). The PDEs become</p>
+    \[ -u_\alpha + 7v_\alpha + 4u_\beta - 8v_\beta = 0 \quad (*) \qquad\quad u_\alpha + u_\beta - 7v_\alpha - 2v_\beta = 0 \quad (\dagger) \]
+    <p><strong>Step 4: Riemann invariants.</strong> Adding \((*)\) and \((\dagger)\) gives \(5u_\beta - 10v_\beta = 0\), so \(u_\beta - 2v_\beta = 0\). Inserting this into \((*)\) gives \(u_\alpha - 7v_\alpha = 0\). Integrating:</p>
+    \[ u - 2v = f(\alpha), \qquad u - 7v = g(\beta). \]
+    <p><strong>Step 5: solution.</strong> Solve for \(u\) and \(v\):</p>
+    \[ v = \tfrac15\big[f(\alpha) - g(\beta)\big], \qquad u = \tfrac15\big[7f(\alpha) - 2g(\beta)\big]. \]
+    <p>At \(y = 0\), we have \(\alpha = \beta = x\), so \(f(x) = u_0(x) - 2v_0(x)\) and \(g(x) = u_0(x) - 7v_0(x)\). Therefore</p>
+    \[ u(x,y) = \tfrac15\big[7u_0(x - 3y) - 14v_0(x - 3y) - 2u_0(x + 2y) + 14v_0(x + 2y)\big], \]
+    \[ v(x,y) = \tfrac15\big[u_0(x - 3y) - 2v_0(x - 3y) - u_0(x + 2y) + 7v_0(x + 2y)\big]. \]
+    <p><strong>Pictorially.</strong> \(x - 3y\) is constant on \(PQ\) and \(x + 2y\) is constant on \(PR\), so \(x_Q = x_P - 3y_P\) and \(x_R = x_P + 2y_P\). The invariants give</p>
+    \[ u_P - 2v_P = u_Q - 2v_Q, \qquad u_P - 7v_P = u_R - 7v_R, \]
+    \[ v_P = \tfrac15\big[u_Q - 2v_Q - u_R + 7v_R\big], \qquad u_P = \tfrac15\big[7u_Q - 14v_Q - 2u_R + 14v_R\big], \]
+    <p>which is the same solution.</p>
+  </div></details>
+
+  <details class="ex"><summary><span class="ex-tag">Example 2</span><span>Constant coefficients, inhomogeneous</span></summary><div class="ex-body">
+    \[ \begin{aligned} u_x + 2u_y + v_y &= \sin x \\ -2u_x + v_x - 3v_y &= \cos x \end{aligned} \qquad u(x,0) = \cos x, \quad v(x,0) = \sin x \]
+    <p><strong>Step 1.</strong> With \(A = \begin{pmatrix} 1 & 0 \\ -2 & 1 \end{pmatrix}\) and \(B = \begin{pmatrix} 2 & 1 \\ 0 & -3 \end{pmatrix}\):</p>
+    \[ \det(\lambda A - B) = \det\begin{pmatrix} \lambda - 2 & -1 \\ -2\lambda & \lambda + 3 \end{pmatrix} = \lambda^2 - \lambda - 6 = (\lambda - 3)(\lambda + 2), \]
+    <p>so \(\lambda = 3\) and \(\lambda = -2\).</p>
+    <p><strong>Step 2.</strong> \(y' = 3\) gives \(\alpha = 3x - y\). \(y' = -2\) gives \(\beta = 2x + y\).</p>
+    <p><strong>Step 3.</strong> \(u_x = 3u_\alpha + 2u_\beta\) and \(u_y = -u_\alpha + u_\beta\), and the same for \(v\). The equations simplify to</p>
+    \[ u_\alpha + 4u_\beta - v_\alpha + v_\beta = \sin x, \qquad -6u_\alpha - 4u_\beta + 6v_\alpha - v_\beta = \cos x. \]
+    <p>Adding, then substituting back into the first equation:</p>
+    \[ u_\alpha - v_\alpha = -\tfrac15(\sin x + \cos x), \qquad 4u_\beta + v_\beta = \tfrac15(6\sin x + \cos x). \]
+    <p><strong>Step 4.</strong> Keep the right-hand sides in the new variables: \(5x = \alpha + \beta\). Integrating in \(\alpha\) and in \(\beta\):</p>
+    \[ u - v = \cos\tfrac{\alpha + \beta}{5} - \sin\tfrac{\alpha + \beta}{5} + g(\beta), \qquad 4u + v = -6\cos\tfrac{\alpha + \beta}{5} + \sin\tfrac{\alpha + \beta}{5} + f(\alpha). \]
+    <p>So the Riemann invariants are</p>
+    \[ u - v + \sin x - \cos x = g(2x + y), \qquad 4u + v + 6\cos x - \sin x = f(3x - y). \]
+    <p><strong>Step 5.</strong> At \(y = 0\), with \(u = \cos x\) and \(v = \sin x\):</p>
+    \[ g(2x) = 0 \;\Rightarrow\; g \equiv 0, \qquad f(3x) = 10\cos x \;\Rightarrow\; f(x) = 10\cos\big(\tfrac13x\big). \]
+    <p>Adding the two invariants gives \(5u + 5\cos x = 10\cos(x - \tfrac13y)\). Hence</p>
+    \[ u = -\cos x + 2\cos\big(x - \tfrac13y\big), \qquad v = \sin x - 2\cos x + 2\cos\big(x - \tfrac13y\big). \]
+    <p><strong>Check.</strong> Using \(u_x = \sin x - 2\sin(x - \tfrac13y)\), \(v_x = \cos x + 2\sin x - 2\sin(x - \tfrac13y)\) and \(u_y = v_y = \tfrac23\sin(x - \tfrac13y)\):</p>
+    \[ u_x + 2u_y + v_y = \sin x + \sin\big(x - \tfrac13y\big)\big(-2 + \tfrac43 + \tfrac23\big) = \sin x, \]
+    \[ -2u_x + v_x - 3v_y = -2\sin x + \cos x + 2\sin x + \sin\big(x - \tfrac13y\big)\big(4 - 2 - 2\big) = \cos x. \]
+  </div></details>
+
+  <details class="ex"><summary><span class="ex-tag">Example 3</span><span>Homogeneous, with \(x\)-dependent coefficients</span></summary><div class="ex-body">
+    \[ u_x - xv_y = 0, \qquad v_x - xu_y = 0, \qquad u(x,0) = x^2, \quad v(x,0) = 0. \]
+    <p><strong>Step 1.</strong> With \(A = I\) and \(B = \begin{pmatrix} 0 & -x \\ -x & 0 \end{pmatrix}\):</p>
+    \[ \det(\lambda A - B) = \begin{vmatrix} \lambda & x \\ x & \lambda \end{vmatrix} = \lambda^2 - x^2 = 0 \quad\Longrightarrow\quad \lambda = \pm x. \]
+    <p><strong>Step 2.</strong> The characteristics are now curves:</p>
+    \[ y' = x \;\Rightarrow\; \alpha = y - \tfrac12x^2, \qquad y' = -x \;\Rightarrow\; \beta = y + \tfrac12x^2. \]
+    <p><strong>Step 3.</strong> \(u_x = u_\alpha\alpha_x + u_\beta\beta_x = x(u_\beta - u_\alpha)\) and \(u_y = u_\alpha + u_\beta\), so</p>
+    \[ -xu_\alpha + xu_\beta - xv_\alpha - xv_\beta = 0, \qquad -xv_\alpha + xv_\beta - xu_\alpha - xu_\beta = 0. \]
+    <p><strong>Step 4.</strong> Adding and subtracting gives \(u_\alpha + v_\alpha = 0\) and \(u_\beta - v_\beta = 0\). So the Riemann invariants are</p>
+    \[ u - v = f(\alpha), \qquad u + v = g(\beta), \]
+    \[ u = \tfrac12\big[g(y + \tfrac12x^2) + f(y - \tfrac12x^2)\big], \qquad v = \tfrac12\big[g(y + \tfrac12x^2) - f(y - \tfrac12x^2)\big]. \]
+    <p><strong>Step 5.</strong> The boundary conditions give \(x^2 = f(-\tfrac12x^2)\) and \(x^2 = g(\tfrac12x^2)\), so \(f(x) = -2x\) and \(g(x) = 2x\). Then</p>
+    \[ u = \tfrac12\big[2(y + \tfrac12x^2) - 2(y - \tfrac12x^2)\big] = x^2, \qquad v = \tfrac12\big[2(y + \tfrac12x^2) + 2(y - \tfrac12x^2)\big] = 2y. \]
+    <figure id="fig-parabolas"><figcaption>With variable coefficients the characteristics are parabolas, but the \(P\), \(Q\), \(R\) argument is unchanged.</figcaption></figure>
+    <p><strong>Pictorially.</strong> \(Q\) and \(R\) lie on \(y = 0\), so \(x_Q^2 = x_P^2 - 2y_P\) and \(x_R^2 = x_P^2 + 2y_P\). Then</p>
+    \[ u_P - v_P = u_Q - v_Q = x_Q^2 = x_P^2 - 2y_P, \qquad u_P + v_P = u_R + v_R = x_R^2 = x_P^2 + 2y_P, \]
+    <p>so \(u_P = x_P^2\) and \(v_P = 2y_P\), which agrees with the result above.</p>
+  </div></details>
+</article>
+
+</div><!-- /wrap -->
+
+<script>
+/* ── Topic list: drives the homepage, top bar and prev/next links ── */
+const CHAPTERS = { I: 'Ordinary Differential Equations', II: 'Calculus of Variations', III: 'Systems of First-Order PDEs' };
+const TOPICS = [
+  { id: 'second-order', ch: 'I', title: 'Second-Order Linear ODEs', desc: 'Complementary function and particular integral',
+    icon: '<path d="M2 12c1.6-7 3.4-7 5 0s3.4 7 5 0 3.4-7 5 0 3.4 7 5 0"/>' },
+  { id: 'euler-ode', ch: 'I', title: "Euler's ODE", desc: 'Power-law solutions and the log substitution',
+    icon: '<path d="M3 21V3M3 21h18"/><path d="M3 21c8 0 14-5 17-17"/><path d="M3 21c4-1 8-3 10-8" opacity=".5"/>' },
+  { id: 'reduction', ch: 'I', title: 'Reduction of Order', desc: 'One solution gives you the second',
+    icon: '<path d="M3 7c3-3 6-3 9 0s6 3 9 0"/><path d="M12 11v6"/><path d="M9 14.5l3 3 3-3"/><path d="M3 21h18"/>' },
+  { id: 'particular-integrals', ch: 'I', title: 'Trial Solutions', desc: 'Particular integrals by educated guess',
+    icon: '<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r="1" fill="currentColor"/>' },
+  { id: 'variation-of-parameters', ch: 'I', title: 'Variation of Parameters', desc: 'Wronskians, Green\'s functions, higher orders',
+    icon: '<path d="M2 12c1 3 1.8 3 2.5 0S6 7 7 12s2 9 3.5 0S13 1 15 12s3 10 7 0"/>' },
+
+  { id: 'functionals', ch: 'II', title: 'Functionals', desc: 'Functions of functions, and classic problems',
+    icon: '<path d="M2 16c2-8 4-8 6-3s3 3 4 1"/><path d="M14 12h5"/><path d="M17 9l3 3-3 3"/><circle cx="22" cy="12" r=".8" fill="currentColor"/>' },
+  { id: 'euler-lagrange', ch: 'II', title: 'Euler–Lagrange Equation', desc: 'Derivation, extremals and the Legendre test',
+    icon: '<path d="M3 18C8 17 15 12 21 6"/><path d="M3 18C6 10 15 8 21 6" stroke-dasharray="2.5 3"/><circle cx="3" cy="18" r="1.6" fill="currentColor"/><circle cx="21" cy="6" r="1.6" fill="currentColor"/>' },
+  { id: 'first-integrals', ch: 'II', title: 'First Integrals', desc: 'Shortcuts when F is missing x or y',
+    icon: '<path d="M14 4c-2-2-4 0-4 3v10c0 3-2 5-4 3"/><path d="M17 9h4M17 14h4"/>' },
+  { id: 'brachistochrone', ch: 'II', title: 'Brachistochrone', desc: 'Curve of fastest descent: the cycloid',
+    icon: '<path d="M2 4C3 14 8 20 12 20s9-6 10-16"/><circle cx="7.2" cy="15.6" r="2" fill="currentColor"/>' },
+  { id: 'isoperimetric', ch: 'II', title: 'Isoperimetric Problems', desc: 'Lagrange multipliers, circles and catenaries',
+    icon: '<path d="M3 20h18"/><path d="M3 20a9 11 0 0 1 18 0"/><path d="M7 20v-6M12 20v-9M17 20v-6" opacity=".5"/>' },
+  { id: 'natural-bc', ch: 'II', title: 'Natural Boundary Conditions', desc: 'Free endpoints and Galilei\'s wall problem',
+    icon: '<path d="M21 2v20"/><path d="M3 4c1 9 8 13 18 13"/><circle cx="3" cy="4" r="1.5" fill="currentColor"/><path d="M21 6l-2.4 2.4M21 11l-2.4 2.4" opacity=".5"/>' },
+  { id: 'generalisations', ch: 'II', title: 'Generalisations', desc: 'More functions, derivatives and variables',
+    icon: '<circle cx="4" cy="12" r="1.8" fill="currentColor"/><path d="M6 12h4M10 12c3 0 3-7 8-7M10 12c3 0 3 7 8 7M10 12h8"/><circle cx="20" cy="5" r="1.4"/><circle cx="20" cy="12" r="1.4"/><circle cx="20" cy="19" r="1.4"/>' },
+  { id: 'hamilton', ch: 'II', title: "Hamilton's Principle", desc: 'Mechanics as a variational problem',
+    icon: '<path d="M2 20h20"/><path d="M4 20C7 6 17 6 20 20"/><circle cx="12" cy="9.5" r="1.8" fill="currentColor"/>' },
+
+  { id: 'first-order-pdes', ch: 'III', title: 'First-Order PDEs', desc: 'Characteristics reduce a PDE to an ODE',
+    icon: '<path d="M3 3v18h18"/><path d="M3 15C8 13 12 9 15 3M8 21C12 16 16 11 19 3M14 21c3-4 5-7 7-12"/>' },
+  { id: 'classification', ch: 'III', title: 'Classifying Systems', desc: 'Elliptic, hyperbolic or parabolic',
+    icon: '<ellipse cx="7" cy="6.5" rx="5" ry="3.2"/><path d="M14.5 3c0 7.500 7 7.500 7 0"/><path d="M7 13c3 3 3 6 0 9"/><path d="M17 13c-3 3-3 6 0 9"/>' },
+  { id: 'hyperbolic-systems', ch: 'III', title: 'Hyperbolic Systems', desc: 'Canonical form and the five-step method',
+    icon: '<path d="M2 20h20"/><path d="M12 5L5 20M12 5l8 15"/><circle cx="12" cy="5" r="1.8" fill="currentColor"/><path d="M4 12l6 8M15 3l6 9" opacity=".4"/>' },
+  { id: 'riemann-examples', ch: 'III', title: 'Riemann Invariant Examples', desc: 'Three full worked systems',
+    icon: '<path d="M4 20L20 4"/><circle cx="8" cy="16" r="1.8" fill="currentColor"/><circle cx="12" cy="12" r="1.8" fill="currentColor"/><circle cx="16" cy="8" r="1.8" fill="currentColor"/><path d="M4 9l5-5M15 20l5-5" opacity=".4"/>' },
+];
+const iconSvg = t => `<span class="icon"><svg viewBox="0 0 24 24" aria-hidden="true">${t.icon}</svg></span>`;
+
+/* ── Build the homepage and each topic's header and pager ── */
+(function build() {
+  const contents = document.getElementById('contents');
+  Object.keys(CHAPTERS).forEach(ch => {
+    const cards = TOPICS.filter(t => t.ch === ch).map(t =>
+      `<a class="topic-card" href="#${t.id}">${iconSvg(t)}<span><b>${t.title}</b><span class="d">${t.desc}</span></span></a>`).join('');
+    contents.insertAdjacentHTML('beforeend',
+      `<section class="ch-group" data-ch="${ch}"><div class="ch-head"><span class="ch-num">Chapter ${ch}</span><span class="ch-title">${CHAPTERS[ch]}</span></div><div class="topic-grid">${cards}</div></section>`);
+  });
+  TOPICS.forEach((t, i) => {
+    const el = document.getElementById(t.id);
+    const prev = TOPICS[i - 1], next = TOPICS[i + 1];
+    el.insertAdjacentHTML('afterbegin',
+      `<nav class="topbar"><a href="#">← All topics</a><span class="where">Chapter ${t.ch} · ${CHAPTERS[t.ch]}</span></nav>
+       <div class="topic-head">${iconSvg(t)}<h2 class="topic-title">${t.title}</h2></div>`);
+    el.insertAdjacentHTML('beforeend',
+      `<nav class="pager">${prev ? `<a href="#${prev.id}"><small>← Previous</small>${prev.title}</a>` : ''}${next ? `<a class="nx" href="#${next.id}"><small>Next →</small>${next.title}</a>` : ''}</nav>`);
+  });
+})();
+
+/* ── Hash routing, so links, reloads and the back button all work ── */
+function route() {
+  const id = decodeURIComponent(location.hash.slice(1));
+  const target = (id && document.getElementById(id)) || document.getElementById('home');
+  document.querySelectorAll('.view').forEach(v => v.classList.toggle('active', v === target));
+  const t = TOPICS.find(x => x.id === target.id);
+  document.title = t ? `${t.title} — MATH323` : 'MATH323 — Further Methods Cheat Sheet';
+  window.scrollTo({ top: 0, behavior: 'instant' });
+  markLongEquations();
+}
+function markLongEquations() {
+  document.querySelectorAll('.view.active .katex-display').forEach(e => {
+    if (e.offsetParent) e.classList.toggle('scrolls', e.scrollWidth - e.clientWidth > 4);
+  });
+}
+window.addEventListener('resize', markLongEquations);
+document.addEventListener('toggle', markLongEquations, true);
+window.addEventListener('hashchange', route);
+route();
+
+/* ── KaTeX: \( \) inline, \[ \] and equation environments for display ── */
+function initMath() {
+  renderMathInElement(document.body, { throwOnError: false, strict: 'ignore' });
+  markLongEquations();
+  document.body.dataset.mathReady = '1';
+}
+
+/* ── SVG figures, plotted from the actual formulas ── */
+const NS = 'http://www.w3.org/2000/svg';
+function el(tag, attrs, parent, text) {
+  const n = document.createElementNS(NS, tag);
+  Object.entries(attrs).forEach(([k, v]) => n.setAttribute(k, v));
+  if (text !== undefined) n.textContent = text;
+  if (parent) parent.appendChild(n);
+  return n;
+}
+function plot(id, w, h, bounds, draw, flipY) {
+  const [x0, x1, y0, y1] = bounds, pad = 34;
+  const svg = el('svg', { viewBox: `0 0 ${w} ${h}`, role: 'img' });
+  const X = x => pad + (x - x0) / (x1 - x0) * (w - 2 * pad);
+  const Y = y => flipY ? pad + (y - y0) / (y1 - y0) * (h - 2 * pad) : h - pad - (y - y0) / (y1 - y0) * (h - 2 * pad);
+  const g = {
+    svg, X, Y,
+    curve(fn, a, b, attrs = {}) {
+      let d = '';
+      for (let i = 0; i <= 160; i++) { const p = fn(a + (b - a) * i / 160); d += (i ? 'L' : 'M') + X(p[0]).toFixed(1) + ' ' + Y(p[1]).toFixed(1); }
+      return el('path', { d, fill: 'none', stroke: 'var(--accent)', 'stroke-width': 2, ...attrs }, svg);
+    },
+    line(a, b, c, d, attrs = {}) { return el('line', { x1: X(a), y1: Y(b), x2: X(c), y2: Y(d), stroke: 'var(--ink-muted)', 'stroke-width': 1, ...attrs }, svg); },
+    dot(x, y, r = 4) { return el('circle', { cx: X(x), cy: Y(y), r, fill: 'var(--accent)' }, svg); },
+    text(x, y, s, dx = 6, dy = -6, anchor = 'start') { return el('text', { x: X(x) + dx, y: Y(y) + dy, 'text-anchor': anchor }, svg, s); },
+  };
+  draw(g);
+  document.getElementById(id).prepend(svg);
+}
+const faint = { stroke: 'var(--ink-muted)', 'stroke-width': 1, opacity: .35 };
+const cycloid = A => p => [A * (p - Math.sin(p)), A * (1 - Math.cos(p))];
+
+plot('fig-variation', 620, 240, [0, 1, 0, 1], g => {
+  const y0 = x => .15 + .7 * x * x, v = x => Math.sin(Math.PI * x);
+  g.curve(x => [x, y0(x)], 0, 1);
+  g.curve(x => [x, y0(x) + .22 * v(x)], 0, 1, { 'stroke-dasharray': '6 5' });
+  g.line(.5, y0(.5), .5, y0(.5) + .22, { 'stroke-width': 1.2 });
+  g.dot(0, y0(0)); g.dot(1, y0(1));
+  g.text(0, y0(0), 'a', -4, 22); g.text(1, y0(1), 'b', -2, -10);
+  g.text(.74, y0(.74), 'y₀', 8, 22); g.text(.6, y0(.6) + .22 * v(.6), 'y₀ + εv', -18, -10);
+  g.text(.5, y0(.5) + .1, 'εv', 6, 4);
+});
+
+plot('fig-cycloid', 620, 256, [0, 13, 0, 4.4], g => {
+  g.line(0, 0, 13, 0); g.line(0, 0, 0, 4.4);
+  g.text(13, 0, 'x', 2, -6); g.text(0, 4.4, 'y', 8, 4);
+  g.line(0, 0, 4.2 * Math.PI / 2, 4.2, { 'stroke-dasharray': '5 5' });
+  g.curve(cycloid(1), 0, 2 * Math.PI);
+  g.curve(cycloid(2), 0, 2 * Math.PI, { 'stroke-width': 2.4 });
+  const P1 = cycloid(1)(Math.PI), P2 = cycloid(2)(Math.PI), Q = cycloid(2)(1.5 * Math.PI);
+  g.dot(...P1); g.dot(...P2); g.dot(...Q);
+  g.text(...P1, 'P₁', 8, -8); g.text(...P2, 'P₂', 8, -8); g.text(...Q, 'Q', 8, 4);
+  g.line(P1[0], P1[1], Q[0], Q[1], { 'stroke-dasharray': '2 5', 'stroke-width': 1.5 });
+  g.text(6.5, .55, 'A = 1', 0, 0); g.text(8.8, 4.1, 'A = 2', -6, 2);
+}, true);
+
+plot('fig-rope', 560, 230, [-1.7, 1.7, -.15, 1], g => {
+  const c = -.35, r = Math.hypot(1, c), t0 = Math.atan2(-c, 1);
+  g.curve(t => [r * Math.cos(t), c + r * Math.sin(t)], t0, Math.PI - t0);
+  g.line(-1.7, 0, 1.7, 0);
+  g.dot(-1, 0); g.dot(1, 0);
+  g.text(-1, 0, '−1', -8, 22); g.text(1, 0, '1', -2, 22);
+  g.text(0, .25, 'area', -14, 0);
+  g.text(.75, .5, 'length l', 10, -6);
+});
+
+plot('fig-catenary', 560, 230, [-.1, 1.1, -.08, 1], g => {
+  const c = -.2296, l = -1.026;
+  g.curve(x => [x, c * Math.cosh((x - .5) / c) - l], 0, 1);
+  g.line(-.1, 0, 1.1, 0);
+  g.dot(0, 0); g.dot(1, 0); g.dot(.5, .796);
+  g.text(0, 0, '0', -4, -8); g.text(1, 0, '1', -2, -8);
+  g.text(.5, .796, 'y ≈ 0.796', 0, 24, 'middle');
+}, true);
+
+plot('fig-galilei', 560, 290, [0, 5.5, 0, 2.5], g => {
+  const b = Math.PI;
+  g.line(0, 0, 5.5, 0);
+  g.curve(cycloid(1), 0, Math.PI);
+  g.line(b, 0, b, 2.5, { 'stroke-width': 2.5 });
+  g.dot(0, 0); g.dot(b, 2);
+  g.text(b, 2.5, 'x = b', 8, -2);
+  g.text(b, 2, 'y = 2b/π', -8, 22, 'end');
+}, true);
+
+plot('fig-pqr', 620, 250, [0, 14, 0, 2], g => {
+  for (let a = -4; a < 14; a += 1.5) { const s = Math.max(a, 0), e = Math.min(a + 6, 14); g.line(s, (s - a) / 3, e, (e - a) / 3, faint); }
+  for (let b = 1; b < 18; b += 1.5) { const s = Math.max(b - 4, 0), e = Math.min(b, 14); g.line(s, (b - s) / 2, e, (b - e) / 2, faint); }
+  const P = [8, 1.5], Q = [3.5, 0], R = [11, 0];
+  g.line(0, 0, 14, 0, { 'stroke-width': 1.5 });
+  g.line(...Q, ...P, { stroke: 'var(--accent)', 'stroke-width': 2.2 });
+  g.line(...R, ...P, { stroke: 'var(--accent)', 'stroke-width': 2.2 });
+  g.dot(...P); g.dot(...Q); g.dot(...R);
+  g.text(...P, 'P', -4, -10); g.text(...Q, 'Q', -4, 22); g.text(...R, 'R', -4, 22);
+  g.text(5.1, .75, 'x − 3y = α', -82, -2); g.text(9.7, .75, 'x + 2y = β', 12, -2);
+  g.text(14, 0, 'y = 0', -40, 22);
+});
+
+plot('fig-parabolas', 620, 300, [0, 6, 0, 6.4], g => {
+  const P = [3.2, 4], xq = Math.sqrt(3.2 * 3.2 - 8), xr = Math.sqrt(3.2 * 3.2 + 8);
+  for (let a = -9; a < 7; a += 2) g.curve(x => [x, a + x * x / 2], Math.sqrt(Math.max(0, -2 * a)), Math.min(6, Math.sqrt(2 * Math.max(6.4 - a, 0))), faint);
+  for (let b = 1; b < 20; b += 2.5) g.curve(x => [x, b - x * x / 2], Math.sqrt(Math.max(0, 2 * (b - 6.4))), Math.min(6, Math.sqrt(2 * b)), faint);
+  g.line(0, 0, 6, 0, { 'stroke-width': 1.5 });
+  g.curve(x => [x, 4 - 5.12 + x * x / 2], xq, 3.2, { 'stroke-width': 2.2 });
+  g.curve(x => [x, 9.12 - x * x / 2], 3.2, xr, { 'stroke-width': 2.2 });
+  g.dot(...P); g.dot(xq, 0); g.dot(xr, 0);
+  g.text(...P, 'P', -4, -10); g.text(xq, 0, 'Q', -4, 22); g.text(xr, 0, 'R', -4, 22);
+  g.text(2.3, 1.5, 'y − ½x² = α', -96, 0); g.text(3.8, 1.9, 'y + ½x² = β', 14, -8);
+});
+
+/* ── Logo: a circle rolls under a line, tracing a cycloid. The bead moves at
+   uniform φ, which is physically right: t = √(A/g) φ on the cycloid. ── */
+(function logo() {
+  const svg = document.getElementById('logo'), A = 36, x0 = 27, y0 = 18, END = 2 * Math.PI;
+  const pt = p => [x0 + A * (p - Math.sin(p)), y0 + A * (1 - Math.cos(p))];
+  const path = (to) => { let d = ''; for (let i = 0; i <= 90; i++) { const q = pt(to * i / 90); d += (i ? 'L' : 'M') + q[0].toFixed(1) + ' ' + q[1].toFixed(1); } return d; };
+  el('line', { x1: 8, y1: y0, x2: 272, y2: y0, stroke: '#7a7468', 'stroke-width': 1.2 }, svg);
+  el('path', { d: path(END), fill: 'none', stroke: '#e4dccd', 'stroke-width': 2 }, svg);
+  const trail = el('path', { fill: 'none', stroke: '#8f6a05', 'stroke-width': 2.4, 'stroke-linecap': 'round' }, svg);
+  const wheel = el('circle', { r: A, fill: 'none', stroke: '#7a7468', 'stroke-width': 1.2 }, svg);
+  const spoke = el('line', { stroke: '#7a7468', 'stroke-width': 1 }, svg);
+  const bead = el('circle', { r: 5, fill: '#8f6a05' }, svg);
+  function show(p) {
+    const q = pt(p), cx = x0 + A * p, cy = y0 + A;
+    wheel.setAttribute('cx', cx); wheel.setAttribute('cy', cy);
+    spoke.setAttribute('x1', cx); spoke.setAttribute('y1', cy);
+    spoke.setAttribute('x2', q[0]); spoke.setAttribute('y2', q[1]);
+    bead.setAttribute('cx', q[0]); bead.setAttribute('cy', q[1]);
+    trail.setAttribute('d', path(Math.max(p, .001)));
+  }
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) { show(4.2); return; }
+  const CYCLE = 9000, HOLD = 1400;
+  (function tick(now) {
+    const t = now % (CYCLE + HOLD);
+    show(Math.min(t / CYCLE, 1) * END);
+    requestAnimationFrame(tick);
+  })(0);
+})();
+</script>
+</body>
+</html>

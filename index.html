@@ -87,6 +87,25 @@
     max-width: 900px;
   }
 
+  /* auto-fill keeps a lone card at normal width, ready for more modules */
+  .grid.current { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
+
+  /* ── Section labels ── */
+  .section-label {
+    width: 100%;
+    max-width: 900px;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    font-weight: 400;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin-bottom: 1rem;
+    animation: fadeUp 0.5s ease both;
+  }
+
+  .grid + .section-label { margin-top: 3rem; }
+
   /* ── Card ── */
   .card {
     background: linear-gradient(145deg, #faf6ee, #f0e9d6);
@@ -194,6 +213,21 @@
   <div class="rule"></div>
 </header>
 
+<h2 class="section-label">Current modules · 2026–27</h2>
+
+<div class="grid current">
+
+  <a class="card" href="FurtherMethods.html" style="--accent: var(--teal);">
+    <span class="card-code">MATH323</span>
+    <span class="card-title">Further Methods of Applied Mathematics</span>
+    <span class="card-topics">Variation of parameters · Calculus of variations · Euler–Lagrange · Brachistochrone · Isoperimetric problems · Hamilton's principle · Characteristics · Riemann invariants</span>
+    <span class="card-arrow">Open sheet →</span>
+  </a>
+
+</div>
+
+<h2 class="section-label">Previous modules · 2025–26</h2>
+
 <div class="grid">
 
   <a class="card" href="DifferentialEquations.html" style="--accent: var(--teal);">
@@ -226,7 +260,7 @@
 
 </div>
 
-<footer>starocracy &nbsp;·&nbsp; 2025–26</footer>
+<footer>starocracy &nbsp;·&nbsp; 2025–27</footer>
 
 </body>
 </html>
