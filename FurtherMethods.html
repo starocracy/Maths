@@ -163,6 +163,32 @@ figure svg { width: 100%; max-width: 620px; height: auto; background: var(--card
 figcaption { font-size: .92rem; color: var(--ink-muted); margin-top: .35rem; }
 svg text { font-family: var(--serif); font-style: italic; font-size: 15px; fill: var(--ink-soft); }
 
+/* Problems pages */
+.q { background: var(--card); border: 1px solid var(--rule); border-radius: 10px; padding: .9rem 1.2rem 1rem; margin: 1.1rem 0; }
+.q-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: .25rem .9rem; margin-bottom: .55rem; font-family: var(--mono); font-size: 11.5px; letter-spacing: .06em; color: var(--ink-muted); }
+.q-num { color: var(--accent); text-transform: uppercase; letter-spacing: .12em; font-weight: 500; }
+.q-head a { color: var(--ink-muted); }
+.q-head a:hover { color: var(--accent); }
+details.sol { margin-top: .75rem; }
+details.sol > summary {
+  display: inline-block; cursor: pointer; list-style: none; padding: .3rem .85rem;
+  border: 1px solid var(--accent); border-radius: 6px; background: var(--tint); color: var(--accent);
+  font-family: var(--mono); font-size: 12px; transition: background .15s, color .15s;
+}
+details.sol > summary::-webkit-details-marker { display: none; }
+details.sol > summary::before { content: '▸ '; }
+details.sol[open] > summary::before { content: '▾ '; }
+details.sol > summary:hover, details.sol > summary:focus-visible { background: var(--accent); color: var(--card); outline: none; }
+details.sol .steps { margin-top: .9rem; }
+.pool-controls { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .75rem 1.25rem; margin-top: 1.4rem; }
+.gen-btn {
+  cursor: pointer; padding: .6rem 1.2rem; border-radius: 8px; border: 1px solid var(--accent);
+  background: var(--accent); color: var(--card); font-family: var(--mono); font-size: 13px;
+  transition: opacity .15s, transform .15s;
+}
+.gen-btn:hover, .gen-btn:focus-visible { opacity: .88; transform: translateY(-1px); outline: none; }
+.pool-count { font-family: var(--mono); font-size: 12px; color: var(--ink-muted); }
+
 .pager { display: flex; justify-content: space-between; gap: 1rem; margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--rule); }
 .pager a { text-decoration: none; color: var(--ink-soft); max-width: 48%; }
 .pager a:hover { color: var(--accent); }
@@ -442,6 +468,255 @@ footer a { color: inherit; }
   </div></details>
 </article>
 
+
+<article class="view" id="problems-1" data-ch="I">
+  <p class="lede">Practice for Chapter I, in the style of the course problem sheets. All questions are new.</p>
+  <div class="note"><b>Modelled on:</b> Problem Sheet 1, Problem Sheet 2 Q1–3 and Mock Class Test Q1.</div>
+  <div class="pool">
+
+  <section class="q" data-style="Sheet 1 Q1" data-topic="second-order">
+    <p>Write down the general solution of \(\dfrac{d^2y}{dx^2} - 6\dfrac{dy}{dx} + 13y = 0\), and find \(y(x)\) for the initial conditions \(y(0) = 2\), \(y'(0) = 0\).</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>The ansatz \(y = e^{mx}\) gives \(m^2 - 6m + 13 = 0\), so \(m = 3 \pm 2i\). The roots are complex, so
+      \[ y = e^{3x}(A\cos 2x + B\sin 2x). \]</li>
+      <li>\(y(0) = 2\) gives \(A = 2\).</li>
+      <li>Differentiating, \(y' = e^{3x}\big[(3A + 2B)\cos 2x + (3B - 2A)\sin 2x\big]\), so \(y'(0) = 3A + 2B = 0\), which gives \(B = -3\).</li>
+      <li>Therefore
+      \[ y(x) = e^{3x}(2\cos 2x - 3\sin 2x). \]</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Mock Q1(c)" data-topic="reduction">
+    <p>By inserting the trial function \(y = x^n\), find one solution \(y_1(x)\) of
+    \[ x(x+2)\,y'' - 2(x+1)\,y' + 2y = 0. \]
+    Then use this solution to find a second linearly independent solution \(y_2(x)\), and write down the general solution.</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>Inserting \(y = x^n\) and collecting powers of \(x\):
+      \[ (n-1)(n-2)\,x^n + 2n(n-2)\,x^{n-1} = 0. \]
+      Both brackets vanish for \(n = 2\), so \(y_1 = x^2\).</li>
+      <li>Set \(y_2 = zy_1\) and \(w = z'\). With \(a = x(x+2)\) and \(b = -2(x+1)\), the reduced equation \(ay_1w' + (2ay_1' + by_1)w = 0\) is
+      \[ x^3(x+2)\,w' + \big[4x^2(x+2) - 2x^2(x+1)\big]w = 0. \]</li>
+      <li>The square bracket simplifies to \(x^2(2x + 6)\). Separating variables and using partial fractions:
+      \[ \frac{w'}{w} = -\frac{2x+6}{x(x+2)} = -\frac3x + \frac{1}{x+2}. \]</li>
+      <li>Integrating gives \(\ln w = -3\ln x + \ln(x+2)\), so
+      \[ w = \frac{x+2}{x^3} = \frac{1}{x^2} + \frac{2}{x^3}. \]</li>
+      <li>Integrating again, \(z = -\dfrac1x - \dfrac{1}{x^2}\), so \(y_2 = zx^2 = -(x+1)\). The overall constant does not matter, so take \(y_2 = x+1\).</li>
+      <li>The general solution is
+      \[ y(x) = c_1x^2 + c_2(x+1). \]</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Sheet 1 Q2" data-topic="euler-ode">
+    <p>Solve the following initial value problem for the Euler equation:
+    \[ t^2y'' - 3ty' + 3y = 0, \qquad y(1) = 2, \quad y'(1) = 0. \]</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>Trying \(y = t^n\) gives \(n(n-1) - 3n + 3 = n^2 - 4n + 3 = (n-1)(n-3) = 0\), so \(n = 1\) or \(3\).</li>
+      <li>The general solution is \(y = c_1t + c_2t^3\), with \(y' = c_1 + 3c_2t^2\).</li>
+      <li>The initial conditions give \(c_1 + c_2 = 2\) and \(c_1 + 3c_2 = 0\). Hence \(c_2 = -1\) and \(c_1 = 3\).</li>
+      <li>Therefore
+      \[ y(t) = 3t - t^3. \]</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Sheet 1 Q7" data-topic="variation-of-parameters">
+    <p>Use the method of variation of arbitrary constants, working from the conditions rather than the general formula, to find the general solution of
+    \[ \frac{d^2y}{dx^2} + y = \operatorname{cosec} x, \qquad 0 \lt x \lt \pi. \]</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>The homogeneous solutions are \(y_1 = \cos x\) and \(y_2 = \sin x\), so try \(y = L_1\cos x + L_2\sin x\).</li>
+      <li>Then \(y' = L_1'\cos x + L_2'\sin x - L_1\sin x + L_2\cos x\). Impose the condition
+      \[ L_1'\cos x + L_2'\sin x = 0. \tag{I} \]</li>
+      <li>Now \(y'' = -L_1'\sin x + L_2'\cos x - L_1\cos x - L_2\sin x\). Inserting into the ODE, the \(L_1\) and \(L_2\) terms cancel, leaving
+      \[ -L_1'\sin x + L_2'\cos x = \operatorname{cosec} x. \tag{II} \]</li>
+      <li>(I)\(\times\cos x\) \(-\) (II)\(\times\sin x\) gives \(L_1' = -1\). (I)\(\times\sin x\) \(+\) (II)\(\times\cos x\) gives \(L_2' = \cot x\).</li>
+      <li>Integrating, \(L_1 = -x + c_1\) and \(L_2 = \ln(\sin x) + c_2\).</li>
+      <li>Therefore
+      \[ y(x) = c_1\cos x + c_2\sin x - x\cos x + \sin x\,\ln(\sin x). \]</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Sheet 1 Q3" data-topic="euler-ode">
+    <p>Write the equation in standard Euler form and solve it for \(t \gt 0\):
+    \[ y'' + \frac3t\,y' + \frac{5}{t^2}\,y = 0. \]
+    Solve the same equation for \(t \lt 0\).</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>Multiplying by \(t^2\) gives the Euler form \(t^2y'' + 3ty' + 5y = 0\).</li>
+      <li>Trying \(y = t^n\): \(n(n-1) + 3n + 5 = n^2 + 2n + 5 = 0\), so \(n = -1 \pm 2i\).</li>
+      <li>Using \(t^{2i} = e^{2i\ln t} = \cos(2\ln t) + i\sin(2\ln t)\), the real solution for \(t \gt 0\) is
+      \[ y(t) = \frac1t\big[A\cos(2\ln t) + B\sin(2\ln t)\big]. \]</li>
+      <li>For \(t \lt 0\), set \(s = -t \gt 0\). Then \(dy/dt = -dy/ds\) and \(d^2y/dt^2 = d^2y/ds^2\), and the term \(\tfrac3t\,y'\) becomes \(\tfrac3s\,dy/ds\). The equation is unchanged in \(s\).</li>
+      <li>So the solution is the same with \(t\) replaced by \(|t|\):
+      \[ y(t) = \frac{1}{|t|}\big[A\cos(2\ln|t|) + B\sin(2\ln|t|)\big]. \]</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Sheet 1 Q6" data-topic="particular-integrals">
+    <p>Determine the general solution of
+    \[ \frac{d^2y}{dx^2} + 2\frac{dy}{dx} - 8y = 6e^{2x}. \]</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>The auxiliary equation \(m^2 + 2m - 8 = (m-2)(m+4) = 0\) gives \(y_{\mathrm{CF}} = Ae^{2x} + Be^{-4x}\).</li>
+      <li>The natural trial \(ae^{2x}\) is already in \(y_{\mathrm{CF}}\), so it cannot work. Use \(y_{\mathrm{PI}} = axe^{2x}\) instead.</li>
+      <li>Then \(y_{\mathrm{PI}}' = a(1 + 2x)e^{2x}\) and \(y_{\mathrm{PI}}'' = a(4 + 4x)e^{2x}\). Inserting:
+      \[ a\big[(4 + 4x) + 2(1 + 2x) - 8x\big]e^{2x} = 6ae^{2x} = 6e^{2x}, \]
+      so \(a = 1\).</li>
+      <li>Therefore
+      \[ y(x) = Ae^{2x} + Be^{-4x} + xe^{2x}. \]</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Sheet 2 Q1" data-topic="variation-of-parameters">
+    <p>Determine, using variation of the constants, the solution of
+    \[ x^2y'' - xy' + y = x, \qquad x \gt 0, \]
+    for the initial conditions \(y(1) = 0\), \(y'(1) = 1\).</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>Trying \(y = x^n\): \(n(n-1) - n + 1 = (n-1)^2 = 0\). This is a double root, so \(y_1 = x\) and \(y_2 = x\ln x\).</li>
+      <li>The Wronskian is \(W = x(\ln x + 1) - x\ln x = x\). Also \(a = x^2\) and \(f = x\), so \(\dfrac{f}{Wa} = \dfrac{1}{x^2}\).</li>
+      <li>From the general result,
+      \[ L_1' = -\frac{fy_2}{Wa} = -\frac{\ln x}{x}, \qquad L_2' = \frac{fy_1}{Wa} = \frac1x. \]</li>
+      <li>Integrating, using the substitution \(u = \ln x\) for the first, \(L_1 = -\tfrac12\ln^2x\) and \(L_2 = \ln x\).</li>
+      <li>So \(y_{\mathrm{PI}} = L_1y_1 + L_2y_2 = -\tfrac12x\ln^2x + x\ln^2x = \tfrac12x\ln^2x\), and
+      \[ y = c_1x + c_2x\ln x + \tfrac12x\ln^2x. \]</li>
+      <li>\(y(1) = 0\) gives \(c_1 = 0\). Then \(y'(1) = c_1 + c_2 = 1\) gives \(c_2 = 1\).</li>
+      <li>Therefore
+      \[ y(x) = x\ln x + \tfrac12x\ln^2x. \]</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Sheet 1 Q5" data-topic="reduction">
+    <p>Check that \(y = x\) is a solution of
+    \[ (1 + x^2)y'' - 2xy' + 2y = 0. \]
+    Find a second solution and write down the general solution.</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>For \(y = x\) we have \(y' = 1\), \(y'' = 0\), so the left side is \(0 - 2x + 2x = 0\). ✓</li>
+      <li>Set \(y_2 = zx\) and \(w = z'\). With \(a = 1 + x^2\), \(b = -2x\), \(y_1 = x\), the reduced equation is
+      \[ x(1 + x^2)w' + \big[2(1 + x^2) - 2x^2\big]w = x(1 + x^2)w' + 2w = 0. \]</li>
+      <li>Separating and using partial fractions:
+      \[ \frac{w'}{w} = -\frac{2}{x(1 + x^2)} = -\frac2x + \frac{2x}{1 + x^2}. \]</li>
+      <li>Integrating gives \(\ln w = -2\ln x + \ln(1 + x^2)\), so \(w = \dfrac{1 + x^2}{x^2} = \dfrac{1}{x^2} + 1\).</li>
+      <li>Then \(z = x - \dfrac1x\), so \(y_2 = zx = x^2 - 1\).</li>
+      <li>The general solution is
+      \[ y(x) = c_1x + c_2(x^2 - 1). \]</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Sheet 1 Q8" data-topic="euler-ode">
+    <p>Find the general solution of the Euler equation using the change of variable \(t = \ln x\):
+    \[ x^2y'' + 2xy' - 6y = 10x^2. \]</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>With \(y(x) = \phi(t)\), we have \(xy' = \phi'\) and \(x^2y'' = \phi'' - \phi'\). The right side is \(10e^{2t}\), so
+      \[ \phi'' - \phi' + 2\phi' - 6\phi = \phi'' + \phi' - 6\phi = 10e^{2t}. \]</li>
+      <li>The auxiliary equation \(m^2 + m - 6 = (m-2)(m+3) = 0\) gives \(\phi_{\mathrm{CF}} = c_1e^{2t} + c_2e^{-3t}\).</li>
+      <li>\(e^{2t}\) is in the complementary function, so try \(\phi_{\mathrm{PI}} = ate^{2t}\). Then \(\phi' = a(1 + 2t)e^{2t}\) and \(\phi'' = a(4 + 4t)e^{2t}\).</li>
+      <li>Inserting: \(a\big[(4 + 4t) + (1 + 2t) - 6t\big]e^{2t} = 5ae^{2t} = 10e^{2t}\), so \(a = 2\).</li>
+      <li>Returning to \(x\) using \(e^{t} = x\):
+      \[ y(x) = c_1x^2 + \frac{c_2}{x^3} + 2x^2\ln x. \]</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Sheet 2 Q3" data-topic="variation-of-parameters">
+    <p>Use variation of arbitrary constants to determine the general solution of
+    \[ y'' - 2y' + y = \frac{e^x}{x^2}, \qquad x \gt 0. \]</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>\(m^2 - 2m + 1 = 0\) has the double root \(m = 1\), so \(y_1 = e^x\) and \(y_2 = xe^x\).</li>
+      <li>The conditions (1.8) are
+      \[ L_1'e^x + L_2'xe^x = 0, \qquad L_1'e^x + L_2'(x + 1)e^x = \frac{e^x}{x^2}. \]</li>
+      <li>Subtracting the first from the second gives \(L_2' = \dfrac{1}{x^2}\). The first then gives \(L_1' = -xL_2' = -\dfrac1x\).</li>
+      <li>Integrating, \(L_1 = -\ln x + c_1\) and \(L_2 = -\dfrac1x + c_2\).</li>
+      <li>So \(y = (c_1 - \ln x)e^x + (c_2 - \tfrac1x)xe^x\). The leftover \(-e^x\) can be absorbed into \(c_1\), which gives
+      \[ y(x) = (c_1 + c_2x)e^x - e^x\ln x. \]</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Sheet 1 Q6(b)" data-topic="particular-integrals">
+    <p>Determine the general solution of
+    \[ \frac{d^2y}{dx^2} - 5\frac{dy}{dx} + 6y = 6x^2 + 2x - 2. \]</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>\(m^2 - 5m + 6 = (m-2)(m-3) = 0\) gives \(y_{\mathrm{CF}} = Ae^{2x} + Be^{3x}\).</li>
+      <li>The right side is a quadratic and a constant is not part of \(y_{\mathrm{CF}}\), so try \(y_{\mathrm{PI}} = ax^2 + bx + c\).</li>
+      <li>Inserting:
+      \[ 2a - 5(2ax + b) + 6(ax^2 + bx + c) = 6ax^2 + (6b - 10a)x + (2a - 5b + 6c). \]</li>
+      <li>Comparing coefficients: \(6a = 6\) gives \(a = 1\). \(6b - 10 = 2\) gives \(b = 2\). \(2 - 10 + 6c = -2\) gives \(c = 1\).</li>
+      <li>Therefore
+      \[ y(x) = Ae^{2x} + Be^{3x} + x^2 + 2x + 1. \]</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Sheet 2 Q2" data-topic="variation-of-parameters">
+    <p>The general solution of \((1 + x^2)y'' - 2xy' + 2y = 0\) is \(y_{\mathrm{CF}} = c_1x + c_2(x^2 - 1)\). Use variation of arbitrary constants to find a particular integral of
+    \[ (1 + x^2)y'' - 2xy' + 2y = (1 + x^2)^2. \]</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>Take \(y_1 = x\) and \(y_2 = x^2 - 1\). The Wronskian is
+      \[ W = x\cdot 2x - (x^2 - 1)\cdot 1 = x^2 + 1. \]</li>
+      <li>With \(a = 1 + x^2\) and \(f = (1 + x^2)^2\), we get \(\dfrac{f}{Wa} = 1\).</li>
+      <li>So \(L_1' = -y_2 = 1 - x^2\) and \(L_2' = y_1 = x\).</li>
+      <li>Integrating, \(L_1 = x - \tfrac13x^3\) and \(L_2 = \tfrac12x^2\). The constants are not needed for a particular integral.</li>
+      <li>Then
+      \[ y_{\mathrm{PI}} = \big(x - \tfrac13x^3\big)x + \tfrac12x^2(x^2 - 1) = \tfrac12x^2 + \tfrac16x^4. \]</li>
+      <li>Check: \(y' = x + \tfrac23x^3\) and \(y'' = 1 + 2x^2\), so the left side is \((1 + x^2)(1 + 2x^2) - 2x^2 - \tfrac43x^4 + x^2 + \tfrac13x^4 = 1 + 2x^2 + x^4\). ✓</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Mock Q1(a–b)" data-topic="variation-of-parameters">
+    <p>(a) Find the general solution of \(\dfrac{d^2y}{dx^2} + 6\dfrac{dy}{dx} + 9y = 0\).</p>
+    <p>(b) Use (a) and variation of arbitrary constants to solve, for \(x \gt 0\),
+    \[ \frac{d^2y}{dx^2} + 6\frac{dy}{dx} + 9y = \frac{\ln x}{x}\,e^{-3x}, \qquad y(1) = e^{-3}, \quad y'(1) = -3e^{-3}. \]
+    Briefly discuss the behaviour of the solution and its derivative as \(x \to 0\).</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>(a) \(m^2 + 6m + 9 = (m+3)^2 = 0\) is a double root, so \(y_{\mathrm{CF}} = (c_1 + c_2x)e^{-3x}\).</li>
+      <li>(b) Take \(y_1 = e^{-3x}\) and \(y_2 = xe^{-3x}\). Then \(W = e^{-6x}\), and with \(a = 1\) and \(f = \tfrac{\ln x}{x}e^{-3x}\):
+      \[ L_1' = -\frac{fy_2}{W} = -\ln x, \qquad L_2' = \frac{fy_1}{W} = \frac{\ln x}{x}. \]</li>
+      <li>Integrating, \(L_1 = x - x\ln x + c_1\) and \(L_2 = \tfrac12\ln^2x + c_2\).</li>
+      <li>Absorbing the \(x\) from \(L_1\) into \(c_2\), the general solution is \(y = e^{-3x}g(x)\), where
+      \[ g(x) = c_1 + c_2x - x\ln x + \tfrac12x\ln^2x. \]</li>
+      <li>Differentiating, \(g'(x) = c_2 - 1 + \tfrac12\ln^2x\), since the \(\ln x\) terms cancel. Also \(y' = e^{-3x}(g' - 3g)\).</li>
+      <li>The conditions give \(g(1) = 1\) and \(g'(1) - 3g(1) = -3\), so \(g'(1) = 0\). Hence \(c_2 = 1\) and \(c_1 = 0\):
+      \[ y(x) = x\,e^{-3x}\big(1 - \ln x + \tfrac12\ln^2x\big). \]</li>
+      <li>As \(x \to 0\), \(x\ln^nx \to 0\), so \(y \to 0\). However \(g' = \tfrac12\ln^2x\) diverges, so \(y' \to +\infty\). The solution stays finite, but its slope becomes infinite.</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Sheet 1 Q1(b)" data-topic="second-order">
+    <p>Write down the general solution of \(\dfrac{d^2y}{dx^2} + 10\dfrac{dy}{dx} + 25y = 0\). Check your second solution by inserting it into the ODE, then find \(y(x)\) for \(y(0) = 1\), \(y'(0) = -2\).</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>\(m^2 + 10m + 25 = (m+5)^2 = 0\) is a double root, so \(y = (A + Bx)e^{-5x}\).</li>
+      <li>Check \(y = xe^{-5x}\): \(y' = (1 - 5x)e^{-5x}\) and \(y'' = (-10 + 25x)e^{-5x}\). Then
+      \[ (-10 + 25x) + 10(1 - 5x) + 25x = 0. \;\checkmark \]</li>
+      <li>\(y(0) = 1\) gives \(A = 1\). Since \(y'(0) = B - 5A = -2\), we get \(B = 3\).</li>
+      <li>Therefore
+      \[ y(x) = (1 + 3x)e^{-5x}. \]</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Sheet 1 Q2" data-topic="euler-ode">
+    <p>Solve the Euler equation
+    \[ x^2y'' - 3xy' + 4y = 0, \qquad y(1) = 1, \quad y'(1) = 0. \]</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>Trying \(y = x^n\): \(n(n-1) - 3n + 4 = n^2 - 4n + 4 = (n-2)^2 = 0\). This is a double root \(n = 2\).</li>
+      <li>In the degenerate case, the second solution is \(x^2\ln x\), so \(y = x^2(c_1 + c_2\ln x)\).</li>
+      <li>\(y(1) = 1\) gives \(c_1 = 1\).</li>
+      <li>\(y' = 2x(c_1 + c_2\ln x) + c_2x\), so \(y'(1) = 2c_1 + c_2 = 0\) and \(c_2 = -2\).</li>
+      <li>Therefore
+      \[ y(x) = x^2(1 - 2\ln x). \]</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Notes §1.3" data-topic="variation-of-parameters">
+    <p>Use variation of arbitrary constants to find a particular integral of the third-order equation
+    \[ y''' - y' = e^{2x}. \]
+    Check your answer by inserting it into the ODE.</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>\(m^3 - m = m(m-1)(m+1) = 0\), so the homogeneous solutions are \(y_1 = 1\), \(y_2 = e^x\) and \(y_3 = e^{-x}\).</li>
+      <li>With \(y = L_1 + L_2e^x + L_3e^{-x}\) and \(f = e^{2x}\), the conditions (1.13) are
+      \[ \begin{aligned} L_1' + L_2'e^x + L_3'e^{-x} &= 0 \\ L_2'e^x - L_3'e^{-x} &= 0 \\ L_2'e^x + L_3'e^{-x} &= e^{2x}. \end{aligned} \]</li>
+      <li>Adding and subtracting the last two gives \(L_2' = \tfrac12e^{x}\) and \(L_3' = \tfrac12e^{3x}\). The first then gives \(L_1' = -e^{2x}\).</li>
+      <li>Integrating, \(L_1 = -\tfrac12e^{2x}\), \(L_2 = \tfrac12e^{x}\) and \(L_3 = \tfrac16e^{3x}\).</li>
+      <li>So
+      \[ y_{\mathrm{PI}} = -\tfrac12e^{2x} + \tfrac12e^{2x} + \tfrac16e^{2x} = \tfrac16e^{2x}. \]</li>
+      <li>Check: \(y''' - y' = \tfrac16(8 - 2)e^{2x} = e^{2x}\). ✓</li>
+    </ol></details>
+  </section>
+
+  </div>
+</article>
 <!-- ═══════════ CHAPTER II: CALCULUS OF VARIATIONS ═══════════ -->
 
 <article class="view" id="functionals" data-ch="II">
@@ -829,6 +1104,275 @@ footer a { color: inherit; }
   </ul>
 </article>
 
+
+<article class="view" id="problems-2" data-ch="II">
+  <p class="lede">Practice for Chapter II, in the style of the course problem sheets. All questions are new.</p>
+  <div class="note"><b>Modelled on:</b> Problem Sheet 2 Q4, Problem Sheets 3 and 4, and Mock Class Test Q2–3.</div>
+  <div class="pool">
+
+  <section class="q" data-style="Sheet 2 Q4" data-topic="euler-lagrange">
+    <p>Given the functional
+    \[ I[y] = \int_0^1 dx\,\big(y'^2 + 4y^2 - 8xy\big), \qquad y(0) = 0, \quad y(1) = 2, \]
+    show that the extremal satisfies \(y'' - 4y = -4x\). Find its general solution, using cosh and sinh, and apply the boundary conditions.</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>\(\dfrac{\partial F}{\partial y} = 8y - 8x\) and \(\dfrac{\partial F}{\partial y'} = 2y'\), so the E–L equation is \(8y - 8x - 2y'' = 0\), which is \(y'' - 4y = -4x\). ✓</li>
+      <li>The complementary function is \(A\cosh 2x + B\sinh 2x\). A particular integral is \(y_{\mathrm{PI}} = x\), since \(0 - 4x = -4x\).</li>
+      <li>So \(y = A\cosh 2x + B\sinh 2x + x\).</li>
+      <li>\(y(0) = 0\) gives \(A = 0\). \(y(1) = B\sinh 2 + 1 = 2\) gives \(B = 1/\sinh 2\).</li>
+      <li>Therefore
+      \[ y(x) = x + \frac{\sinh 2x}{\sinh 2}. \]</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Sheet 3 Q1" data-topic="first-integrals">
+    <p>Use the \(x\)-independence of the integrand to show that the extremal of
+    \[ I[y] = \int_0^{\pi/4} dx\,\big(y'^2 - 4y^2\big), \qquad y(0) = 0, \quad y(\pi/4) = a \gt 0, \]
+    satisfies \(y'^2 + 4y^2 = c_1\), where \(c_1\) is a positive constant. Solve for \(y(x)\). Evaluate \(I\) and compare it with the straight line through the same endpoints. Confirm your conclusion with the Legendre condition.</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>\(F\) has no explicit \(x\), so \(F - y'\dfrac{\partial F}{\partial y'}\) is constant:
+      \[ y'^2 - 4y^2 - 2y'^2 = -(y'^2 + 4y^2) = \text{const.} \]
+      So \(y'^2 + 4y^2 = c_1\). It is positive because it is a sum of squares that cannot both vanish for all \(x\) when \(a \gt 0\).</li>
+      <li>Write \(c_1 = 4c^2\). Then \(y' = \pm2\sqrt{c^2 - y^2}\), which integrates to \(y = c\sin(2x + \delta)\).</li>
+      <li>\(y(0) = 0\) gives \(\delta = 0\), and \(y(\pi/4) = c = a\). So \(y(x) = a\sin 2x\).</li>
+      <li>For the extremal,
+      \[ I = 4a^2\int_0^{\pi/4}\big(\cos^22x - \sin^22x\big)\,dx = 4a^2\int_0^{\pi/4}\cos 4x\,dx = 0. \]</li>
+      <li>The straight line is \(y = 4ax/\pi\), for which
+      \[ I = \frac{16a^2}{\pi^2}\int_0^{\pi/4}(1 - 4x^2)\,dx = \frac{16a^2}{\pi^2}\left(\frac\pi4 - \frac{\pi^3}{48}\right) = a^2\left(\frac4\pi - \frac\pi3\right) \approx 0.226\,a^2 \gt 0. \]</li>
+      <li>The extremal gives the smaller value, which suggests a minimum. Legendre agrees: \(\dfrac{\partial^2F}{\partial y'^2} = 2 \gt 0\).</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Mock Q2" data-topic="euler-lagrange">
+    <p>For the functional
+    \[ J[y] = \int_a^b \big(x^3y'^2 + 3xy^2\big)\,dx, \]</p>
+    <p>(a) write down and solve the equation for \(y(x)\) which extremises \(J\) for \(a = 1\), \(b = 2\), with \(y(1) = 0\) and \(y(2) = \tfrac{15}{8}\).</p>
+    <p>(b) Find \(J\) for this solution, and compare it with the straight line through the same endpoints. What do you conclude?</p>
+    <p>(c) Use the Legendre condition to investigate the nature of the extremum.</p>
+    <p>(d) Comment briefly on how the solution would be affected if the limits were \(a = -1\), \(b = 1\).</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>(a) \(\dfrac{\partial F}{\partial y} = 6xy\), \(\dfrac{\partial F}{\partial y'} = 2x^3y'\), and \(\dfrac{d}{dx}\dfrac{\partial F}{\partial y'} = 6x^2y' + 2x^3y''\). Dividing the E–L equation by \(-2x\):
+      \[ x^2y'' + 3xy' - 3y = 0. \]</li>
+      <li>This is an Euler ODE: \(n(n-1) + 3n - 3 = n^2 + 2n - 3 = (n-1)(n+3) = 0\). So \(y = Ax + Bx^{-3}\).</li>
+      <li>\(y(1) = 0\) gives \(B = -A\). \(y(2) = 2A - \tfrac18A = \tfrac{15}{8}A = \tfrac{15}{8}\) gives \(A = 1\). So \(y = x - x^{-3}\).</li>
+      <li>(b) With \(y' = 1 + 3x^{-4}\):
+      \[ x^3y'^2 + 3xy^2 = (x^3 + 6x^{-1} + 9x^{-5}) + (3x^3 - 6x^{-1} + 3x^{-5}) = 4x^3 + 12x^{-5}. \]
+      \[ J = \big[x^4 - 3x^{-4}\big]_1^2 = \frac{285}{16} \approx 17.81. \]</li>
+      <li>The straight line is \(y_1 = \tfrac{15}{8}(x - 1)\). Using \(\int_1^2x^3\,dx = \tfrac{15}{4}\) and \(\int_1^2x(x-1)^2\,dx = \tfrac{7}{12}\):
+      \[ J[y_1] = \frac{225}{64}\cdot\frac{15}{4} + 3\cdot\frac{225}{64}\cdot\frac{7}{12} = \frac{2475}{128} \approx 19.34. \]
+      Since \(J[y] \lt J[y_1]\), the stationary point looks like a minimum.</li>
+      <li>(c) \(\dfrac{\partial^2F}{\partial y'^2} = 2x^3 \gt 0\) on \([1,2]\), so the Legendre condition for a minimum is satisfied.</li>
+      <li>(d) On \([-1,1]\), the term \(x^{-3}\) is singular at \(x = 0\), so we need \(B = 0\) for a continuous solution. That leaves only \(y = Ax\), which cannot satisfy two general boundary conditions. Also, \(2x^3\) changes sign at \(x = 0\), so the Legendre condition fails.</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Sheet 3 Q3" data-topic="isoperimetric">
+    <p>Find the function \(y(x)\) which makes
+    \[ I[y] = \int_0^1 y'^2\,dx, \qquad y(0) = 0, \quad y(1) = 0, \]
+    stationary subject to the constraint \(J[y] = \displaystyle\int_0^1 y\,dx = 1\). Use the Legendre condition to decide whether this is a minimum or a maximum.</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>Form \(H = y'^2 + \lambda y\). The E–L equation is \(\lambda - 2y'' = 0\), so \(y'' = \lambda/2\).</li>
+      <li>Integrating twice, \(y = \tfrac\lambda4x^2 + bx + c\).</li>
+      <li>\(y(0) = 0\) gives \(c = 0\), and \(y(1) = 0\) gives \(b = -\lambda/4\). So \(y = \tfrac\lambda4(x^2 - x)\).</li>
+      <li>The constraint gives
+      \[ \frac\lambda4\left(\frac13 - \frac12\right) = -\frac{\lambda}{24} = 1, \]
+      so \(\lambda = -24\).</li>
+      <li>Therefore \(y(x) = 6x(1 - x)\). Since \(\dfrac{\partial^2H}{\partial y'^2} = 2 \gt 0\), this is a minimum.</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Sheet 3 Q2" data-topic="first-integrals">
+    <p>Consider \(I[y] = \displaystyle\int_0^1 \frac{y'^2}{y^2}\,dx\), with \(y(0) = 1\) and \(y(1) = e^2\), where \(y \gt 0\).</p>
+    <p>(a) Use the first integral to find the extremal \(y(x)\), and calculate \(I\) for it.</p>
+    <p>(b) Compare with the straight line through the endpoints. What do you conclude? Could you reach this conclusion without calculating?</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>(a) \(F\) has no explicit \(x\), so
+      \[ F - y'\frac{\partial F}{\partial y'} = \frac{y'^2}{y^2} - \frac{2y'^2}{y^2} = -\frac{y'^2}{y^2} = -k^2. \]</li>
+      <li>So \(y'/y = k\), taking the positive root as \(y\) increases. This gives \(y = Ce^{kx}\).</li>
+      <li>\(y(0) = 1\) gives \(C = 1\), and \(y(1) = e^2\) gives \(k = 2\). So \(y(x) = e^{2x}\), and
+      \[ I = \int_0^14\,dx = 4. \]</li>
+      <li>(b) The line is \(y = 1 + mx\) with \(m = e^2 - 1\). Then
+      \[ I = \int_0^1\frac{m^2}{(1 + mx)^2}\,dx = \frac{m^2}{1 + m} \approx 5.52 \gt 4. \]
+      So the extremal looks like a minimum.</li>
+      <li>Without calculating: \(\dfrac{\partial^2F}{\partial y'^2} = \dfrac{2}{y^2} \gt 0\), so the Legendre condition for a minimum holds.</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Sheet 4 Q1" data-topic="isoperimetric">
+    <p>Find the extremal \(y(x)\) of \(I[y]\) subject to \(J[y] = \tfrac38\), where
+    \[ I[y] = \int_0^\infty dx\,\big(y'^2 + 9y^2\big), \qquad J[y] = \int_0^\infty dx\,e^{-x}y, \]
+    with \(y(0) = 1\) and \(\displaystyle\lim_{x\to\infty}y(x) = 0\).</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>Form \(H = y'^2 + 9y^2 + \lambda e^{-x}y\). The E–L equation is \(18y + \lambda e^{-x} - 2y'' = 0\), so
+      \[ y'' - 9y = \frac\lambda2e^{-x}. \]</li>
+      <li>The complementary function is \(Ae^{-3x} + Be^{3x}\). For the particular integral, try \(ce^{-x}\): \((1 - 9)c = \lambda/2\), so \(c = -\lambda/16\).</li>
+      <li>The condition at infinity requires \(B = 0\), so \(y = Ae^{-3x} + ce^{-x}\). Then \(y(0) = 1\) gives \(A + c = 1\).</li>
+      <li>The constraint gives
+      \[ J = \int_0^\infty\big(Ae^{-4x} + ce^{-2x}\big)\,dx = \frac A4 + \frac c2 = \frac38. \]</li>
+      <li>Substituting \(A = 1 - c\) gives \(\tfrac14 + \tfrac c4 = \tfrac38\), so \(c = \tfrac12\), \(A = \tfrac12\) and \(\lambda = -8\).</li>
+      <li>Therefore
+      \[ y(x) = \tfrac12\big(e^{-3x} + e^{-x}\big). \]</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Sheet 4 Q2" data-topic="generalisations">
+    <p>Show that the extremal of \(I[y] = \displaystyle\int_0^{\pi/2}dx\,\big(y''^2 - 10y'^2 + 9y^2 + x^2\big)\) satisfies \(y^{(iv)} + 10y'' + 9y = 0\). Find the general solution, then the extremal for \(y(0) = y(\pi/2) = 0\) and \(y'(0) = y'(\pi/2) = a\).</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>\(\dfrac{\partial F}{\partial y} = 18y\), \(\dfrac{\partial F}{\partial y'} = -20y'\) and \(\dfrac{\partial F}{\partial y''} = 2y''\). Using (6.46):
+      \[ 18y + 20y'' + 2y^{(iv)} = 0 \quad\Longrightarrow\quad y^{(iv)} + 10y'' + 9y = 0. \]</li>
+      <li>Trying \(y = e^{mx}\): \(m^4 + 10m^2 + 9 = (m^2 + 1)(m^2 + 9) = 0\), so \(m = \pm i, \pm3i\). Hence
+      \[ y = C_1\cos x + C_2\sin x + C_3\cos 3x + C_4\sin 3x. \]</li>
+      <li>Then \(y' = -C_1\sin x + C_2\cos x - 3C_3\sin 3x + 3C_4\cos 3x\).</li>
+      <li>\(y(0) = 0\) gives \(C_3 = -C_1\). At \(x = \pi/2\), \(\sin\tfrac{3\pi}{2} = -1\) and \(\cos\tfrac{3\pi}{2} = 0\), so \(y(\pi/2) = C_2 - C_4 = 0\).</li>
+      <li>\(y'(0) = C_2 + 3C_4 = 4C_2 = a\), so \(C_2 = C_4 = a/4\).</li>
+      <li>\(y'(\pi/2) = -C_1 + 3C_3 = -4C_1 = a\), so \(C_1 = -a/4\) and \(C_3 = a/4\).</li>
+      <li>Therefore
+      \[ y(x) = \frac a4\big(\sin x - \cos x + \cos 3x + \sin 3x\big). \]</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Sheet 4 Q3" data-topic="generalisations">
+    <p>Let \(I[y,z] = \displaystyle\int_a^b dx\,F\), with \(F = \tfrac12\big(y'^2 + z'^2\big) + 4yz\), and \(y, z\) fixed at both ends.</p>
+    <p>Write down the equations satisfied by the extremal functions. Defining \(Y = y + z\) and \(Z = y - z\), show that \(Y'' = 4Y\) and \(Z'' = -4Z\). Hence find the general solution for \(y(x)\) and \(z(x)\).</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>\(\dfrac{\partial F}{\partial y} = 4z\) and \(\dfrac{\partial F}{\partial y'} = y'\), giving \(y'' = 4z\). In the same way, \(z'' = 4y\).</li>
+      <li>Adding gives \(Y'' = 4(z + y) = 4Y\). Subtracting gives \(Z'' = 4(z - y) = -4Z\). ✓</li>
+      <li>Solving, \(Y = Ae^{2x} + Be^{-2x}\) and \(Z = C\cos 2x + D\sin 2x\).</li>
+      <li>Since \(y = \tfrac12(Y + Z)\) and \(z = \tfrac12(Y - Z)\):
+      \[ y = \tfrac12\big(Ae^{2x} + Be^{-2x} + C\cos 2x + D\sin 2x\big), \]
+      \[ z = \tfrac12\big(Ae^{2x} + Be^{-2x} - C\cos 2x - D\sin 2x\big). \]</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Sheet 4 Q4" data-topic="generalisations">
+    <p>Verify that the Euler–Lagrange equation for the function \(\phi(x,t)\) that extremises
+    \[ I[\phi] = \iint dx\,dt\,\big(\phi_t^2 - c^2\phi_x^2 - m^2\phi^2\big), \]
+    with \(\phi\) fixed on the boundary and \(c, m\) constants, is \(\phi_{tt} - c^2\phi_{xx} + m^2\phi = 0\). Show that \(\phi = \cos(kx - \omega t)\) is a solution, provided \(\omega^2 = c^2k^2 + m^2\).</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>Here \(\dfrac{\partial F}{\partial\phi} = -2m^2\phi\), \(\dfrac{\partial F}{\partial\phi_t} = 2\phi_t\) and \(\dfrac{\partial F}{\partial\phi_x} = -2c^2\phi_x\).</li>
+      <li>The two-variable E–L equation (6.47) gives
+      \[ -2m^2\phi - \frac{d}{dt}(2\phi_t) - \frac{d}{dx}(-2c^2\phi_x) = 0. \]</li>
+      <li>Dividing by \(-2\) gives \(\phi_{tt} - c^2\phi_{xx} + m^2\phi = 0\). ✓</li>
+      <li>For \(\phi = \cos(kx - \omega t)\), we have \(\phi_{tt} = -\omega^2\phi\) and \(\phi_{xx} = -k^2\phi\). Inserting:
+      \[ \big(-\omega^2 + c^2k^2 + m^2\big)\phi = 0, \]
+      which holds exactly when \(\omega^2 = c^2k^2 + m^2\).</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Mock Q3" data-topic="isoperimetric">
+    <p>(a) Explain the origin of the three constants needed to satisfy \(y(a) = y_0\), \(y(b) = y_1\) and \(J[y] = C\) in an isoperimetric problem.</p>
+    <p>(b) Find the extremal \(y(x)\) for the functional
+    \[ I[y] = \int_0^{\pi/2}\big(y'^2 - y^2\big)\,dx \quad\text{with}\quad J[y] = \int_0^{\pi/2}y\sin 3x\,dx = \frac\pi4, \]
+    and the boundary conditions \(y(0) = 0\) and \(y(\pi/2) = 0\).</p>
+    <p>(c) Use the Legendre condition to state whether this is a minimum or a maximum.</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>(a) The E–L equation for \(H = F + \lambda G\) is a second-order ODE, which gives two integration constants. The third constant is the multiplier \(\lambda\). The two boundary conditions and the constraint fix all three.</li>
+      <li>(b) Form \(H = y'^2 - y^2 + \lambda y\sin 3x\). The E–L equation is \(-2y + \lambda\sin 3x - 2y'' = 0\), so
+      \[ y'' + y = \frac\lambda2\sin 3x. \]</li>
+      <li>The complementary function is \(A\cos x + B\sin x\). Trying \(c\sin 3x\): \((-9 + 1)c = \lambda/2\), so \(c = -\lambda/16\).</li>
+      <li>\(y(0) = 0\) gives \(A = 0\). Since \(\sin\tfrac{3\pi}{2} = -1\), \(y(\pi/2) = B - c = 0\), so \(B = c\) and \(y = c(\sin x + \sin 3x)\).</li>
+      <li>Using \(\sin\alpha\sin\beta = \tfrac12[\cos(\alpha - \beta) - \cos(\alpha + \beta)]\):
+      \[ \int_0^{\pi/2}\sin x\sin 3x\,dx = \tfrac12\int_0^{\pi/2}(\cos 2x - \cos 4x)\,dx = 0, \]
+      \[ \int_0^{\pi/2}\sin^23x\,dx = \tfrac12\int_0^{\pi/2}(1 - \cos 6x)\,dx = \frac\pi4. \]</li>
+      <li>So \(J = c\,\pi/4 = \pi/4\), which gives \(c = 1\) and \(\lambda = -16\). Therefore
+      \[ y(x) = \sin x + \sin 3x. \]</li>
+      <li>(c) \(\dfrac{\partial^2H}{\partial y'^2} = 2 \gt 0\), so this is a minimum.</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Notes §6" data-topic="natural-bc">
+    <p>Find the extremal of \(I[y] = \displaystyle\int_0^1\big(y'^2 + y^2\big)\,dx\) with \(y(0) = 1\) and \(y(1)\) not prescribed. Evaluate \(I\) for your solution, and compare it with \(I\) for the constant function \(y = 1\).</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>The E–L equation is \(2y - 2y'' = 0\), so \(y'' = y\) and \(y = A\cosh x + B\sinh x\).</li>
+      <li>\(y(0) = 1\) gives \(A = 1\).</li>
+      <li>The end at \(x = 1\) is free, so the natural condition applies: \(\left.\partial F/\partial y'\right|_{x=1} = 2y'(1) = 0\). This gives \(\sinh 1 + B\cosh 1 = 0\).</li>
+      <li>So \(B = -\tanh 1\). Using the cosh subtraction formula,
+      \[ y(x) = \frac{\cosh(1 - x)}{\cosh 1}. \]</li>
+      <li>Since \(y'' = y\), we have \(y'^2 + y^2 = (yy')'\), so
+      \[ I = \big[yy'\big]_0^1 = -y'(0) = \tanh 1 \approx 0.762. \]</li>
+      <li>For \(y = 1\), \(I = 1\), which is larger. This is consistent with a minimum.</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Sheet 4 Q2" data-topic="generalisations">
+    <p>Find the function which extremises \(I[y] = \displaystyle\int_0^1y''^2\,dx\), with \(y(0) = 0\), \(y'(0) = 0\), \(y(1) = 1\), \(y'(1) = 0\). Compare the value of \(I\) with that for \(y = \sin^2(\pi x/2)\), which satisfies the same conditions.</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>Only \(\partial F/\partial y'' = 2y''\) is non-zero, so (6.46) gives \(\dfrac{d^2}{dx^2}(2y'') = 0\), that is \(y^{(iv)} = 0\).</li>
+      <li>So \(y\) is a cubic. \(y(0) = y'(0) = 0\) leaves \(y = ax^3 + bx^2\).</li>
+      <li>\(y(1) = 1\) gives \(a + b = 1\), and \(y'(1) = 0\) gives \(3a + 2b = 0\). Hence \(a = -2\), \(b = 3\), and
+      \[ y(x) = 3x^2 - 2x^3. \]</li>
+      <li>Then \(y'' = 6 - 12x\), and
+      \[ I = 36\int_0^1(1 - 2x)^2\,dx = 12. \]</li>
+      <li>For \(y = \sin^2(\pi x/2) = \tfrac12(1 - \cos\pi x)\), we have \(y'' = \tfrac{\pi^2}{2}\cos\pi x\), so
+      \[ I = \frac{\pi^4}{4}\int_0^1\cos^2\pi x\,dx = \frac{\pi^4}{8} \approx 12.18 \gt 12. \]
+      The extremal has the smaller value.</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Sheet 3 Q2" data-topic="first-integrals">
+    <p>Find the extremal of \(I[y] = \displaystyle\int_0^1yy'^2\,dx\) with \(y(0) = 1\) and \(y(1) = 4\), where \(y \gt 0\). Calculate \(I\), compare it with the straight line through the endpoints, and check the Legendre condition.</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>\(F\) has no explicit \(x\), so
+      \[ F - y'\frac{\partial F}{\partial y'} = yy'^2 - 2yy'^2 = -yy'^2 = \text{const.} \]</li>
+      <li>So \(\sqrt y\,y' = k\). Since \(\dfrac{d}{dx}\big(\tfrac23y^{3/2}\big) = \sqrt y\,y'\), we get \(y^{3/2} = \tfrac32kx + d\).</li>
+      <li>\(y(0) = 1\) gives \(d = 1\). \(y(1) = 4\) gives \(8 = \tfrac32k + 1\), so \(k = \tfrac{14}{3}\). Hence
+      \[ y(x) = (7x + 1)^{2/3}. \]</li>
+      <li>Then \(yy'^2 = k^2\) is constant, so \(I = \dfrac{196}{9} \approx 21.78\).</li>
+      <li>For the line \(y = 1 + 3x\):
+      \[ I = \int_0^19(1 + 3x)\,dx = \frac{45}{2} = 22.5. \]
+      This is larger, which suggests a minimum.</li>
+      <li>Legendre: \(\dfrac{\partial^2F}{\partial y'^2} = 2y \gt 0\), which agrees.</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Sheet 3 Q3" data-topic="isoperimetric">
+    <p>Find the function \(y(x)\) which makes
+    \[ I[y] = \int_1^2\big(x^2y'^2 + 2y^2\big)\,dx, \qquad y(1) = 0, \quad y(2) = 0, \]
+    stationary subject to \(J[y] = \displaystyle\int_1^2y\,dx = \tfrac18\). Use the Legendre condition to decide between a minimum and a maximum.</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>Form \(H = x^2y'^2 + 2y^2 + \lambda y\). The E–L equation is \(4y + \lambda - (4xy' + 2x^2y'') = 0\), which rearranges to
+      \[ x^2y'' + 2xy' - 2y = \frac\lambda2. \]</li>
+      <li>The homogeneous part is Euler: \(n(n-1) + 2n - 2 = (n-1)(n+2) = 0\). A constant \(K\) is a particular integral, with \(-2K = \lambda/2\). So
+      \[ y = Ax + \frac{B}{x^2} + K, \qquad K = -\frac\lambda4. \]</li>
+      <li>\(y(1) = 0\) gives \(A + B + K = 0\). \(y(2) = 0\) gives \(2A + \tfrac14B + K = 0\). Subtracting gives \(A = \tfrac34B\), and then \(K = -\tfrac74B\).</li>
+      <li>The constraint gives
+      \[ J = \tfrac32A + \tfrac12B + K = \left(\tfrac98 + \tfrac12 - \tfrac74\right)B = -\tfrac18B = \tfrac18, \]
+      so \(B = -1\), \(A = -\tfrac34\), \(K = \tfrac74\) and \(\lambda = -7\).</li>
+      <li>Therefore
+      \[ y(x) = \frac74 - \frac34x - \frac{1}{x^2}. \]</li>
+      <li>\(\dfrac{\partial^2H}{\partial y'^2} = 2x^2 \gt 0\) on \([1,2]\), so this is a minimum.</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Notes §2.1" data-topic="functionals">
+    <p>In a planar medium, the speed of light is \(c(x,y) = y\), for \(y \gt 0\). Write down the travel-time functional \(T[y]\) from Fermat's principle. Show that the light rays are arcs of circles centred on the \(x\)-axis, and find the ray from \((-1,1)\) to \((1,1)\).</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>From (2.5),
+      \[ T[y] = \int\frac{\sqrt{1 + y'^2}}{y}\,dx. \]</li>
+      <li>\(F\) has no explicit \(x\), so
+      \[ F - y'\frac{\partial F}{\partial y'} = \frac{1 + y'^2 - y'^2}{y\sqrt{1 + y'^2}} = \frac{1}{y\sqrt{1 + y'^2}} = \frac1R, \]
+      where \(1/R\) is a positive constant.</li>
+      <li>So \(y^2(1 + y'^2) = R^2\), which gives \(y'^2 = (R^2 - y^2)/y^2\).</li>
+      <li>Separating, \(\dfrac{y\,dy}{\sqrt{R^2 - y^2}} = \pm dx\). Integrating gives \(\mp\sqrt{R^2 - y^2} = x - d\). Squaring:
+      \[ (x - d)^2 + y^2 = R^2. \]
+      This is a circle centred at \((d, 0)\), on the \(x\)-axis.</li>
+      <li>By symmetry between the two endpoints, \(d = 0\). Then \(R^2 = 1 + 1 = 2\), so the ray is \(y = \sqrt{2 - x^2}\).</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Notes §7" data-topic="hamilton">
+    <p>A simple pendulum has a bob of mass \(m\) on a light rod of length \(l\), at angle \(\theta(t)\) to the downward vertical. Write down its Lagrangian \(L = T - V\) and derive the equation of motion from the Euler–Lagrange equation. What does it reduce to for small \(\theta\)?</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>The bob has speed \(l\dot\theta\), so \(T = \tfrac12ml^2\dot\theta^2\).</li>
+      <li>Taking \(V = 0\) at the pivot, the bob is at height \(-l\cos\theta\), so \(V = -mgl\cos\theta\). Hence
+      \[ L = \tfrac12ml^2\dot\theta^2 + mgl\cos\theta. \]</li>
+      <li>\(\dfrac{\partial L}{\partial\theta} = -mgl\sin\theta\) and \(\dfrac{\partial L}{\partial\dot\theta} = ml^2\dot\theta\). The E–L equation gives
+      \[ -mgl\sin\theta - ml^2\ddot\theta = 0 \quad\Longrightarrow\quad \ddot\theta + \frac gl\sin\theta = 0. \]</li>
+      <li>For small \(\theta\), \(\sin\theta \approx \theta\), so \(\ddot\theta + \dfrac gl\theta = 0\). This is simple harmonic motion with angular frequency \(\sqrt{g/l}\).</li>
+    </ol></details>
+  </section>
+
+  </div>
+</article>
 <!-- ═══════════ CHAPTER III: SYSTEMS OF FIRST-ORDER PDEs ═══════════ -->
 
 <article class="view" id="first-order-pdes" data-ch="III">
@@ -1027,6 +1571,216 @@ footer a { color: inherit; }
   </div></details>
 </article>
 
+<article class="view" id="problems-3" data-ch="III">
+  <p class="lede">Practice for Chapter III, in the style of the course problem sheets. All questions are new.</p>
+  <div class="note"><b>Modelled on:</b> Problem Sheet 5 and the first part of Problem Sheet 6 Q1. The rest of Sheets 6 and 7 covers second-order PDEs, so it belongs to Chapter IV.</div>
+  <div class="pool">
+
+  <section class="q" data-style="Sheet 5 Q1" data-topic="riemann-examples">
+    <p>The functions \(u(x,y)\) and \(v(x,y)\) satisfy
+    \[ 2u_x + u_y + 3v_y = 0, \qquad 3u_y + 2v_x + v_y = 0, \]
+    with \(u(x,0) = \cos x\) and \(v(x,0) = \sin x\). Show that the system is hyperbolic with characteristics \(\alpha = 2x - y\) and \(\beta = x + y\). Find the Riemann invariants, and determine \(u\) and \(v\).</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>In the form \(A\mathbf u_x + B\mathbf u_y = \mathbf 0\), we have \(A = 2I\) and \(B = \begin{pmatrix} 1 & 3 \\ 3 & 1 \end{pmatrix}\). Then
+      \[ \det(\lambda A - B) = (2\lambda - 1)^2 - 9 = 0 \quad\Longrightarrow\quad \lambda = 2, -1. \]
+      The roots are real and distinct, so the system is hyperbolic.</li>
+      <li>\(y' = 2\) gives \(\alpha = 2x - y\), and \(y' = -1\) gives \(\beta = x + y\).</li>
+      <li>Changing variables: \(u_x = 2u_\alpha + u_\beta\) and \(u_y = -u_\alpha + u_\beta\), and the same for \(v\). After dividing by 3, the PDEs become
+      \[ u_\alpha + u_\beta - v_\alpha + v_\beta = 0, \qquad -u_\alpha + u_\beta + v_\alpha + v_\beta = 0. \]</li>
+      <li>Adding gives \(u_\beta + v_\beta = 0\), and subtracting gives \(u_\alpha - v_\alpha = 0\). So the Riemann invariants are
+      \[ u + v = f(\alpha), \qquad u - v = g(\beta). \]</li>
+      <li>At \(y = 0\), \(\alpha = 2x\) and \(\beta = x\). So \(f(2x) = \cos x + \sin x\) and \(g(x) = \cos x - \sin x\). Hence \(f(s) = \cos\tfrac s2 + \sin\tfrac s2\).</li>
+      <li>Since \(u = \tfrac12(f + g)\) and \(v = \tfrac12(f - g)\):
+      \[ u = \tfrac12\big[\cos(x - \tfrac y2) + \sin(x - \tfrac y2) + \cos(x + y) - \sin(x + y)\big], \]
+      \[ v = \tfrac12\big[\cos(x - \tfrac y2) + \sin(x - \tfrac y2) - \cos(x + y) + \sin(x + y)\big]. \]</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Notes §3.1" data-topic="classification">
+    <p>Classify each of the following systems as elliptic, hyperbolic or parabolic:</p>
+    <p>(a) \(u_x + v_y = 0\), \(\;u_y - v_x = 0\)</p>
+    <p>(b) \(u_x + u_y + v_y = 0\), \(\;v_x + v_y = 0\)</p>
+    <p>(c) \(u_x + 4v_y = 0\), \(\;v_x + u_y = 0\)</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>(a) Here \(A = \begin{pmatrix} 1 & 0 \\ 0 & -1 \end{pmatrix}\) and \(B = \begin{pmatrix} 0 & 1 \\ 1 & 0 \end{pmatrix}\). So \(D = A^{-1}B = \begin{pmatrix} 0 & 1 \\ -1 & 0 \end{pmatrix}\), and \(\det(\lambda I - D) = \lambda^2 + 1\). There are no real roots, so the system is <strong>elliptic</strong>.</li>
+      <li>(b) \(D = \begin{pmatrix} 1 & 1 \\ 0 & 1 \end{pmatrix}\), so \(\det(\lambda I - D) = (\lambda - 1)^2\), a double root \(\lambda = 1\). Solving \((D - I)\mathbf e = \mathbf 0\) gives only \(\mathbf e = (1,0)^T\). With one eigenvector, the system is <strong>parabolic</strong>.</li>
+      <li>(c) \(D = \begin{pmatrix} 0 & 4 \\ 1 & 0 \end{pmatrix}\), so \(\det(\lambda I - D) = \lambda^2 - 4\), giving \(\lambda = \pm2\). These are real and distinct, so the system is <strong>hyperbolic</strong>.</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Sheet 5 Q3" data-topic="riemann-examples">
+    <p>The functions \(u(x,y)\) and \(v(x,y)\) satisfy, for \(x \neq 0\),
+    \[ u_x - 2xv_y = 8xy, \qquad v_x - 2xu_y = -8x^3. \]
+    Show that the system is hyperbolic with characteristics \(\eta = y - x^2\) and \(\nu = y + x^2\). By changing variables, show that
+    \[ u_\eta + v_\eta = -2\eta, \qquad u_\nu - v_\nu = 2\nu. \]
+    Find \(u\) and \(v\) for \(u(x,0) = x^4\) and \(v(x,0) = -x^4\).</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>\(A = I\) and \(B = \begin{pmatrix} 0 & -2x \\ -2x & 0 \end{pmatrix}\), so \(\det(\lambda A - B) = \lambda^2 - 4x^2 = 0\) and \(\lambda = \pm2x\). These are real and distinct for \(x \neq 0\), so the system is hyperbolic.</li>
+      <li>\(y' = 2x\) gives \(\eta = y - x^2\), and \(y' = -2x\) gives \(\nu = y + x^2\).</li>
+      <li>Changing variables: \(u_x = 2x(u_\nu - u_\eta)\) and \(u_y = u_\eta + u_\nu\), and the same for \(v\). Dividing each PDE by \(2x\):
+      \[ u_\nu - u_\eta - v_\eta - v_\nu = 4y, \qquad v_\nu - v_\eta - u_\eta - u_\nu = -4x^2. \]</li>
+      <li>Adding gives \(-2(u_\eta + v_\eta) = 4(y - x^2) = 4\eta\). Subtracting gives \(2(u_\nu - v_\nu) = 4(y + x^2) = 4\nu\). This gives the two stated equations. ✓</li>
+      <li>Integrating:
+      \[ u + v = -\eta^2 + F(\nu), \qquad u - v = \nu^2 + G(\eta). \]</li>
+      <li>At \(y = 0\), \(\eta = -x^2\) and \(\nu = x^2\). The first condition gives \(0 = -x^4 + F(x^2)\), so \(F(s) = s^2\). The second gives \(2x^4 = x^4 + G(-x^2)\), so \(G(s) = s^2\).</li>
+      <li>So \(u + v = \nu^2 - \eta^2\) and \(u - v = \nu^2 + \eta^2\). Hence
+      \[ u = \nu^2 = (y + x^2)^2, \qquad v = -\eta^2 = -(y - x^2)^2. \]</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Sheet 5 Q2" data-topic="hyperbolic-systems">
+    <p>The functions \(u(x,y)\) and \(v(x,y)\) satisfy
+    \[ u_x + 2v_x + u_y + 2v_y = 2, \qquad u_x - v_x - 2u_y + 2v_y = 6x. \]
+    Show that the gradients of the characteristics are \(\lambda = 1\) and \(\lambda = -2\). Decouple the system and verify that \(u + 2v - 2x\) and \(u - v - 3x^2\) are each constant on one family of characteristics. By considering the characteristics through \(P = (1,1)\), find \(u(1,1)\) and \(v(1,1)\), for \(u(x,0) = x^2\) and \(v(x,0) = x\).</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>With \(A = \begin{pmatrix} 1 & 2 \\ 1 & -1 \end{pmatrix}\) and \(B = \begin{pmatrix} 1 & 2 \\ -2 & 2 \end{pmatrix}\):
+      \[ \det(\lambda A - B) = \begin{vmatrix} \lambda - 1 & 2(\lambda - 1) \\ \lambda + 2 & -(\lambda + 2) \end{vmatrix} = -3(\lambda - 1)(\lambda + 2) = 0. \]
+      So \(\lambda = 1\) or \(-2\).</li>
+      <li>The characteristics are \(\alpha = x - y\) and \(\beta = 2x + y\). Then \(u_x = u_\alpha + 2u_\beta\) and \(u_y = -u_\alpha + u_\beta\), and the same for \(v\).</li>
+      <li>Substituting and simplifying:
+      \[ 3(u_\beta + 2v_\beta) = 2, \qquad 3(u_\alpha - v_\alpha) = 6x. \]</li>
+      <li>Since \(x_\beta = \tfrac13\), the first gives \((u + 2v - 2x)_\beta = \tfrac23 - \tfrac23 = 0\). Since \(x_\alpha = \tfrac13\), the second gives \((u - v - 3x^2)_\alpha = 2x - 2x = 0\). So
+      \[ u + 2v - 2x = f(\alpha), \qquad u - v - 3x^2 = g(\beta). \]
+      The first is constant on \(\alpha = x - y = \text{const.}\), and the second on \(\beta = 2x + y = \text{const.}\)</li>
+      <li>Through \(P\), we have \(\alpha = 0\) and \(\beta = 3\). These characteristics meet \(y = 0\) at \(Q = (0,0)\) and \(R = (\tfrac32, 0)\).</li>
+      <li>On \(PQ\): \(u_P + 2v_P - 2 = u_Q + 2v_Q - 0 = 0\).</li>
+      <li>On \(PR\): \(u_P - v_P - 3 = \tfrac94 - \tfrac32 - \tfrac{27}{4} = -6\).</li>
+      <li>So \(u_P + 2v_P = 2\) and \(u_P - v_P = -3\). Subtracting gives \(3v_P = 5\). Hence
+      \[ v(1,1) = \frac53, \qquad u(1,1) = -\frac43. \]</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Notes §3.1" data-topic="first-order-pdes">
+    <p>Use the method of characteristics to find the general solution of
+    \[ xu_x + 2yu_y = 2x^2, \qquad x \gt 0, \]
+    and then the solution with \(u(1,y) = y\).</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>The characteristic equation is \(\dfrac{dy}{dx} = \dfrac{2y}{x}\). Separating gives \(\ln y = 2\ln x + \text{const.}\), so \(y/x^2 = k\).</li>
+      <li>Choose \(\eta = y/x^2\) and \(\xi = x\). The Jacobian is \(\eta_y = 1/x^2 \neq 0\).</li>
+      <li>Then \(u_x = u_\xi - \dfrac{2y}{x^3}u_\eta\) and \(u_y = \dfrac{1}{x^2}u_\eta\). Substituting, the \(u_\eta\) terms cancel:
+      \[ xu_\xi = 2x^2 \quad\Longrightarrow\quad u_\xi = 2\xi. \]</li>
+      <li>Integrating gives \(u = \xi^2 + g(\eta)\), so
+      \[ u(x,y) = x^2 + g\!\left(\frac{y}{x^2}\right). \]</li>
+      <li>On \(x = 1\): \(1 + g(y) = y\), so \(g(t) = t - 1\). Therefore
+      \[ u(x,y) = x^2 + \frac{y}{x^2} - 1. \]</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Notes §3.1" data-topic="classification">
+    <p>Classify the system
+    \[ u_x + xv_y = 0, \qquad v_x + yu_y = 0 \]
+    throughout the \((x,y)\)-plane.</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>\(A = I\), so \(D = \begin{pmatrix} 0 & x \\ y & 0 \end{pmatrix}\) and \(\det(\lambda I - D) = \lambda^2 - xy\).</li>
+      <li>If \(xy \gt 0\), then \(\lambda = \pm\sqrt{xy}\) are real and distinct: <strong>hyperbolic</strong> (first and third quadrants).</li>
+      <li>If \(xy \lt 0\), there are no real roots: <strong>elliptic</strong> (second and fourth quadrants).</li>
+      <li>If exactly one of \(x, y\) is zero, then \(\lambda = 0\) is a double root and \(D\) is non-zero, so there is only one eigenvector: <strong>parabolic</strong>.</li>
+      <li>At the origin, \(D = 0\), so \(\lambda = 0\) is a double root with two independent eigenvectors: <strong>hyperbolic</strong> by the definition.</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Sheet 5 Q1" data-topic="riemann-examples">
+    <p>The functions \(u(x,y)\) and \(v(x,y)\) satisfy
+    \[ 3u_x + 7u_y + 2v_y = 0, \qquad u_x - v_x + u_y - v_y = 0, \]
+    with \(u(x,0) = u_0(x)\) and \(v(x,0) = v_0(x)\). Show that the characteristics are \(\alpha = 3x - y\) and \(\beta = x - y\). Find the Riemann invariants, and hence the solution in terms of \(u_0\) and \(v_0\). Evaluate it for \(u_0 = x\), \(v_0 = 2x\).</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>\(A = \begin{pmatrix} 3 & 0 \\ 1 & -1 \end{pmatrix}\) and \(B = \begin{pmatrix} 7 & 2 \\ 1 & -1 \end{pmatrix}\), so
+      \[ \det(\lambda A - B) = (3\lambda - 7)(1 - \lambda) + 2(\lambda - 1) = -3(\lambda - 1)(\lambda - 3). \]
+      Then \(\lambda = 3\) gives \(\alpha = 3x - y\), and \(\lambda = 1\) gives \(\beta = x - y\).</li>
+      <li>Changing variables: \(u_x = 3u_\alpha + u_\beta\) and \(u_y = -u_\alpha - u_\beta\), and the same for \(v\). The PDEs become
+      \[ 2u_\alpha - 4u_\beta - 2v_\alpha - 2v_\beta = 0, \qquad 2u_\alpha - 2v_\alpha = 0. \]</li>
+      <li>So \(u_\alpha - v_\alpha = 0\). Inserting this into the first gives \(2u_\beta + v_\beta = 0\). The Riemann invariants are
+      \[ 2u + v = f(\alpha), \qquad u - v = g(\beta). \]</li>
+      <li>At \(y = 0\): \(f(3x) = 2u_0(x) + v_0(x)\) and \(g(x) = u_0(x) - v_0(x)\).</li>
+      <li>Solving, \(u = \tfrac13(f + g)\) and \(v = \tfrac13(f - 2g)\). With \(s = x - \tfrac y3\):
+      \[ u = \tfrac13\big[2u_0(s) + v_0(s) + u_0(x - y) - v_0(x - y)\big], \]
+      \[ v = \tfrac13\big[2u_0(s) + v_0(s) - 2u_0(x - y) + 2v_0(x - y)\big]. \]</li>
+      <li>For \(u_0 = x\), \(v_0 = 2x\): \(f(\alpha) = \tfrac43\alpha\) and \(g(\beta) = -\beta\). Hence
+      \[ u = x - \frac y9, \qquad v = 2x - \frac{10y}{9}. \]</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Notes §3.2" data-topic="hyperbolic-systems">
+    <p>For the system \(\mathbf u_x + D\mathbf u_y = \mathbf 0\), with \(\mathbf u = (u,v)^T\) and \(D = \begin{pmatrix} 1 & 2 \\ 2 & 1 \end{pmatrix}\), find \(P\) and \(\Lambda\) with \(P^{-1}DP = \Lambda\). Put \(\mathbf u = P\mathbf w\) to obtain the canonical form. Solve the system for \(u(x,0) = x\), \(v(x,0) = 0\).</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>\(\det(\lambda I - D) = (\lambda - 1)^2 - 4 = 0\) gives \(\lambda_1 = 3\) and \(\lambda_2 = -1\). The eigenvectors are \(\mathbf e_1 = (1,1)^T\) and \(\mathbf e_2 = (1,-1)^T\).</li>
+      <li>So
+      \[ P = \begin{pmatrix} 1 & 1 \\ 1 & -1 \end{pmatrix}, \qquad \Lambda = \begin{pmatrix} 3 & 0 \\ 0 & -1 \end{pmatrix}. \]</li>
+      <li>\(P\) is constant, so \(\mathbf w = (p,q)^T\) satisfies \(\mathbf w_x + \Lambda\mathbf w_y = \mathbf 0\):
+      \[ p_x + 3p_y = 0, \qquad q_x - q_y = 0. \]</li>
+      <li>Hence \(p = f(3x - y)\) and \(q = g(x + y)\).</li>
+      <li>From \(\mathbf u = P\mathbf w\), \(p = \tfrac12(u + v)\) and \(q = \tfrac12(u - v)\). At \(y = 0\), both equal \(\tfrac12x\). So \(f(s) = \tfrac16s\) and \(g(s) = \tfrac12s\).</li>
+      <li>Then \(p = \tfrac12x - \tfrac16y\) and \(q = \tfrac12x + \tfrac12y\). Therefore
+      \[ u = p + q = x + \frac y3, \qquad v = p - q = -\frac{2y}{3}. \]</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Sheet 5 Q2" data-topic="riemann-examples">
+    <p>The functions \(u(x,y)\) and \(v(x,y)\) satisfy
+    \[ u_x + 2v_y = \tfrac12(\cos x + e^x), \qquad v_x + 2u_y = \tfrac12(\cos x - e^x), \]
+    with \(u(x,0) = 0\) and \(v(x,0) = 0\). Show that \(u + v - \sin x\) and \(u - v - e^x\) are Riemann invariants, and determine \(u\) and \(v\).</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>\(A = I\) and \(B = \begin{pmatrix} 0 & 2 \\ 2 & 0 \end{pmatrix}\), so \(\lambda^2 - 4 = 0\) and \(\lambda = \pm2\). The system is hyperbolic, with \(\alpha = 2x - y\) and \(\beta = 2x + y\).</li>
+      <li>Adding and subtracting the PDEs gives
+      \[ (u + v)_x + 2(u + v)_y = \cos x, \qquad (u - v)_x - 2(u - v)_y = e^x. \]</li>
+      <li>The left side of the first is the derivative along \(dy/dx = 2\), so \(\dfrac{d}{dx}(u + v) = \cos x\) on \(\alpha = \text{const.}\) The second similarly gives \(\dfrac{d}{dx}(u - v) = e^x\) on \(\beta = \text{const.}\)</li>
+      <li>Integrating along each characteristic:
+      \[ u + v - \sin x = f(2x - y), \qquad u - v - e^x = g(2x + y). \]</li>
+      <li>At \(y = 0\): \(f(2x) = -\sin x\) and \(g(2x) = -e^x\). So \(f(s) = -\sin\tfrac s2\) and \(g(s) = -e^{s/2}\).</li>
+      <li>Thus \(u + v = \sin x - \sin(x - \tfrac y2)\) and \(u - v = e^x - e^{x + y/2}\). Therefore
+      \[ u = \tfrac12\big[\sin x - \sin(x - \tfrac y2) + e^x - e^{x + y/2}\big], \]
+      \[ v = \tfrac12\big[\sin x - \sin(x - \tfrac y2) - e^x + e^{x + y/2}\big]. \]</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Sheet 6 Q1" data-topic="hyperbolic-systems">
+    <p>Show that the system
+    \[ u_x + cv_y = 0, \qquad v_x + cu_y = 0, \]
+    with constant \(c \gt 0\), is hyperbolic, and calculate the gradients of its characteristics. By differentiating, show that \(u\) satisfies \(u_{xx} = c^2u_{yy}\). Find the Riemann invariants, and hence write down the general solution for \(u\).</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>\(A = I\) and \(B = \begin{pmatrix} 0 & c \\ c & 0 \end{pmatrix}\), so \(\lambda^2 - c^2 = 0\). The roots \(\lambda = \pm c\) are real and distinct, so the system is hyperbolic.</li>
+      <li>Differentiate the first PDE with respect to \(x\): \(u_{xx} = -cv_{xy}\). Differentiate the second with respect to \(y\): \(v_{xy} = -cu_{yy}\). Together, \(u_{xx} = c^2u_{yy}\). ✓</li>
+      <li>Adding and subtracting the PDEs:
+      \[ (u + v)_x + c(u + v)_y = 0, \qquad (u - v)_x - c(u - v)_y = 0. \]</li>
+      <li>So \(u + v = F(y - cx)\) and \(u - v = G(y + cx)\) are the Riemann invariants.</li>
+      <li>Hence
+      \[ u(x,y) = \tfrac12\big[F(y - cx) + G(y + cx)\big], \]
+      which is the general solution of the wave equation.</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Sheet 5 Q3" data-topic="riemann-examples">
+    <p>The functions \(u(x,y)\) and \(v(x,y)\) satisfy, for \(y \gt 0\),
+    \[ u_x + yv_y = 0, \qquad v_x + yu_y = 0. \]
+    Show that the system is hyperbolic, with characteristics \(\alpha = ye^{-x}\) and \(\beta = ye^{x}\). Find the Riemann invariants, and the solution with \(u(0,y) = y\) and \(v(0,y) = 0\).</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>\(A = I\) and \(B = \begin{pmatrix} 0 & y \\ y & 0 \end{pmatrix}\), so \(\lambda = \pm y\). These are real and distinct for \(y \gt 0\), so the system is hyperbolic.</li>
+      <li>\(dy/dx = y\) gives \(y = \alpha e^{x}\), so \(\alpha = ye^{-x}\). \(dy/dx = -y\) gives \(\beta = ye^{x}\).</li>
+      <li>Adding and subtracting the PDEs:
+      \[ (u + v)_x + y(u + v)_y = 0, \qquad (u - v)_x - y(u - v)_y = 0. \]</li>
+      <li>So \(u + v\) is constant along \(dy/dx = y\), and \(u - v\) is constant along \(dy/dx = -y\):
+      \[ u + v = f(\alpha), \qquad u - v = g(\beta). \]</li>
+      <li>On \(x = 0\), \(\alpha = \beta = y\), so \(f(y) = y\) and \(g(y) = y\).</li>
+      <li>So \(u + v = ye^{-x}\) and \(u - v = ye^{x}\). Therefore
+      \[ u = y\cosh x, \qquad v = -y\sinh x. \]</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Notes §3.2" data-topic="hyperbolic-systems">
+    <p>A hyperbolic system has characteristic gradients \(\lambda = 2\) and \(\lambda = -1\), and its data \(u(x,0)\), \(v(x,0)\) are known only for \(0 \leq x \leq 1\). By tracing the characteristics back from a point \(P = (x_P, y_P)\) with \(y_P \gt 0\), determine the region of the upper half-plane where the solution is fixed by this data. Sketch it.</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>The characteristics through \(P\) are \(2x - y = \text{const.}\) and \(x + y = \text{const.}\)</li>
+      <li>They reach \(y = 0\) at
+      \[ x_Q = x_P - \tfrac12y_P, \qquad x_R = x_P + y_P. \]</li>
+      <li>The Riemann invariants at \(P\) are known only if both feet are in the data interval. So we need \(x_P - \tfrac12y_P \geq 0\) and \(x_P + y_P \leq 1\).</li>
+      <li>The boundaries are the lines \(y = 2x\) and \(y = 1 - x\). They meet where \(2x = 1 - x\), at \(\big(\tfrac13, \tfrac23\big)\).</li>
+      <li>So the region is the triangle with vertices \((0,0)\), \((1,0)\) and \(\big(\tfrac13, \tfrac23\big)\).</li>
+    </ol></details>
+  </section>
+
+  </div>
+</article>
+
 </div><!-- /wrap -->
 
 <script>
@@ -1043,6 +1797,8 @@ const TOPICS = [
     icon: '<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r="1" fill="currentColor"/>' },
   { id: 'variation-of-parameters', ch: 'I', title: 'Variation of Parameters', desc: 'Wronskians, Green\'s functions, higher orders',
     icon: '<path d="M2 12c1 3 1.8 3 2.5 0S6 7 7 12s2 9 3.5 0S13 1 15 12s3 10 7 0"/>' },
+  { id: 'problems-1', ch: 'I', title: 'Problems', desc: 'Sixteen questions in the style of Sheets 1 and 2',
+    icon: '<path d="M4 20l1-4.500L16.500 4l3.500 3.500L8.500 19 4 20z"/><path d="M14 6.500l3.500 3.500"/>' },
 
   { id: 'functionals', ch: 'II', title: 'Functionals', desc: 'Functions of functions, and classic problems',
     icon: '<path d="M2 16c2-8 4-8 6-3s3 3 4 1"/><path d="M14 12h5"/><path d="M17 9l3 3-3 3"/><circle cx="22" cy="12" r=".8" fill="currentColor"/>' },
@@ -1060,6 +1816,8 @@ const TOPICS = [
     icon: '<circle cx="4" cy="12" r="1.8" fill="currentColor"/><path d="M6 12h4M10 12c3 0 3-7 8-7M10 12c3 0 3 7 8 7M10 12h8"/><circle cx="20" cy="5" r="1.4"/><circle cx="20" cy="12" r="1.4"/><circle cx="20" cy="19" r="1.4"/>' },
   { id: 'hamilton', ch: 'II', title: "Hamilton's Principle", desc: 'Mechanics as a variational problem',
     icon: '<path d="M2 20h20"/><path d="M4 20C7 6 17 6 20 20"/><circle cx="12" cy="9.5" r="1.8" fill="currentColor"/>' },
+  { id: 'problems-2', ch: 'II', title: 'Problems', desc: 'Sixteen questions in the style of Sheets 2 to 4',
+    icon: '<path d="M4 20l1-4.500L16.500 4l3.500 3.500L8.500 19 4 20z"/><path d="M14 6.500l3.500 3.500"/>' },
 
   { id: 'first-order-pdes', ch: 'III', title: 'First-Order PDEs', desc: 'Characteristics reduce a PDE to an ODE',
     icon: '<path d="M3 3v18h18"/><path d="M3 15C8 13 12 9 15 3M8 21C12 16 16 11 19 3M14 21c3-4 5-7 7-12"/>' },
@@ -1069,6 +1827,8 @@ const TOPICS = [
     icon: '<path d="M2 20h20"/><path d="M12 5L5 20M12 5l8 15"/><circle cx="12" cy="5" r="1.8" fill="currentColor"/><path d="M4 12l6 8M15 3l6 9" opacity=".4"/>' },
   { id: 'riemann-examples', ch: 'III', title: 'Riemann Invariant Examples', desc: 'Three full worked systems',
     icon: '<path d="M4 20L20 4"/><circle cx="8" cy="16" r="1.8" fill="currentColor"/><circle cx="12" cy="12" r="1.8" fill="currentColor"/><circle cx="16" cy="8" r="1.8" fill="currentColor"/><path d="M4 9l5-5M15 20l5-5" opacity=".4"/>' },
+  { id: 'problems-3', ch: 'III', title: 'Problems', desc: 'Twelve questions in the style of Sheets 5 and 6',
+    icon: '<path d="M4 20l1-4.500L16.500 4l3.500 3.500L8.500 19 4 20z"/><path d="M14 6.500l3.500 3.500"/>' },
 ];
 const iconSvg = t => `<span class="icon"><svg viewBox="0 0 24 24" aria-hidden="true">${t.icon}</svg></span>`;
 
@@ -1091,6 +1851,57 @@ const iconSvg = t => `<span class="icon"><svg viewBox="0 0 24 24" aria-hidden="t
       `<nav class="pager">${prev ? `<a href="#${prev.id}"><small>← Previous</small>${prev.title}</a>` : ''}${next ? `<a class="nx" href="#${next.id}"><small>Next →</small>${next.title}</a>` : ''}</nav>`);
   });
 })();
+
+/* ── Problems: show 4 questions from each pool, and cycle on demand ── */
+const SHOW = 4;
+function shuffled(list) {
+  const a = list.slice();
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+document.querySelectorAll('.pool').forEach(pool => {
+  const all = [...pool.querySelectorAll('.q')];
+  const sets = Math.ceil(all.length / SHOW);
+  let order = shuffled(all), set = 0;
+
+  all.forEach(q => {
+    const topic = TOPICS.find(t => t.id === q.dataset.topic);
+    q.insertAdjacentHTML('afterbegin',
+      `<div class="q-head"><span class="q-num"></span><span>Based on ${q.dataset.style}</span><a href="#${topic.id}">${topic.title}</a></div>`);
+  });
+
+  pool.insertAdjacentHTML('afterend',
+    `<div class="pool-controls"><button class="gen-btn" type="button">Generate new questions</button><span class="pool-count"></span></div>`);
+  const controls = pool.nextElementSibling;
+  const count = controls.querySelector('.pool-count');
+
+  function show() {
+    all.forEach(q => { q.hidden = true; q.querySelector('details').open = false; });
+    order.slice(set * SHOW, (set + 1) * SHOW).forEach((q, i) => {
+      q.hidden = false;
+      q.querySelector('.q-num').textContent = `Question ${i + 1}`;
+      pool.append(q);
+    });
+    count.textContent = `Set ${set + 1} of ${sets} · ${all.length} questions in the pool`;
+  }
+
+  controls.querySelector('.gen-btn').addEventListener('click', () => {
+    set++;
+    if (set === sets) { set = 0; order = shuffled(all); }   // pool finished: start a fresh cycle
+    show();
+    markLongEquations();
+    pool.closest('.view').scrollIntoView({ block: 'start', behavior: 'instant' });
+  });
+  show();
+});
+document.addEventListener('toggle', e => {
+  if (e.target.matches && e.target.matches('details.sol')) {
+    e.target.querySelector('summary').textContent = e.target.open ? 'Hide solution' : 'Show solution';
+  }
+}, true);
 
 /* ── Hash routing, so links, reloads and the back button all work ── */
 function route() {
