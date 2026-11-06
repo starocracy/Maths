@@ -20,6 +20,7 @@
   --teal: #2e7d6b;   --teal-tint: #e9f3f0;
   --gold: #8f6a05;   --gold-tint: #f7f0dc;
   --red:  #8b2f2f;   --red-tint:  #f6e9e6;
+  --blue: #2f5583;   --blue-tint: #e8eef6;
   --accent: var(--teal);
   --tint: var(--teal-tint);
   --serif: 'EB Garamond', Georgia, serif;
@@ -28,6 +29,7 @@
 [data-ch="I"]   { --accent: var(--teal); --tint: var(--teal-tint); }
 [data-ch="II"]  { --accent: var(--gold); --tint: var(--gold-tint); }
 [data-ch="III"] { --accent: var(--red);  --tint: var(--red-tint); }
+[data-ch="IV"]  { --accent: var(--blue); --tint: var(--blue-tint); }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
@@ -231,7 +233,7 @@ footer a { color: inherit; }
     <div>
       <p class="eyebrow">MATH323 · Cheat Sheet</p>
       <h1>Further Methods <em>of Applied Mathematics</em></h1>
-      <p class="subtitle">ODE techniques, the calculus of variations and first-order PDE systems. Pick a topic to begin.</p>
+      <p class="subtitle">ODE techniques, the calculus of variations, and first- and second-order PDEs. Pick a topic to begin.</p>
     </div>
     <svg id="logo" viewBox="0 0 280 150" role="img" aria-label="A circle rolling beneath a line, tracing the cycloid curve of fastest descent"></svg>
   </header>
@@ -304,7 +306,7 @@ footer a { color: inherit; }
     <tr><td>\(\alpha x^n\)</td><td>\(\lambda x^n\)</td><td>\(n\) is not a root of (1.4)</td></tr>
     <tr><td>\(\alpha x^n\)</td><td>\(\lambda x^n\ln x\)</td><td>\(n\) is a root, non-degenerate case</td></tr>
   </table></div>
-  <p>More generally there are two routes: substitute \(t = \ln x\) and use undetermined coefficients or variation of parameters, or <a href="#variation-of-parameters">apply variation of parameters</a> directly.</p>
+  <p>There are two ways to solve the nonhomogeneous problem for Euler's ODE: introduce \(x = \ln t\), transform it to the constant-coefficient case, then apply undetermined coefficients or variation of parameters, or <a href="#variation-of-parameters">apply variation of parameters</a> directly.</p>
 
   <details class="ex"><summary><span class="ex-tag">Example</span><span>\(x^2y'' + 6xy' + 6y = 0\)</span></summary><div class="ex-body">
     <p>Here \(a = 1\), \(b = 6\), \(c = 6\), so (1.4) becomes</p>
@@ -819,7 +821,7 @@ footer a { color: inherit; }
   <div class="hero">
     <div class="hero-label">Legendre condition</div>
     \begin{equation} \frac{\partial^2 F}{\partial y'^2} \gt 0 \;\;\text{(minimum)} \qquad \frac{\partial^2 F}{\partial y'^2} \lt 0 \;\;\text{(maximum)} \tag{4.21} \end{equation}
-    <p>A necessary condition: it must hold along the function for all \(a \leq x \leq b\).</p>
+    <p>In order for \(y(x)\) to lead to a minimum (or maximum), this needs to be fulfilled for this function at all \(a \leq x \leq b\).</p>
   </div>
 
   <details class="ex" open><summary><span class="ex-tag">Example</span><span>The shortest path is a straight line</span></summary><div class="ex-body">
@@ -859,7 +861,7 @@ footer a { color: inherit; }
 
   <details class="ex"><summary><span class="ex-tag">Example 2</span><span>\(I_\pm[y] = \int_0^1 dx\,(12xy \pm y'^2)\), with \(y(0) = 0\), \(y(1) = 1\)</span></summary><div class="ex-body">
     <p>Here \(\dfrac{\partial F}{\partial y} = 12x\) and \(\dfrac{d}{dx}\dfrac{\partial F}{\partial y'} = \pm 2y''\), so (4.18) gives</p>
-    \[ 12x \mp 2y'' = 0 \;\Rightarrow\; y'' = \pm 6x \;\Rightarrow\; y = \pm x^3 + cx + d. \]
+    \[ 12x \pm 2y'' = 0 \;\Rightarrow\; y'' = \pm 6x \;\Rightarrow\; y = \pm x^3 + cx + d. \]
     <p>The boundary conditions give \(d = 0\) and \(1 = \pm 1 + c\), hence</p>
     \[ y_+(x) = x^3, \qquad y_-(x) = 2x - x^3. \]
     <p>Compare with the straight line \(y = x\), for which \(I_\pm[x] = 4 \pm 1\):</p>
@@ -1066,7 +1068,7 @@ footer a { color: inherit; }
   <div class="hero">
     <div class="hero-label">Hamilton's principle</div>
     \[ \delta I = \delta\int_{t_1}^{t_2} L\,dt = 0, \qquad L = T - V \]
-    <p>Of all possible paths between \(t_1\) and \(t_2\), the actual path makes the action stationary. \(L\) is the Lagrangian, with \(T\) the kinetic and \(V\) the potential energy.</p>
+    <p>Out of all possible paths between \(t_1\) and \(t_2\), the actual path is one for which the action has a stationary value, and so the Hamiltonian integral must be minimized. \(L\) is the Lagrangian, with \(T\) the kinetic and \(V\) the potential energy.</p>
   </div>
 
   <div class="hero">
@@ -1544,7 +1546,7 @@ footer a { color: inherit; }
     \[ u - v + \sin x - \cos x = g(2x + y), \qquad 4u + v + 6\cos x - \sin x = f(3x - y). \]
     <p><strong>Step 5.</strong> At \(y = 0\), with \(u = \cos x\) and \(v = \sin x\):</p>
     \[ g(2x) = 0 \;\Rightarrow\; g \equiv 0, \qquad f(3x) = 10\cos x \;\Rightarrow\; f(x) = 10\cos\big(\tfrac13x\big). \]
-    <p>Adding the two invariants gives \(5u + 5\cos x = 10\cos(x - \tfrac13y)\). Hence</p>
+    <p>Inserting these results into the invariants and adding gives \(-5u - 5\cos x = -10\cos(x - \tfrac13y)\). Hence</p>
     \[ u = -\cos x + 2\cos\big(x - \tfrac13y\big), \qquad v = \sin x - 2\cos x + 2\cos\big(x - \tfrac13y\big). \]
     <p><strong>Check.</strong> Using \(u_x = \sin x - 2\sin(x - \tfrac13y)\), \(v_x = \cos x + 2\sin x - 2\sin(x - \tfrac13y)\) and \(u_y = v_y = \tfrac23\sin(x - \tfrac13y)\):</p>
     \[ u_x + 2u_y + v_y = \sin x + \sin\big(x - \tfrac13y\big)\big(-2 + \tfrac43 + \tfrac23\big) = \sin x, \]
@@ -1573,7 +1575,7 @@ footer a { color: inherit; }
 
 <article class="view" id="problems-3" data-ch="III">
   <p class="lede">Practice for Chapter III, in the style of the course problem sheets. All questions are new.</p>
-  <div class="note"><b>Modelled on:</b> Problem Sheet 5 and the first part of Problem Sheet 6 Q1. The rest of Sheets 6 and 7 covers second-order PDEs, so it belongs to Chapter IV.</div>
+  <div class="note"><b>Modelled on:</b> Problem Sheet 5 and the first part of Problem Sheet 6 Q1. The rest of Sheets 6 and 7 covers second-order PDEs, so it is in the Chapter IV Problems.</div>
   <div class="pool">
 
   <section class="q" data-style="Sheet 5 Q1" data-topic="riemann-examples">
@@ -1781,11 +1783,519 @@ footer a { color: inherit; }
   </div>
 </article>
 
+<!-- ═══════════ CHAPTER IV: SECOND-ORDER PDEs ═══════════ -->
+
+<article class="view" id="coordinate-transformations" data-ch="IV">
+  <p class="lede">A change of coordinates reshuffles the coefficients of a second-order PDE. Pick the coordinates well, and most of those coefficients vanish.</p>
+
+  <div class="hero">
+    <div class="hero-label">General second-order PDE</div>
+    \begin{equation} Au_{xx} + Bu_{xy} + Cu_{yy} = f \tag{4.1} \end{equation}
+    <p>Linear in the highest derivatives. \(f\) may contain \(u_x, u_y, u, x, y\).</p>
+  </div>
+
+  <div class="tbl"><table>
+    <tr><th>Equation</th><th>Form</th><th>Type</th></tr>
+    <tr><td>Laplace</td><td>\(u_{xx} + u_{yy} = 0\)</td><td>Elliptic</td></tr>
+    <tr><td>Wave</td><td>\(u_{tt} - c^2u_{xx} = 0\)</td><td>Hyperbolic</td></tr>
+    <tr><td>Diffusion</td><td>\(u_t - ku_{xx} = 0\)</td><td>Parabolic</td></tr>
+  </table></div>
+
+  <h3>The change of variables</h3>
+  <p>Take \(\xi = \xi(x,y)\), \(\eta = \eta(x,y)\) with non-zero Jacobian:</p>
+  \[ |J| = \frac{\partial(\xi,\eta)}{\partial(x,y)} = \begin{vmatrix} \xi_x & \xi_y \\ \eta_x & \eta_y \end{vmatrix} = \xi_x\eta_y - \xi_y\eta_x \neq 0. \]
+  <p>The chain rule gives \(u_x = u_\xi\xi_x + u_\eta\eta_x\) and \(u_y = u_\xi\xi_y + u_\eta\eta_y\), and then</p>
+  \[ \begin{aligned}
+    u_{xx} &= u_{\xi\xi}\xi_x^2 + 2u_{\xi\eta}\xi_x\eta_x + u_{\eta\eta}\eta_x^2 + u_\xi\xi_{xx} + u_\eta\eta_{xx}, \\
+    u_{xy} &= u_{\xi\xi}\xi_x\xi_y + u_{\xi\eta}(\xi_x\eta_y + \xi_y\eta_x) + u_{\eta\eta}\eta_x\eta_y + u_\xi\xi_{xy} + u_\eta\eta_{xy}, \\
+    u_{yy} &= u_{\xi\xi}\xi_y^2 + 2u_{\xi\eta}\xi_y\eta_y + u_{\eta\eta}\eta_y^2 + u_\xi\xi_{yy} + u_\eta\eta_{yy}.
+  \end{aligned} \]
+
+  <div class="hero">
+    <div class="hero-label">Transformed coefficients</div>
+    \[ Pu_{\xi\xi} + Qu_{\xi\eta} + Ru_{\eta\eta} = F(u_\xi, u_\eta, u, \xi, \eta) \]
+    \begin{equation} \begin{aligned}
+      P &= A\xi_x^2 + B\xi_x\xi_y + C\xi_y^2 \\
+      Q &= 2A\xi_x\eta_x + B(\xi_x\eta_y + \xi_y\eta_x) + 2C\xi_y\eta_y \\
+      R &= A\eta_x^2 + B\eta_x\eta_y + C\eta_y^2
+    \end{aligned} \tag{4.3} \end{equation}
+  </div>
+
+  <h3>Matrix form</h3>
+  <p>The three equations (4.3) combine into a single matrix equation, where \(J\) is the Jacobian matrix:</p>
+  \[ \begin{pmatrix} P & Q/2 \\ Q/2 & R \end{pmatrix} = J\begin{pmatrix} A & B/2 \\ B/2 & C \end{pmatrix}J^T, \qquad J = \begin{pmatrix} \xi_x & \xi_y \\ \eta_x & \eta_y \end{pmatrix}. \]
+  <p>Taking determinants gives the key invariance result, used on the <a href="#second-order-classification">next page</a>.</p>
+</article>
+
+<article class="view" id="second-order-classification" data-ch="IV">
+  <p class="lede">The type of a PDE survives any real change of coordinates, so it is a genuine property of the equation.</p>
+
+  <div class="hero">
+    <div class="hero-label">The discriminant</div>
+    \[ \Delta = B^2 - 4AC \]
+    <p>Taking determinants of the matrix form gives \(PR - \tfrac14Q^2 = |J|^2\big(AC - \tfrac14B^2\big)\), so the sign of \(\Delta\) cannot change.</p>
+  </div>
+
+  <div class="tbl"><table>
+    <tr><th>Type</th><th>\(B^2 - 4AC\)</th><th>Roots \(\mu\)</th><th>Prototype</th></tr>
+    <tr><td><strong>Hyperbolic</strong></td><td>\(\gt 0\)</td><td>Two real roots</td><td>Wave equation</td></tr>
+    <tr><td><strong>Parabolic</strong></td><td>\(= 0\)</td><td>One real double root</td><td>Diffusion equation</td></tr>
+    <tr><td><strong>Elliptic</strong></td><td>\(\lt 0\)</td><td>Complex conjugates</td><td>Laplace's equation</td></tr>
+  </table></div>
+
+  <div class="hero">
+    <div class="hero-label">Auxiliary equation and characteristics</div>
+    \[ A\mu^2 + B\mu + C = 0, \qquad \frac{dy}{dx} = -\mu \]
+    \[ \mu_{1,2} = \frac{-B \pm \sqrt{B^2 - 4AC}}{2A} \]
+    <p>Note the minus sign in \(dy/dx = -\mu\). The characteristics are the solutions of this ODE.</p>
+  </div>
+
+  <div class="note"><b>Position dependence.</b> If \(A, B, C\) depend on \(x, y\), the type can change from region to region, so classify "throughout the plane". The Euler–Tricomi equation below is the standard example.</div>
+
+  <details class="ex" open><summary><span class="ex-tag">Example</span><span>Euler–Tricomi equation: \(yu_{xx} + u_{yy} = 0\)</span></summary><div class="ex-body">
+    <p>With \(A = y\), \(B = 0\), \(C = 1\), the discriminant is \(B^2 - 4AC = -4y\). So the equation is</p>
+    <ul>
+      <li><strong>hyperbolic</strong> for \(y \lt 0\),</li>
+      <li><strong>parabolic</strong> on \(y = 0\),</li>
+      <li><strong>elliptic</strong> for \(y \gt 0\).</li>
+    </ul>
+    <p>It occurs in studies of trans-sonic gas flow. The two reductions are on the <a href="#reduction-examples">examples page</a>.</p>
+  </div></details>
+</article>
+
+<article class="view" id="canonical-forms" data-ch="IV">
+  <p class="lede">Each type has a standard shape. The characteristics are exactly the coordinates that remove the unwanted second derivatives.</p>
+
+  <div class="tbl"><table>
+    <tr><th>Type</th><th>Canonical form</th><th>Coordinates, constant \(A,B,C\)</th></tr>
+    <tr><td>Hyperbolic</td><td>\(u_{\xi\eta} = F\)</td><td>\(\xi = \mu_1x + y\), \(\;\eta = \mu_2x + y\)</td></tr>
+    <tr><td>Elliptic</td><td>\(u_{\xi\xi} + u_{\eta\eta} = F\)</td><td>\(\mu = \alpha \pm i\beta\): \(\;\xi = \alpha x + y\), \(\;\eta = \pm\beta x\)</td></tr>
+    <tr><td>Parabolic</td><td>\(u_{\eta\eta} = F\)</td><td>\(\xi = \mu x + y\), \(\;\eta = x\)</td></tr>
+  </table></div>
+
+  <h3>Hyperbolic: \(B^2 - 4AC \gt 0\)</h3>
+  <div class="hero">
+    <div class="hero-label">Hyperbolic canonical form</div>
+    \[ \frac{dy}{dx} = -\mu_1, \quad \frac{dy}{dx} = -\mu_2 \quad\Longrightarrow\quad u_{\xi\eta} = F(u_\xi, u_\eta, u, \xi, \eta) \]
+  </div>
+  <p>Along \(\xi = \text{const.}\) we have \(\xi_x + \xi_y\,dy/dx = 0\), so \(\mu_1 = \xi_x/\xi_y\). Since \(\mu_1\) solves the auxiliary equation, \(A(\xi_x/\xi_y)^2 + B(\xi_x/\xi_y) + C = 0\), which is \(P = 0\). In the same way \(R = 0\). Dividing by the remaining \(Q \neq 0\) gives the canonical form.</p>
+
+  <h3>Elliptic: \(B^2 - 4AC \lt 0\)</h3>
+  <div class="hero">
+    <div class="hero-label">Elliptic canonical form</div>
+    \[ \phi = \xi + i\eta, \quad \psi = \xi - i\eta \quad\Longrightarrow\quad u_{\xi\xi} + u_{\eta\eta} = F \]
+  </div>
+  <p>The characteristics are complex conjugates, \(\phi(x,y) = \text{const.}\) and \(\psi(x,y) = \text{const.}\) Take real and imaginary parts as the new coordinates. Separating the real and imaginary parts of \(A(\xi_x \pm i\eta_x)^2 + B(\xi_x \pm i\eta_x)(\xi_y \pm i\eta_y) + C(\xi_y \pm i\eta_y)^2 = 0\) gives \(P = R\) and \(Q = 0\). Divide by \(P\).</p>
+
+  <h3>Parabolic: \(B^2 - 4AC = 0\)</h3>
+  <div class="hero">
+    <div class="hero-label">Parabolic canonical form</div>
+    \[ \frac{dy}{dx} = -\mu \quad\Longrightarrow\quad u_{\eta\eta} = F(u_\xi, u_\eta, u, \xi, \eta) \]
+  </div>
+  <p>There is one family of characteristics, \(\xi = \text{const.}\), so \(P = 0\). Choose \(\eta\) to be any function giving \(|J| \neq 0\). Using \(\xi_x/\xi_y = \mu = -B/(2A)\), one finds \(Q = -\xi_y\eta_y\dfrac{B^2 - 4AC}{2A} = 0\) too. Divide by \(R\).</p>
+
+  <h3>Method</h3>
+  <ol class="steps">
+    <li>Compute \(B^2 - 4AC\) to classify, region by region if necessary.</li>
+    <li>Solve \(A\mu^2 + B\mu + C = 0\), then integrate \(dy/dx = -\mu\).</li>
+    <li>Write the characteristics as \(\xi(x,y)\), \(\eta(x,y)\). For elliptic equations take real and imaginary parts. For parabolic equations pick \(\eta\) freely, often \(\eta = x\).</li>
+    <li>Compute \(u_x, u_y, u_{xx}, u_{xy}, u_{yy}\) by the chain rule, or use (4.3) for the leading coefficients.</li>
+    <li>Substitute, then express all remaining \(x, y\) in terms of \(\xi, \eta\).</li>
+  </ol>
+</article>
+
+<article class="view" id="reduction-examples" data-ch="IV">
+  <p class="lede">Worked reductions for each type, from the notes.</p>
+
+  <details class="ex" open><summary><span class="ex-tag">Example 1</span><span>Hyperbolic: \(u_{xx} - x^2u_{yy} = 0\)</span></summary><div class="ex-body">
+    <p>\(\mu^2 - x^2 = 0\) has real roots \(\mu = \pm x\), so the PDE is hyperbolic. Solving \(dy/dx = \mp x\) gives</p>
+    \[ \xi = y + \frac{x^2}{2}, \qquad \eta = y - \frac{x^2}{2}. \]
+    <p>Then \(u_x = xu_\xi - xu_\eta\) and \(u_y = u_\xi + u_\eta\), so</p>
+    \[ u_{xx} = x^2(u_{\xi\xi} - 2u_{\xi\eta} + u_{\eta\eta}) + u_\xi - u_\eta, \qquad u_{yy} = u_{\xi\xi} + 2u_{\xi\eta} + u_{\eta\eta}. \]
+    \[ u_{xx} - x^2u_{yy} = -4x^2u_{\xi\eta} + u_\xi - u_\eta. \]
+    <p>Since \(\xi - \eta = x^2\), the canonical form is</p>
+    \[ u_{\xi\eta} = \frac{1}{4(\xi - \eta)}(u_\xi - u_\eta). \]
+  </div></details>
+
+  <details class="ex"><summary><span class="ex-tag">Example 2</span><span>Elliptic: \(u_{xx} + x^2u_{yy} = 0\)</span></summary><div class="ex-body">
+    <p>\(\mu^2 + x^2 = 0\) has complex roots \(\mu = \pm ix\), so the PDE is elliptic. The complex characteristics are \(\phi = y + \tfrac i2x^2\) and \(\psi = y - \tfrac i2x^2\). Taking real and imaginary parts:</p>
+    \[ \xi = y, \qquad \eta = \frac{x^2}{2}. \]
+    <p>Then \(u_x = xu_\eta\) and \(u_y = u_\xi\), so \(u_{xx} = u_\eta + x^2u_{\eta\eta}\) and \(u_{yy} = u_{\xi\xi}\), giving</p>
+    \[ x^2u_{\xi\xi} + u_\eta + x^2u_{\eta\eta} = 0 \quad\Longrightarrow\quad u_{\xi\xi} + u_{\eta\eta} = -\frac{1}{2\eta}u_\eta. \]
+  </div></details>
+
+  <details class="ex"><summary><span class="ex-tag">Example 3</span><span>Euler–Tricomi, hyperbolic case \(y \lt 0\)</span></summary><div class="ex-body">
+    <p>\(y\mu^2 + 1 = 0\) gives \(\mu = \pm(-y)^{-1/2}\). Integrating the characteristic equations:</p>
+    \[ \xi = x + \tfrac23(-y)^{3/2}, \qquad \eta = x - \tfrac23(-y)^{3/2}. \]
+    <p>Then \(u_x = u_\xi + u_\eta\) and \(u_y = -(-y)^{1/2}(u_\xi - u_\eta)\), so</p>
+    \[ u_{xx} = u_{\xi\xi} + 2u_{\xi\eta} + u_{\eta\eta}, \qquad u_{yy} = \tfrac12(-y)^{-1/2}(u_\xi - u_\eta) - y(u_{\xi\xi} - 2u_{\xi\eta} + u_{\eta\eta}). \]
+    \[ yu_{xx} + u_{yy} = 4yu_{\xi\eta} + \tfrac12(-y)^{-1/2}(u_\xi - u_\eta) = 0. \]
+    <p>Using \(\xi - \eta = \tfrac43(-y)^{3/2}\), the canonical form is</p>
+    \[ u_{\xi\eta} = -\tfrac18(-y)^{-3/2}(u_\xi - u_\eta) = \frac{1}{6(\eta - \xi)}(u_\xi - u_\eta). \]
+  </div></details>
+
+  <details class="ex"><summary><span class="ex-tag">Example 4</span><span>Euler–Tricomi, elliptic case \(y \gt 0\)</span></summary><div class="ex-body">
+    <p>The roots are \(\mu = \pm iy^{-1/2}\). Taking real and imaginary parts of the complex characteristics gives</p>
+    \[ \xi = \tfrac23y^{3/2}, \qquad \eta = x. \]
+    <p>Then \(u_{xx} = u_{\eta\eta}\) and \(u_{yy} = \tfrac12y^{-1/2}u_\xi + yu_{\xi\xi}\), so</p>
+    \[ yu_{\eta\eta} + yu_{\xi\xi} + \tfrac12y^{-1/2}u_\xi = 0 \quad\Longrightarrow\quad u_{\xi\xi} + u_{\eta\eta} = -\frac{1}{3\xi}u_\xi. \]
+  </div></details>
+
+  <details class="ex"><summary><span class="ex-tag">Example 5</span><span>Parabolic, with boundary conditions: \(y^3u_{xx} + 2y^2u_{xy} + yu_{yy} = u_y + y^3e^x\)</span></summary><div class="ex-body">
+    <p>Boundary conditions: \(u(0,y) = y^4\) and \(u_x(0,y) = 0\). The auxiliary equation \(y^3\mu^2 + 2y^2\mu + y = 0\) has the double root \(\mu = -1/y\), so the PDE is parabolic. Then \(dy/dx = 1/y\) gives \(\tfrac12y^2 = x + \text{const.}\) Choose</p>
+    \[ \xi = \tfrac12y^2 - x, \qquad \eta = x. \]
+    <p>Then \(u_x = -u_\xi + u_\eta\) and \(u_y = yu_\xi\), and the derivatives combine to give</p>
+    \[ y^3u_{xx} + 2y^2u_{xy} + yu_{yy} - u_y = y^3u_{\eta\eta}. \]
+    <p>So \(u_{\eta\eta} = e^\eta\), with general solution \(u = \eta f(\xi) + g(\xi) + e^\eta\). That is,</p>
+    \[ u = xf\big(\tfrac12y^2 - x\big) + g\big(\tfrac12y^2 - x\big) + e^x. \]
+    <p>\(u(0,y) = g(\tfrac12y^2) + 1 = y^4\) gives \(g(\xi) = 4\xi^2 - 1\). Then \(u_x(0,y) = f(\tfrac12y^2) - g'(\tfrac12y^2) + 1 = 0\) gives \(f(\xi) = 8\xi - 1\). Therefore</p>
+    \[ u = y^4 - 4x^2 - x - 1 + e^x. \]
+  </div></details>
+
+  <details class="ex"><summary><span class="ex-tag">Example 6</span><span>General solution: \(x^2u_{xx} - 4y^2u_{yy} = \tfrac12xu_x + yu_y\)</span></summary><div class="ex-body">
+    <p>For \(x, y \neq 0\), \(x^2\mu^2 - 4y^2 = 0\) has real roots \(\mu = \pm2y/x\), so the PDE is hyperbolic. Integrating \(dy/dx = \mp2y/x\):</p>
+    \[ \xi = yx^2, \qquad \eta = yx^{-2}. \]
+    <p>Transforming, the equation becomes \(-16y^2u_{\xi\eta} + 6yx^{-2}u_\eta = 0\), so</p>
+    \[ u_{\xi\eta} = \frac{3}{8yx^2}u_\eta = \frac{3}{8\xi}u_\eta. \]
+    <p>Integrating with respect to \(\eta\) leaves the first-order equation \(u_\xi - \tfrac38\xi^{-1}u = f(\xi)\). With integrating factor \(\xi^{-3/8}\):</p>
+    \[ u(\xi,\eta) = \xi^{3/8}\int\xi^{-3/8}f(\xi)\,d\xi + \xi^{3/8}g(\eta). \]
+  </div></details>
+</article>
+
+<article class="view" id="simple-solutions" data-ch="IV">
+  <p class="lede">Once in canonical form, many PDEs can be integrated directly. Treat the other variable as a constant, so that the "constants" of integration become arbitrary functions.</p>
+
+  <div class="hero">
+    <div class="hero-label">Integration constants are functions</div>
+    \[ u_{xy} = 0 \;\Longrightarrow\; u = f(x) + g(y), \qquad u_{xx} = 0 \;\Longrightarrow\; u = xf(y) + g(y) \]
+  </div>
+
+  <h3>Mixed derivative with a first-order term</h3>
+  <p>For \(\dfrac{\partial^2u}{\partial x\partial y} + p(x)\dfrac{\partial u}{\partial y} = 0\), integrating with respect to \(y\) leaves a first-order linear ODE in \(x\):</p>
+  \[ \frac{\partial u}{\partial x} + p(x)u = f(x). \]
+  <p>The integrating factor \(I(x) = \exp\big(\int p(x)\,dx\big)\) gives \(\dfrac{\partial}{\partial x}(Iu) = If\), so</p>
+  \[ u(x,y) = e^{-\int p\,dx}\int e^{\int p\,dx}f(x)\,dx + g(y)\,e^{-\int p\,dx}. \]
+
+  <h3>Inhomogeneous equations</h3>
+  <p>\(u_{xy} = p(x,y)\) and \(u_{xx} = p(x,y)\) are treated by simple integration, in the same way as above.</p>
+
+  <h3>Change of dependent variable</h3>
+  <p>First-order terms can sometimes be simplified by writing</p>
+  \[ u = e^{-\lambda x - \mu y}\,v. \]
+</article>
+
+<article class="view" id="wave-equation" data-ch="IV">
+  <p class="lede">One of the few PDEs with a general solution: two waves of fixed shape, travelling in opposite directions at speed \(c\).</p>
+
+  <div class="hero">
+    <div class="hero-label">General solution of the wave equation</div>
+    \begin{equation} u_{tt} - c^2u_{xx} = 0 \quad\Longrightarrow\quad u(x,t) = f(x - ct) + g(x + ct) \tag{4.6} \end{equation}
+    <p>\(f(x - ct)\) travels to the right and \(g(x + ct)\) travels to the left.</p>
+  </div>
+
+  <h3>Reduction</h3>
+  <p>\(A = 1\), \(B = 0\), \(C = -c^2\), so \(B^2 - 4AC = 4c^2 \gt 0\) and the equation is hyperbolic. With \(\xi = x - ct\) and \(\eta = x + ct\):</p>
+  \[ u_{tt} = c^2(u_{\xi\xi} - 2u_{\xi\eta} + u_{\eta\eta}), \qquad u_{xx} = u_{\xi\xi} + 2u_{\xi\eta} + u_{\eta\eta}. \]
+  <p>So \(u_{tt} - c^2u_{xx} = -4c^2u_{\xi\eta}\). The canonical form \(u_{\xi\eta} = 0\) then integrates directly to (4.6).</p>
+
+  <div class="hero">
+    <div class="hero-label">d'Alembert's solution</div>
+    \begin{equation} u(x,t) = \tfrac12\big[U(x - ct) + U(x + ct)\big] + \frac{1}{2c}\int_{x-ct}^{x+ct}V(s)\,ds \tag{4.9} \end{equation}
+    <p>For Cauchy data \(u(x,0) = U(x)\), \(u_t(x,0) = V(x)\) on \(-\infty \lt x \lt \infty\).</p>
+  </div>
+
+  <h3>Derivation</h3>
+  <ol class="steps">
+    <li>The initial conditions give \(f(x) + g(x) = U(x)\) and \(-cf'(x) + cg'(x) = V(x)\).</li>
+    <li>Integrating the second from \(a\) to \(x\):
+    \[ f(x) - g(x) = -\frac1c\int_a^xV(s)\,ds + f(a) - g(a). \]</li>
+    <li>Solving for \(f\) and \(g\):
+    \[ f(x) = \tfrac12U(x) - \frac{1}{2c}\int_a^xV\,ds + \tfrac12\big(f(a) - g(a)\big), \]
+    \[ g(x) = \tfrac12U(x) + \frac{1}{2c}\int_a^xV\,ds - \tfrac12\big(f(a) - g(a)\big). \]</li>
+    <li>Insert into (4.6) with arguments \(x - ct\) and \(x + ct\). The constants cancel, and reversing the limits on one integral combines the two into (4.9).</li>
+  </ol>
+
+  <div class="note"><b>Domain of dependence.</b> The solution at \((x,t)\) depends only on data on the finite interval \([x - ct, x + ct]\): on \(U\) at its two ends, and on \(V\) across the whole interval.</div>
+</article>
+
+<article class="view" id="well-posed" data-ch="IV">
+  <p class="lede">A PDE alone is not a complete problem. The extra conditions must match its type, or the problem has no meaningful solution.</p>
+
+  <div class="hero">
+    <div class="hero-label">Well-posed problem</div>
+    \[ \text{existence} \;+\; \text{uniqueness} \;+\; \text{continuous dependence on the data} \]
+    <p>If any one of these fails, the problem is <strong>ill-posed</strong>. Continuous dependence means small changes in the data give small changes in the solution.</p>
+  </div>
+
+  <h3>Guidelines</h3>
+  <ul>
+    <li><strong>Too many conditions:</strong> a solution will not exist.</li>
+    <li><strong>Too few conditions:</strong> the solution will not be unique.</li>
+    <li><strong>Wrong kind of conditions for the type:</strong> the solution will not depend continuously on the data.</li>
+  </ul>
+
+  <h3>Boundary condition types</h3>
+  <div class="tbl"><table>
+    <tr><th>Name</th><th>Specifies</th></tr>
+    <tr><td>Dirichlet</td><td>The value \(u\) on the boundary</td></tr>
+    <tr><td>Neumann</td><td>The normal gradient \(\partial u/\partial n = \mathbf n\cdot\nabla u\)</td></tr>
+    <tr><td>Robin</td><td>A combination \(\alpha u + \beta\,\partial u/\partial n\)</td></tr>
+    <tr><td>Cauchy</td><td>Both \(u\) and \(\partial u/\partial n\)</td></tr>
+  </table></div>
+
+  <h3>What each type needs</h3>
+  <div class="tbl"><table>
+    <tr><th>Type</th><th>Typical problem</th><th>Conditions</th></tr>
+    <tr><td>Elliptic</td><td>Steady state</td><td>BVP on a <strong>closed</strong> boundary</td></tr>
+    <tr><td>Parabolic</td><td>Evolving in time</td><td>IBVP: spatial BCs on an <strong>open</strong> surface, plus an initial condition</td></tr>
+    <tr><td>Hyperbolic</td><td>Waves, vibration</td><td>IBVP: spatial BCs on an <strong>open</strong> surface, plus Cauchy data \(u\) and \(u_t\)</td></tr>
+  </table></div>
+
+  <h3>Well-posed examples</h3>
+  <details class="ex"><summary><span class="ex-tag">Elliptic</span><span>Laplace on the unit square</span></summary><div class="ex-body">
+    \[ u_{xx} + u_{yy} = 0, \quad 0 \lt x, y \lt 1, \qquad u(x,0) = \sin\pi x, \quad u(x,1) = \sin(\pi x)e^{-\pi}, \quad u(0,y) = u(1,y) = 0. \]
+    <p>The solution is \(u(x,y) = \sin(\pi x)e^{-\pi y}\). The maximum principle can be used to prove uniqueness and continuous dependence on the data.</p>
+  </div></details>
+  <details class="ex"><summary><span class="ex-tag">Parabolic</span><span>Heat conduction in a rod</span></summary><div class="ex-body">
+    \[ u_t - ku_{xx} = 0, \quad 0 \lt x \lt L, \; t \gt 0, \qquad u(x,0) = f(x), \quad u(0,t) = u(L,t) = 0. \]
+    <p>The initial condition sets the temperature at \(t = 0\), and the ends are held at zero. On an unbounded region, require \(|u| \lt \infty\) and \(f(x) \to 0\) as \(|x| \to \infty\).</p>
+  </div></details>
+  <details class="ex"><summary><span class="ex-tag">Hyperbolic</span><span>A small change in data gives a small change in the solution</span></summary><div class="ex-body">
+    <p>For \(u_{tt} - u_{xx} = 0\) on the whole line, zero data give \(u \equiv 0\). Changing the data to \(v(x,0) = 0\), \(v_t(x,0) = \varepsilon\sin(x/\varepsilon)\) gives</p>
+    \[ v(x,t) = \varepsilon^2\sin\frac x\varepsilon\sin\frac t\varepsilon. \]
+    <p>Then \(|v_t(x,0) - u_t(x,0)| \leq \varepsilon\) and \(|v - u| \leq \varepsilon^2\), so the solution changes by only a small amount.</p>
+  </div></details>
+
+  <h3>Ill-posed examples</h3>
+  <details class="ex" open><summary><span class="ex-tag">Elliptic</span><span>Cauchy problem for Laplace's equation</span></summary><div class="ex-body">
+    <p>For \(u_{tt} + u_{xx} = 0\), data \(u(x,0) = u_t(x,0) = 0\) give \(u \equiv 0\). Changing to \(v(x,0) = 0\), \(v_t(x,0) = \varepsilon\sin(x/\varepsilon)\) gives</p>
+    \[ v(x,t) = \varepsilon^2\sin\frac x\varepsilon\sinh\frac t\varepsilon. \]
+    <p>The data differ by at most \(\varepsilon\), yet \(|v - u| \to \infty\) as \(t \to \infty\), because of the \(\sinh(t/\varepsilon)\). There is no continuous dependence on the data. The well-posed problem for this PDE is a boundary value problem.</p>
+  </div></details>
+  <details class="ex"><summary><span class="ex-tag">Parabolic</span><span>The backwards heat equation</span></summary><div class="ex-body">
+    <p>\(u = \sin(kx)e^{-k^2t}\) solves \(u_t - u_{xx} = 0\) and decays with \(t\) for all \(k\), so the forward problem is well-posed. Going backwards, the solution grows without bound with \(k\) at fixed \(t\). So finding earlier states from \(u(x,T) = f(x)\) has no solution for arbitrary \(f\), and even when a solution exists, it does not depend continuously on the data.</p>
+    <p>The Dirichlet problem on a rectangle in the \(xt\)-plane is also ill-posed: the solution is already determined by data on \(t = 0\), \(x = 0\) and \(x = \pi\), so there is no freedom to specify data at a later \(t\).</p>
+  </div></details>
+</article>
+
+<article class="view" id="problems-4" data-ch="IV">
+  <p class="lede">Practice for Chapter IV, in the style of the course problem sheets. All questions are new.</p>
+  <div class="note"><b>Modelled on:</b> Problem Sheet 6 and Problem Sheet 7.</div>
+  <div class="pool">
+
+  <section class="q" data-style="Sheet 6 Q2" data-topic="second-order-classification">
+    <p>Classify each of the following equations throughout the \((x,y)\)-plane:</p>
+    <p>(a) \(xz_{xx} - z_{yy} = 0\) &nbsp; (b) \(u_{xx} + 2yu_{xy} + u_{yy} + u_x = 0\) &nbsp; (c) \(x^2u_{xx} + 2xyu_{xy} + y^2u_{yy} = 0\) &nbsp; (d) \(u_{xx} + 4u_{xy} + 3u_{yy} = 0\)</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>(a) \(A = x\), \(B = 0\), \(C = -1\), so \(B^2 - 4AC = 4x\). Hyperbolic for \(x \gt 0\), parabolic on \(x = 0\), elliptic for \(x \lt 0\).</li>
+      <li>(b) \(B^2 - 4AC = 4y^2 - 4 = 4(y^2 - 1)\). Hyperbolic for \(|y| \gt 1\), parabolic on \(y = \pm1\), elliptic for \(|y| \lt 1\). The first-order term does not matter.</li>
+      <li>(c) \(B^2 - 4AC = 4x^2y^2 - 4x^2y^2 = 0\). Parabolic everywhere.</li>
+      <li>(d) \(B^2 - 4AC = 16 - 12 = 4 \gt 0\). Hyperbolic everywhere.</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Sheet 6 Q5" data-topic="canonical-forms">
+    <p>Reduce \(u_{xx} + 2u_{xy} + 5u_{yy} = 0\) to canonical form.</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>\(B^2 - 4AC = 4 - 20 = -16 \lt 0\), so the PDE is elliptic.</li>
+      <li>\(\mu^2 + 2\mu + 5 = 0\) gives \(\mu = -1 \pm 2i\), so \(\alpha = -1\) and \(\beta = 2\).</li>
+      <li>Take \(\xi = \alpha x + y = y - x\) and \(\eta = \beta x = 2x\).</li>
+      <li>From (4.3), with \(\xi_x = -1\), \(\xi_y = 1\), \(\eta_x = 2\), \(\eta_y = 0\):
+      \[ P = 1 - 2 + 5 = 4, \qquad Q = 2(-1)(2) + 2(0 + 2) + 0 = 0, \qquad R = 4. \]</li>
+      <li>So \(4u_{\xi\xi} + 4u_{\eta\eta} = 0\), which is Laplace's equation \(u_{\xi\xi} + u_{\eta\eta} = 0\).</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Sheet 7 Q1" data-topic="simple-solutions">
+    <p>Determine the solution of \(u_{xy} = 4xy\) for the boundary conditions \(u = 0\) and \(u_x = 0\) on the line \(y = x\).</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>Integrating with respect to \(y\), then \(x\): \(u = x^2y^2 + f(x) + g(y)\).</li>
+      <li>\(u_x = 2xy^2 + f'(x)\). Setting this to zero on \(y = x\) gives \(f'(x) = -2x^3\), so \(f = -\tfrac12x^4 + c\).</li>
+      <li>\(u = 0\) on \(y = x\) gives \(x^4 + f(x) + g(x) = 0\), so \(g(x) = -\tfrac12x^4 - c\).</li>
+      <li>Therefore
+      \[ u = x^2y^2 - \tfrac12x^4 - \tfrac12y^4 = -\tfrac12(x^2 - y^2)^2. \]</li>
+      <li>Check: \(u_x = -2x(x^2 - y^2)\) and \(u_{xy} = 4xy\). ✓</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Sheet 7 Q2" data-topic="canonical-forms">
+    <p>Show that \(x^2u_{xx} - y^2u_{yy} + xu_x - yu_y = 0\), with \(x, y \gt 0\), is hyperbolic with characteristics \(\xi = xy\) and \(\eta = y/x\). Show that it reduces to \(u_{\xi\eta} = 0\), and write down the general solution.</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>\(B^2 - 4AC = 4x^2y^2 \gt 0\), so the PDE is hyperbolic. \(x^2\mu^2 - y^2 = 0\) gives \(\mu = \pm y/x\).</li>
+      <li>\(dy/dx = -y/x\) gives \(xy = \text{const.}\), and \(dy/dx = y/x\) gives \(y/x = \text{const.}\)</li>
+      <li>With \(\xi = xy\) and \(\eta = y/x\): \(u_x = yu_\xi - \dfrac{y}{x^2}u_\eta\) and \(u_y = xu_\xi + \dfrac1xu_\eta\).</li>
+      <li>Then \(xu_x = \xi u_\xi - \eta u_\eta\) and \(yu_y = \xi u_\xi + \eta u_\eta\). Applying \(x\partial_x\) and \(y\partial_y\) a second time:
+      \[ x\partial_x(xu_x) = x^2u_{xx} + xu_x = \xi^2u_{\xi\xi} - 2\xi\eta u_{\xi\eta} + \eta^2u_{\eta\eta} + \xi u_\xi + \eta u_\eta, \]
+      \[ y\partial_y(yu_y) = y^2u_{yy} + yu_y = \xi^2u_{\xi\xi} + 2\xi\eta u_{\xi\eta} + \eta^2u_{\eta\eta} + \xi u_\xi + \eta u_\eta. \]</li>
+      <li>The PDE is the difference of these two, which is \(-4\xi\eta u_{\xi\eta} = 0\). So \(u_{\xi\eta} = 0\).</li>
+      <li>Therefore
+      \[ u(x,y) = f(xy) + g\!\left(\frac yx\right). \]</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Sheet 7 Q3" data-topic="canonical-forms">
+    <p>Show that \(y^2u_{xx} - 2yu_{xy} + u_{yy} - u_x = 2\) is parabolic, with characteristics \(\xi = x + \tfrac12y^2\). With \(\eta = y\), reduce it to canonical form and find its general solution. Determine the solution with \(u = x\) and \(u_y = 1\) on \(y = 0\).</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>\(B^2 - 4AC = 4y^2 - 4y^2 = 0\), so the PDE is parabolic. \(y^2\mu^2 - 2y\mu + 1 = (y\mu - 1)^2 = 0\) gives \(\mu = 1/y\).</li>
+      <li>\(dy/dx = -1/y\) integrates to \(x + \tfrac12y^2 = \text{const.}\)</li>
+      <li>With \(\xi = x + \tfrac12y^2\), \(\eta = y\): \(u_x = u_\xi\) and \(u_y = yu_\xi + u_\eta\). Then
+      \[ u_{xx} = u_{\xi\xi}, \quad u_{xy} = yu_{\xi\xi} + u_{\xi\eta}, \quad u_{yy} = u_\xi + y^2u_{\xi\xi} + 2yu_{\xi\eta} + u_{\eta\eta}. \]</li>
+      <li>Substituting, the \(u_{\xi\xi}\) and \(u_{\xi\eta}\) terms cancel, and \(u_\xi - u_x = 0\). This leaves \(u_{\eta\eta} = 2\).</li>
+      <li>Integrating twice: \(u = \eta^2 + \eta f(\xi) + g(\xi)\), so
+      \[ u = y^2 + yf\big(x + \tfrac12y^2\big) + g\big(x + \tfrac12y^2\big). \]</li>
+      <li>On \(y = 0\): \(g(x) = x\). Also \(u_y(x,0) = f(x) = 1\).</li>
+      <li>Therefore
+      \[ u = y^2 + y + x + \tfrac12y^2 = x + y + \tfrac32y^2. \]</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Notes §4.1" data-topic="wave-equation">
+    <p>Use d'Alembert's solution to solve \(u_{tt} = c^2u_{xx}\) on the whole line, for \(u(x,0) = \sin x\) and \(u_t(x,0) = c\cos x\). In which direction does the wave travel?</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>Here \(U = \sin x\) and \(V = c\cos x\).</li>
+      <li>From (4.9):
+      \[ u = \tfrac12\big[\sin(x - ct) + \sin(x + ct)\big] + \frac{1}{2c}\int_{x-ct}^{x+ct}c\cos s\,ds. \]</li>
+      <li>The integral gives \(\tfrac12\big[\sin(x + ct) - \sin(x - ct)\big]\).</li>
+      <li>Adding, the \(\sin(x - ct)\) terms cancel:
+      \[ u(x,t) = \sin(x + ct). \]
+      This is a single wave travelling to the left at speed \(c\).</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Sheet 7 Q4" data-topic="well-posed">
+    <p>Classify each PDE and explain briefly whether the problem is well posed:</p>
+    <p>(a) \(u_{tt} = 9u_{xx}\), \(0 \lt x \lt 1\), \(t \gt 0\), with \(u = 0\) at \(x = 0, 1\), and \(u|_{t=0} = \sin\pi x\), \(u_t|_{t=0} = 0\).</p>
+    <p>(b) \(u_t = u_{xx}\), \(0 \lt x \lt L\), \(0 \lt t \lt T\), with \(u\) prescribed on both ends, at \(t = 0\) and at \(t = T\).</p>
+    <p>(c) \(u_{xx} + u_{yy} = 0\) on \(0 \lt x, y \lt 1\), with \(u\) prescribed on all four sides.</p>
+    <p>(d) \(u_{tt} + u_{xx} = 0\), \(0 \lt x \lt \pi\), \(t \gt 0\), with \(u\) prescribed at \(x = 0, \pi\), and \(u\), \(u_t\) prescribed at \(t = 0\).</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>(a) Hyperbolic. Spatial boundary conditions with Cauchy data at \(t = 0\) form the correct IBVP, so it is <strong>well posed</strong>.</li>
+      <li>(b) Parabolic. The solution is already fixed by the data at \(t = 0\) and at the two ends. Prescribing \(u\) at \(t = T\) as well is too many conditions, so it is <strong>ill posed</strong>.</li>
+      <li>(c) Elliptic. A boundary value problem on a closed boundary is the correct form, so it is <strong>well posed</strong>.</li>
+      <li>(d) Elliptic. This is an initial value problem for an elliptic equation. Solutions like \(\varepsilon^2\sin(x/\varepsilon)\sinh(t/\varepsilon)\) show there is no continuous dependence on the data, so it is <strong>ill posed</strong>.</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Sheet 6 Q1" data-topic="second-order-classification">
+    <p>For the system \(u_x + 2u_y + v_y = 0\), \(v_x + u_y = 0\), find the gradients of the characteristics. By differentiating, derive a second-order equation for \(u\) alone. Show that it is hyperbolic, and compare its characteristics with those of the system.</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>\(A = I\) and \(B = \begin{pmatrix} 2 & 1 \\ 1 & 0 \end{pmatrix}\), so \(\lambda^2 - 2\lambda - 1 = 0\) and \(\lambda = 1 \pm \sqrt2\). These are real and distinct.</li>
+      <li>Differentiating the first PDE with respect to \(x\): \(u_{xx} + 2u_{xy} + v_{xy} = 0\).</li>
+      <li>Differentiating the second with respect to \(y\): \(v_{xy} = -u_{yy}\). Hence
+      \[ u_{xx} + 2u_{xy} - u_{yy} = 0. \]</li>
+      <li>\(B^2 - 4AC = 4 + 4 = 8 \gt 0\), so this is hyperbolic.</li>
+      <li>\(\mu^2 + 2\mu - 1 = 0\) gives \(\mu = -1 \pm \sqrt2\), so \(dy/dx = -\mu = 1 \mp \sqrt2\). These are the same gradients as the first-order system.</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Sheet 6 Q5" data-topic="canonical-forms">
+    <p>Find the general solution of \(u_{xx} + 4u_{xy} + 4u_{yy} = 0\) by reducing it to canonical form.</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>\(B^2 - 4AC = 16 - 16 = 0\), so the PDE is parabolic. \(\mu^2 + 4\mu + 4 = 0\) has the double root \(\mu = -2\).</li>
+      <li>Take \(\xi = y + \mu x = y - 2x\) and \(\eta = x\).</li>
+      <li>From (4.3): \(P = 4 - 8 + 4 = 0\), \(Q = 2(-2)(1) + 4(1) = 0\) and \(R = 1\).</li>
+      <li>So \(u_{\eta\eta} = 0\), which integrates to \(u = \eta f(\xi) + g(\xi)\):
+      \[ u(x,y) = xf(y - 2x) + g(y - 2x). \]</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Notes §4.1" data-topic="well-posed">
+    <p>Verify that \(v(x,t) = \varepsilon^2\sin(x/\varepsilon)\sinh(t/\varepsilon)\) solves \(v_{tt} + v_{xx} = 0\) with \(v(x,0) = 0\) and \(v_t(x,0) = \varepsilon\sin(x/\varepsilon)\). Compare with the solution \(u \equiv 0\) for zero data, and explain what this shows.</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>\(v_{tt} = \sin(x/\varepsilon)\sinh(t/\varepsilon)\) and \(v_{xx} = -\sin(x/\varepsilon)\sinh(t/\varepsilon)\), so they sum to zero. ✓</li>
+      <li>\(v(x,0) = 0\) since \(\sinh 0 = 0\). Also \(v_t = \varepsilon\sin(x/\varepsilon)\cosh(t/\varepsilon)\), so \(v_t(x,0) = \varepsilon\sin(x/\varepsilon)\). ✓</li>
+      <li>The data differ from zero by at most \(\varepsilon\), which is arbitrarily small.</li>
+      <li>However, at \(x = \varepsilon\pi/2\), \(|v - u| = \varepsilon^2\sinh(t/\varepsilon)\), which grows without bound as \(t \to \infty\). For fixed \(t \gt 0\), it also diverges as \(\varepsilon \to 0\).</li>
+      <li>So there is no continuous dependence on the data, and the Cauchy problem for this elliptic equation is ill-posed.</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Sheet 6 Q2" data-topic="coordinate-transformations">
+    <p>For \(u_{xx} + 2u_{xy} - 3u_{yy} = 0\) under the transformation \(\xi = x + y\), \(\eta = x - y\), calculate \(P\), \(Q\), \(R\) and \(|J|\). Verify that \(Q^2 - 4PR = |J|^2(B^2 - 4AC)\).</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>\(A = 1\), \(B = 2\), \(C = -3\), with \(\xi_x = \xi_y = 1\), \(\eta_x = 1\), \(\eta_y = -1\).</li>
+      <li>From (4.3):
+      \[ P = 1 + 2 - 3 = 0, \quad Q = 2 + 2(-1 + 1) + 6 = 8, \quad R = 1 - 2 - 3 = -4. \]</li>
+      <li>\(|J| = \xi_x\eta_y - \xi_y\eta_x = -2\), so \(|J|^2 = 4\).</li>
+      <li>\(Q^2 - 4PR = 64\), and \(B^2 - 4AC = 4 + 12 = 16\). So \(|J|^2(B^2 - 4AC) = 64\). ✓</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Notes §4.1" data-topic="reduction-examples">
+    <p>Show that \(u_{xx} + y^2u_{yy} = 0\) is elliptic for \(y \gt 0\). Find suitable real coordinates, and reduce it to canonical form.</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>\(B^2 - 4AC = -4y^2 \lt 0\), so the PDE is elliptic.</li>
+      <li>\(\mu^2 + y^2 = 0\) gives \(\mu = \pm iy\). Then \(dy/dx = \mp iy\) integrates to \(\ln y \pm ix = \text{const.}\)</li>
+      <li>Taking real and imaginary parts: \(\xi = \ln y\) and \(\eta = x\).</li>
+      <li>Then \(u_x = u_\eta\) and \(u_y = \tfrac1yu_\xi\), so \(u_{xx} = u_{\eta\eta}\) and
+      \[ u_{yy} = \frac{1}{y^2}(u_{\xi\xi} - u_\xi). \]</li>
+      <li>Substituting gives \(u_{\eta\eta} + u_{\xi\xi} - u_\xi = 0\), so
+      \[ u_{\xi\xi} + u_{\eta\eta} = u_\xi. \]</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Notes §4.1" data-topic="simple-solutions">
+    <p>Find the general solution of \(u_{xy} + 2u_y = 0\).</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>Integrating with respect to \(y\) gives \(u_x + 2u = f(x)\), where \(f\) is arbitrary.</li>
+      <li>The integrating factor is \(I = e^{2x}\), so \(\dfrac{\partial}{\partial x}(e^{2x}u) = e^{2x}f(x)\).</li>
+      <li>Integrating with respect to \(x\), the constant becomes a function of \(y\):
+      \[ e^{2x}u = \int e^{2x}f(x)\,dx + g(y). \]</li>
+      <li>Since \(f\) is arbitrary, the integral is an arbitrary function of \(x\). Therefore
+      \[ u(x,y) = h(x) + g(y)e^{-2x}. \]</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Notes §4.1" data-topic="wave-equation">
+    <p>Solve \(u_{tt} = c^2u_{xx}\) on the whole line, with \(u(x,0) = x^2\) and \(u_t(x,0) = 2x\). Check your answer directly.</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>From (4.9), with \(U = x^2\) and \(V = 2x\):
+      \[ u = \tfrac12\big[(x - ct)^2 + (x + ct)^2\big] + \frac{1}{2c}\int_{x-ct}^{x+ct}2s\,ds. \]</li>
+      <li>The first term is \(x^2 + c^2t^2\).</li>
+      <li>The integral gives \(\dfrac{1}{2c}\big[(x + ct)^2 - (x - ct)^2\big] = \dfrac{4xct}{2c} = 2xt\).</li>
+      <li>Therefore
+      \[ u(x,t) = x^2 + c^2t^2 + 2xt. \]</li>
+      <li>Check: \(u_{tt} = 2c^2\) and \(u_{xx} = 2\), so \(u_{tt} = c^2u_{xx}\). Also \(u(x,0) = x^2\) and \(u_t(x,0) = 2x\). ✓</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Sheet 7 Q2" data-topic="canonical-forms">
+    <p>Show that \(y^2u_{xx} - x^2u_{yy} = 0\), for \(x, y \neq 0\), is hyperbolic with characteristics \(\xi = x^2 + y^2\) and \(\eta = y^2 - x^2\). Reduce it to canonical form.</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>\(B^2 - 4AC = 4x^2y^2 \gt 0\), so the PDE is hyperbolic. \(y^2\mu^2 - x^2 = 0\) gives \(\mu = \pm x/y\).</li>
+      <li>\(dy/dx = \mp x/y\) gives \(y^2 \pm x^2 = \text{const.}\)</li>
+      <li>With these coordinates, \(u_x = 2x(u_\xi - u_\eta)\) and \(u_y = 2y(u_\xi + u_\eta)\). Then
+      \[ u_{xx} = 2(u_\xi - u_\eta) + 4x^2(u_{\xi\xi} - 2u_{\xi\eta} + u_{\eta\eta}), \]
+      \[ u_{yy} = 2(u_\xi + u_\eta) + 4y^2(u_{\xi\xi} + 2u_{\xi\eta} + u_{\eta\eta}). \]</li>
+      <li>Substituting, the \(u_{\xi\xi}\) and \(u_{\eta\eta}\) terms cancel:
+      \[ -16x^2y^2u_{\xi\eta} + 2(y^2 - x^2)u_\xi - 2(y^2 + x^2)u_\eta = 0. \]</li>
+      <li>Using \(4x^2y^2 = \xi^2 - \eta^2\), the canonical form is
+      \[ u_{\xi\eta} = \frac{\eta u_\xi - \xi u_\eta}{2(\xi^2 - \eta^2)}. \]</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Sheet 6 Q4" data-topic="canonical-forms">
+    <p>Reduce \(u_{xx} + 4u_{xy} + 3u_{yy} = 0\) to canonical form and find its general solution. Then find the solution with \(u(x,0) = x^2\) and \(u_y(x,0) = 0\).</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>\(\mu^2 + 4\mu + 3 = 0\) gives \(\mu_1 = -1\) and \(\mu_2 = -3\). Take \(\xi = y - x\) and \(\eta = y - 3x\).</li>
+      <li>From (4.3): \(P = R = 0\), and \(Q = 2(-1)(-3) + 4(-1 - 3) + 6 = -4\).</li>
+      <li>So \(u_{\xi\eta} = 0\), with general solution
+      \[ u = f(y - x) + g(y - 3x). \]</li>
+      <li>The conditions give \(f(-x) + g(-3x) = x^2\) and \(f'(-x) + g'(-3x) = 0\).</li>
+      <li>Differentiating the first with respect to \(x\): \(-f'(-x) - 3g'(-3x) = 2x\). Adding the second gives \(g'(-3x) = -x\), so \(g'(s) = s/3\). Then \(f'(-x) = x\), so \(f'(s) = -s\).</li>
+      <li>So \(g(s) = \tfrac16s^2 + k\) and \(f(s) = -\tfrac12s^2 - k\). Therefore
+      \[ u = -\tfrac12(y - x)^2 + \tfrac16(y - 3x)^2 = x^2 - \tfrac13y^2. \]</li>
+    </ol></details>
+  </section>
+
+  </div>
+</article>
+
 </div><!-- /wrap -->
 
 <script>
 /* ── Topic list: drives the homepage, top bar and prev/next links ── */
-const CHAPTERS = { I: 'Ordinary Differential Equations', II: 'Calculus of Variations', III: 'Systems of First-Order PDEs' };
+const CHAPTERS = { I: 'Ordinary Differential Equations', II: 'Calculus of Variations', III: 'Systems of First-Order PDEs', IV: 'Second-Order PDEs' };
 const TOPICS = [
   { id: 'second-order', ch: 'I', title: 'Second-Order Linear ODEs', desc: 'Complementary function and particular integral',
     icon: '<path d="M2 12c1.6-7 3.4-7 5 0s3.4 7 5 0 3.4-7 5 0 3.4 7 5 0"/>' },
@@ -1828,6 +2338,23 @@ const TOPICS = [
   { id: 'riemann-examples', ch: 'III', title: 'Riemann Invariant Examples', desc: 'Three full worked systems',
     icon: '<path d="M4 20L20 4"/><circle cx="8" cy="16" r="1.8" fill="currentColor"/><circle cx="12" cy="12" r="1.8" fill="currentColor"/><circle cx="16" cy="8" r="1.8" fill="currentColor"/><path d="M4 9l5-5M15 20l5-5" opacity=".4"/>' },
   { id: 'problems-3', ch: 'III', title: 'Problems', desc: 'Twelve questions in the style of Sheets 5 and 6',
+    icon: '<path d="M4 20l1-4.500L16.500 4l3.500 3.500L8.500 19 4 20z"/><path d="M14 6.500l3.500 3.500"/>' },
+
+  { id: 'coordinate-transformations', ch: 'IV', title: 'Coordinate Transformations', desc: 'How A, B and C change under a new grid',
+    icon: '<path d="M3 8c6-3 12-3 18 0M3 16c6-3 12-3 18 0"/><path d="M8 3c-3 6-3 12 0 18M16 3c-3 6-3 12 0 18"/>' },
+  { id: 'second-order-classification', ch: 'IV', title: 'Classifying Second-Order PDEs', desc: 'The discriminant and its invariance',
+    icon: '<path d="M12 3v18"/><path d="M3 8h18"/><circle cx="7" cy="15" r="2.500"/><path d="M15 19c0-5 4-5 4-5"/>' },
+  { id: 'canonical-forms', ch: 'IV', title: 'Canonical Forms', desc: 'Hyperbolic, elliptic and parabolic reductions',
+    icon: '<path d="M3 6h18M3 12h12M3 18h7"/><path d="M18 15l3 3-3 3"/>' },
+  { id: 'reduction-examples', ch: 'IV', title: 'Reduction Examples', desc: 'Six full reductions, with Euler–Tricomi',
+    icon: '<path d="M4 4h16v16H4z"/><path d="M8 9h8M8 13h8M8 17h5"/>' },
+  { id: 'simple-solutions', ch: 'IV', title: 'General Solutions', desc: 'Integrating PDEs directly',
+    icon: '<path d="M14 4c-2-2-4 0-4 3v10c0 3-2 5-4 3"/><path d="M15 12h6M18 9v6"/>' },
+  { id: 'wave-equation', ch: 'IV', title: 'The Wave Equation', desc: 'General solution and d\'Alembert\'s formula',
+    icon: '<path d="M2 16c2 0 3-8 5-8s3 8 5 8 3-8 5-8 3 8 5 8"/>' },
+  { id: 'well-posed', ch: 'IV', title: 'Well-Posed Problems', desc: 'Matching conditions to the PDE type',
+    icon: '<path d="M12 3l8 4v5c0 5-3.500 8-8 9-4.500-1-8-4-8-9V7z"/><path d="M8.500 12l2.500 2.500 4.500-5"/>' },
+  { id: 'problems-4', ch: 'IV', title: 'Problems', desc: 'Sixteen questions in the style of Sheets 6 and 7',
     icon: '<path d="M4 20l1-4.500L16.500 4l3.500 3.500L8.500 19 4 20z"/><path d="M14 6.500l3.500 3.500"/>' },
 ];
 const iconSvg = t => `<span class="icon"><svg viewBox="0 0 24 24" aria-hidden="true">${t.icon}</svg></span>`;

@@ -1,0 +1,1944 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MATH326 — Relativity Cheat Sheet</title>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,500;0,600;1,400;1,500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" onload="initMath();"></script>
+<style>
+:root {
+  --ink: #1f1c17;
+  --ink-soft: #4a453d;
+  --ink-muted: #7a7468;
+  --rule: #e4dccd;
+  --page: #faf7f2;
+  --page-deep: #f1ebdf;
+  --card: #fffdf9;
+  --teal: #2e7d6b;   --teal-tint: #e9f3f0;
+  --gold: #8f6a05;   --gold-tint: #f7f0dc;
+  --red:  #8b2f2f;   --red-tint:  #f6e9e6;
+  --blue: #2f5583;   --blue-tint: #e8eef6;
+  --accent: var(--teal);
+  --tint: var(--teal-tint);
+  --serif: 'EB Garamond', Georgia, serif;
+  --mono: 'DM Mono', Consolas, monospace;
+}
+[data-ch="I"]   { --accent: var(--teal); --tint: var(--teal-tint); }
+[data-ch="II"]  { --accent: var(--gold); --tint: var(--gold-tint); }
+[data-ch="III"] { --accent: var(--red);  --tint: var(--red-tint); }
+[data-ch="IV"]  { --accent: var(--blue); --tint: var(--blue-tint); }
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--page); color: var(--ink);
+  font-family: var(--serif); font-size: 19px; line-height: 1.6;
+}
+a { color: var(--accent); }
+.wrap { max-width: 880px; margin: 0 auto; padding: 0 1.5rem 5rem; }
+.view { display: none; }
+.view.active { display: block; animation: rise .28s ease; }
+@keyframes rise { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+
+/* ── Home ── */
+.masthead {
+  display: grid; grid-template-columns: 1fr 280px; gap: 1.5rem; align-items: center;
+  padding: 4rem 0 2.5rem; border-bottom: 1px solid var(--rule); margin-bottom: 2.5rem;
+}
+.eyebrow {
+  font-family: var(--mono); font-size: 12px; letter-spacing: .16em; text-transform: uppercase;
+  color: var(--ink-muted); margin-bottom: .75rem;
+}
+h1 { font-weight: 500; font-size: clamp(2.5rem, 7vw, 3.6rem); line-height: 1.05; letter-spacing: -.01em; }
+h1 em { color: var(--gold); font-style: italic; }
+.subtitle { color: var(--ink-soft); margin-top: .9rem; max-width: 30em; }
+#logo { width: 100%; height: auto; display: block; }
+
+.ch-group { margin-bottom: 2.75rem; }
+.ch-head { display: flex; align-items: baseline; gap: .75rem; margin-bottom: 1rem; }
+.ch-num { font-family: var(--mono); font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); }
+.ch-title { font-size: 1.45rem; font-weight: 500; }
+.topic-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: .75rem; }
+.topic-card {
+  display: flex; gap: .85rem; align-items: flex-start; padding: .9rem 1rem;
+  background: var(--card); border: 1px solid var(--rule); border-radius: 10px;
+  color: inherit; text-decoration: none;
+  transition: border-color .15s, transform .15s, box-shadow .15s;
+}
+.topic-card:hover, .topic-card:focus-visible {
+  border-color: var(--accent); transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(60, 45, 20, .08); outline: none;
+}
+.icon {
+  flex: none; width: 42px; height: 42px; border-radius: 9px; padding: 8px;
+  background: var(--tint); color: var(--accent);
+}
+.icon svg { width: 100%; height: 100%; display: block; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.topic-card b { display: block; font-weight: 500; line-height: 1.25; font-size: 1.08rem; }
+.topic-card span.d { display: block; color: var(--ink-muted); font-size: .86rem; line-height: 1.35; margin-top: 3px; }
+
+/* ── Topic pages ── */
+.topbar {
+  position: sticky; top: 0; z-index: 5; background: var(--page);
+  display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+  padding: .85rem 0; border-bottom: 1px solid var(--rule); margin-bottom: 2.25rem;
+  font-family: var(--mono); font-size: 12px;
+}
+.topbar a { color: var(--ink-soft); text-decoration: none; white-space: nowrap; }
+.topbar a:hover { color: var(--accent); }
+.topbar .where { color: var(--ink-muted); letter-spacing: .08em; text-align: right; }
+.topic-head { display: flex; gap: 1rem; align-items: center; margin-bottom: 1.5rem; }
+.topic-head .icon { width: 56px; height: 56px; padding: 11px; border-radius: 12px; }
+h2.topic-title { font-size: clamp(1.8rem, 5vw, 2.4rem); font-weight: 500; line-height: 1.12; }
+.lede { color: var(--ink-soft); font-size: 1.1rem; margin-bottom: 1.75rem; }
+h3 {
+  font-family: var(--mono); font-weight: 500; font-size: 12.5px; letter-spacing: .13em; text-transform: uppercase;
+  color: var(--accent); margin: 2.25rem 0 .75rem; padding-bottom: .35rem; border-bottom: 1px solid var(--rule);
+}
+p { margin-bottom: .8rem; }
+ul, ol { margin: 0 0 .9rem 1.4rem; }
+li { margin-bottom: .35rem; }
+
+/* Hero cell */
+.hero {
+  background: var(--tint); border: 1px solid var(--accent); border-radius: 12px;
+  padding: 1.15rem 1.25rem 1rem; margin: 1.4rem 0; text-align: center;
+}
+.hero-label {
+  font-family: var(--mono); font-size: 11.5px; letter-spacing: .15em; text-transform: uppercase;
+  color: var(--accent); margin-bottom: .2rem;
+}
+.hero .katex-display { margin: .7rem 0; }
+.hero .katex { font-size: 1.28em; }
+.hero p { font-size: .98rem; color: var(--ink-soft); margin: .25rem auto .15rem; max-width: 36em; }
+.hero p .katex { font-size: 1.05em; }
+
+/* Cards, callouts, tables */
+.box { background: var(--card); border: 1px solid var(--rule); border-radius: 10px; padding: .85rem 1.1rem; margin: 1rem 0; }
+.box > :last-child { margin-bottom: 0; }
+.box-title { font-weight: 600; margin-bottom: .3rem; }
+.note {
+  border-left: 3px solid var(--accent); background: var(--card);
+  padding: .55rem 1rem; margin: 1rem 0; border-radius: 0 8px 8px 0; font-size: .98rem;
+}
+.note b:first-child { font-weight: 600; }
+.steps { counter-reset: s; list-style: none; margin-left: 0; }
+.steps > li { counter-increment: s; position: relative; padding-left: 2.2rem; margin-bottom: .65rem; }
+.steps > li::before {
+  content: counter(s); position: absolute; left: 0; top: .12rem; width: 1.5rem; height: 1.5rem; border-radius: 50%;
+  background: var(--tint); color: var(--accent); font-family: var(--mono); font-size: 12px;
+  display: flex; align-items: center; justify-content: center; border: 1px solid var(--accent);
+}
+.tbl { overflow-x: auto; margin: 1rem 0; }
+table { border-collapse: collapse; width: 100%; background: var(--card); font-size: .98rem; }
+th {
+  font-family: var(--mono); font-weight: 500; font-size: 11.5px; letter-spacing: .08em; text-transform: uppercase;
+  text-align: left; color: var(--ink-muted); background: var(--page-deep);
+}
+th, td { padding: .5rem .75rem; border: 1px solid var(--rule); vertical-align: middle; }
+
+details.ex { background: var(--card); border: 1px solid var(--rule); border-radius: 10px; margin: .8rem 0; }
+details.ex > summary {
+  cursor: pointer; padding: .65rem 1.1rem; list-style: none; display: flex; gap: .7rem; align-items: baseline;
+}
+details.ex > summary::-webkit-details-marker { display: none; }
+details.ex > summary::before { content: '›'; color: var(--accent); font-weight: 600; transition: transform .15s; display: inline-block; }
+details.ex[open] > summary::before { transform: rotate(90deg); }
+details.ex > summary:hover { color: var(--accent); }
+.ex-tag { font-family: var(--mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); flex: none; }
+.ex-body { padding: .2rem 1.2rem .9rem; border-top: 1px solid var(--rule); }
+.ex-body > :first-child { margin-top: .7rem; }
+
+/* Long equations scroll sideways, but the bar only shows when one really does not fit */
+.katex-display { overflow-x: auto; overflow-y: hidden; padding: .15rem 0 .35rem; scrollbar-width: none; }
+.katex-display::-webkit-scrollbar { display: none; }
+.katex-display.scrolls { scrollbar-width: thin; }
+.katex-display.scrolls::-webkit-scrollbar { display: block; height: 6px; }
+.katex-display.scrolls::-webkit-scrollbar-thumb { background: var(--rule); border-radius: 3px; }
+.katex { font-size: 1.08em; }
+
+figure { margin: 1.2rem 0; text-align: center; }
+figure svg { width: 100%; max-width: 620px; height: auto; background: var(--card); border: 1px solid var(--rule); border-radius: 10px; }
+figcaption { font-size: .92rem; color: var(--ink-muted); margin-top: .35rem; }
+svg text { font-family: var(--serif); font-style: italic; font-size: 15px; fill: var(--ink-soft); }
+
+/* Problems pages */
+.q { background: var(--card); border: 1px solid var(--rule); border-radius: 10px; padding: .9rem 1.2rem 1rem; margin: 1.1rem 0; }
+.q-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: .25rem .9rem; margin-bottom: .55rem; font-family: var(--mono); font-size: 11.5px; letter-spacing: .06em; color: var(--ink-muted); }
+.q-num { color: var(--accent); text-transform: uppercase; letter-spacing: .12em; font-weight: 500; }
+.q-head a { color: var(--ink-muted); }
+.q-head a:hover { color: var(--accent); }
+details.sol { margin-top: .75rem; }
+details.sol > summary {
+  display: inline-block; cursor: pointer; list-style: none; padding: .3rem .85rem;
+  border: 1px solid var(--accent); border-radius: 6px; background: var(--tint); color: var(--accent);
+  font-family: var(--mono); font-size: 12px; transition: background .15s, color .15s;
+}
+details.sol > summary::-webkit-details-marker { display: none; }
+details.sol > summary::before { content: '▸ '; }
+details.sol[open] > summary::before { content: '▾ '; }
+details.sol > summary:hover, details.sol > summary:focus-visible { background: var(--accent); color: var(--card); outline: none; }
+details.sol .steps { margin-top: .9rem; }
+.pool-controls { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .75rem 1.25rem; margin-top: 1.4rem; }
+.gen-btn {
+  cursor: pointer; padding: .6rem 1.2rem; border-radius: 8px; border: 1px solid var(--accent);
+  background: var(--accent); color: var(--card); font-family: var(--mono); font-size: 13px;
+  transition: opacity .15s, transform .15s;
+}
+.gen-btn:hover, .gen-btn:focus-visible { opacity: .88; transform: translateY(-1px); outline: none; }
+.pool-count { font-family: var(--mono); font-size: 12px; color: var(--ink-muted); }
+
+.pager { display: flex; justify-content: space-between; gap: 1rem; margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--rule); }
+.pager a { text-decoration: none; color: var(--ink-soft); max-width: 48%; }
+.pager a:hover { color: var(--accent); }
+.pager small { display: block; font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-muted); }
+.pager .nx { text-align: right; margin-left: auto; }
+
+footer { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--rule); color: var(--ink-muted); font-family: var(--mono); font-size: 12px; display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+footer a { color: inherit; }
+
+@media (max-width: 680px) {
+  body { font-size: 18px; }
+  .wrap { padding: 0 1rem 4rem; }
+  .masthead { grid-template-columns: 1fr; padding-top: 2.5rem; }
+  #logo { max-width: 280px; }
+  .hero { padding: 1rem .75rem; }
+  .hero .katex { font-size: 1.12em; }
+  /* Equation numbers go on their own line, so they cannot collide with the equation */
+  .katex-display > .katex > .katex-html > .tag { position: static; display: block; text-align: right; font-size: .82em; color: var(--ink-muted); }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .view.active { animation: none; }
+  .topic-card { transition: none; }
+}
+@media print {
+  .topbar, .pager, #home, footer { display: none !important; }
+  .view { display: block !important; page-break-after: always; }
+  .ex-body { display: block !important; }
+  body { background: #fff; }
+}
+
+/* ── Relativity theme: a spacetime diagram on graph paper ── */
+:root {
+  --ink: #1b2233;
+  --ink-soft: #3f4a60;
+  --ink-muted: #6c778c;
+  --rule: #d9e0ea;
+  --page: #f7f9fc;
+  --page-deep: #e9eef5;
+  --card: #ffffff;
+  --teal: #2467b3;  --teal-tint: #e7f0fa;
+  --gold: #0f7f8c;  --gold-tint: #e2f3f4;
+  --red:  #6a4bb0;  --red-tint:  #eee9f8;
+  --blue: #a2467f;  --blue-tint: #f8e9f2;
+  --violet: #c2551f; --violet-tint: #fbece3;
+  --accent: var(--teal);
+  --tint: var(--teal-tint);
+  --serif: 'Spectral', Georgia, serif;
+  --mono: 'JetBrains Mono', Consolas, monospace;
+}
+[data-ch="V"] { --accent: var(--violet); --tint: var(--violet-tint); }
+body {
+  font-size: 18px; line-height: 1.62;
+  background-color: var(--page);
+  background-image:
+    linear-gradient(rgba(36,103,179,.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(36,103,179,.045) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+h1 { font-weight: 500; letter-spacing: -.015em; }
+h1 em { color: var(--teal); font-style: italic; }
+.topbar { background: var(--page); }
+.topic-card:hover, .topic-card:focus-visible { box-shadow: 0 4px 14px rgba(36,103,179,.12); }
+.hero { border-radius: 4px; }
+svg text { font-size: 14px; }
+@media (max-width: 680px) { body { font-size: 17px; } }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+<!-- ═══════════ HOME ═══════════ -->
+<main id="home" class="view active">
+  <header class="masthead">
+    <div>
+      <p class="eyebrow">MATH326 · Cheat Sheet</p>
+      <h1>Relativity, <em>special and general</em></h1>
+      <p class="subtitle">From the Lorentz transformations to curved space-time and black holes. Pick a topic to begin.</p>
+    </div>
+    <svg id="logo" viewBox="0 0 280 200" role="img" aria-label="A spacetime diagram: the axes of a moving frame tilt towards a fixed light cone as its speed changes"></svg>
+  </header>
+  <div id="contents"></div>
+  <footer>
+    <span>starocracy · 2026–27</span>
+    <a href="index.html">← Revision Hub</a>
+  </footer>
+</main>
+
+<!-- ═══════════ CHAPTER I: FOUNDATIONS OF SPECIAL RELATIVITY ═══════════ -->
+
+<article class="view" id="frames" data-ch="I">
+  <p class="lede">Before relativity: what an inertial frame is, and the symmetries of Newtonian mechanics that Einstein's theory replaces.</p>
+
+  <div class="hero">
+    <div class="hero-label">Galilei transformation</div>
+    \[ \vec r^{\,\prime} = R\vec r - \vec v_0t + \vec r_0, \qquad t' = t + t_0 \]
+    <p>A rotation \(R\), a boost \(\vec v_0\), and translations \(\vec r_0\), \(t_0\). Time is absolute, and velocities simply add.</p>
+  </div>
+
+  <p>An <strong>event</strong> is a position \(\vec r\) together with a time \(t\). An <strong>inertial frame</strong> is one in which a free particle moves with constant velocity. The Galilei transformations relate inertial frames in classical mechanics: they leave accelerations unchanged up to the rotation, so Newton's second law takes the same form in each frame.</p>
+
+  <h3>Groups</h3>
+  <p>A group is a set with an associative product, a unit element, and an inverse for every element.</p>
+  <div class="tbl"><table>
+    <tr><th>Group</th><th>Meaning</th></tr>
+    <tr><td>\(O(3)\)</td><td>Orthogonal matrices, \(R^TR = 1\): rotations and reflections, \(\det R = \pm1\)</td></tr>
+    <tr><td>\(SO(3)\)</td><td>Rotations alone, \(\det R = 1\)</td></tr>
+    <tr><td>\(\text{Euc}(3)\)</td><td>Rotations and translations: leaves \(d\vec r^{\,2}\) invariant</td></tr>
+    <tr><td>Galilei group</td><td>Euclidean group plus boosts and time translations</td></tr>
+  </table></div>
+</article>
+
+<article class="view" id="index-notation" data-ch="I">
+  <p class="lede">The language of the whole module. A few rules let you write and check long expressions at a glance.</p>
+
+  <div class="hero">
+    <div class="hero-label">Einstein summation convention</div>
+    \[ v_iw_i \equiv \sum_{i}v_iw_i \]
+    <p>A repeated index is summed over. Each index may appear at most twice in a term.</p>
+  </div>
+
+  <h3>Rules</h3>
+  <ul>
+    <li><strong>Free indices</strong> appear once in a term, and must match across every term of an equation.</li>
+    <li><strong>Summation (dummy) indices</strong> appear exactly twice, and can be renamed freely.</li>
+    <li>\(\delta_{ij}\) is 1 if \(i = j\) and 0 otherwise, so \(v_j\delta_{ji} = v_i\) and \(\delta_{ii} = 3\) in three dimensions.</li>
+  </ul>
+
+  <h3>Orthogonal matrices</h3>
+  <p>\(R\) is orthogonal if \(RR^T = 1 = R^TR\). Then \(\det R = \pm1\), \(R^{-1} = R^T\), and \((R\vec v)\cdot(R\vec w) = \vec v\cdot\vec w\). In index notation:</p>
+  \[ R_{ik}R_{jk} = \delta_{ij}. \]
+  <div class="note"><b>Checking covariance.</b> \(M_{ij}v_j = w_j\) is wrong: \(i\) is free on the left but absent on the right, and \(j\) appears three times. In Minkowski space, a summation index also needs one upper and one lower position.</div>
+</article>
+
+<article class="view" id="lorentz" data-ch="I">
+  <p class="lede">The principle of relativity and causality leave only Lorentz or Galilei transformations. The speed of light is the tie breaker.</p>
+
+  <div class="box"><div class="box-title">First postulate: the principle of relativity</div><p>The laws of nature are the same in all inertial frames.</p></div>
+  <div class="box"><div class="box-title">Second postulate: the speed of light</div><p>The speed of light in a vacuum is the same in all inertial frames, and independent of the motion of the source.</p></div>
+
+  <div class="hero">
+    <div class="hero-label">Lorentz transformation, standard configuration</div>
+    \begin{equation} x' = \gamma(x - vt), \quad y' = y, \quad z' = z, \quad t' = \gamma\!\left(t - \frac{v}{c^2}x\right) \tag{105} \end{equation}
+    \[ \gamma = \frac{1}{\sqrt{1 - v^2/c^2}} \]
+    <p>Frame \(I'\) moves at velocity \((v,0,0)\) relative to \(I\). For the inverse, swap primed and unprimed and set \(v \to -v\).</p>
+  </div>
+
+  <div class="hero">
+    <div class="hero-label">Rapidity</div>
+    \[ ct' = ct\cosh\phi - x\sinh\phi, \qquad x' = -ct\sinh\phi + x\cosh\phi, \qquad \frac vc = \tanh\phi \]
+    <p>A hyperbolic rotation. Collinear boosts add their rapidities: \(\phi = \phi_1 + \phi_2\).</p>
+  </div>
+
+  <div class="hero">
+    <div class="hero-label">Addition of collinear velocities</div>
+    \begin{equation} v_{12} = \frac{v_1 + v_2}{1 + v_1v_2/c^2} \tag{108} \end{equation}
+    <p>The result never exceeds \(c\), and \(v_1 = c\) gives \(v_{12} = c\).</p>
+  </div>
+
+  <h3>Derivation in outline</h3>
+  <ol class="steps">
+    <li><strong>Affine.</strong> The principle of relativity implies that space and time are homogeneous and isotropic, so the transformation of a separation depends only on the separation. Hence the transformation is affine, and linear for frames in standard configuration.</li>
+    <li><strong>\(y\) and \(z\).</strong> \(z = 0\) implies \(z' = 0\), so \(z' = C(v)z\). Isotropy makes \(C\) even, and the inverse transformation gives \(C(v)^2 = 1\). Setting \(v = 0\) gives \(C = 1\), so \(z' = z\), and likewise \(y' = y\).</li>
+    <li><strong>\(x\).</strong> \(x' = 0\) for \(x = vt\), so \(x' = \gamma(v)(x - vt)\), with \(\gamma\) even.</li>
+    <li><strong>\(t\).</strong> Combining with the inverse \(x = \gamma(x' + vt')\), and isotropy, gives \(t' = \gamma\left(t - \dfrac{vx}{\eta}\right)\) and \(\gamma = \dfrac{1}{\sqrt{1 - v^2/\eta}}\), where \(\eta(v)\) is an even function.</li>
+    <li><strong>Group property.</strong> Two successive transformations must form a single one of the same type. Comparing coefficients gives \(\eta = \text{const.}\), and the addition law for collinear velocities.</li>
+    <li><strong>Causality.</strong> For \(\eta \lt 0\) the temporal order of any two events could be reversed, so \(\eta \gt 0\). This leaves \(\eta = c^2\), the Lorentz transformations, or \(\eta = \infty\), the Galilei transformations.</li>
+    <li><strong>Second postulate.</strong> It acts as a tie breaker between the two, and identifies the parameter \(c\) with the speed of light.</li>
+  </ol>
+
+  <h3>Consequences</h3>
+  <ul>
+    <li>No signal can travel faster than \(c\), given causality, so rigid bodies and incompressible fluids are impossible.</li>
+    <li><strong>Recession velocities</strong> can exceed \(c\), as they involve no exchange of matter, energy or information. An example is the spot of a rotating laser on a distant screen.</li>
+    <li>Classical mechanics holds approximately for \(|\vec v| \ll c\), that is \(T \ll mc^2\).</li>
+  </ul>
+</article>
+
+<article class="view" id="intervals" data-ch="I">
+  <p class="lede">Times and distances depend on the observer, but one combination does not.</p>
+
+  <div class="hero">
+    <div class="hero-label">Invariant line element</div>
+    \begin{equation} ds^2 = c^2dt^2 - dx^2 - dy^2 - dz^2 \tag{111} \end{equation}
+    <p>The relative minus sign is essential. \(ds^2\) can be zero for distinct events, and it can be negative.</p>
+  </div>
+
+  <p>The Lorentz transformations are linear, so intervals transform like the coordinates:</p>
+  \begin{equation} \Delta t' = \gamma\!\left(\Delta t - \frac{v}{c^2}\Delta x\right), \qquad \Delta x' = \gamma(\Delta x - v\Delta t), \qquad \Delta y' = \Delta y, \qquad \Delta z' = \Delta z. \tag{109} \end{equation}
+
+  <h3>Transformations leaving \(ds^2\) invariant</h3>
+  <div class="tbl"><table>
+    <tr><th>Name</th><th>Contents</th></tr>
+    <tr><td>Lorentz group</td><td>Proper Lorentz transformations (boosts) and rotations</td></tr>
+    <tr><td>Poincaré group</td><td>Lorentz transformations plus space-time translations</td></tr>
+    <tr><td>Full groups</td><td>Also include parity \(\vec r \to -\vec r\) and time reflection \(t \to -t\)</td></tr>
+    <tr><td>Restricted groups</td><td>Only those connected continuously to the identity</td></tr>
+  </table></div>
+  <p>The Galilei group is the limit of the Poincaré group as \(c \to \infty\).</p>
+</article>
+
+<article class="view" id="time-length" data-ch="I">
+  <p class="lede">Moving clocks run slow and moving rods shorten. Both effects are symmetric between observers, and both follow from the Lorentz transformation.</p>
+
+  <div class="hero">
+    <div class="hero-label">Time dilation</div>
+    \begin{equation} \Delta t = \gamma\,\Delta\tau = \left(1 - \frac{v^2}{c^2}\right)^{-1/2}\Delta\tau \gt \Delta\tau \tag{114} \end{equation}
+    <p>\(\Delta\tau\) is the proper time, the time measured in the rest frame of the clock. "Moving clocks go slower".</p>
+  </div>
+  <div class="hero">
+    <div class="hero-label">Length contraction</div>
+    \[ L = \frac{L_0}{\gamma} \]
+    <p>\(L_0\) is the proper length, measured in the rest frame of the body. In a frame where the body moves, both ends must be measured <em>at the same time</em>.</p>
+  </div>
+
+  <figure id="fig-spacetime"><figcaption>Frame \(I'\) drawn on a spacetime diagram of \(I\). Its axes tilt towards the light cone. Events on a line parallel to \(x'\) are simultaneous in \(I'\), but not in \(I\).</figcaption></figure>
+
+  <h3>Relativity of simultaneity</h3>
+  <p>Two events with \(\Delta t = 0\) and \(\Delta x \neq 0\) have \(\Delta t' = -\gamma v\Delta x/c^2 \neq 0\). Events that are simultaneous in one frame are not in another. This resolves the "paradoxes" below.</p>
+
+  <details class="ex"><summary><span class="ex-tag">Paradox</span><span>The pole in the barn</span></summary><div class="ex-body">
+    <p>A man runs at \(v = \tfrac{\sqrt3}{2}c\) towards a barn \(3\,\text{m}\) deep, carrying a pole of proper length \(L_0 = 6\,\text{m}\). At \(t = 0\) the front of the pole hits the back of the barn, and at the same time the door closes. Is the end of the pole inside the barn when the door closes?</p>
+    <p><strong>Barn frame: yes.</strong> Here \(\gamma = 2\), so \(L = \tfrac12L_0 = 3\,\text{m}\), and the pole just fits.</p>
+    <p><strong>Pole frame: yes.</strong> The barn has depth \(1.5\,\text{m}\), which naively cannot hold a \(6\,\text{m}\) pole. But "door closes" is at \(x = -3\,\text{m}\), \(t = 0\) in the barn frame, which transforms to \(x' = -6\,\text{m}\), \(t' = 3\sqrt3\,\text{m}/c\). That is later than "pole touches the back of the barn" at \(t' = 0\), and \(x' = -6\,\text{m}\) is the end of the pole.</p>
+    <p>The answer is yes in both frames, for different reasons: Lorentz contraction in one, and the fact that simultaneity is not absolute in the other. It is counter-intuitive, but not paradoxical.</p>
+  </div></details>
+  <details class="ex"><summary><span class="ex-tag">Paradox</span><span>The twins</span></summary><div class="ex-body">
+    <p>Twin 1 stays at home and twin 2 makes a round trip. Proper time is path dependent:</p>
+    \[ \Delta\tau_{[2]} = \int_{t_1}^{t_2}dt\,\sqrt{1 - \frac{v(t)^2}{c^2}} \lt \int_{t_1}^{t_2}dt = \Delta\tau_{[1]}. \]
+    <p>So the twin making the round trip is younger at their reunion. The roles cannot be exchanged, because there is an absolute difference: the twin on Earth remains in an inertial frame, while the travelling twin does not, and experiences acceleration.</p>
+  </div></details>
+</article>
+
+<article class="view" id="doppler" data-ch="I">
+  <p class="lede">The frequency of light depends on the motion of source and receiver. Unlike the classical effect, it includes time dilation.</p>
+
+  <div class="hero">
+    <div class="hero-label">Relativistic Doppler effect</div>
+    \[ \nu_R = \left(1 + \frac{v_r}{c}\right)^{-1}\left(1 - \frac{v^2}{c^2}\right)^{1/2}\nu_S \]
+    <p>\(v_r\) is the radial velocity of the source, positive when moving away from the receiver.</p>
+  </div>
+
+  <div class="tbl"><table>
+    <tr><th>Case</th><th>Formula</th><th>Effect</th></tr>
+    <tr><td>Longitudinal</td><td>\(\nu_R = \sqrt{\dfrac{1 - v/c}{1 + v/c}}\;\nu_S\)</td><td>\(v \gt 0\): redshift. \(v \lt 0\): blueshift.</td></tr>
+    <tr><td>Transverse</td><td>\(\nu_R = \sqrt{1 - v^2/c^2}\;\nu_S\)</td><td>Always a redshift, from time dilation alone.</td></tr>
+  </table></div>
+
+  <p>The transverse effect is purely relativistic, and gave the first experimental verification of time dilation (Ives and Stillwell, 1938).</p>
+
+  <h3>Derivation in outline</h3>
+  <ol class="steps">
+    <li>The source period \(\delta t = 1/\nu_S\) is dilated in the receiver's frame to \(\delta t' = \gamma\,\delta t\).</li>
+    <li>During one period, the distance to the source grows by \(v_r\delta t'\), adding a travel time \(v_r\delta t'/c\).</li>
+    <li>So the receiver sees \(\delta t_R = (1 + v_r/c)\gamma\,\delta t\), and \(\nu_R = 1/\delta t_R\).</li>
+  </ol>
+</article>
+
+<article class="view" id="problems-1" data-ch="I">
+  <p class="lede">Practice for Chapter I, in the style of the course problem sheets. All questions are new.</p>
+  <div class="note"><b>Modelled on:</b> Problem Sheets 1, 2 and 3.</div>
+  <div class="pool">
+
+  <section class="q" data-style="Sheet 1 P1" data-topic="lorentz">
+    <p>Use the substitution \(u = 2\sinh s\) to evaluate \(J(x) = \displaystyle\int_0^x\frac{du}{\sqrt{4 + u^2}}\). Write the answer in terms of a logarithm.</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>\(du = 2\cosh s\,ds\), and \(\sqrt{4 + u^2} = 2\sqrt{1 + \sinh^2s} = 2\cosh s\).</li>
+      <li>So the integrand reduces to \(ds\), and \(J = s = \operatorname{arsinh}(x/2)\).</li>
+      <li>Using \(\operatorname{arsinh}w = \ln\big(w + \sqrt{w^2 + 1}\big)\):
+      \[ J(x) = \ln\left(\frac x2 + \sqrt{\frac{x^2}{4} + 1}\right). \]</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Sheet 1 P2" data-topic="time-length">
+    <p>Expand \(f(v) = \sqrt{1 - v^2/c^2}\) for \(v \ll c\), up to order \(v^4/c^4\). A clock moves at \(v = 0.01c\). By what fraction does it run slow?</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>Using \((1 + x)^{1/2} = 1 + \tfrac12x - \tfrac18x^2 + \dots\) with \(x = -v^2/c^2\):
+      \[ f(v) = 1 - \frac{v^2}{2c^2} - \frac{v^4}{8c^4} + \dots \]</li>
+      <li>The moving clock's rate is \(d\tau/dt = 1/\gamma = f(v)\).</li>
+      <li>So the fractional slowing is \(\dfrac{v^2}{2c^2} = 5\times10^{-5}\).</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Sheet 1 P4" data-topic="index-notation">
+    <p>In three dimensions, simplify \(\delta_{ij}\delta_{ij}\) and \(\delta_{ij}v_jw_i\). Which of these are valid equations, and why? (a) \(T_{ij}v_j = w_i\) (b) \(T_{ij}v_j = w_j\) (c) \(A_iB_iC_i = D\)</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>\(\delta_{ij}\delta_{ij} = \delta_{ii} = 3\).</li>
+      <li>\(\delta_{ij}v_jw_i = v_iw_i = \vec v\cdot\vec w\).</li>
+      <li>(a) Valid: \(j\) is summed, and the free index \(i\) matches on both sides.</li>
+      <li>(b) Invalid: \(i\) is free on the left only, and \(j\) would appear three times.</li>
+      <li>(c) Invalid: \(i\) appears three times in one term.</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Sheet 1 P3" data-topic="index-notation">
+    <p>Show that if \(R_1\) and \(R_2\) are orthogonal, so is \(R_1R_2\). Show that \(R(\theta) = \begin{pmatrix} \cos\theta & -\sin\theta \\ \sin\theta & \cos\theta \end{pmatrix}\) is orthogonal, with \(\det R = 1\). Why does \(\det R = \pm1\) imply that \(R\) is invertible?</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>\((R_1R_2)(R_1R_2)^T = R_1R_2R_2^TR_1^T = R_1R_1^T = 1\). ✓</li>
+      <li>\(R(\theta)R(\theta)^T\) has diagonal entries \(\cos^2\theta + \sin^2\theta = 1\), and off-diagonal entries \(\cos\theta\sin\theta - \sin\theta\cos\theta = 0\). ✓</li>
+      <li>\(\det R = \cos^2\theta + \sin^2\theta = 1\).</li>
+      <li>A square matrix is invertible exactly when its determinant is non-zero. Here the inverse is \(R^T\).</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Sheet 2 P1" data-topic="frames">
+    <p>Under \(\vec r^{\,\prime} = R\vec r - \vec v_0t + \vec r_0\), \(t' = t + t_0\), find how the velocity and acceleration of a particle transform. Hence show that Newton's second law keeps its form, if \(\vec F' = R\vec F\).</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>\(dt' = dt\), and \(R\), \(\vec v_0\), \(\vec r_0\) are constant.</li>
+      <li>Differentiating once: \(\vec v^{\,\prime} = R\vec v - \vec v_0\). So velocities shift by \(\vec v_0\), after rotating.</li>
+      <li>Differentiating again: \(\vec a^{\,\prime} = R\vec a\). The boost and translations disappear.</li>
+      <li>So \(m\vec a^{\,\prime} = Rm\vec a = R\vec F = \vec F'\), the same form as in the original frame.</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Sheet 2 P2(d)" data-topic="intervals">
+    <p>Show directly that \(c^2dt^2 - dx^2\) is invariant under the standard Lorentz transformation.</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>\(c\,dt' = \gamma(c\,dt - \beta\,dx)\) and \(dx' = \gamma(dx - \beta c\,dt)\), with \(\beta = v/c\).</li>
+      <li>Squaring and subtracting, the cross terms \(\mp2\gamma^2\beta c\,dt\,dx\) cancel:
+      \[ c^2dt'^2 - dx'^2 = \gamma^2(1 - \beta^2)(c^2dt^2 - dx^2). \]</li>
+      <li>Since \(\gamma^2(1 - \beta^2) = 1\), this equals \(c^2dt^2 - dx^2\). ✓</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Sheet 3 P1" data-topic="lorentz">
+    <p>A rocket moves at \(0.6c\) relative to Earth, and fires a probe forward at \(0.8c\) relative to the rocket. Find the probe's speed relative to Earth, using velocity addition, and again using rapidities.</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>From (108):
+      \[ v = \frac{0.6 + 0.8}{1 + 0.48}c = \frac{1.4}{1.48}c = \frac{35}{37}c \approx 0.946c. \]</li>
+      <li>For rapidities, \(e^{2\phi} = \dfrac{1 + \tanh\phi}{1 - \tanh\phi}\). So \(e^{2\phi_1} = \dfrac{1.6}{0.4} = 4\) and \(e^{2\phi_2} = \dfrac{1.8}{0.2} = 9\).</li>
+      <li>Rapidities add, so \(e^{2\phi} = 36\).</li>
+      <li>Then \(\dfrac{1 + \beta}{1 - \beta} = 36\), which gives \(\beta = \dfrac{35}{37}\). ✓</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Sheet 3 P2" data-topic="time-length">
+    <p>A spaceship leaves Earth at constant velocity. After 4 years by its own clocks, it reaches a star and sends a radio signal. The signal reaches Earth 16 years after departure, by Earth clocks. Find the ship's speed, the distance to the star, and the signal's travel time.</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>In Earth's frame, the ship arrives at \(t = 4\gamma\) years, at distance \(D = vt\).</li>
+      <li>The signal takes \(D/c = \beta t\), so \(4\gamma(1 + \beta) = 16\).</li>
+      <li>Since \(\gamma(1 + \beta) = \sqrt{\dfrac{1 + \beta}{1 - \beta}}\), we get \(\dfrac{1 + \beta}{1 - \beta} = 16\), so \(\beta = \dfrac{15}{17}\).</li>
+      <li>Then \(\gamma = \dfrac{17}{8}\), so \(t = 8.5\) years, and \(D = \beta ct = 7.5\) light years.</li>
+      <li>The signal takes 7.5 years, which gives \(8.5 + 7.5 = 16\). ✓</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Sheet 3 P3" data-topic="lorentz">
+    <p>Light moves at \(c/n\) in the rest frame of a medium, and the medium moves at speed \(v\) along the light's direction. Show that, to first order in \(v/c\), an observer measures \(u \approx \dfrac cn + v\left(1 - \dfrac{1}{n^2}\right)\). Check the case \(n = 1\). Compare with the exact result for \(n = 1.5\), \(v = 0.1c\).</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>Velocity addition gives \(u = \dfrac{c/n + v}{1 + v/(nc)}\).</li>
+      <li>Expanding \(\big(1 + v/(nc)\big)^{-1} \approx 1 - v/(nc)\):
+      \[ u \approx \left(\frac cn + v\right)\left(1 - \frac{v}{nc}\right) \approx \frac cn + v - \frac{v}{n^2}. \]</li>
+      <li>For \(n = 1\), \(u = c\), as the second postulate requires.</li>
+      <li>For \(n = 1.5\), \(v = 0.1c\): the approximation gives \(0.722c\), and the exact formula gives \(\dfrac{0.7667}{1.0667}c = 0.719c\).</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Notes §2.3" data-topic="time-length">
+    <p>Muons have a mean lifetime of \(2.2\,\mu\text{s}\) in their rest frame. How far does a muon with \(v = 0.995c\) travel in one lifetime, measured in Earth's frame? Show that an observer moving with the muon agrees that it reaches the ground from \(6\,\text{km}\) up, using length contraction.</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>\(\gamma = 1/\sqrt{1 - 0.995^2} \approx 10.0\).</li>
+      <li>In Earth's frame, the lifetime is dilated to \(\gamma\tau \approx 22\,\mu\text{s}\), so the range is \(v\gamma\tau \approx 6.6\,\text{km}\).</li>
+      <li>In the muon's frame, the \(6\,\text{km}\) is contracted to \(6/\gamma \approx 0.6\,\text{km}\).</li>
+      <li>In one lifetime, the ground approaches by \(v\tau \approx 0.66\,\text{km}\), which is more than \(0.6\,\text{km}\). Both frames agree that it arrives.</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Notes §2.2" data-topic="time-length">
+    <p>A pole of rest length \(20\,\text{m}\) moves through a barn of length \(10\,\text{m}\). What speed makes it just fit, in the barn's frame? In the pole's frame, what is the time between the two doors shutting?</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>Fitting requires \(20/\gamma = 10\), so \(\gamma = 2\) and \(\beta = \tfrac{\sqrt3}{2} \approx 0.866\).</li>
+      <li>In the barn's frame, the door events have \(\Delta t = 0\) and \(\Delta x = 10\,\text{m}\).</li>
+      <li>In the pole's frame:
+      \[ c\Delta t' = \gamma(c\Delta t - \beta\Delta x) = -2(0.866)(10\,\text{m}) \approx -17.3\,\text{m}. \]</li>
+      <li>So the far door shuts first, by \(\Delta t' \approx 58\,\text{ns}\). The two doors are not simultaneous in this frame, which resolves the paradox.</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Notes §2.4" data-topic="doppler">
+    <p>A spectral line emitted at \(656\,\text{nm}\) is observed from a receding galaxy at \(700\,\text{nm}\). Find the galaxy's speed. What wavelength would be seen if the same speed were entirely transverse?</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>Since \(\lambda \propto 1/\nu\), \(\dfrac{\lambda_R}{\lambda_S} = \sqrt{\dfrac{1 + \beta}{1 - \beta}}\). The ratio is \(700/656 = 1.0671\).</li>
+      <li>Squaring gives \(\dfrac{1 + \beta}{1 - \beta} = 1.1387\), so \(\beta = \dfrac{0.1387}{2.1387} \approx 0.065\).</li>
+      <li>For transverse motion, \(\lambda_R = \gamma\lambda_S\).</li>
+      <li>With \(\gamma \approx 1.0021\), \(\lambda_R \approx 657.4\,\text{nm}\), a far smaller shift.</li>
+    </ol></details>
+  </section>
+
+  </div>
+</article>
+
+<!-- ═══════════ CHAPTER II: MINKOWSKI SPACE ═══════════ -->
+
+<article class="view" id="minkowski" data-ch="II">
+  <p class="lede">Space and time join into one four-dimensional geometry, with a scalar product that is not positive definite.</p>
+
+  <div class="hero">
+    <div class="hero-label">Minkowski scalar product</div>
+    \[ x\cdot y = \eta_{\mu\nu}x^\mu y^\nu = x^0y^0 - x^1y^1 - x^2y^2 - x^3y^3, \qquad \eta = \operatorname{diag}(1, -1, -1, -1) \]
+    <p>With \(x^\mu = (x^0, \vec x) = (ct, \vec x)\). It is invariant under Lorentz transformations.</p>
+  </div>
+
+  <h3>Raising and lowering</h3>
+  <p>A <strong>four-vector</strong> has contravariant components \(A^\mu\) that transform as \(A'^\mu = \Lambda^\mu{}_\nu A^\nu\). The metric lowers indices, and its inverse \(\eta^{\mu\nu}\) raises them:</p>
+  \[ A_\mu = \eta_{\mu\nu}A^\nu = (A^0, -\vec A), \qquad A^\mu = \eta^{\mu\nu}A_\nu, \qquad A\cdot B = A^\mu B_\mu. \]
+  <p>In a valid covariant equation, every free index matches in height and name, and each summation pair has one upper and one lower index.</p>
+
+  <h3>From index to matrix notation</h3>
+  <div class="tbl"><table>
+    <tr><th>Index form</th><th>Matrix form</th></tr>
+    <tr><td>\(\eta_{\mu\nu}\Lambda^\mu{}_\rho\Lambda^\nu{}_\sigma = \eta_{\rho\sigma}\)</td><td>\(\Lambda^T\eta\Lambda = \eta\)</td></tr>
+    <tr><td>\(R^\mu{}_\nu x^\nu\)</td><td>\(Rx\)</td></tr>
+    <tr><td>\(M_{\mu\nu}v^\mu w^\nu\)</td><td>\(v^TMw\)</td></tr>
+  </table></div>
+</article>
+
+<article class="view" id="causality" data-ch="II">
+  <p class="lede">The sign of \(x^2\) tells you whether one event can influence another, and every observer agrees on it.</p>
+
+  <figure id="fig-cone"><figcaption>The light cone of an event divides spacetime into its causal future, its causal past, and the events spacelike to it, which are causally unrelated.</figcaption></figure>
+
+  <div class="tbl"><table>
+    <tr><th>Type</th><th>\(x^2\)</th><th>Standard form</th><th>Meaning</th></tr>
+    <tr><td>Timelike</td><td>\(\gt 0\)</td><td>\((x^0, \vec 0)\)</td><td>Connectable by a particle. The time order is the same in all frames.</td></tr>
+    <tr><td>Lightlike</td><td>\(= 0\)</td><td>\((x^0, x^0, 0, 0)\)</td><td>Connectable by a light ray.</td></tr>
+    <tr><td>Spacelike</td><td>\(\lt 0\)</td><td>\((0, \vec x)\)</td><td>No causal influence. The time order depends on the frame.</td></tr>
+  </table></div>
+
+  <div class="note"><b>Using standard forms.</b> Any one vector can be brought to its standard form by a Lorentz transformation, which makes proofs short. Two vectors usually cannot be brought to standard form simultaneously.</div>
+
+  <p>A future-pointing vector cannot be turned into a past-pointing one by a Lorentz transformation, so causal past and future are invariant. For spacelike-separated events there is always a frame where they are simultaneous, and frames with either order. This is consistent with causality, since such events cannot influence each other.</p>
+</article>
+
+<article class="view" id="proper-time" data-ch="II">
+  <p class="lede">The length of a timelike curve is the time measured by a clock carried along it.</p>
+
+  <div class="hero">
+    <div class="hero-label">Proper time along a worldline</div>
+    \[ \tau = \frac1c\int\sqrt{ds^2} = \int\sqrt{1 - \frac{v(t)^2}{c^2}}\;dt \]
+    <p>Proper time depends on the path, and is a Lorentz invariant. The straight worldline between two events has the longest proper time.</p>
+  </div>
+
+  <p>At each moment, an accelerated clock can be compared with its <strong>momentarily co-moving reference frame</strong> (MCRF): the inertial frame in which it is instantaneously at rest. Between infinitesimally close moments, \(dt = \gamma\,d\tau\), where now \(\gamma\) depends on time.</p>
+</article>
+
+<article class="view" id="lorentz-group" data-ch="II">
+  <p class="lede">All Lorentz transformations are captured by one matrix condition: they preserve the Minkowski metric.</p>
+
+  <div class="hero">
+    <div class="hero-label">Lorentz group \(O(1,3)\)</div>
+    \[ \Lambda^T\eta\Lambda = \eta \]
+    <p>Taking determinants gives \(\det\Lambda = \pm1\). The \(00\) component gives \((\Lambda^0{}_0)^2 \geq 1\).</p>
+  </div>
+
+  <div class="tbl"><table>
+    <tr><th>Subset</th><th>Conditions</th></tr>
+    <tr><td>Connected (restricted) group</td><td>\(\det\Lambda = 1\), \(\;\Lambda^0{}_0 \geq 1\)</td></tr>
+    <tr><td>Parity, time reversal</td><td>Reach the other components</td></tr>
+  </table></div>
+
+  <div class="hero">
+    <div class="hero-label">General boost, \(c = 1\)</div>
+    \[ \Lambda^0{}_0 = \gamma, \quad \Lambda^0{}_i = -\gamma v_i, \quad \Lambda^i{}_j = \delta_{ij} + (\gamma - 1)\frac{v_iv_j}{v^2} \]
+    <p>So \(x'^0 = \gamma(x^0 - \vec v\cdot\vec x)\), as used on Sheet 4. Use this when frames are not in standard configuration. The \(\Lambda^i{}_j\) block is the standard result, and is not printed in the notes.</p>
+  </div>
+
+  <h3>Poincaré group</h3>
+  <p>Adding translations gives \(x'^\mu = \Lambda^\mu{}_\nu x^\nu + a^\mu\). This is the group \(IO(1,3)\), the largest group relating inertial frames that preserves the speed of light.</p>
+</article>
+
+<article class="view" id="problems-2" data-ch="II">
+  <p class="lede">Practice for Chapter II, in the style of the course problem sheets. All questions are new.</p>
+  <div class="note"><b>Modelled on:</b> Problem Sheet 4 and Sheet 5 Problem 3.</div>
+  <div class="pool">
+
+  <section class="q" data-style="Sheet 4 P1" data-topic="causality">
+    <p>Prove that (a) two future-pointing timelike vectors have \(A\cdot B \gt 0\), and (b) the sum of two future-pointing, non-parallel lightlike vectors is timelike.</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>(a) Choose a frame where \(B\) takes its standard form, \(B = (B^0, \vec 0)\), with \(B^0 \gt 0\). Then \(A\cdot B = A^0B^0\).</li>
+      <li>\(A^0 \gt 0\) as \(A\) is future-pointing, and this cannot be changed by a Lorentz transformation. So \(A\cdot B \gt 0\).</li>
+      <li>(b) Bring \(A\) to the form \(A = (a, a, 0, 0)\), with \(a \gt 0\). Write \(B = (b, \vec b)\), with \(b = |\vec b| \gt 0\).</li>
+      <li>Then \(A\cdot B = a(b - b_1) \gt 0\), since \(b_1 \lt |\vec b|\) when the vectors are not parallel.</li>
+      <li>Since \(A^2 = B^2 = 0\), \((A + B)^2 = 2A\cdot B \gt 0\), so the sum is timelike.</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Notes §3.2" data-topic="causality">
+    <p>Events \(E_1, E_2, E_3\) have \((ct, x) = (3, 5)\), \((5, 3)\), \((5, 5)\) relative to an event at the origin. Classify each. For the spacelike one, find the frame where it is simultaneous with the origin, and the distance between them in that frame.</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>\(E_1\): \(x^2 = 9 - 25 = -16\), spacelike.</li>
+      <li>\(E_2\): \(x^2 = 25 - 9 = 16\), future-pointing timelike.</li>
+      <li>\(E_3\): \(x^2 = 0\), future-pointing lightlike.</li>
+      <li>For \(E_1\), \(ct' = \gamma(3 - 5\beta) = 0\) gives \(\beta = 0.6\), so \(\gamma = 1.25\).</li>
+      <li>Then \(x' = \gamma(5 - 3\beta) = 1.25(3.2) = 4\). This matches \(\sqrt{-x^2} = 4\). ✓</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Sheet 4 P2" data-topic="lorentz-group">
+    <p>With \(c\) set to 1, a Lorentz transformation has the form below, with \(a \gt 0\), \(b = \tfrac{3\sqrt2}{8}\) and \(p \gt q\). Use \(\Lambda^T\eta\Lambda = \eta\) to find \(a, p, q\), then find the velocity \(\vec v\).
+    \[ \Lambda = \begin{pmatrix} a & -b & -b & 0 \\ -b & p & q & 0 \\ -b & q & p & 0 \\ 0 & 0 & 0 & 1 \end{pmatrix} \]</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>The \(00\) component gives \(a^2 - 2b^2 = 1\). With \(b^2 = \tfrac{9}{32}\), \(a^2 = \tfrac{25}{16}\), so \(a = \tfrac54\).</li>
+      <li>The \(01\) component gives \(-ab + bp + bq = 0\), so \(p + q = a = \tfrac54\).</li>
+      <li>The \(12\) component gives \(b^2 - 2pq = 0\), so \(pq = \tfrac{9}{64}\).</li>
+      <li>So \(p, q\) are the roots of \(t^2 - \tfrac54t + \tfrac{9}{64} = 0\). With \(p \gt q\): \(p = \tfrac98\), \(q = \tfrac18\).</li>
+      <li>Comparing \(x'^0 = \gamma(x^0 - \vec v\cdot\vec x)\) with the top row: \(\gamma = \tfrac54\) and \(\gamma v_1 = \gamma v_2 = b\).</li>
+      <li>So \(\vec v = \big(\tfrac{3\sqrt2}{10}, \tfrac{3\sqrt2}{10}, 0\big)\), with \(|\vec v| = 0.6\), consistent with \(\gamma = \tfrac54\). ✓</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Sheet 4 P3" data-topic="minkowski">
+    <p>(a) Rewrite in matrix notation: (i) \(A_\mu{}^\rho B^\mu{}_\sigma\) (ii) \(M_{\mu\nu}v^\mu w^\nu\).</p>
+    <p>(b) Decide which equations are covariant: (i) \(a^\mu B_{\mu\nu} = w_\nu\) (ii) \(M^\mu{}_\nu x^\nu = y_\mu\) (iii) \(a_\mu g^{\mu\nu} = u^\nu\)</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>(a)(i) \(\mu\) is summed over the first index of each, so this is \(A^TB\).</li>
+      <li>(a)(ii) \(v^TMw\).</li>
+      <li>(b)(i) \(\mu\) is summed with one up and one down, and the free \(\nu\) is down on both sides. Covariant.</li>
+      <li>(b)(ii) The free index \(\mu\) is up on the left and down on the right. <strong>Not covariant</strong>.</li>
+      <li>(b)(iii) \(\mu\) is summed correctly, and the free \(\nu\) is up on both sides. Covariant.</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Sheet 5 P3" data-topic="minkowski">
+    <p>The components \(u_\mu\) transform as \(u'_\mu = (\Lambda^{-1})^\rho{}_\mu u_\rho\), and \(v^\mu\) as \(v'^\mu = \Lambda^\mu{}_\sigma v^\sigma\). Show that \(u'_\mu v'^\mu = u_\mu v^\mu\).</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>Substituting:
+      \[ u'_\mu v'^\mu = (\Lambda^{-1})^\rho{}_\mu\Lambda^\mu{}_\sigma u_\rho v^\sigma. \]</li>
+      <li>The product is an inverse pair: \((\Lambda^{-1})^\rho{}_\mu\Lambda^\mu{}_\sigma = \delta^\rho{}_\sigma\).</li>
+      <li>So \(u'_\mu v'^\mu = \delta^\rho{}_\sigma u_\rho v^\sigma = u_\rho v^\rho\), which is the original scalar. ✓</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Notes §3.3" data-topic="proper-time">
+    <p>A twin travels to a star 3 light years away at \(0.6c\), and straight back. How much time passes on Earth, and for the traveller? A clock moves in a circle of radius \(R\) at angular speed \(\omega\). How much proper time passes in coordinate time \(T\)?</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>On Earth: \(t = 2(3/0.6) = 10\) years.</li>
+      <li>The traveller moves at constant speed on each leg, so \(\tau = t\sqrt{1 - 0.36} = 8\) years.</li>
+      <li>For the circle, the speed \(v = \omega R\) is constant, so
+      \[ \tau = \int_0^T\sqrt{1 - \frac{\omega^2R^2}{c^2}}\,dt = T\sqrt{1 - \frac{\omega^2R^2}{c^2}}. \]</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Sheet 3 P1(b)" data-topic="lorentz-group">
+    <p>Let \(\Lambda(\phi) = \begin{pmatrix} \cosh\phi & -\sinh\phi \\ -\sinh\phi & \cosh\phi \end{pmatrix}\). Show that \(\Lambda(\phi_1)\Lambda(\phi_2) = \Lambda(\phi_1 + \phi_2)\). Find \(\Lambda(\phi)^{-1}\), and show that \(\Lambda^T\eta\Lambda = \eta\) for \(\eta = \operatorname{diag}(1, -1)\).</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>The top-left entry of the product is \(\cosh\phi_1\cosh\phi_2 + \sinh\phi_1\sinh\phi_2 = \cosh(\phi_1 + \phi_2)\).</li>
+      <li>The top-right is \(-(\cosh\phi_1\sinh\phi_2 + \sinh\phi_1\cosh\phi_2) = -\sinh(\phi_1 + \phi_2)\). The other two entries match by symmetry. ✓</li>
+      <li>Hence \(\Lambda(\phi)^{-1} = \Lambda(-\phi)\), since \(\Lambda(0) = 1\).</li>
+      <li>\(\Lambda^T\eta\Lambda\) has \(00\) entry \(\cosh^2\phi - \sinh^2\phi = 1\), \(11\) entry \(\sinh^2\phi - \cosh^2\phi = -1\), and zero off-diagonal entries. ✓</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Notes §3.4" data-topic="lorentz-group">
+    <p>Use \(\Lambda^T\eta\Lambda = \eta\) to show that \(\det\Lambda = \pm1\) and that \((\Lambda^0{}_0)^2 \geq 1\). Why can the connected group not contain a time reflection?</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>Taking determinants: \((\det\Lambda)^2\det\eta = \det\eta\), so \((\det\Lambda)^2 = 1\).</li>
+      <li>The \(00\) component is \((\Lambda^0{}_0)^2 - \sum_i(\Lambda^i{}_0)^2 = 1\).</li>
+      <li>So \((\Lambda^0{}_0)^2 = 1 + \sum_i(\Lambda^i{}_0)^2 \geq 1\).</li>
+      <li>Hence \(\Lambda^0{}_0\) cannot pass continuously from \(\geq 1\) to \(\leq -1\). The identity has \(\Lambda^0{}_0 = 1\), and a time reflection has \(-1\), so they are not connected.</li>
+    </ol></details>
+  </section>
+
+  </div>
+</article>
+
+<!-- ═══════════ CHAPTER III: RELATIVISTIC MECHANICS ═══════════ -->
+
+<article class="view" id="four-velocity" data-ch="III">
+  <p class="lede">Differentiate with respect to proper time, which is invariant, and you get true four-vectors.</p>
+
+  <div class="hero">
+    <div class="hero-label">4-velocity</div>
+    \begin{equation} U^\mu := \frac{dx^\mu}{d\tau}, \qquad (U^\mu) = (\gamma, \gamma\vec v), \qquad U_\mu U^\mu = 1 \tag{121} \end{equation}
+    <p>In units with \(c = 1\). Keeping \(c\): \(U = \gamma(c, \vec v)\) and \(U^2 = c^2\). It is timelike, and is the unit tangent vector of the worldline.</p>
+  </div>
+
+  <div class="hero">
+    <div class="hero-label">4-acceleration</div>
+    \[ A^\mu = \frac{dU^\mu}{d\tau}, \qquad A^\mu U_\mu = 0, \qquad A^\mu A_\mu \leq 0 \]
+    <p>In the MCRF, \(A = (0, \vec a)\). The proper acceleration is \(\alpha = |\vec a_{\text{MCRF}}|\).</p>
+  </div>
+
+  <p>In a general frame, with \(c = 1\):</p>
+  \begin{equation} A = \gamma(\dot\gamma, \dot\gamma\vec v + \gamma\vec a), \qquad \dot\gamma = (1 - v^2)^{-3/2}\,\vec v\cdot\vec a. \tag{122} \end{equation}
+  <p>The orthogonality has a quick proof: differentiating \(U^\mu U_\mu = 1\) gives \(2U^\mu A_\mu = 0\).</p>
+
+  <h3>Motion under constant proper acceleration</h3>
+  <div class="hero">
+    <div class="hero-label">Hyperbolic motion, starting from rest</div>
+    \[ \gamma v = \alpha t, \qquad x = \frac{c^2}{\alpha}\left(\sqrt{1 + \frac{\alpha^2t^2}{c^2}} - 1\right), \qquad \tau = \frac c\alpha\sinh^{-1}\frac{\alpha t}{c} \]
+    <p>For motion along \(x\), \(\alpha = \gamma^3\,dv/dt = \dfrac{d}{dt}(\gamma v)\).</p>
+  </div>
+</article>
+
+<article class="view" id="four-momentum" data-ch="III">
+  <p class="lede">Energy and momentum are two parts of one four-vector, whose length is the invariant mass.</p>
+
+  <div class="hero">
+    <div class="hero-label">4-momentum and energy</div>
+    \[ p^\mu = mU^\mu, \qquad \vec p = \gamma m\vec v \]
+    \begin{equation} E = p^0c = \frac{mc^2}{\sqrt{1 - v^2/c^2}} \tag{127} \end{equation}
+  </div>
+  <div class="hero">
+    <div class="hero-label">Energy–momentum relation</div>
+    \[ p_\mu p^\mu = m^2c^2 \quad\Longleftrightarrow\quad E^2 = m^2c^4 + \vec p^{\,2}c^2 \]
+    <p>\(m\) always means the Lorentz-invariant rest mass.</p>
+  </div>
+
+  <h3>Equation of motion</h3>
+  <p>The relativistic second law is below, with \(K^\mu\) the relativistic force. It applies to any force, but not gravity.</p>
+  \begin{equation} \frac{d}{d\tau}p^\mu = m\frac{d}{d\tau}U^\mu = K^\mu \tag{126} \end{equation}
+  <p>Writing \(\vec F := \gamma^{-1}\vec K\), in units with \(c = 1\):</p>
+  \[ \frac{d}{dt}(\gamma m\vec v) = \vec F, \qquad K^0 = \gamma\vec F\cdot\vec v, \qquad \vec F\cdot\vec v = \frac{d}{dt}(m\gamma) = \frac{d}{dt}p^0, \qquad \frac{d}{dt}(E\vec v) = \vec F. \]
+  <p>So the inertia of a particle is determined by its total energy, and not by its rest mass.</p>
+
+  <h3>Low-velocity expansion</h3>
+  \[ E = mc^2 + \tfrac12mv^2 + \tfrac38m\frac{v^4}{c^2} + \dots \]
+  <p>The first term is the rest energy \(E_0 = mc^2\), and the rest is kinetic. As \(v \to c\), \(E \to \infty\), so \(c\) can only be approached.</p>
+
+  <h3>Massless particles</h3>
+  <div class="hero">
+    <div class="hero-label">Massless particles</div>
+    \[ E = |\vec p|c, \qquad v = c, \qquad p_\mu p^\mu = 0 \]
+    <p>There is no rest frame, so no proper time and no \(U^\mu\). Use an affine parameter: \(p^\mu = dx^\mu/d\lambda\).</p>
+  </div>
+  <p>With quantum mechanics, \(E = h\nu\) and \(\vec p = h\vec k\), with \(|\vec k| = \lambda^{-1}\). Worldlines of photons are lightlike lines in Minkowski space.</p>
+</article>
+
+<article class="view" id="collisions" data-ch="III">
+  <p class="lede">Conservation of 4-momentum, plus the invariance of \(p^2\), solves almost every particle problem. Units with \(c = 1\) from here.</p>
+
+  <div class="hero">
+    <div class="hero-label">Conservation</div>
+    \[ P^\mu_{\text{total}} = \sum_{i=1}^Np_i^\mu = \text{const.} \]
+    <p>For a closed system, with no external force. The <strong>invariant energy</strong>, or invariant mass, \(E_{\text{inv}}^2 := P^\mu_{\text{total}}P_{\text{total}\,\mu}\), is both conserved and Lorentz invariant.</p>
+  </div>
+
+  <p>In the <strong>CMS</strong> (center of mass system), \(\vec P_{\text{total}} = \vec0\), and the total energy equals \(E_{\text{inv}}\). In any other frame the total energy is larger. The invariant mass is the maximal energy available to create new particles in a scattering process.</p>
+
+  <h3>Method</h3>
+  <ol class="steps">
+    <li>Write down each 4-momentum in a convenient frame.</li>
+    <li>Isolate the unknown you do not want, then square, so that it disappears through \(p^2 = m^2\).</li>
+    <li>Use invariants, evaluating each scalar product in whichever frame is easiest.</li>
+  </ol>
+
+  <h3>Two-body decay at rest</h3>
+  <p>For \(M \to m_1 + m_2\) in the CMS, \(M = E_1 + E_2 = m_1 + m_2 + E_{\text{kin},1} + E_{\text{kin},2}\), so a decay is impossible if \(M \lt m_1 + m_2\). If \(M \gt m_1 + m_2\), momentum and energy conservation give</p>
+  \[ E_1 = \frac{M^2 + m_1^2 - m_2^2}{2M}, \qquad E_2 = \frac{M^2 + m_2^2 - m_1^2}{2M}. \]
+  <p>The energies are completely determined by the masses. This is special to \(1 \to 2\) decays.</p>
+
+  <h3>Threshold energy</h3>
+  <p>For \(1 + 2 \to 3 + 4\), the minimal energy in the CMS just provides the masses of the final state particles, \(E_{\min}^2 = (m_3 + m_4)^2\). In the Lab frame, particle 2 is at rest, and a prime marks Lab quantities: \(E_{\text{inv}}'^2 = m_1^2 + m_2^2 + 2E_1'm_2\). As \(E_{\text{inv}}\) is Lorentz invariant, the threshold energy in the Lab frame is</p>
+  \[ E_{1\min}' = \frac{(m_3 + m_4)^2 - m_1^2 - m_2^2}{2m_2}. \]
+  <p>The CMS moves at \(\beta = |\vec p_{\text{tot}}|/E_{\text{tot}}\) in the lab.</p>
+
+  <h3>Compton scattering</h3>
+  <div class="hero">
+    <div class="hero-label">Compton scattering, \(\gamma + e \to \gamma' + e'\)</div>
+    \begin{equation} \frac{E - E'}{EE'} = \frac{1}{E'} - \frac1E = \frac1m(1 - \cos\theta) \tag{131} \end{equation}
+    \[ \frac ch(\lambda' - \lambda) = \frac1m(1 - \cos\theta) \]
+    <p>A photon of energy \(E\) scatters off an electron at rest in the Lab frame, leaving with energy \(E'\) at angle \(\theta\). The change in wavelength is determined by the scattering angle alone.</p>
+  </div>
+  <p>With 4-vectors: \(p + q = p' + q'\) gives \(p'^2 = (p + q - q')^2\). Using \(q^2 = q'^2 = 0\) and \(p^2 = p'^2 = m^2\), this becomes \(p(q - q') - qq' = 0\). In the rest frame of the initial electron, \(p = (m, \vec0)\), \(q = E(1, 1, 0, 0)\) and \(q' = E'(1, \cos\theta, \sin\theta, 0)\), so \(EE'(1 - \cos\theta) = m(E - E')\).</p>
+  <p><strong>Inverse Compton scattering.</strong> Off an ultrarelativistic particle with \(E_e = \gamma m\), \(\gamma \gg 1\):</p>
+  \[ \frac{E'}{E} = \frac{4\gamma^2}{1 + 4\dfrac{\gamma E}{m}}. \]
+  <p>For \(E \ll \gamma m\), the scattered photon gains energy, \(E' \gg E\).</p>
+</article>
+
+<article class="view" id="problems-3" data-ch="III">
+  <p class="lede">Practice for Chapter III, in the style of the course problem sheets. All questions are new.</p>
+  <div class="note"><b>Modelled on:</b> Problem Sheets 5 and 6. These use units with \(c = 1\) where stated.</div>
+  <div class="pool">
+
+  <section class="q" data-style="Sheet 5 P2" data-topic="four-velocity">
+    <p>A rocket accelerates from rest with constant proper acceleration \(\alpha = 10\,\text{m s}^{-2}\). After 5 years of proper time, how much time has passed on Earth, and how far has it gone? Use \(c = 3\times10^8\,\text{m s}^{-1}\) and \(1\,\text{yr} = 3.16\times10^7\,\text{s}\).</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>\(\alpha\tau/c = 10(5)(3.16\times10^7)/(3\times10^8) \approx 5.27\).</li>
+      <li>From \(\tau = \tfrac c\alpha\sinh^{-1}(\alpha t/c)\): \(\alpha t/c = \sinh(5.27) \approx 97\).</li>
+      <li>So \(t \approx 97(3\times10^7\,\text{s}) \approx 2.9\times10^9\,\text{s} \approx 92\) years.</li>
+      <li>Also \(\sqrt{1 + (\alpha t/c)^2} = \cosh(\alpha\tau/c)\), so
+      \[ x = \frac{c^2}{\alpha}\big(\cosh(\alpha\tau/c) - 1\big) \approx 9\times10^{15}(96)\,\text{m} \approx 8.7\times10^{17}\,\text{m}, \]
+      which is about 92 light years.</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Sheet 5 P2(d)" data-topic="four-velocity">
+    <p>For the hyperbolic worldline with \(c = 1\), find the line that \(x(t)\) approaches as \(t \to \infty\). Show that a light signal sent from the origin at \(t \geq 1/\alpha\) never reaches the particle.</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>\(x = \dfrac{1}{\alpha}\big(\sqrt{1 + \alpha^2t^2} - 1\big)\).</li>
+      <li>For large \(t\), \(\sqrt{1 + \alpha^2t^2} \approx \alpha t\), so \(x \to t - \dfrac1\alpha\).</li>
+      <li>Since \(\sqrt{1 + \alpha^2t^2} \gt \alpha t\), we have \(x \gt t - 1/\alpha\) for all \(t\). The particle always stays ahead of this line.</li>
+      <li>A signal from the origin at \(t_0\) follows \(x = t - t_0\). If \(t_0 \geq 1/\alpha\), this lies at or behind the asymptote, so it never catches the particle.</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Sheet 5 P1" data-topic="four-velocity">
+    <p>With \(c = 1\), for one-dimensional motion show that \(\dfrac{d}{dt}(\gamma v) = \gamma^3\dfrac{dv}{dt}\). Then find \(U^\mu\) and \(U_\mu U^\mu\) for \(v = 0.6\) along \(x\).</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>\(\dot\gamma = \gamma^3v\dot v\), since \(\gamma = (1 - v^2)^{-1/2}\).</li>
+      <li>So \(\dfrac{d}{dt}(\gamma v) = \gamma^3v^2\dot v + \gamma\dot v = \gamma\dot v(\gamma^2v^2 + 1) = \gamma^3\dot v\), using \(\gamma^2v^2 + 1 = \gamma^2\). ✓</li>
+      <li>For \(v = 0.6\), \(\gamma = 1.25\), so \(U = (1.25, 0.75, 0, 0)\).</li>
+      <li>\(U_\mu U^\mu = 1.5625 - 0.5625 = 1\). ✓</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Notes §4.2" data-topic="four-momentum">
+    <p>A particle has kinetic energy \(2mc^2\). Find \(\gamma\), its momentum and its speed. What would the Newtonian formula \(T = \tfrac12mv^2\) give for the speed?</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>\(E = mc^2 + T = 3mc^2\), so \(\gamma = 3\).</li>
+      <li>\(p^2c^2 = E^2 - m^2c^4 = 8m^2c^4\), so \(p = 2\sqrt2\,mc\).</li>
+      <li>\(v/c = pc/E = 2\sqrt2/3 \approx 0.943\).</li>
+      <li>Newtonian: \(\tfrac12mv^2 = 2mc^2\) gives \(v = 2c\), which is impossible.</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Notes §5.2" data-topic="collisions">
+    <p>A pion at rest, with \(m_\pi = 139.6\,\text{MeV}\), decays into a muon, \(m_\mu = 105.7\,\text{MeV}\), and a massless neutrino. Find the muon's energy and momentum, and the neutrino's energy.</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>Using \(E_1 = (M^2 + m_1^2 - m_2^2)/2M\) with \(m_2 = 0\):
+      \[ E_\mu = \frac{139.6^2 + 105.7^2}{2(139.6)} \approx 109.8\,\text{MeV}. \]</li>
+      <li>\(p = \sqrt{E_\mu^2 - m_\mu^2} \approx 29.8\,\text{MeV}\).</li>
+      <li>The neutrino has the opposite momentum, and is massless, so \(E_\nu = p \approx 29.8\,\text{MeV}\).</li>
+      <li>Check: \(109.8 + 29.8 = 139.6\). ✓</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Sheet 6 P1" data-topic="collisions">
+    <p>A stationary particle of mass \(4m\) is struck by a particle of mass \(m\) and energy \(E\). Two particles of mass \(3m\) emerge, at angles \(\pm\theta\). Show that they have the same energy, and that
+    \[ \cos^2\theta = \frac{E^2 - m^2}{E^2 + 8Em - 20m^2}. \]
+    Find the minimum energy \(E\) for this process.</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>Conservation of \(y\)-momentum gives \(p_1\sin\theta = p_2\sin\theta\), so \(p_1 = p_2\). The masses are equal, so the energies are equal, and \(E_1 = \tfrac12(E + 4m)\).</li>
+      <li>\(x\)-momentum: \(p = 2p_1\cos\theta\), with \(p^2 = E^2 - m^2\) and \(p_1^2 = E_1^2 - 9m^2\).</li>
+      <li>So
+      \[ \cos^2\theta = \frac{E^2 - m^2}{4E_1^2 - 36m^2} = \frac{E^2 - m^2}{(E + 4m)^2 - 36m^2} = \frac{E^2 - m^2}{E^2 + 8Em - 20m^2}. \]</li>
+      <li>At threshold, \(E_{\text{inv}}^2 = (6m)^2\). With \(E_{\text{inv}}^2 = m^2 + 16m^2 + 8Em\), we get \(E_{\min} = \tfrac{19}{8}m\).</li>
+      <li>Check: this gives \(\cos^2\theta = 1\), so both particles go straight forward, as expected at threshold. ✓</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Sheet 6 P1(c)" data-topic="collisions">
+    <p>A particle of energy \(E\) and mass \(m\) strikes a stationary particle of mass \(3m\), producing two particles of mass \(3m\). Find the minimum \(E\), and the speed of the CMS relative to the lab at that energy.</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>\(E_{\text{inv}}^2 = m^2 + 9m^2 + 6Em \geq (6m)^2\), so \(E_{\min} = \tfrac{13}{3}m\).</li>
+      <li>In the lab, \(|\vec p| = \sqrt{E^2 - m^2} = m\sqrt{\tfrac{169}{9} - 1} = \tfrac{4\sqrt{10}}{3}m\).</li>
+      <li>The total energy is \(E + 3m = \tfrac{22}{3}m\).</li>
+      <li>So \(\beta = \dfrac{|\vec p_{\text{tot}}|}{E_{\text{tot}}} = \dfrac{4\sqrt{10}}{22} \approx 0.575\).</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Sheet 6 P2" data-topic="collisions">
+    <p>A photon of energy \(E\) scatters off a stationary particle of mass \(m\), leaving at angle \(\theta\) with energy \(E'\). Using 4-momentum conservation, show that
+    \[ E' = \frac{E}{1 + (E/m)(1 - \cos\theta)}. \]</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>With \(q + p = q' + p'\), isolate \(p' = q + p - q'\), then square. Using \(q^2 = q'^2 = 0\):
+      \[ m^2 = m^2 + 2q\cdot p - 2q'\cdot p - 2q\cdot q'. \]</li>
+      <li>So \(q\cdot q' = p\cdot(q - q')\).</li>
+      <li>With the particle at rest, \(p\cdot q = mE\) and \(p\cdot q' = mE'\). Also \(q\cdot q' = EE'(1 - \cos\theta)\).</li>
+      <li>Then \(EE'(1 - \cos\theta) = m(E - E')\). Solving for \(E'\) gives the result.</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Sheet 6 P2" data-topic="four-momentum">
+    <p>Two photons of energies \(E_1, E_2\) meet at angle \(\theta\). Show that \(E_{\text{inv}}^2 = 2E_1E_2(1 - \cos\theta)\). What is the condition to create a pair of particles of mass \(m\)? Why can a single photon not do this?</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>\(E_{\text{inv}}^2 = (q_1 + q_2)^2 = 2q_1\cdot q_2\), since \(q_1^2 = q_2^2 = 0\).</li>
+      <li>\(q_1\cdot q_2 = E_1E_2 - \vec q_1\cdot\vec q_2 = E_1E_2(1 - \cos\theta)\).</li>
+      <li>Pair creation requires \(E_{\text{inv}}^2 \geq (2m)^2\), that is \(E_1E_2(1 - \cos\theta) \geq 2m^2\).</li>
+      <li>A single photon has \(E_{\text{inv}}^2 = 0 \lt 4m^2\), so it cannot create the pair: there is no way to conserve energy and momentum.</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Notes §4.2" data-topic="four-momentum">
+    <p>With \(c = 1\), show that \(K^0 = \gamma\vec F\cdot\vec v\), using \(K^\mu U_\mu = 0\). Show that a constant force \(F\) along \(x\), from rest, gives \(\gamma v = Ft/m\).</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>\(K^\mu = (K^0, \gamma\vec F)\) and \(U^\mu = (\gamma, \gamma\vec v)\). Then \(K^\mu U_\mu = K^0\gamma - \gamma^2\vec F\cdot\vec v = 0\).</li>
+      <li>So \(K^0 = \gamma\vec F\cdot\vec v\).</li>
+      <li>From \(\dfrac{d}{dt}(\gamma mv) = F\) with \(F\) constant: \(\gamma mv = Ft\) when starting from rest.</li>
+      <li>So \(\gamma v = Ft/m\). This is hyperbolic motion, with \(\alpha = F/m\).</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Sheet 6 P2" data-topic="collisions">
+    <p>A photon of energy \(E\) moving along \(+x\) meets an ultra-relativistic particle head-on, with \(E_A = \gamma m\), and is scattered straight back with energy \(E'\). Show that \(E' \approx 4\gamma^2E\) when \(E \ll m/\gamma\).</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>From \(q\cdot q' = p\cdot(q - q')\). For opposite photons, \(q\cdot q' = 2EE'\).</li>
+      <li>With \(p = (E_A, -|\vec p_A|, 0, 0)\): \(p\cdot q = E(E_A + |\vec p_A|)\) and \(p\cdot q' = E'(E_A - |\vec p_A|)\).</li>
+      <li>So \(2EE' = E(E_A + |\vec p_A|) - E'(E_A - |\vec p_A|)\).</li>
+      <li>For \(\gamma \gg 1\), \(E_A + |\vec p_A| \approx 2\gamma m\) and \(E_A - |\vec p_A| = m^2/(E_A + |\vec p_A|) \approx m/(2\gamma)\).</li>
+      <li>Solving: \(E' \approx \dfrac{2\gamma mE}{2E + m/2\gamma}\). For \(E \ll m/\gamma\), this gives \(E' \approx 4\gamma^2E\).</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Notes §4.1" data-topic="four-velocity">
+    <p>Prove that the 4-acceleration of a massive particle is either zero or spacelike. Use the MCRF, then give the alternative proof that \(A^\mu U_\mu = 0\) without it.</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>In the MCRF, \(\vec v = 0\), \(\gamma = 1\) and \(\dot\gamma = 0\), so \(A = (0, \vec a)\).</li>
+      <li>So \(A^\mu A_\mu = -|\vec a|^2 \leq 0\), and it is zero only if \(\vec a = 0\). That is, \(A^\mu = 0\) in this frame, and so in all frames.</li>
+      <li>\(A^\mu A_\mu\) is invariant, so this holds in every frame.</li>
+      <li>Without the MCRF: differentiating \(U^\mu U_\mu = 1\) with respect to \(\tau\) gives \(2A^\mu U_\mu = 0\).</li>
+    </ol></details>
+  </section>
+
+  </div>
+</article>
+
+<!-- ═══════════ CHAPTER IV: RIEMANNIAN GEOMETRY ═══════════ -->
+
+<article class="view" id="equivalence" data-ch="IV">
+  <p class="lede">Newtonian gravity acts instantly, which clashes with special relativity. The way out begins with a simple fact: everything falls the same way.</p>
+
+  <div class="hero">
+    <div class="hero-label">(Strong) equivalence principle</div>
+    <p>In a gravitational field one can choose, at any space-time point, a locally inertial frame (LIF), such that the laws of nature are those of an unaccelerated frame in absence of gravity. Thus in a LIF the laws of nature take the form known from special relativity.</p>
+    \[ g_{\mu\nu}(P) = \eta_{\mu\nu}, \qquad \partial_\rho g_{\mu\nu}(P) = 0 \]
+    <p>In coordinates, a LIF at \(P\) is a choice of Riemannian normal coordinates. The second derivatives of the metric cannot be set to zero in general.</p>
+  </div>
+
+  <h3>Newtonian gravity</h3>
+  <p>The field is \(\vec G = -\nabla\phi\), and the force on a probe is \(\vec F = m\vec G = -m\nabla\phi\). The potential of a mass density \(\rho\) is determined by the Poisson equation</p>
+  \begin{equation} \Delta\phi = 4\pi G_N\rho. \tag{133} \end{equation}
+  <p>Two problems. Newton's theory assumes that gravity acts instantaneously, which conflicts with a maximal speed for the propagation of energy. And inertial and gravitational mass are equal with very high precision, with no logical reason why this must be the case.</p>
+
+  <h3>Consequences</h3>
+  <ul>
+    <li><strong>Elevator thought experiment.</strong> A homogeneous gravitational field cannot be distinguished from a state of constant acceleration in absence of gravity. A freely falling elevator in a homogeneous gravitational field cannot be distinguished from a freely falling spacecraft in empty space.</li>
+    <li><strong>Only local inertial frames.</strong> When gravity is relevant, we cannot assume the existence of global inertial frames, but only of locally inertial frames.</li>
+    <li><strong>General covariance.</strong> The Lorentz transformations lose their privileged role, so the laws of nature must be covariant with respect to general coordinate transformations.</li>
+    <li><strong>Gravitational time dilation.</strong> Signals sent from a height \(H\) above an observer, with time difference \(\delta t_A\), arrive with \(\delta t_B \simeq \left(1 - \dfrac{Hg}{c^2}\right)\delta t_A\). The lower clock runs slower.</li>
+  </ul>
+</article>
+
+<article class="view" id="metric" data-ch="IV">
+  <p class="lede">A \(d\)-dimensional manifold looks locally like \(\mathbb R^d\). The metric supplies distances, and tells you how to raise and lower indices.</p>
+
+  <div class="hero">
+    <div class="hero-label">The metric</div>
+    \[ ds^2 = g_{\mu\nu}(x)\,dx^\mu dx^\nu, \qquad g_{\mu\nu} = g_{\nu\mu}, \qquad g^{\mu\rho}g_{\rho\nu} = \delta^\mu{}_\nu \]
+    <p>A <strong>Riemannian space</strong> is a manifold equipped with a Riemannian metric. Here the metric need not be positive definite. A space-time has signature \((1,3)\), the "mostly minus" convention.</p>
+  </div>
+
+  <div class="tbl"><table>
+    <tr><th>Space</th><th>Line element</th></tr>
+    <tr><td>Plane, polar</td><td>\(ds^2 = dr^2 + r^2d\phi^2\)</td></tr>
+    <tr><td>3D, spherical</td><td>\(ds^2 = dr^2 + r^2(d\theta^2 + \sin^2\theta\,d\phi^2)\)</td></tr>
+    <tr><td>Sphere of radius \(a\)</td><td>\(ds^2 = a^2(d\theta^2 + \sin^2\theta\,d\phi^2)\)</td></tr>
+    <tr><td>Minkowski</td><td>\(ds^2 = \eta_{\mu\nu}dx^\mu dx^\nu\)</td></tr>
+  </table></div>
+
+  <h3>Tensors</h3>
+  <div class="hero">
+    <div class="hero-label">Tensor transformation laws</div>
+    \[ A^{\bar\mu} = J^{\bar\mu}{}_\mu A^\mu, \qquad A_{\bar\mu} = J^\mu{}_{\bar\mu}A_\mu, \qquad J^{\bar\mu}{}_\mu = \frac{\partial x^{\bar\mu}}{\partial x^\mu} \]
+    <p>Each upper index gets one Jacobian, and each lower index gets one inverse Jacobian. A tensor of type \((m,n)\) has \(m\) upper and \(n\) lower indices.</p>
+  </div>
+  <ul>
+    <li>A tensor equation that holds in one coordinate system holds in all of them.</li>
+    <li>The gradient \(\partial_\mu\phi\) of a scalar is a covariant vector.</li>
+    <li>\(A_\mu = g_{\mu\nu}A^\nu\) and \(A^\mu = g^{\mu\nu}A_\nu\).</li>
+    <li>Contracting an upper and a lower index gives a tensor with two fewer indices.</li>
+    <li><strong>Quotient theorem:</strong> if \(A^\lambda P_{\lambda\mu_1\cdots}\) is a tensor for all vectors \(A^\lambda\), then \(P_{\lambda\mu_1\cdots}\) is a tensor.</li>
+  </ul>
+</article>
+
+<article class="view" id="parallel-transport" data-ch="IV">
+  <p class="lede">On a curved space, vectors at different points cannot be compared directly. Parallel transport says how to carry one along a curve.</p>
+
+  <div class="hero">
+    <div class="hero-label">Christoffel symbols</div>
+    \[ \Gamma_{\mu\nu\rho} = \tfrac12\big(\partial_\nu g_{\mu\rho} + \partial_\rho g_{\mu\nu} - \partial_\mu g_{\nu\rho}\big), \qquad \Gamma^\lambda{}_{\mu\nu} = g^{\lambda\rho}\Gamma_{\rho\mu\nu} \]
+    <p>The first and second kinds. Both are symmetric in the last two indices, and \(\partial_\rho g_{\mu\nu} = \Gamma_{\mu\nu\rho} + \Gamma_{\nu\mu\rho}\). They do <strong>not</strong> form a tensor: they can be zero in one coordinate system while being non-zero in others.</p>
+  </div>
+
+  <div class="hero">
+    <div class="hero-label">Parallel transport</div>
+    \[ dA^\lambda = -\Gamma^\lambda{}_{\mu\rho}A^\mu dx^\rho, \qquad \frac{dA^\lambda}{dt} + \Gamma^\lambda{}_{\mu\nu}A^\mu\frac{dx^\nu}{dt} = 0 \tag{137} \]
+    <p>The second form is for a finite curve. For a covariant vector, \(dA_\nu = \Gamma_{\mu\nu\rho}A^\mu dx^\rho\), which is equation (135).</p>
+  </div>
+
+  <p>The scalar product is invariant under parallel transport: \(d(A^\nu B_\nu) = 0\). The result of a parallel transport does not only depend on the endpoints, but on the choice of the curve itself.</p>
+
+  <p>The Christoffel symbols transform with an extra, non-tensor term:</p>
+  \begin{equation} \Gamma^{\bar\mu}{}_{\bar\nu\bar\rho} = J^{\bar\mu}{}_\mu J^\nu{}_{\bar\nu}J^\rho{}_{\bar\rho}\Gamma^\mu{}_{\nu\rho} + J^{\bar\mu}{}_\nu\partial_{\bar\rho}J^\nu{}_{\bar\nu}. \tag{136} \end{equation}
+
+  <details class="ex" open><summary><span class="ex-tag">Example</span><span>Polar coordinates on the plane</span></summary><div class="ex-body">
+    <p>With \(ds^2 = dr^2 + r^2d\phi^2\), the only non-zero derivative is \(\partial_rg_{\phi\phi} = 2r\). The non-zero symbols are</p>
+    \[ \Gamma^r{}_{\phi\phi} = -r, \qquad \Gamma^\phi{}_{r\phi} = \Gamma^\phi{}_{\phi r} = \frac1r. \]
+    <p>They are non-zero even though the plane is flat. In Cartesian coordinates, they all vanish. Transport gives \(dA^r = rA^\phi d\phi\) and \(dA^\phi = -\tfrac1r(A^rd\phi + A^\phi dr)\). The components change only because the polar basis depends on position.</p>
+  </div></details>
+</article>
+
+<article class="view" id="geodesics" data-ch="IV">
+  <p class="lede">Straight lines generalised: curves whose tangent stays parallel to itself. Free particles follow them.</p>
+
+  <div class="hero">
+    <div class="hero-label">Geodesic equation</div>
+    \begin{equation} \frac{d^2x^\mu}{d\tau^2} + \Gamma^\mu{}_{\nu\rho}\frac{dx^\nu}{d\tau}\frac{dx^\rho}{d\tau} = 0 \tag{139} \end{equation}
+    <p>Valid only for an <strong>affine parameter</strong>, for which \(g_{\mu\nu}u^\mu u^\nu\) is constant. Affine parameters are related by \(\tau \to a\tau + b\).</p>
+  </div>
+
+  <div class="tbl"><table>
+    <tr><th>Curve type</th><th>\(g_{\mu\nu}u^\mu u^\nu\)</th><th>Parameter</th></tr>
+    <tr><td>Timelike</td><td>\(\gt 0\), normalised to 1</td><td>Proper time</td></tr>
+    <tr><td>Spacelike</td><td>\(\lt 0\), normalised to \(-1\)</td><td>Proper length</td></tr>
+    <tr><td>Lightlike (null)</td><td>\(0\)</td><td>Affine \(\lambda\), with \(dx^\mu/d\lambda = p^\mu\)</td></tr>
+  </table></div>
+
+  <p>Non-null geodesics are also the curves of extremal length. In a space-time, timelike geodesics maximise proper time. So the same equation follows from the variational principle \(\delta\int\sqrt{g_{\mu\nu}\dot x^\mu\dot x^\nu}\,d\tau = 0\).</p>
+
+  <div class="hero">
+    <div class="hero-label">Conserved quantities</div>
+    \[ \partial_0g_{\mu\nu} = 0 \quad\Longrightarrow\quad u_0, \; p_0 = mu_0 \text{ conserved along a geodesic} \]
+    <p>Symmetries of space-time lead to conserved quantities along geodesics. If the metric is time-independent, \(p_0\) is conserved, and it is identified as the total energy.</p>
+  </div>
+
+  <details class="ex"><summary><span class="ex-tag">Example</span><span>Geodesics on the sphere</span></summary><div class="ex-body">
+    <p>For \(ds^2 = a^2(d\theta^2 + \sin^2\theta\,d\phi^2)\), the non-zero symbols are \(\Gamma^\theta{}_{\phi\phi} = -\sin\theta\cos\theta\) and \(\Gamma^\phi{}_{\theta\phi} = \cot\theta\). The geodesic equations are</p>
+    \[ \ddot\theta - \sin\theta\cos\theta\,\dot\phi^2 = 0, \qquad \ddot\phi + 2\cot\theta\,\dot\theta\dot\phi = 0. \]
+    <p>Lines of longitude, with \(\phi = \phi_0\) constant, have \(\theta = s/a\), where \(s\) is the length along the curve. They satisfy both equations for all \(\phi_0\), so all lines of longitude are geodesics. Which circles of latitude, \(\theta = \theta_0\), are geodesics is left as an exercise in the notes.</p>
+  </div></details>
+</article>
+
+<article class="view" id="covariant-derivatives" data-ch="IV">
+  <p class="lede">Partial derivatives of tensors are not tensors. Subtracting off the parallel-transported vector repairs this.</p>
+
+  <div class="hero">
+    <div class="hero-label">Covariant derivatives</div>
+    \[ \nabla_\nu A^\mu = \partial_\nu A^\mu + \Gamma^\mu{}_{\nu\sigma}A^\sigma, \qquad \nabla_\nu A_\mu = \partial_\nu A_\mu - \Gamma^\sigma{}_{\mu\nu}A_\sigma \]
+    <p>One \(+\Gamma\) for each upper index, and one \(-\Gamma\) for each lower index. A \((m,n)\) tensor becomes a \((m,n+1)\) tensor.</p>
+  </div>
+
+  <div class="hero">
+    <div class="hero-label">Metric compatibility</div>
+    \[ \nabla_\rho g_{\mu\nu} = 0 \]
+    <p>So contraction and covariant differentiation commute, and indices can be raised and lowered freely under \(\nabla\).</p>
+  </div>
+
+  <h3>General rule</h3>
+  \[ \nabla_\sigma T^\rho{}_{\mu\nu} = \partial_\sigma T^\rho{}_{\mu\nu} + \Gamma^\rho{}_{\sigma\lambda}T^\lambda{}_{\mu\nu} - \Gamma^\lambda{}_{\sigma\mu}T^\rho{}_{\lambda\nu} - \Gamma^\lambda{}_{\sigma\nu}T^\rho{}_{\mu\lambda}. \]
+  <ul>
+    <li>On a scalar, \(\nabla_\mu\phi = \partial_\mu\phi\).</li>
+    <li>\(\nabla\) obeys the product rule.</li>
+    <li>For higher derivatives, work from the outside in: \(\nabla_\mu(\nabla_\nu A^\rho)\) treats \(\nabla_\nu A^\rho\) as a \((1,1)\) tensor.</li>
+    <li>This \(\nabla\), the Levi-Civita connection, is the unique one that is metric compatible and torsion free.</li>
+  </ul>
+  <div class="note"><b>Quick proof of \(\nabla g = 0\).</b> In local inertial coordinates at \(P\), \(\partial_\rho g_{\mu\nu}(P) = 0\) and \(\Gamma(P) = 0\), so \(\nabla_\rho g_{\mu\nu}(P) = 0\). It is a tensor, so this holds in all coordinates, and \(P\) is arbitrary.</div>
+</article>
+
+<article class="view" id="curvature" data-ch="IV">
+  <p class="lede">Curvature is what cannot be removed by a change of coordinates, and one tensor captures all of it.</p>
+
+  <div class="hero">
+    <div class="hero-label">Riemann curvature tensor</div>
+    \[ R^\mu{}_{\nu\rho\sigma} = \partial_\rho\Gamma^\mu{}_{\nu\sigma} - \partial_\sigma\Gamma^\mu{}_{\nu\rho} + \Gamma^\mu{}_{\lambda\rho}\Gamma^\lambda{}_{\nu\sigma} - \Gamma^\mu{}_{\lambda\sigma}\Gamma^\lambda{}_{\nu\rho} \]
+    <p>A space is flat if and only if \(R^\mu{}_{\nu\rho\sigma} = 0\).</p>
+  </div>
+
+  <p>It measures two equivalent things. Parallel transport round an infinitesimal parallelogram changes a vector by \(\Delta A^\mu = R^\mu{}_{\nu\rho\sigma}A^\nu d_1x^\rho d_2x^\sigma\). And covariant derivatives fail to commute, by the Ricci identity:</p>
+  \[ \nabla_\rho\nabla_\nu A_\mu - \nabla_\nu\nabla_\rho A_\mu = R^\lambda{}_{\mu\nu\rho}A_\lambda. \]
+
+  <h3>Symmetries</h3>
+  <div class="tbl"><table>
+    <tr><th>Property</th><th>Statement</th></tr>
+    <tr><td>Antisymmetry</td><td>\(R_{\mu\nu\rho\sigma} = -R_{\nu\mu\rho\sigma} = -R_{\mu\nu\sigma\rho}\)</td></tr>
+    <tr><td>Pair exchange</td><td>\(R_{\mu\nu\rho\sigma} = R_{\rho\sigma\mu\nu}\)</td></tr>
+    <tr><td>Cyclic identity</td><td>\(R_{\mu\nu\rho\sigma} + R_{\mu\rho\sigma\nu} + R_{\mu\sigma\nu\rho} = 0\)</td></tr>
+    <tr><td>Bianchi identity</td><td>\(\nabla_\lambda R^\mu{}_{\nu\rho\sigma} + \nabla_\rho R^\mu{}_{\nu\sigma\lambda} + \nabla_\sigma R^\mu{}_{\nu\lambda\rho} = 0\)</td></tr>
+  </table></div>
+  <p>These leave \(N = \tfrac{1}{12}d^2(d^2 - 1)\) independent components: \(N(1) = 0\), \(N(2) = 1\), \(N(3) = 6\), \(N(4) = 20\).</p>
+
+  <h3>Contractions</h3>
+  <div class="hero">
+    <div class="hero-label">Ricci tensor, Ricci scalar, Einstein tensor</div>
+    \[ R_{\mu\nu} = R^\lambda{}_{\mu\lambda\nu}, \qquad R = g^{\mu\nu}R_{\mu\nu}, \qquad G_{\mu\nu} = R_{\mu\nu} - \tfrac12g_{\mu\nu}R \]
+    \[ \nabla^\mu G_{\mu\nu} = 0 \]
+    <p>\(R_{\mu\nu}\) is symmetric, with ten independent components in four dimensions. The divergence-free property comes from contracting the Bianchi identity.</p>
+  </div>
+
+  <details class="ex" open><summary><span class="ex-tag">Example</span><span>The sphere of radius \(a\)</span></summary><div class="ex-body">
+    <p>With \(ds^2 = a^2(d\theta^2 + \cos^2\theta\,d\phi^2)\):</p>
+    \[ R^\theta{}_{\phi\theta\phi} = \sin^2\theta, \qquad R^\phi{}_{\theta\phi\theta} = 1, \qquad (R_{\mu\nu}) = \begin{pmatrix} 1 & 0 \\ 0 & \sin^2\theta \end{pmatrix}, \qquad R = \frac{2}{a^2}. \]
+    <p>The Einstein tensor vanishes, as it does for every two-dimensional space. The curvature grows as the radius shrinks.</p>
+  </div></details>
+</article>
+
+<article class="view" id="problems-4" data-ch="IV">
+  <p class="lede">Practice for Chapter IV. The problem sheets have not reached this material yet, so these are in the style of the worked examples in the notes.</p>
+  <div class="note"><b>Modelled on:</b> The lecture notes, §6 to §11, including the homework exercises they mention.</div>
+  <div class="pool">
+
+  <section class="q" data-style="Notes §8.4" data-topic="parallel-transport">
+    <p>For the sphere \(ds^2 = a^2(d\theta^2 + \sin^2\theta\,d\phi^2)\), calculate the non-zero Christoffel symbols.</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>\(g_{\theta\theta} = a^2\), \(g_{\phi\phi} = a^2\sin^2\theta\), and the only non-zero derivative is \(\partial_\theta g_{\phi\phi} = 2a^2\sin\theta\cos\theta\).</li>
+      <li>\(\Gamma_{\theta\phi\phi} = -\tfrac12\partial_\theta g_{\phi\phi} = -a^2\sin\theta\cos\theta\). Raising with \(g^{\theta\theta} = a^{-2}\):
+      \[ \Gamma^\theta{}_{\phi\phi} = -\sin\theta\cos\theta. \]</li>
+      <li>\(\Gamma_{\phi\theta\phi} = \tfrac12\partial_\theta g_{\phi\phi} = a^2\sin\theta\cos\theta\). Raising with \(g^{\phi\phi}\):
+      \[ \Gamma^\phi{}_{\theta\phi} = \Gamma^\phi{}_{\phi\theta} = \cot\theta. \]</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Notes §9.4" data-topic="geodesics">
+    <p>Using the sphere's geodesic equations, show that \(\theta = \pi/2\) (the equator) is a geodesic, and that the circle of latitude \(\theta = \theta_0 \neq \pi/2\) is not. Show that \(\sin^2\theta\,\dot\phi\) is conserved.</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>The equations are \(\ddot\theta = \sin\theta\cos\theta\,\dot\phi^2\) and \(\ddot\phi + 2\cot\theta\,\dot\theta\dot\phi = 0\).</li>
+      <li>On \(\theta = \pi/2\), \(\cos\theta = 0\), so the first gives \(\ddot\theta = 0\). The second gives \(\ddot\phi = 0\), which is uniform motion. So the equator is a geodesic.</li>
+      <li>For \(\theta_0 \neq \pi/2\), with \(\dot\phi \neq 0\), \(\sin\theta_0\cos\theta_0\,\dot\phi^2 \neq 0\), but \(\ddot\theta = 0\). So it is not a geodesic.</li>
+      <li>\(\dfrac{d}{d\tau}(\sin^2\theta\,\dot\phi) = \sin^2\theta\big(\ddot\phi + 2\cot\theta\,\dot\theta\dot\phi\big) = 0\). ✓</li>
+      <li>This agrees with the rule: the metric does not depend on \(\phi\), so \(p_\phi\) is conserved.</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Notes §7.2" data-topic="metric">
+    <p>With \(x = u^2 - v^2\) and \(y = 2uv\), find the metric on the plane in \((u,v)\) coordinates. What is the inverse metric?</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>\(dx = 2u\,du - 2v\,dv\) and \(dy = 2v\,du + 2u\,dv\).</li>
+      <li>Squaring and adding, the cross terms cancel:
+      \[ ds^2 = 4(u^2 + v^2)(du^2 + dv^2). \]</li>
+      <li>So \(g_{uu} = g_{vv} = 4(u^2 + v^2)\) and \(g_{uv} = 0\).</li>
+      <li>The metric is diagonal, so \(g^{uu} = g^{vv} = \dfrac{1}{4(u^2 + v^2)}\).</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Notes §10.4" data-topic="covariant-derivatives">
+    <p>In polar coordinates on the plane, verify \(\nabla_rg_{\phi\phi} = 0\) and \(\nabla_\phi g_{r\phi} = 0\) directly.</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>\(\nabla_\rho g_{\mu\nu} = \partial_\rho g_{\mu\nu} - \Gamma^\sigma{}_{\rho\mu}g_{\sigma\nu} - \Gamma^\sigma{}_{\rho\nu}g_{\mu\sigma}\).</li>
+      <li>For \(\rho = r\), \(\mu = \nu = \phi\): \(\nabla_rg_{\phi\phi} = 2r - 2\Gamma^\phi{}_{r\phi}g_{\phi\phi} = 2r - 2\cdot\dfrac1r\cdot r^2 = 0\). ✓</li>
+      <li>For \(\rho = \phi\), \(\mu = r\), \(\nu = \phi\): \(\partial_\phi g_{r\phi} = 0\), so
+      \[ \nabla_\phi g_{r\phi} = -\Gamma^\phi{}_{\phi r}g_{\phi\phi} - \Gamma^r{}_{\phi\phi}g_{rr} = -\frac1r\cdot r^2 + r = 0. \;\checkmark \]</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Notes §10.1" data-topic="covariant-derivatives">
+    <p>Show that in polar coordinates on the plane, \(\nabla_\mu A^\mu = \dfrac1r\partial_r(rA^r) + \partial_\phi A^\phi\).</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>\(\nabla_\mu A^\mu = \partial_\mu A^\mu + \Gamma^\mu{}_{\mu\sigma}A^\sigma\).</li>
+      <li>\(\Gamma^\mu{}_{\mu r} = \Gamma^r{}_{rr} + \Gamma^\phi{}_{\phi r} = \dfrac1r\), and \(\Gamma^\mu{}_{\mu\phi} = 0\).</li>
+      <li>So \(\nabla_\mu A^\mu = \partial_rA^r + \partial_\phi A^\phi + \dfrac1rA^r\).</li>
+      <li>Since \(\dfrac1r\partial_r(rA^r) = \partial_rA^r + \dfrac1rA^r\), this is the stated result.</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Notes §11.6" data-topic="curvature">
+    <p>Using the Christoffel symbols of the sphere, compute \(R^\theta{}_{\phi\theta\phi}\). Hence find \(R_{\phi\phi}\) and the Ricci scalar. Show that \(G_{\mu\nu} = 0\).</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>From the definition, with \(\mu = \rho = \theta\), \(\nu = \sigma = \phi\):
+      \[ R^\theta{}_{\phi\theta\phi} = \partial_\theta\Gamma^\theta{}_{\phi\phi} - \partial_\phi\Gamma^\theta{}_{\phi\theta} + \Gamma^\theta{}_{\lambda\theta}\Gamma^\lambda{}_{\phi\phi} - \Gamma^\theta{}_{\lambda\phi}\Gamma^\lambda{}_{\phi\theta}. \]</li>
+      <li>The first term is \(-\cos2\theta\). The second and third vanish. The last has \(\lambda = \phi\), which gives \(+\sin\theta\cos\theta\cot\theta = \cos^2\theta\).</li>
+      <li>So \(R^\theta{}_{\phi\theta\phi} = \cos^2\theta - \cos2\theta = \sin^2\theta\).</li>
+      <li>Then \(R_{\phi\phi} = R^\theta{}_{\phi\theta\phi} = \sin^2\theta\), and similarly \(R_{\theta\theta} = 1\).</li>
+      <li>\(R = g^{\theta\theta}R_{\theta\theta} + g^{\phi\phi}R_{\phi\phi} = \dfrac{1}{a^2} + \dfrac{1}{a^2} = \dfrac{2}{a^2}\).</li>
+      <li>\(G_{\theta\theta} = 1 - \tfrac12a^2\cdot\tfrac{2}{a^2} = 0\), and \(G_{\phi\phi} = \sin^2\theta - \tfrac12a^2\sin^2\theta\cdot\tfrac{2}{a^2} = 0\). ✓</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Notes §11.6" data-topic="curvature">
+    <p>Show that the plane in polar coordinates is flat, by computing \(R^r{}_{\phi r\phi}\).</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>From the definition:
+      \[ R^r{}_{\phi r\phi} = \partial_r\Gamma^r{}_{\phi\phi} - \partial_\phi\Gamma^r{}_{\phi r} + \Gamma^r{}_{\lambda r}\Gamma^\lambda{}_{\phi\phi} - \Gamma^r{}_{\lambda\phi}\Gamma^\lambda{}_{\phi r}. \]</li>
+      <li>\(\partial_r\Gamma^r{}_{\phi\phi} = -1\). The second and third terms vanish.</li>
+      <li>In the last term, \(\lambda = \phi\): \(-\Gamma^r{}_{\phi\phi}\Gamma^\phi{}_{\phi r} = r\cdot\dfrac1r = 1\).</li>
+      <li>So \(R^r{}_{\phi r\phi} = -1 + 1 = 0\). In two dimensions, there is one independent component, so the Riemann tensor vanishes and the plane is flat.</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Notes §11.3" data-topic="curvature">
+    <p>How many independent components do the Riemann tensor, Ricci tensor and metric have in \(d = 4\)? Why is all of the Riemann tensor determined by the Ricci scalar in \(d = 2\)?</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>Riemann: \(N = \tfrac{1}{12}\cdot16\cdot15 = 20\).</li>
+      <li>Ricci and the metric are symmetric, with \(\tfrac12d(d+1) = 10\) components each.</li>
+      <li>In \(d = 2\), \(N = \tfrac{1}{12}\cdot4\cdot3 = 1\).</li>
+      <li>So every component equals zero or \(\pm R_{1212}\), and one scalar suffices.</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Notes §6.2" data-topic="equivalence">
+    <p>Using the equivalence principle, estimate the fractional frequency shift of light climbing \(22.5\,\text{m}\) in Earth's gravity, as measured by Pound and Rebka. Use \(g = 9.8\,\text{m s}^{-2}\). Compare with the prediction from \(g_{00} \approx 1 + 2\phi/c^2\).</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>In an accelerating lift, the receiver moves at \(v = gh/c\) by the time light arrives. The Doppler shift gives \(\Delta\nu/\nu \approx -v/c = -gh/c^2\).</li>
+      <li>So the size of the shift is
+      \[ \frac{gh}{c^2} = \frac{9.8(22.5)}{9\times10^{16}} \approx 2.5\times10^{-15}. \]</li>
+      <li>With \(d\tau = \sqrt{g_{00}}\,dt \approx (1 + \phi/c^2)\,dt\), the ratio of rates is \(1 + \Delta\phi/c^2\), with \(\Delta\phi = gh\). This gives the same result.</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Notes §9.2" data-topic="geodesics">
+    <p>In polar coordinates on the plane, write down the geodesic equations. Show that \(r^2\dot\phi\) is conserved, and that \(r\cos\phi = 1\) (a straight line) with \(r^2\dot\phi = 1\) satisfies the radial equation.</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>Using the polar Christoffel symbols: \(\ddot r - r\dot\phi^2 = 0\) and \(\ddot\phi + \dfrac2r\dot r\dot\phi = 0\).</li>
+      <li>\(\dfrac{d}{ds}(r^2\dot\phi) = r^2\ddot\phi + 2r\dot r\dot\phi = 0\). ✓</li>
+      <li>On the line, \(r = \sec\phi\), with \(\dot\phi = \cos^2\phi\). So \(\dot r = \sec\phi\tan\phi\,\dot\phi = \sin\phi\).</li>
+      <li>Then \(\ddot r = \cos\phi\,\dot\phi = \cos^3\phi\), and \(r\dot\phi^2 = \sec\phi\cos^4\phi = \cos^3\phi\). So \(\ddot r = r\dot\phi^2\). ✓</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Notes §10.4" data-topic="covariant-derivatives">
+    <p>Explain why \(\partial_\mu\phi\) is a tensor, but \(\partial_\nu A_\mu\) is not. Show that \(\nabla_\nu\phi_\mu - \nabla_\mu\phi_\nu = \partial_\nu\phi_\mu - \partial_\mu\phi_\nu\).</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>By the chain rule, \(\partial_{\bar\mu}\phi = J^\mu{}_{\bar\mu}\partial_\mu\phi\), which is the covariant vector law.</li>
+      <li>For \(\partial_\nu A_\mu\), the derivative also hits the position-dependent Jacobian, which adds a non-tensor term.</li>
+      <li>\(\nabla_\nu\phi_\mu = \partial_\nu\phi_\mu - \Gamma^\sigma{}_{\mu\nu}\phi_\sigma\).</li>
+      <li>On antisymmetrising, the \(\Gamma\) terms cancel, since \(\Gamma^\sigma{}_{\mu\nu}\) is symmetric. So the antisymmetrised partial derivative is a tensor.</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Notes §8.3" data-topic="parallel-transport">
+    <p>Prove that the scalar product is preserved by parallel transport, using \(dA^\nu = -\Gamma^\nu{}_{\mu\rho}A^\mu dx^\rho\) and \(dB_\nu = \Gamma^\mu{}_{\nu\rho}B_\mu dx^\rho\). Why do non-zero \(\Gamma\) not imply curvature?</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>\(d(A^\nu B_\nu) = dA^\nu\,B_\nu + A^\nu\,dB_\nu\).</li>
+      <li>Substituting: \(-\Gamma^\nu{}_{\mu\rho}A^\mu B_\nu dx^\rho + \Gamma^\mu{}_{\nu\rho}A^\nu B_\mu dx^\rho\).</li>
+      <li>Renaming the dummy indices \(\mu \leftrightarrow \nu\) in the second term shows it cancels the first.</li>
+      <li>The \(\Gamma\) do not form a tensor, so they can be non-zero in flat space in curved coordinates. Only \(R^\mu{}_{\nu\rho\sigma} \neq 0\) signals true curvature.</li>
+    </ol></details>
+  </section>
+
+  </div>
+</article>
+
+<!-- ═══════════ CHAPTER V: GENERAL RELATIVITY ═══════════ -->
+
+<article class="view" id="newtonian-limit" data-ch="V">
+  <p class="lede">"Space-time tells matter how to move." Free particles follow geodesics, and Newton's gravity appears when fields are weak and motion is slow.</p>
+
+  <div class="hero">
+    <div class="hero-label">Equation of motion in curved space-time</div>
+    \[ m\big(\ddot x^\lambda + \Gamma^\lambda{}_{\mu\nu}\dot x^\mu\dot x^\nu\big) = K^\lambda \]
+    <p>\(K^\lambda\) contains non-gravitational forces only. Gravity is entirely in the metric. Massless particles follow null geodesics.</p>
+  </div>
+
+  <p>This follows from the equivalence principle: in a LIF, \(m\,d^2\xi^\alpha/d\tau^2 = 0\). Transforming to general coordinates generates the \(\Gamma\) term.</p>
+
+  <div class="hero">
+    <div class="hero-label">Newtonian limit</div>
+    \[ g_{00} \approx 1 + \frac{2\phi}{c^2} \]
+    <p>For slow motion, a weak field \(g_{\mu\nu} = \eta_{\mu\nu} + h_{\mu\nu}\), and a static metric.</p>
+  </div>
+
+  <h3>Derivation</h3>
+  <ol class="steps">
+    <li>Slow motion gives \(\tau \approx t\), and leaves only the \(00\) term: \(\ddot x^\mu + \Gamma^\mu{}_{00} = 0\).</li>
+    <li>For a static metric: \(\Gamma^\mu{}_{00} = -\tfrac12g^{\mu i}\partial_ig_{00}\).</li>
+    <li>In a weak field, \(g^{\mu\nu} \approx \eta^{\mu\nu} - h^{\mu\nu}\), so \(\Gamma^0{}_{00} \approx 0\) and \(\Gamma^i{}_{00} \approx \tfrac12\partial_ih_{00}\).</li>
+    <li>So \(\ddot x^i = -\tfrac12\partial_ih_{00}\). Comparing with \(\ddot x^i = -\partial_i\phi\) gives \(h_{00} \approx 2\phi\).</li>
+  </ol>
+  <p>For a static metric, \(p_0\) is conserved. In the Newtonian limit, \(p_0 = m + m\phi + \vec p^{\,2}/2m + \dots\), which is rest energy, gravitational energy and kinetic energy.</p>
+</article>
+
+<article class="view" id="energy-momentum" data-ch="V">
+  <p class="lede">The source of gravity is not mass density alone, but a symmetric tensor containing all energy, momentum and stress.</p>
+
+  <div class="hero">
+    <div class="hero-label">Energy–momentum tensor</div>
+    \[ P^\nu = \int d^3x\,T^{0\nu}, \qquad \partial_\mu T^{\mu\nu} = 0 \quad\longrightarrow\quad \nabla_\mu T^{\mu\nu} = 0 \]
+    <p>Conservation of 4-momentum in Minkowski space becomes covariant conservation in a curved space-time.</p>
+  </div>
+
+  <div class="tbl"><table>
+    <tr><th>Component</th><th>Meaning</th></tr>
+    <tr><td>\(T^{00}\)</td><td>Energy density</td></tr>
+    <tr><td>\(T^{0i} = T^{i0}\)</td><td>Energy flow, equal to momentum density</td></tr>
+    <tr><td>\(T^{ij}\)</td><td>Stress tensor, encoding pressure</td></tr>
+  </table></div>
+
+  <div class="hero">
+    <div class="hero-label">Perfect fluid</div>
+    \[ T^{\mu\nu} = (\epsilon + p)u^\mu u^\nu - pg^{\mu\nu} \]
+    <p>In its rest frame, \(T^{\mu\nu} = \operatorname{diag}(\epsilon, p, p, p)\).</p>
+  </div>
+
+  <div class="tbl"><table>
+    <tr><th>Case</th><th>Equation of state</th></tr>
+    <tr><td>Non-relativistic "matter", dust</td><td>\(p \ll \epsilon\), with \(p = 0\) for dust</td></tr>
+    <tr><td>Radiation</td><td>\(p = \tfrac13\epsilon\)</td></tr>
+    <tr><td>Dark energy</td><td>\(p = -\epsilon\)</td></tr>
+  </table></div>
+</article>
+
+<article class="view" id="einstein-equations" data-ch="V">
+  <p class="lede">"Matter tells space-time how to curve." The field equations are fixed almost uniquely by three requirements.</p>
+
+  <div class="hero">
+    <div class="hero-label">Einstein field equations</div>
+    \[ G_{\mu\nu} - \Lambda g_{\mu\nu} = 8\pi G\,T_{\mu\nu} \]
+    <p>\(G_{\mu\nu} = R_{\mu\nu} - \tfrac12g_{\mu\nu}R\), with \(c = 1\). Ten coupled non-linear PDEs for the metric. \(\Lambda\) is the cosmological constant.</p>
+  </div>
+
+  <h3>Motivation</h3>
+  <ol class="steps">
+    <li>The Newtonian limit requires \(\tilde G_{00} \approx \Delta g_{00}\) with \(\tilde G_{\mu\nu} = 8\pi G\,T_{\mu\nu}\), for some symmetric tensor \(\tilde G_{\mu\nu}\).</li>
+    <li>Since \(\nabla_\mu T^{\mu\nu} = 0\), it must be covariantly conserved.</li>
+    <li>It must be linear in second derivatives of the metric, with none higher.</li>
+    <li>Only the Einstein tensor and the metric itself satisfy these, so \(\tilde G_{\mu\nu} = \alpha G_{\mu\nu} - \Lambda g_{\mu\nu}\). The weak-field limit fixes \(\alpha = 1\).</li>
+  </ol>
+
+  <h3>Trace-reversed form</h3>
+  <p>Contracting with \(g^{\mu\nu}\), in four dimensions, with \(T = g^{\mu\nu}T_{\mu\nu}\) and \(\kappa = 8\pi G\), gives \(R = -4\Lambda - \kappa T\). Substituting back:</p>
+  \[ R_{\mu\nu} = -\Lambda g_{\mu\nu} + \kappa\big(T_{\mu\nu} - \tfrac12Tg_{\mu\nu}\big). \]
+  <div class="hero">
+    <div class="hero-label">Vacuum Einstein equations</div>
+    \[ R_{\mu\nu} = -\Lambda g_{\mu\nu} \]
+    <p>With \(\Lambda = 0\), this is \(R_{\mu\nu} = 0\). For \(\Lambda \neq 0\), space-time cannot be flat.</p>
+  </div>
+  <div class="note"><b>The cosmological constant.</b> Einstein added \(\Lambda\) in 1917 for a static universe, then regretted it after Hubble's discovery. A small positive value, \(\Lambda \approx 10^{-52}\,\text{m}^{-2}\), may now explain dark energy.</div>
+</article>
+
+<article class="view" id="schwarzschild" data-ch="V">
+  <p class="lede">The first exact solution, and the basis of every solar-system test: the field outside a static, spherical mass.</p>
+
+  <div class="hero">
+    <div class="hero-label">Schwarzschild metric</div>
+    \[ ds^2 = \left(1 - \frac{r_S}{r}\right)dt^2 - \left(1 - \frac{r_S}{r}\right)^{-1}dr^2 - r^2\big(d\theta^2 + \sin^2\theta\,d\phi^2\big) \]
+    \[ r_S = \frac{2G_NM}{c^2} \]
+    <p>The Sun has \(r_S \approx 3\,\text{km}\), and Earth has \(r_S \approx 9\,\text{mm}\). The solution holds only outside the body.</p>
+  </div>
+
+  <h3>Derivation</h3>
+  <ol class="steps">
+    <li>A static, spherically symmetric metric can be brought to the form
+    \[ ds^2 = e^{2f(r)}dt^2 - e^{2g(r)}dr^2 - r^2\big(d\theta^2 + \sin^2\theta\,d\phi^2\big). \]</li>
+    <li>Computing the Ricci tensor:
+    \[ R_{00} = (f'' - g'f' + f'^2 + 2f'r^{-1})e^{2f-2g}, \quad R_{11} = -f'' + g'f' - f'^2 + 2g'r^{-1}, \quad R_{22} = 1 - (1 + rf' - rg')e^{-2g}. \]</li>
+    <li>\(R_{00}e^{-2f+2g} + R_{11} = 0\) gives \(f' + g' = 0\). A rescaling of \(t\) then allows \(f = -g\).</li>
+    <li>\(R_{22} = 0\) becomes \((re^{2f})' = 1\), so \(re^{2f} = r + C\).</li>
+    <li>The Newtonian limit \(e^{2f} \approx 1 + 2\phi = 1 - 2G_NM/r\) fixes \(C = -2G_NM\).</li>
+  </ol>
+
+  <h3>Geometry</h3>
+  <ul>
+    <li><strong>Birkhoff's theorem:</strong> any spherically symmetric vacuum solution is static, so Schwarzschild is the only one.</li>
+    <li><strong>\(r\) is not radial distance.</strong> Radial distance is \(d = \int dr\,(1 - r_S/r)^{-1/2} \gt r_2 - r_1\).</li>
+    <li><strong>\(r\) is defined by area.</strong> Spheres of constant \(t, r\) have area \(4\pi r^2\), so space is non-Euclidean.</li>
+    <li><strong>Gravitational time dilation.</strong> A static clock has \(d\tau = (1 - r_S/r)^{1/2}dt\), so the lower clock runs slower.</li>
+    <li><strong>\(r = r_S\)</strong> is a coordinate singularity, not a physical one: curvature stays finite there.</li>
+  </ul>
+</article>
+
+<article class="view" id="orbits" data-ch="V">
+  <p class="lede">Two conserved quantities reduce motion to a one-dimensional problem in an effective potential, with one new relativistic term.</p>
+
+  <div class="hero">
+    <div class="hero-label">Massive particles, \(\theta = \pi/2\)</div>
+    \begin{equation} \left(\frac{dr}{d\tau}\right)^2 = E^2 - V^2(r), \qquad V^2(r) = \left(1 - \frac{r_S}{r}\right)\left(1 + \frac{L^2}{r^2}\right) \tag{166} \end{equation}
+    <p>With \(p_t = mE\) and \(p_\phi = mL\) conserved, because the metric does not depend on \(t\) or \(\phi\).</p>
+  </div>
+
+  <figure id="fig-potential"><figcaption>The effective potential \(V^2(r)\) for \(L^2/r_S^2 = 6\), with a maximum at \(r_A\) and a minimum at \(r_B\), tending to 1 at large \(r\).</figcaption></figure>
+
+  <p>Expanding, \(V^2\) has the Newtonian \(-1/r\) term, the centrifugal \(+1/r^2\) term, and a relativistic term \(-r_SL^2/r^3\), which makes gravity stronger at small \(r\).</p>
+
+  <h3>Circular orbits</h3>
+  <p>Circular orbits sit at critical points of \(V^2\), which are</p>
+  \[ r_\pm = \frac{L^2}{r_S}\left(1 \pm \sqrt{1 - \frac{3r_S^2}{L^2}}\right). \]
+  <p>These exist only if \(L^2 \geq 3r_S^2\). \(r_A = r_-\) is a maximum (unstable), and \(r_B = r_+\) is a minimum (stable).</p>
+
+  <h3>Classification</h3>
+  <div class="tbl"><table>
+    <tr><th>Case</th><th>\(L^2/r_S^2\)</th><th>Shape of \(V^2\)</th></tr>
+    <tr><td>(a)</td><td>\(\lt 3\)</td><td>Monotonic from 0 to 1</td></tr>
+    <tr><td>(b)</td><td>\(3\) to \(4\)</td><td>Maximum below 1, \(V^2(r_A) \lt 1\)</td></tr>
+    <tr><td>(c)</td><td>\(\gt 4\)</td><td>Maximum above 1, \(V^2(r_A) \gt 1\)</td></tr>
+  </table></div>
+  <div class="tbl"><table>
+    <tr><th>Orbit</th><th>Condition</th><th>Behaviour</th></tr>
+    <tr><td>Circular</td><td>(b), (c), \(E^2 = E_A^2\) or \(E_B^2\)</td><td>\(r\) constant</td></tr>
+    <tr><td>Elliptic</td><td>(b) \(E_A^2 \gt E^2 \gt E_B^2\); (c) \(1 \gt E^2 \gt E_B^2\)</td><td>\(r\) between a minimum and maximum</td></tr>
+    <tr><td>Hyperbolic</td><td>(c) \(1 \lt E^2 \lt E_A^2\)</td><td>Scattering: \(r\) has a minimum only</td></tr>
+    <tr><td>Capture</td><td>(a); (b) \(E^2 \gt 1\); (c) \(E^2 \gt E_A^2\)</td><td>No minimum. No Newtonian analogue for \(L \neq 0\)</td></tr>
+  </table></div>
+
+  <h3>Massless particles</h3>
+  <div class="hero">
+    <div class="hero-label">Photons</div>
+    \[ \left(\frac{dr}{d\lambda}\right)^2 = E^2 - V^2(r), \qquad V^2(r) = \left(1 - \frac{r_S}{r}\right)\frac{L^2}{r^2} \]
+    <p>There is one unstable circular orbit, at \(r = \tfrac32r_S\).</p>
+  </div>
+</article>
+
+<article class="view" id="tests" data-ch="V">
+  <p class="lede">The two classical tests of Einstein's theory, using \(u = 1/r\). Both come from a small correction to a Newtonian equation.</p>
+
+  <div class="hero">
+    <div class="hero-label">Perihelion shift</div>
+    \begin{equation} \Delta\phi \approx \frac{6\pi\tilde M^2}{L^2} \approx \frac{6\pi\tilde M}{r_{\min}(1 + \epsilon)}, \qquad \tilde M = \frac{r_S}{2} \tag{171} \end{equation}
+    <p>Per orbit. For Mercury this is \(5\times10^{-7}\) rad, or 43″ per century.</p>
+  </div>
+
+  <h3>Perihelion: outline</h3>
+  <ol class="steps">
+    <li>With \(u = 1/r\) as a function of \(\phi\), the orbit equation is
+    \[ u'' + u = \frac{\tilde M}{L^2} + 3\tilde Mu^2. \]
+    The last term is the relativistic correction.</li>
+    <li>Writing \(y = u - \tilde M/L^2\) and dropping \(y^2\) terms gives a forced oscillator with \(k^2 = 1 - 6\tilde M^2/L^2\).</li>
+    <li>So \(u \approx \dfrac{\tilde M}{L^2}\big(1 + \epsilon\cos(k\phi - \phi_0)\big)\), up to a small correction.</li>
+    <li>Successive perihelia are separated by \(\delta\phi = 2\pi/k \approx 2\pi(1 + 3\tilde M^2/L^2)\), which is more than \(2\pi\). So the orbit does not close.</li>
+  </ol>
+
+  <div class="hero">
+    <div class="hero-label">Deflection of light</div>
+    \[ \Delta\phi \approx \frac{2r_S}{b} = \frac{4G_NM}{c^2b} \]
+    <p>For light grazing the Sun, \(b = r_{\text{sun}}\), this gives \(8.48\times10^{-6}\) rad, or 1.75″. Confirmed by Eddington in 1919.</p>
+  </div>
+
+  <h3>Deflection: outline</h3>
+  <ol class="steps">
+    <li>Using \(d\phi/d\lambda = L/r^2\) and \(u = 1/r\), the null orbit satisfies
+    \begin{equation} u'^2 = \frac{E^2}{L^2} - u^2 + r_Su^3 \tag{172} \end{equation}
+    and, on differentiating,
+    \begin{equation} u'' + u = \tfrac32r_Su^2. \tag{173} \end{equation}</li>
+    <li>Neglecting the right side gives \(u = \tfrac1b\sin\phi\): a straight line with impact parameter \(b\).</li>
+    <li>Set \(u = \tfrac1b\big(\sin\phi + \tfrac{r_S}{2b}v(\phi)\big)\). To first order, \(v'' + v = 3\sin^2\phi\), solved by \(v = (1 - \cos\phi)^2\).</li>
+    <li>So \(u = \tfrac1b\sin\phi + \tfrac{r_S}{2b^2}(1 - \cos\phi)^2\).</li>
+    <li>Set \(u = 0\) at \(\phi = \pi + \Delta\phi\), using \(\sin\phi \approx -\Delta\phi\) and \(\cos\phi \approx -1\). This gives \(\Delta\phi \approx 2r_S/b\).</li>
+  </ol>
+</article>
+
+<article class="view" id="black-holes" data-ch="V">
+  <p class="lede">A falling observer crosses the horizon in finite proper time. To a distant observer, they never quite arrive.</p>
+
+  <div class="hero">
+    <div class="hero-label">Radial fall from rest at \(r_0\)</div>
+    \[ \dot r^2 = r_S\left(\frac1r - \frac{1}{r_0}\right) \]
+    <p>The equation of motion with \(L = 0\) and \(E^2 = V^2(r_0)\). It has the same form as in Newton's theory.</p>
+  </div>
+
+  <div class="tbl"><table>
+    <tr><th>Observer</th><th>Time to reach \(r_S\)</th></tr>
+    <tr><td>Falling particle (proper time \(\tau\))</td><td>Finite: \(\tau = \dfrac{1}{\sqrt{r_S}}\displaystyle\int_{r_S}^{r_0}\left(\frac{r_0r}{r_0 - r}\right)^{1/2}dr\)</td></tr>
+    <tr><td>Distant static observer (coordinate time \(t\))</td><td>Infinite: \(t \sim -\ln\epsilon\) to reach \(r_S + \epsilon\)</td></tr>
+  </table></div>
+
+  <p>The coordinate speed for a fall from far away is \(\tilde v = (r_S/r)^{1/2}(1 - r_S/r)\), which tends to 0 at \(r_S\). The Newtonian speed would instead be \((r_S/r)^{1/2}\).</p>
+
+  <div class="hero">
+    <div class="hero-label">Gravitational redshift</div>
+    \[ \frac{\nu_2}{\nu_1} = \sqrt{\frac{1 - r_S/r_1}{1 - r_S/r_2}} \]
+    <p>For static observers, with \(r_1 \lt r_2\). An outward signal is redshifted, and \(\nu_2 \to 0\) as \(r_1 \to r_S\).</p>
+  </div>
+
+  <h3>The event horizon</h3>
+  <p>\(r = r_S\) is the boundary of a region invisible from outside. It can only be crossed in one direction. Only extremely dense objects are smaller than their Schwarzschild radius, and these are black holes.</p>
+
+  <h3>Inside the horizon</h3>
+  <p>The coordinate singularity is removed by advanced Eddington–Finkelstein coordinates, \(v = t + r + r_S\ln(r/r_S - 1)\), in which</p>
+  \[ ds^2 = \left(1 - \frac{r_S}{r}\right)dv^2 - 2dv\,dr - r^2\big(d\theta^2 + \sin^2\theta\,d\phi^2\big), \]
+  <p>which is regular for all \(r \gt 0\), and continues the metric to \(r \lt r_S\).</p>
+</article>
+
+<article class="view" id="problems-5" data-ch="V">
+  <p class="lede">Practice for Chapter V. The problem sheets have not reached this material yet, so these are in the style of the results in the notes.</p>
+  <div class="note"><b>Modelled on:</b> The lecture notes, §12 to §15. Use \(c = 3\times10^8\,\text{m s}^{-1}\), \(G_N = 6.67\times10^{-11}\) in SI units, and \(M_\odot = 2\times10^{30}\,\text{kg}\) where needed.</div>
+  <div class="pool">
+
+  <section class="q" data-style="Notes §14.1" data-topic="schwarzschild">
+    <p>Calculate the Schwarzschild radius of the Sun. What density would the Sun's mass have, if compressed to this radius?</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>\(r_S = \dfrac{2(6.67\times10^{-11})(2\times10^{30})}{9\times10^{16}} \approx 2.96\,\text{km}\).</li>
+      <li>\(\rho = \dfrac{M}{\frac43\pi r_S^3} \approx \dfrac{2\times10^{30}}{1.09\times10^{11}} \approx 1.8\times10^{19}\,\text{kg m}^{-3}\).</li>
+      <li>For comparison, nuclear density is around \(2\times10^{17}\,\text{kg m}^{-3}\).</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Notes §14.2" data-topic="orbits">
+    <p>Show that circular orbits exist only for \(L^2 \geq 3r_S^2\). Find the innermost stable circular orbit, and its value of \(E^2\).</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>Expanding, \(V^2 = 1 - \dfrac{r_S}{r} + \dfrac{L^2}{r^2} - \dfrac{r_SL^2}{r^3}\).</li>
+      <li>\(\dfrac{dV^2}{dr} = \dfrac{r_S}{r^2} - \dfrac{2L^2}{r^3} + \dfrac{3r_SL^2}{r^4} = 0\) gives \(r_Sr^2 - 2L^2r + 3r_SL^2 = 0\).</li>
+      <li>So \(r_\pm = \dfrac{L^2}{r_S}\left(1 \pm \sqrt{1 - \dfrac{3r_S^2}{L^2}}\right)\). These are real only if \(L^2 \geq 3r_S^2\).</li>
+      <li>The stable orbit moves inward as \(L\) falls. At \(L^2 = 3r_S^2\) the two roots merge at \(r = 3r_S\).</li>
+      <li>There, \(E^2 = V^2 = \big(1 - \tfrac13\big)\big(1 + \tfrac13\big) = \tfrac89\).</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Notes §14.2" data-topic="orbits">
+    <p>Show that the photon potential \(V^2 = (1 - r_S/r)L^2/r^2\) has a maximum at \(r = \tfrac32r_S\). Why is this orbit unstable? What is \(V^2\) there, in terms of \(L\) and \(r_S\)?</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>\(V^2 = L^2\big(r^{-2} - r_Sr^{-3}\big)\), so \(\dfrac{dV^2}{dr} = L^2\big(-2r^{-3} + 3r_Sr^{-4}\big)\).</li>
+      <li>Setting this to zero gives \(r = \tfrac32r_S\).</li>
+      <li>\(V^2 \to 0\) as \(r \to r_S\) and as \(r \to \infty\), and it is positive between. So this critical point is a maximum, and a small push sends the photon inward or outward.</li>
+      <li>\(V^2 = \big(1 - \tfrac23\big)\dfrac{4L^2}{9r_S^2} = \dfrac{4L^2}{27r_S^2}\).</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Notes §14.3" data-topic="tests">
+    <p>Mercury has \(r_{\min}(1 + \epsilon) \approx 5.55\times10^{10}\,\text{m}\) and an orbital period of 88 days. Taking \(\tilde M = 1.48\,\text{km}\) for the Sun, find its perihelion shift per orbit, and per century, in arc seconds.</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>From (171):
+      \[ \Delta\phi \approx \frac{6\pi(1480)}{5.55\times10^{10}} \approx 5.03\times10^{-7}\,\text{rad per orbit}. \]</li>
+      <li>In a century, the number of orbits is \(36525/88 \approx 415\).</li>
+      <li>So the total is \(2.09\times10^{-4}\) rad. With \(1\,\text{rad} = 206265''\), this is about \(43''\) per century.</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Notes §14.4" data-topic="tests">
+    <p>Check by substitution that \(v = (1 - \cos\phi)^2\) solves \(v'' + v = 3\sin^2\phi\). Find the deflection of light grazing Jupiter, with \(M = 1.9\times10^{27}\,\text{kg}\) and radius \(7\times10^7\,\text{m}\).</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>\(v = 1 - 2\cos\phi + \cos^2\phi\), so \(v' = 2\sin\phi - 2\sin\phi\cos\phi\).</li>
+      <li>\(v'' = 2\cos\phi - 2\cos^2\phi + 2\sin^2\phi\).</li>
+      <li>\(v'' + v = 1 - \cos^2\phi + 2\sin^2\phi = 3\sin^2\phi\). ✓</li>
+      <li>For Jupiter, \(r_S = 2G_NM/c^2 \approx 2.8\,\text{m}\). So \(\Delta\phi \approx \dfrac{2(2.8)}{7\times10^7} \approx 8\times10^{-8}\) rad, or about \(0.017''\).</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Notes §15.1" data-topic="black-holes">
+    <p>A particle falls from rest at infinity, so \(E^2 = 1\), and \(\dot r^2 = r_S/r\). Find the proper time to go from \(r_1\) to \(r_2 \lt r_1\). What is the proper time from \(r_S\) to \(r = 0\)?</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>Taking the inward root, \(\dfrac{d\tau}{dr} = -\sqrt{\dfrac{r}{r_S}}\).</li>
+      <li>Integrating:
+      \[ \tau = \frac{1}{\sqrt{r_S}}\int_{r_2}^{r_1}\sqrt r\,dr = \frac{2}{3\sqrt{r_S}}\big(r_1^{3/2} - r_2^{3/2}\big). \]</li>
+      <li>This is finite at \(r_S\): nothing special happens to the particle at the horizon.</li>
+      <li>From \(r_S\) to 0, \(\tau = \tfrac23r_S\), which is \(\tfrac23r_S/c\) with \(c\) restored.</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Notes §15.2" data-topic="black-holes">
+    <p>Light is emitted by a static source at \(r = \tfrac32r_S\), and received at infinity. Find the ratio of frequencies. By how much does a clock at this radius run slow?</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>With \(r_2 \to \infty\):
+      \[ \frac{\nu_\infty}{\nu_1} = \sqrt{1 - \frac{r_S}{r_1}} = \sqrt{\frac13} \approx 0.577. \]</li>
+      <li>The clock has \(d\tau/dt = \sqrt{1 - r_S/r}\), the same factor.</li>
+      <li>So the clock runs at 57.7% of the rate at infinity.</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Notes §14.1" data-topic="schwarzschild">
+    <p>Find the proper radial distance from \(r = r_S\) to \(r = 2r_S\), at constant \(t\). Compare with the difference \(r_S\) in the coordinate. You may use
+    \[ \int\frac{dr}{\sqrt{1 - r_S/r}} = \sqrt{r(r - r_S)} + \frac{r_S}{2}\ln\big(2r - r_S + 2\sqrt{r(r - r_S)}\big). \]</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>\(d = \displaystyle\int_{r_S}^{2r_S}\frac{dr}{\sqrt{1 - r_S/r}}\), which is finite despite the singular metric component.</li>
+      <li>At \(r = 2r_S\): \(\sqrt2\,r_S + \tfrac{r_S}{2}\ln\big((3 + 2\sqrt2)r_S\big)\).</li>
+      <li>At \(r = r_S\): \(\tfrac{r_S}{2}\ln r_S\).</li>
+      <li>Subtracting: \(d = r_S\big[\sqrt2 + \tfrac12\ln(3 + 2\sqrt2)\big] \approx 2.30r_S\). That is larger than the difference \(r_S\) in the coordinate.</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Notes §14.1" data-topic="schwarzschild">
+    <p>A satellite clock orbits at \(r = 2.66\times10^7\,\text{m}\). Ignoring its orbital speed, how much faster does it run than a clock on Earth's surface, \(r = 6.37\times10^6\,\text{m}\)? Take \(r_S = 8.87\,\text{mm}\) for Earth. Express this in microseconds per day.</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>\(d\tau/dt = \sqrt{1 - r_S/r} \approx 1 - r_S/2r\).</li>
+      <li>The fractional difference is
+      \[ \frac{r_S}{2}\left(\frac{1}{r_E} - \frac{1}{r}\right) = 4.435\times10^{-3}\big(1.570 - 0.376\big)\times10^{-7} \approx 5.3\times10^{-10}. \]</li>
+      <li>Over a day of \(86400\,\text{s}\), this is about \(46\,\mu\text{s}\).</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Notes §13.1" data-topic="einstein-equations">
+    <p>Derive the trace-reversed form of the Einstein equations. Show that in vacuum, \(R = -4\Lambda\).</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>Contract \(R_{\mu\nu} - \tfrac12g_{\mu\nu}R - \Lambda g_{\mu\nu} = \kappa T_{\mu\nu}\) with \(g^{\mu\nu}\), using \(g^{\mu\nu}g_{\mu\nu} = 4\).</li>
+      <li>This gives \(R - 2R - 4\Lambda = \kappa T\), so \(R = -4\Lambda - \kappa T\).</li>
+      <li>Substituting back:
+      \[ R_{\mu\nu} = \tfrac12g_{\mu\nu}(-4\Lambda - \kappa T) + \Lambda g_{\mu\nu} + \kappa T_{\mu\nu} = -\Lambda g_{\mu\nu} + \kappa\big(T_{\mu\nu} - \tfrac12Tg_{\mu\nu}\big). \]</li>
+      <li>In vacuum, \(T_{\mu\nu} = 0\), so \(T = 0\) and \(R = -4\Lambda\).</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Notes §12.4" data-topic="energy-momentum">
+    <p>For the perfect fluid \(T^{\mu\nu} = (\epsilon + p)u^\mu u^\nu - pg^{\mu\nu}\), check that the rest frame gives \(\operatorname{diag}(\epsilon, p, p, p)\) in Minkowski space. Show that the trace is \(\epsilon - 3p\), and that it vanishes for radiation.</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>In the rest frame, \(u^\mu = (1, \vec 0)\) and \(g^{\mu\nu} = \eta^{\mu\nu}\).</li>
+      <li>\(T^{00} = \epsilon + p - p = \epsilon\). \(T^{0i} = 0\). \(T^{ij} = -p\eta^{ij} = p\delta^{ij}\). ✓</li>
+      <li>\(T = g_{\mu\nu}T^{\mu\nu} = (\epsilon + p)u^\mu u_\mu - 4p = \epsilon + p - 4p = \epsilon - 3p\), using \(u^\mu u_\mu = 1\).</li>
+      <li>For radiation, \(p = \tfrac13\epsilon\), so \(T = 0\).</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Notes §12.2" data-topic="newtonian-limit">
+    <p>Using \(g_{00} \approx 1 + 2\phi/c^2\) with \(\phi = -G_NM/r\), estimate \(|h_{00}|\) at Earth's surface and at the Sun's surface. Earth: \(r_S = 8.87\,\text{mm}\), \(r = 6.37\times10^6\,\text{m}\). Sun: \(r_S = 2.95\,\text{km}\), \(r = 6.96\times10^8\,\text{m}\). Is the weak-field assumption good?</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>\(h_{00} = 2\phi/c^2 = -2G_NM/(rc^2) = -r_S/r\).</li>
+      <li>Earth: \(|h_{00}| = \dfrac{8.87\times10^{-3}}{6.37\times10^6} \approx 1.4\times10^{-9}\).</li>
+      <li>Sun: \(|h_{00}| = \dfrac{2950}{6.96\times10^8} \approx 4.2\times10^{-6}\).</li>
+      <li>Both are far smaller than 1, so the weak-field assumption is very good in the solar system. It fails only near \(r \sim r_S\).</li>
+    </ol></details>
+  </section>
+
+  </div>
+</article>
+
+</div><!-- /wrap -->
+
+<script>
+const SHEET = { code: 'MATH326', full: 'MATH326 — Relativity Cheat Sheet' };
+const CHAPTERS = { I: 'Foundations of Special Relativity', II: 'Minkowski Space', III: 'Relativistic Mechanics', IV: 'Riemannian Geometry', V: 'General Relativity' };
+const PENCIL = '<path d="M4 20l1-4.500L16.500 4l3.500 3.500L8.500 19 4 20z"/><path d="M14 6.500l3.500 3.500"/>';
+const TOPICS = [
+  { id: 'frames', ch: 'I', title: 'Inertial Frames', desc: 'Galilei transformations and groups',
+    icon: '<path d="M3 21V9M3 21h12"/><path d="M9 15V3M9 15h12" opacity=".6"/>' },
+  { id: 'index-notation', ch: 'I', title: 'Index Notation', desc: 'Summation, δ and orthogonal matrices',
+    icon: '<path d="M5 5v12"/><path d="M10 12v5M10 9v.01"/><path d="M16 12c-2 0-2 5 0 5s2-5 0-5"/><path d="M20 6v5"/>' },
+  { id: 'lorentz', ch: 'I', title: 'Lorentz Transformations', desc: 'Postulates, rapidity, velocity addition',
+    icon: '<path d="M3 21V3M3 21h18"/><path d="M3 21L15 5M3 21l16-12" opacity=".6"/>' },
+  { id: 'intervals', ch: 'I', title: 'Intervals', desc: 'The invariant line element',
+    icon: '<circle cx="5" cy="19" r="1.800" fill="currentColor"/><circle cx="19" cy="5" r="1.800" fill="currentColor"/><path d="M6.500 17.500l11-11"/><path d="M5 12V5h7" opacity=".5"/>' },
+  { id: 'time-length', ch: 'I', title: 'Time and Length', desc: 'Dilation, contraction, simultaneity',
+    icon: '<circle cx="9" cy="9" r="6"/><path d="M9 6v3l2 1.500"/><path d="M3 20h18M3 18v4M21 18v4"/>' },
+  { id: 'doppler', ch: 'I', title: 'Doppler Effect', desc: 'Longitudinal and transverse shifts',
+    icon: '<circle cx="11" cy="12" r="1.800" fill="currentColor"/><path d="M6 6a8.500 8.500 0 0 0 0 12M15 8a6 6 0 0 1 0 8M18 6a9 9 0 0 1 0 12"/>' },
+  { id: 'problems-1', ch: 'I', title: 'Problems', desc: 'Twelve questions in the style of Sheets 1 to 3', icon: PENCIL },
+
+  { id: 'minkowski', ch: 'II', title: 'Minkowski Space', desc: 'Four-vectors and the metric',
+    icon: '<path d="M4 4h16v16H4z"/><path d="M4 12h16M12 4v16"/><path d="M4 20L20 4" opacity=".5"/>' },
+  { id: 'causality', ch: 'II', title: 'Causality', desc: 'Timelike, lightlike and spacelike',
+    icon: '<path d="M4 4l16 16M20 4L4 20"/><ellipse cx="12" cy="4" rx="8" ry="1.800"/><ellipse cx="12" cy="20" rx="8" ry="1.800"/>' },
+  { id: 'proper-time', ch: 'II', title: 'Proper Time', desc: 'The length of a worldline',
+    icon: '<path d="M12 21C7 15 17 9 12 3"/><circle cx="12" cy="21" r="1.500" fill="currentColor"/><circle cx="12" cy="3" r="1.500" fill="currentColor"/><path d="M12 21V3" stroke-dasharray="2 3"/>' },
+  { id: 'lorentz-group', ch: 'II', title: 'Lorentz Group', desc: 'Matrices preserving the metric',
+    icon: '<path d="M6 4H4v16h2M18 4h2v16h-2"/><path d="M9 9h6M9 15h6"/>' },
+  { id: 'problems-2', ch: 'II', title: 'Problems', desc: 'Eight questions in the style of Sheets 4 and 5', icon: PENCIL },
+
+  { id: 'four-velocity', ch: 'III', title: '4-Velocity', desc: 'Tangents, acceleration, hyperbolic motion',
+    icon: '<path d="M6 21C6 12 11 7 20 3"/><path d="M15 3h5v5"/>' },
+  { id: 'four-momentum', ch: 'III', title: '4-Momentum', desc: 'Energy, mass and massless particles',
+    icon: '<path d="M3 20h18L12 4z"/><path d="M12 4v16"/>' },
+  { id: 'collisions', ch: 'III', title: 'Decays and Collisions', desc: 'Invariants and threshold energies',
+    icon: '<path d="M3 12h7M21 5l-9 6M21 19l-9-6"/><circle cx="11" cy="12" r="1.800" fill="currentColor"/>' },
+  { id: 'problems-3', ch: 'III', title: 'Problems', desc: 'Twelve questions in the style of Sheets 5 and 6', icon: PENCIL },
+
+  { id: 'equivalence', ch: 'IV', title: 'Equivalence Principle', desc: 'From Newton\'s force to geometry',
+    icon: '<path d="M6 3h12v18H6z"/><path d="M12 9v7"/><path d="M9 13l3 3 3-3"/>' },
+  { id: 'metric', ch: 'IV', title: 'Metric and Tensors', desc: 'Manifolds and transformation laws',
+    icon: '<path d="M3 8c6-4 12-4 18 0M3 16c6-4 12-4 18 0"/><path d="M8 4c-2 5-2 11 0 16M16 4c-2 5-2 11 0 16"/>' },
+  { id: 'parallel-transport', ch: 'IV', title: 'Parallel Transport', desc: 'Christoffel symbols',
+    icon: '<path d="M3 18C9 8 15 8 21 18"/><path d="M6 14v-5M6 9l-2 2M6 9l2 2M18 14v-5M18 9l-2 2M18 9l2 2"/>' },
+  { id: 'geodesics', ch: 'IV', title: 'Geodesics', desc: 'The straightest possible lines',
+    icon: '<circle cx="12" cy="12" r="9"/><path d="M3 12c4 4 14 4 18 0"/>' },
+  { id: 'covariant-derivatives', ch: 'IV', title: 'Covariant Derivatives', desc: 'Differentiating tensors properly',
+    icon: '<path d="M4 5h16L12 20z"/><path d="M8 8.500h8" opacity=".5"/>' },
+  { id: 'curvature', ch: 'IV', title: 'Curvature', desc: 'Riemann, Ricci and Einstein tensors',
+    icon: '<path d="M3 16c4-3 6-10 9-10s5 7 9 10"/><path d="M3 20h18" opacity=".5"/>' },
+  { id: 'problems-4', ch: 'IV', title: 'Problems', desc: 'Twelve questions based on the notes', icon: PENCIL },
+
+  { id: 'newtonian-limit', ch: 'V', title: 'Matter and Newtonian Limit', desc: 'Motion in a curved space-time',
+    icon: '<path d="M3 8c5 8 13 8 18 0"/><circle cx="12" cy="9" r="2.500" fill="currentColor"/>' },
+  { id: 'energy-momentum', ch: 'V', title: 'Energy–Momentum Tensor', desc: 'The source of gravity',
+    icon: '<path d="M4 6h16M12 6v14"/><path d="M4 20h16" opacity=".4"/>' },
+  { id: 'einstein-equations', ch: 'V', title: 'Einstein Equations', desc: 'Geometry equals matter',
+    icon: '<path d="M4 9h6M4 15h6M13 9h7M13 15h7"/><path d="M3 12h0"/>' },
+  { id: 'schwarzschild', ch: 'V', title: 'Schwarzschild Solution', desc: 'Outside a spherical mass',
+    icon: '<circle cx="12" cy="12" r="3.500" fill="currentColor"/><circle cx="12" cy="12" r="6.500" stroke-dasharray="2 3"/><circle cx="12" cy="12" r="10" stroke-dasharray="2 3"/>' },
+  { id: 'orbits', ch: 'V', title: 'Orbits', desc: 'Effective potential and classification',
+    icon: '<ellipse cx="12" cy="12" rx="10" ry="5" transform="rotate(25 12 12)"/><circle cx="12" cy="12" r="1.800" fill="currentColor"/>' },
+  { id: 'tests', ch: 'V', title: 'Tests of GR', desc: 'Perihelion shift and light bending',
+    icon: '<circle cx="12" cy="13" r="3.500" fill="currentColor"/><path d="M2 5c7 1 13 2 20 8"/>' },
+  { id: 'black-holes', ch: 'V', title: 'Black Holes', desc: 'Horizons, infall and redshift',
+    icon: '<circle cx="12" cy="12" r="4.500" fill="currentColor"/><path d="M2 12c3-5 7-5 10-5s7 0 10 5"/><path d="M2 12c3 5 7 5 10 5s7 0 10-5"/>' },
+  { id: 'problems-5', ch: 'V', title: 'Problems', desc: 'Twelve questions based on the notes', icon: PENCIL },
+];
+
+const iconSvg = t => `<span class="icon"><svg viewBox="0 0 24 24" aria-hidden="true">${t.icon}</svg></span>`;
+
+/* ── Build the homepage and each topic's header and pager ── */
+(function build() {
+  const contents = document.getElementById('contents');
+  Object.keys(CHAPTERS).forEach(ch => {
+    const cards = TOPICS.filter(t => t.ch === ch).map(t =>
+      `<a class="topic-card" href="#${t.id}">${iconSvg(t)}<span><b>${t.title}</b><span class="d">${t.desc}</span></span></a>`).join('');
+    contents.insertAdjacentHTML('beforeend',
+      `<section class="ch-group" data-ch="${ch}"><div class="ch-head"><span class="ch-num">Chapter ${ch}</span><span class="ch-title">${CHAPTERS[ch]}</span></div><div class="topic-grid">${cards}</div></section>`);
+  });
+  TOPICS.forEach((t, i) => {
+    const el = document.getElementById(t.id);
+    const prev = TOPICS[i - 1], next = TOPICS[i + 1];
+    el.insertAdjacentHTML('afterbegin',
+      `<nav class="topbar"><a href="#">← All topics</a><span class="where">Chapter ${t.ch} · ${CHAPTERS[t.ch]}</span></nav>
+       <div class="topic-head">${iconSvg(t)}<h2 class="topic-title">${t.title}</h2></div>`);
+    el.insertAdjacentHTML('beforeend',
+      `<nav class="pager">${prev ? `<a href="#${prev.id}"><small>← Previous</small>${prev.title}</a>` : ''}${next ? `<a class="nx" href="#${next.id}"><small>Next →</small>${next.title}</a>` : ''}</nav>`);
+  });
+})();
+
+/* ── Problems: show 4 questions from each pool, and cycle on demand ── */
+const SHOW = 4;
+function shuffled(list) {
+  const a = list.slice();
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+document.querySelectorAll('.pool').forEach(pool => {
+  const all = [...pool.querySelectorAll('.q')];
+  const sets = Math.ceil(all.length / SHOW);
+  let order = shuffled(all), set = 0;
+
+  all.forEach(q => {
+    const topic = TOPICS.find(t => t.id === q.dataset.topic);
+    q.insertAdjacentHTML('afterbegin',
+      `<div class="q-head"><span class="q-num"></span><span>Based on ${q.dataset.style}</span><a href="#${topic.id}">${topic.title}</a></div>`);
+  });
+
+  pool.insertAdjacentHTML('afterend',
+    `<div class="pool-controls"><button class="gen-btn" type="button">Generate new questions</button><span class="pool-count"></span></div>`);
+  const controls = pool.nextElementSibling;
+  const count = controls.querySelector('.pool-count');
+
+  function show() {
+    all.forEach(q => { q.hidden = true; q.querySelector('details').open = false; });
+    order.slice(set * SHOW, (set + 1) * SHOW).forEach((q, i) => {
+      q.hidden = false;
+      q.querySelector('.q-num').textContent = `Question ${i + 1}`;
+      pool.append(q);
+    });
+    count.textContent = `Set ${set + 1} of ${sets} · ${all.length} questions in the pool`;
+  }
+
+  controls.querySelector('.gen-btn').addEventListener('click', () => {
+    set++;
+    if (set === sets) { set = 0; order = shuffled(all); }   // pool finished: start a fresh cycle
+    show();
+    markLongEquations();
+    pool.closest('.view').scrollIntoView({ block: 'start', behavior: 'instant' });
+  });
+  show();
+});
+document.addEventListener('toggle', e => {
+  if (e.target.matches && e.target.matches('details.sol')) {
+    e.target.querySelector('summary').textContent = e.target.open ? 'Hide solution' : 'Show solution';
+  }
+}, true);
+
+/* ── Hash routing, so links, reloads and the back button all work ── */
+function route() {
+  const id = decodeURIComponent(location.hash.slice(1));
+  const target = (id && document.getElementById(id)) || document.getElementById('home');
+  document.querySelectorAll('.view').forEach(v => v.classList.toggle('active', v === target));
+  const t = TOPICS.find(x => x.id === target.id);
+  document.title = t ? `${t.title} — ${SHEET.code}` : SHEET.full;
+  window.scrollTo({ top: 0, behavior: 'instant' });
+  markLongEquations();
+}
+function markLongEquations() {
+  document.querySelectorAll('.view.active .katex-display').forEach(e => {
+    if (e.offsetParent) e.classList.toggle('scrolls', e.scrollWidth - e.clientWidth > 4);
+  });
+}
+window.addEventListener('resize', markLongEquations);
+document.addEventListener('toggle', markLongEquations, true);
+window.addEventListener('hashchange', route);
+route();
+
+/* ── KaTeX: \( \) inline, \[ \] and equation environments for display ── */
+function initMath() {
+  renderMathInElement(document.body, { throwOnError: false, strict: 'ignore' });
+  markLongEquations();
+  document.body.dataset.mathReady = '1';
+}
+
+/* ── SVG figures, plotted from the actual formulas ── */
+const NS = 'http://www.w3.org/2000/svg';
+function el(tag, attrs, parent, text) {
+  const n = document.createElementNS(NS, tag);
+  Object.entries(attrs).forEach(([k, v]) => n.setAttribute(k, v));
+  if (text !== undefined) n.textContent = text;
+  if (parent) parent.appendChild(n);
+  return n;
+}
+function plot(id, w, h, bounds, draw, flipY) {
+  const [x0, x1, y0, y1] = bounds, pad = 34;
+  const svg = el('svg', { viewBox: `0 0 ${w} ${h}`, role: 'img' });
+  const X = x => pad + (x - x0) / (x1 - x0) * (w - 2 * pad);
+  const Y = y => flipY ? pad + (y - y0) / (y1 - y0) * (h - 2 * pad) : h - pad - (y - y0) / (y1 - y0) * (h - 2 * pad);
+  const g = {
+    svg, X, Y,
+    curve(fn, a, b, attrs = {}) {
+      let d = '';
+      for (let i = 0; i <= 160; i++) { const p = fn(a + (b - a) * i / 160); d += (i ? 'L' : 'M') + X(p[0]).toFixed(1) + ' ' + Y(p[1]).toFixed(1); }
+      return el('path', { d, fill: 'none', stroke: 'var(--accent)', 'stroke-width': 2, ...attrs }, svg);
+    },
+    line(a, b, c, d, attrs = {}) { return el('line', { x1: X(a), y1: Y(b), x2: X(c), y2: Y(d), stroke: 'var(--ink-muted)', 'stroke-width': 1, ...attrs }, svg); },
+    dot(x, y, r = 4) { return el('circle', { cx: X(x), cy: Y(y), r, fill: 'var(--accent)' }, svg); },
+    text(x, y, s, dx = 6, dy = -6, anchor = 'start') { return el('text', { x: X(x) + dx, y: Y(y) + dy, 'text-anchor': anchor }, svg, s); },
+  };
+  draw(g);
+  document.getElementById(id).prepend(svg);
+}
+
+/* ── Figures ── */
+const faint = { stroke: 'var(--ink-muted)', 'stroke-width': 1, opacity: .4 };
+
+plot('fig-spacetime', 520, 400, [-.3, 3.2, -.3, 3.2], g => {
+  const b = .5;
+  g.line(0, 0, 3.1, 0, { stroke: 'var(--ink)', 'stroke-width': 1.4 }); g.line(0, 0, 0, 3.1, { stroke: 'var(--ink)', 'stroke-width': 1.4 });
+  g.line(0, 0, 3.1, 3.1, { stroke: 'var(--ink-muted)', 'stroke-dasharray': '6 5' });
+  g.line(0, 0, 3.1 * b, 3.1, { stroke: 'var(--accent)', 'stroke-width': 2 });
+  g.line(0, 0, 3.1, 3.1 * b, { stroke: 'var(--accent)', 'stroke-width': 2 });
+  [1, 2].forEach(k => g.line(0, k, 3.1, k + 3.1 * b, { ...faint, stroke: 'var(--accent)' }));
+  g.dot(0, 1); g.dot(2, 2);
+  g.text(3.1, 0, 'x', 2, -6); g.text(0, 3.1, 'ct', 8, 4);
+  g.text(3.1 * b, 3.1, "ct′", 6, 6); g.text(3.1, 3.1 * b, "x′", -14, -8); g.text(2.5, 2.5, 'light', 8, 12);
+});
+
+plot('fig-cone', 520, 340, [-3, 3, -2.2, 2.2], g => {
+  g.line(-2.2, -2.2, 2.2, 2.2, { stroke: 'var(--accent)', 'stroke-width': 2 });
+  g.line(-2.2, 2.2, 2.2, -2.2, { stroke: 'var(--accent)', 'stroke-width': 2 });
+  g.line(-3, 0, 3, 0); g.line(0, -2.2, 0, 2.2);
+  g.dot(0, 0);
+  g.text(0, 1.5, 'future', -18, 0); g.text(0, -1.5, 'past', -13, 0);
+  g.text(2, .45, 'spacelike', -30, 0); g.text(-2, .45, 'spacelike', -30, 0);
+  g.text(0, 2.2, 'ct', 8, 8); g.text(3, 0, 'x', -12, -6);
+});
+
+plot('fig-potential', 620, 300, [0, 34, .55, 1.25], g => {
+  const L2 = 6, V = r => (1 - 1 / r) * (1 + L2 / (r * r));
+  g.curve(r => [r, V(r)], 1.15, 34);
+  g.line(0, 1, 34, 1, { 'stroke-dasharray': '5 5' });
+  g.line(0, .55, 34, .55); g.line(0, .55, 0, 1.25);
+  const s = Math.sqrt(1 - 3 / L2), rA = L2 * (1 - s), rB = L2 * (1 + s);
+  g.dot(rA, V(rA)); g.dot(rB, V(rB));
+  g.text(rA, V(rA), 'rA', 6, -8); g.text(rB, V(rB), 'rB', -4, 20);
+  g.text(34, .55, 'r / rS', -40, 20); g.text(0, 1.25, 'V²', 8, 6); g.text(34, 1, '1', 2, -6);
+});
+
+/* ── Logo: a boost tilts the axes of I′ within a fixed light cone. Each axis has slope
+   set by β, and marks stay on the invariant hyperbolae c²t² − x² = ±1. ── */
+(function logo() {
+  const svg = document.getElementById('logo'), cx = 140, cy = 178, S = 54, R = 150;
+  const css = v => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+  const blue = css('--teal'), ink = css('--ink-muted'), rule = css('--rule');
+  const P = (x, t) => [cx + S * x, cy - S * t];
+  const seg = (a, b, attrs) => el('line', { x1: a[0], y1: a[1], x2: b[0], y2: b[1], ...attrs }, svg);
+  [1, 2].forEach(k => {
+    let d = '';
+    for (let i = -40; i <= 40; i++) { const u = i / 40 * 1.8, q = P(k * Math.sinh(u), k * Math.cosh(u)); if (q[0] > 4 && q[0] < 276 && q[1] > 4) d += (d ? 'L' : 'M') + q[0].toFixed(1) + ' ' + q[1].toFixed(1); }
+    el('path', { d, fill: 'none', stroke: rule, 'stroke-width': 1.2 }, svg);
+  });
+  seg([cx - 160, cy], [cx + 160, cy], { stroke: ink, 'stroke-width': 1 });
+  seg([cx, cy], [cx, 6], { stroke: ink, 'stroke-width': 1 });
+  seg([cx, cy], [cx + 130, cy - 130], { stroke: ink, 'stroke-width': 1.2, 'stroke-dasharray': '5 4' });
+  seg([cx, cy], [cx - 130, cy - 130], { stroke: ink, 'stroke-width': 1.2, 'stroke-dasharray': '5 4' });
+  const tAxis = el('line', { x1: cx, y1: cy, stroke: blue, 'stroke-width': 2.2, 'stroke-linecap': 'round' }, svg);
+  const xAxis = el('line', { x1: cx, y1: cy, stroke: blue, 'stroke-width': 2.2, 'stroke-linecap': 'round' }, svg);
+  const mark = el('circle', { r: 4.5, fill: blue }, svg);
+  function show(beta) {
+    const g = 1 / Math.sqrt(1 - beta * beta), T = P(beta * g * 3, g * 3), X = P(g * 3, beta * g * 3);
+    const norm = (p) => { const dx = p[0] - cx, dy = p[1] - cy, n = Math.hypot(dx, dy) / R; return [cx + dx / n, cy + dy / n]; };
+    const t = norm(T), x = norm(X), m = P(beta * g * 2, g * 2);
+    tAxis.setAttribute('x2', t[0]); tAxis.setAttribute('y2', t[1]);
+    xAxis.setAttribute('x2', x[0]); xAxis.setAttribute('y2', x[1]);
+    mark.setAttribute('cx', m[0]); mark.setAttribute('cy', m[1]);
+  }
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) { show(.45); return; }
+  (function tick(now) { show(.62 * Math.sin(now / 2600)); requestAnimationFrame(tick); })(0);
+})();
+</script>
+</body>
+</html>

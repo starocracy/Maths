@@ -1,0 +1,1767 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MATH325 — Quantum Mechanics Cheat Sheet</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" onload="initMath();"></script>
+<style>
+:root {
+  --ink: #1f1c17;
+  --ink-soft: #4a453d;
+  --ink-muted: #7a7468;
+  --rule: #e4dccd;
+  --page: #faf7f2;
+  --page-deep: #f1ebdf;
+  --card: #fffdf9;
+  --teal: #2e7d6b;   --teal-tint: #e9f3f0;
+  --gold: #8f6a05;   --gold-tint: #f7f0dc;
+  --red:  #8b2f2f;   --red-tint:  #f6e9e6;
+  --blue: #2f5583;   --blue-tint: #e8eef6;
+  --accent: var(--teal);
+  --tint: var(--teal-tint);
+  --serif: 'EB Garamond', Georgia, serif;
+  --mono: 'DM Mono', Consolas, monospace;
+}
+[data-ch="I"]   { --accent: var(--teal); --tint: var(--teal-tint); }
+[data-ch="II"]  { --accent: var(--gold); --tint: var(--gold-tint); }
+[data-ch="III"] { --accent: var(--red);  --tint: var(--red-tint); }
+[data-ch="IV"]  { --accent: var(--blue); --tint: var(--blue-tint); }
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--page); color: var(--ink);
+  font-family: var(--serif); font-size: 19px; line-height: 1.6;
+}
+a { color: var(--accent); }
+.wrap { max-width: 880px; margin: 0 auto; padding: 0 1.5rem 5rem; }
+.view { display: none; }
+.view.active { display: block; animation: rise .28s ease; }
+@keyframes rise { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+
+/* ── Home ── */
+.masthead {
+  display: grid; grid-template-columns: 1fr 280px; gap: 1.5rem; align-items: center;
+  padding: 4rem 0 2.5rem; border-bottom: 1px solid var(--rule); margin-bottom: 2.5rem;
+}
+.eyebrow {
+  font-family: var(--mono); font-size: 12px; letter-spacing: .16em; text-transform: uppercase;
+  color: var(--ink-muted); margin-bottom: .75rem;
+}
+h1 { font-weight: 500; font-size: clamp(2.5rem, 7vw, 3.6rem); line-height: 1.05; letter-spacing: -.01em; }
+h1 em { color: var(--gold); font-style: italic; }
+.subtitle { color: var(--ink-soft); margin-top: .9rem; max-width: 30em; }
+#logo { width: 100%; height: auto; display: block; }
+
+.ch-group { margin-bottom: 2.75rem; }
+.ch-head { display: flex; align-items: baseline; gap: .75rem; margin-bottom: 1rem; }
+.ch-num { font-family: var(--mono); font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); }
+.ch-title { font-size: 1.45rem; font-weight: 500; }
+.topic-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: .75rem; }
+.topic-card {
+  display: flex; gap: .85rem; align-items: flex-start; padding: .9rem 1rem;
+  background: var(--card); border: 1px solid var(--rule); border-radius: 10px;
+  color: inherit; text-decoration: none;
+  transition: border-color .15s, transform .15s, box-shadow .15s;
+}
+.topic-card:hover, .topic-card:focus-visible {
+  border-color: var(--accent); transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(60, 45, 20, .08); outline: none;
+}
+.icon {
+  flex: none; width: 42px; height: 42px; border-radius: 9px; padding: 8px;
+  background: var(--tint); color: var(--accent);
+}
+.icon svg { width: 100%; height: 100%; display: block; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.topic-card b { display: block; font-weight: 500; line-height: 1.25; font-size: 1.08rem; }
+.topic-card span.d { display: block; color: var(--ink-muted); font-size: .86rem; line-height: 1.35; margin-top: 3px; }
+
+/* ── Topic pages ── */
+.topbar {
+  position: sticky; top: 0; z-index: 5; background: var(--page);
+  display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+  padding: .85rem 0; border-bottom: 1px solid var(--rule); margin-bottom: 2.25rem;
+  font-family: var(--mono); font-size: 12px;
+}
+.topbar a { color: var(--ink-soft); text-decoration: none; white-space: nowrap; }
+.topbar a:hover { color: var(--accent); }
+.topbar .where { color: var(--ink-muted); letter-spacing: .08em; text-align: right; }
+.topic-head { display: flex; gap: 1rem; align-items: center; margin-bottom: 1.5rem; }
+.topic-head .icon { width: 56px; height: 56px; padding: 11px; border-radius: 12px; }
+h2.topic-title { font-size: clamp(1.8rem, 5vw, 2.4rem); font-weight: 500; line-height: 1.12; }
+.lede { color: var(--ink-soft); font-size: 1.1rem; margin-bottom: 1.75rem; }
+h3 {
+  font-family: var(--mono); font-weight: 500; font-size: 12.5px; letter-spacing: .13em; text-transform: uppercase;
+  color: var(--accent); margin: 2.25rem 0 .75rem; padding-bottom: .35rem; border-bottom: 1px solid var(--rule);
+}
+p { margin-bottom: .8rem; }
+ul, ol { margin: 0 0 .9rem 1.4rem; }
+li { margin-bottom: .35rem; }
+
+/* Hero cell */
+.hero {
+  background: var(--tint); border: 1px solid var(--accent); border-radius: 12px;
+  padding: 1.15rem 1.25rem 1rem; margin: 1.4rem 0; text-align: center;
+}
+.hero-label {
+  font-family: var(--mono); font-size: 11.5px; letter-spacing: .15em; text-transform: uppercase;
+  color: var(--accent); margin-bottom: .2rem;
+}
+.hero .katex-display { margin: .7rem 0; }
+.hero .katex { font-size: 1.28em; }
+.hero p { font-size: .98rem; color: var(--ink-soft); margin: .25rem auto .15rem; max-width: 36em; }
+.hero p .katex { font-size: 1.05em; }
+
+/* Cards, callouts, tables */
+.box { background: var(--card); border: 1px solid var(--rule); border-radius: 10px; padding: .85rem 1.1rem; margin: 1rem 0; }
+.box > :last-child { margin-bottom: 0; }
+.box-title { font-weight: 600; margin-bottom: .3rem; }
+.note {
+  border-left: 3px solid var(--accent); background: var(--card);
+  padding: .55rem 1rem; margin: 1rem 0; border-radius: 0 8px 8px 0; font-size: .98rem;
+}
+.note b:first-child { font-weight: 600; }
+.steps { counter-reset: s; list-style: none; margin-left: 0; }
+.steps > li { counter-increment: s; position: relative; padding-left: 2.2rem; margin-bottom: .65rem; }
+.steps > li::before {
+  content: counter(s); position: absolute; left: 0; top: .12rem; width: 1.5rem; height: 1.5rem; border-radius: 50%;
+  background: var(--tint); color: var(--accent); font-family: var(--mono); font-size: 12px;
+  display: flex; align-items: center; justify-content: center; border: 1px solid var(--accent);
+}
+.tbl { overflow-x: auto; margin: 1rem 0; }
+table { border-collapse: collapse; width: 100%; background: var(--card); font-size: .98rem; }
+th {
+  font-family: var(--mono); font-weight: 500; font-size: 11.5px; letter-spacing: .08em; text-transform: uppercase;
+  text-align: left; color: var(--ink-muted); background: var(--page-deep);
+}
+th, td { padding: .5rem .75rem; border: 1px solid var(--rule); vertical-align: middle; }
+
+details.ex { background: var(--card); border: 1px solid var(--rule); border-radius: 10px; margin: .8rem 0; }
+details.ex > summary {
+  cursor: pointer; padding: .65rem 1.1rem; list-style: none; display: flex; gap: .7rem; align-items: baseline;
+}
+details.ex > summary::-webkit-details-marker { display: none; }
+details.ex > summary::before { content: '›'; color: var(--accent); font-weight: 600; transition: transform .15s; display: inline-block; }
+details.ex[open] > summary::before { transform: rotate(90deg); }
+details.ex > summary:hover { color: var(--accent); }
+.ex-tag { font-family: var(--mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); flex: none; }
+.ex-body { padding: .2rem 1.2rem .9rem; border-top: 1px solid var(--rule); }
+.ex-body > :first-child { margin-top: .7rem; }
+
+/* Long equations scroll sideways, but the bar only shows when one really does not fit */
+.katex-display { overflow-x: auto; overflow-y: hidden; padding: .15rem 0 .35rem; scrollbar-width: none; }
+.katex-display::-webkit-scrollbar { display: none; }
+.katex-display.scrolls { scrollbar-width: thin; }
+.katex-display.scrolls::-webkit-scrollbar { display: block; height: 6px; }
+.katex-display.scrolls::-webkit-scrollbar-thumb { background: var(--rule); border-radius: 3px; }
+.katex { font-size: 1.08em; }
+
+figure { margin: 1.2rem 0; text-align: center; }
+figure svg { width: 100%; max-width: 620px; height: auto; background: var(--card); border: 1px solid var(--rule); border-radius: 10px; }
+figcaption { font-size: .92rem; color: var(--ink-muted); margin-top: .35rem; }
+svg text { font-family: var(--serif); font-style: italic; font-size: 15px; fill: var(--ink-soft); }
+
+/* Problems pages */
+.q { background: var(--card); border: 1px solid var(--rule); border-radius: 10px; padding: .9rem 1.2rem 1rem; margin: 1.1rem 0; }
+.q-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: .25rem .9rem; margin-bottom: .55rem; font-family: var(--mono); font-size: 11.5px; letter-spacing: .06em; color: var(--ink-muted); }
+.q-num { color: var(--accent); text-transform: uppercase; letter-spacing: .12em; font-weight: 500; }
+.q-head a { color: var(--ink-muted); }
+.q-head a:hover { color: var(--accent); }
+details.sol { margin-top: .75rem; }
+details.sol > summary {
+  display: inline-block; cursor: pointer; list-style: none; padding: .3rem .85rem;
+  border: 1px solid var(--accent); border-radius: 6px; background: var(--tint); color: var(--accent);
+  font-family: var(--mono); font-size: 12px; transition: background .15s, color .15s;
+}
+details.sol > summary::-webkit-details-marker { display: none; }
+details.sol > summary::before { content: '▸ '; }
+details.sol[open] > summary::before { content: '▾ '; }
+details.sol > summary:hover, details.sol > summary:focus-visible { background: var(--accent); color: var(--card); outline: none; }
+details.sol .steps { margin-top: .9rem; }
+.pool-controls { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .75rem 1.25rem; margin-top: 1.4rem; }
+.gen-btn {
+  cursor: pointer; padding: .6rem 1.2rem; border-radius: 8px; border: 1px solid var(--accent);
+  background: var(--accent); color: var(--card); font-family: var(--mono); font-size: 13px;
+  transition: opacity .15s, transform .15s;
+}
+.gen-btn:hover, .gen-btn:focus-visible { opacity: .88; transform: translateY(-1px); outline: none; }
+.pool-count { font-family: var(--mono); font-size: 12px; color: var(--ink-muted); }
+
+.pager { display: flex; justify-content: space-between; gap: 1rem; margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--rule); }
+.pager a { text-decoration: none; color: var(--ink-soft); max-width: 48%; }
+.pager a:hover { color: var(--accent); }
+.pager small { display: block; font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-muted); }
+.pager .nx { text-align: right; margin-left: auto; }
+
+footer { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--rule); color: var(--ink-muted); font-family: var(--mono); font-size: 12px; display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+footer a { color: inherit; }
+
+@media (max-width: 680px) {
+  body { font-size: 18px; }
+  .wrap { padding: 0 1rem 4rem; }
+  .masthead { grid-template-columns: 1fr; padding-top: 2.5rem; }
+  #logo { max-width: 280px; }
+  .hero { padding: 1rem .75rem; }
+  .hero .katex { font-size: 1.12em; }
+  /* Equation numbers go on their own line, so they cannot collide with the equation */
+  .katex-display > .katex > .katex-html > .tag { position: static; display: block; text-align: right; font-size: .82em; color: var(--ink-muted); }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .view.active { animation: none; }
+  .topic-card { transition: none; }
+}
+@media print {
+  .topbar, .pager, #home, footer { display: none !important; }
+  .view { display: block !important; page-break-after: always; }
+  .ex-body { display: block !important; }
+  body { background: #fff; }
+}
+
+/* ── Quantum Mechanics theme: a dark probability cloud ── */
+:root {
+  --ink: #ecebf5;
+  --ink-soft: #c2c0d4;
+  --ink-muted: #9794ad;
+  --rule: #2e3047;
+  --page: #11121c;
+  --page-deep: #1f2133;
+  --card: #191b29;
+  --teal: #6fd6c8;  --teal-tint: #182e2f;
+  --gold: #b69cff;  --gold-tint: #241f3d;
+  --red:  #f29ab3;  --red-tint:  #351f2b;
+  --blue: #f2bd6b;  --blue-tint: #322a1b;
+  --accent: var(--gold);
+  --tint: var(--gold-tint);
+  --serif: 'IBM Plex Sans', 'Segoe UI', system-ui, sans-serif;
+  --mono: 'IBM Plex Mono', Consolas, monospace;
+}
+body {
+  font-size: 17.5px; line-height: 1.65; font-weight: 400;
+  background:
+    radial-gradient(900px 500px at 85% -10%, rgba(182,156,255,.13), transparent 70%),
+    radial-gradient(700px 500px at 0% 30%, rgba(111,214,200,.06), transparent 70%),
+    var(--page);
+  background-attachment: fixed;
+}
+h1 { font-weight: 500; letter-spacing: -.02em; font-size: clamp(2.4rem, 7vw, 3.4rem); }
+h1 em { color: #b69cff; font-style: normal; }
+.topbar { background: var(--page); }
+.topic-card:hover, .topic-card:focus-visible { box-shadow: 0 4px 18px rgba(182,156,255,.14); }
+.topic-card b, .ch-title { font-weight: 500; }
+svg text { font-style: normal; font-size: 13px; }
+.gen-btn { font-weight: 500; }
+@media (max-width: 680px) { body { font-size: 16.5px; } }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+<!-- ═══════════ HOME ═══════════ -->
+<main id="home" class="view active">
+  <header class="masthead">
+    <div>
+      <p class="eyebrow">MATH325 · Cheat Sheet</p>
+      <h1>Quantum <em>Mechanics</em></h1>
+      <p class="subtitle">Wave functions, operators, bound states, scattering and uncertainty. Pick a topic to begin.</p>
+    </div>
+    <svg id="logo" viewBox="0 0 280 150" role="img" aria-label="The probability density of a particle in a box, sloshing from side to side"></svg>
+  </header>
+  <div id="contents"></div>
+  <footer>
+    <span>starocracy · 2026–27</span>
+    <a href="index.html">← Revision Hub</a>
+  </footer>
+</main>
+
+<!-- ═══════════ CHAPTER I: FOUNDATIONS ═══════════ -->
+
+<article class="view" id="duality" data-ch="I">
+  <p class="lede">Light behaves as a wave and as a particle, and so does matter. The same two relations connect both pictures.</p>
+
+  <div class="hero">
+    <div class="hero-label">Planck and de Broglie</div>
+    \[ E = h\nu, \qquad p = \frac h\lambda \]
+    <p>With \(\hbar = h/2\pi\), \(k = 2\pi/\lambda\) and \(\omega = 2\pi\nu\), these become \(E = \hbar\omega\) and \(p = \hbar k\).</p>
+  </div>
+
+  <h3>Light as a wave</h3>
+  <p>Light diffracts through a slit of about one wavelength, and interferes when it can take two routes. Waves added in phase interfere constructively, and waves in anti-phase cancel. A double slit gives light and dark stripes on a screen.</p>
+  <p>Unlike water waves, light comes in discrete <strong>quanta</strong>. Even when dimmed so that photons arrive one at a time, an interference pattern still builds up.</p>
+
+  <h3>Light as a particle: the photoelectric effect</h3>
+  <p>Light on a metal surface knocks out electrons. There is a threshold frequency \(\nu_0\), depending on the metal, below which no electrons are released. Above it, the electron energy rises linearly with \(\nu\). The intensity only changes the <em>number</em> of electrons, not their energy.</p>
+  <div class="hero">
+    <div class="hero-label">Einstein's photoelectric equation</div>
+    \begin{equation} E_{\text{electron}} = E_{\text{photon}} - E_{\text{escape}} = h\nu - E_{\text{escape}} \tag{1.2} \end{equation}
+    <p>One photon gives all of its energy to one electron.</p>
+  </div>
+
+  <h3>Matter as a wave</h3>
+  <p>Electrons, neutrons, atoms and even \(C_{60}\) molecules show diffraction and interference. The double-slit pattern is <em>not</em> the sum of two single-slit patterns. Waves are in step when</p>
+  \begin{equation} l_1 - l_2 = n\lambda, \qquad n = 1, 2, 3, \dots \tag{1.3} \end{equation}
+
+  <h3>Where \(p = h/\lambda\) comes from</h3>
+  <p>For light, \(\nu\lambda = c\) and \(p = E/c\). Combining with \(E = h\nu\):</p>
+  \[ p = \frac{h\nu}{c} = \frac h\lambda. \]
+  <p>The same relation holds for electrons and other matter. Quantum effects are generally harder to see the larger the object.</p>
+</article>
+
+<article class="view" id="quantisation" data-ch="I">
+  <p class="lede">Quantisation is not mysterious mathematically: it is what boundary conditions do to the solutions of a differential equation.</p>
+
+  <div class="hero">
+    <div class="hero-label">Quantisation from boundary conditions</div>
+    \[ f'' + \alpha^2f = 0, \quad f(0) = f(L) = 0 \quad\Longrightarrow\quad \alpha = \frac{n\pi}{L} \]
+    <p>Only discrete values of \(\alpha\) allow a non-trivial solution. \(n\) is the quantum number.</p>
+  </div>
+
+  <h3>The calculation</h3>
+  <ol class="steps">
+    <li>Trying \(f = Ae^{\lambda x}\) gives \(\lambda^2 + \alpha^2 = 0\), so \(\lambda = \pm i\alpha\). The general solution is
+    \begin{equation} f(x) = A\sin(\alpha x) + B\cos(\alpha x). \tag{1.12} \end{equation}</li>
+    <li>\(f(0) = 0\) gives \(B = 0\).</li>
+    <li>\(f(L) = 0\) gives \(A\sin(\alpha L) = 0\). For a non-trivial solution, \(\alpha L = n\pi\).</li>
+    <li>So there are infinitely many solutions, and the general solution is their superposition:
+    \begin{equation} \psi_n(x) = A_n\sin\frac{n\pi x}{L}, \qquad f(x) = \sum_{n=1}^\infty A_n\sin\frac{n\pi x}{L}. \tag{1.16} \end{equation}</li>
+  </ol>
+  <p>The \(\psi_n\) are the eigenfunctions of the ODE. In QM they are the <strong>eigenstates</strong>, and any quantum state is a superposition of them.</p>
+</article>
+
+<article class="view" id="postulates" data-ch="I">
+  <p class="lede">The rules of the game. These cannot be derived from classical mechanics: they are the starting point.</p>
+
+  <div class="hero">
+    <div class="hero-label">Born rule</div>
+    \[ P(x) = \psi^*(x)\psi(x), \qquad P(a \leq x \leq b) = \int_a^b\psi^*(x)\psi(x)\,dx \]
+    <p>For normalised \(\psi\). The wave function gives a probability distribution, not an exact position.</p>
+  </div>
+
+  <h3>The postulates</h3>
+  <ol class="steps">
+    <li><strong>State.</strong> A system is represented by a complex wave function \(\psi(x,t)\). It is a mathematical construct, not a physical object like the height of a wave.</li>
+    <li><strong>Superposition.</strong> Wave functions form a complex vector space: if \(\psi_1, \psi_2\) are wave functions, so is \(\alpha\psi_1 + \beta\psi_2\).</li>
+    <li><strong>Scalar product.</strong> In Dirac notation, with bra \(\langle\psi_1|\) and ket \(|\psi_2\rangle\):
+    \begin{equation} \langle\psi_1|\psi_2\rangle = \int_{-\infty}^\infty\psi_1^*(x)\psi_2(x)\,dx. \tag{2.2} \end{equation}</li>
+  </ol>
+
+  <div class="note"><b>Order matters.</b> \(\langle\psi_1|\psi_2\rangle\) and \(\langle\psi_2|\psi_1\rangle\) are complex conjugates of each other, not equal. The bra is the one that gets complex conjugated.</div>
+
+  <h3>Normalisation</h3>
+  <p>\(\langle\psi|\psi\rangle = \|\psi\|^2\) is real and positive. The total probability must be one, so \(|\psi\rangle/\sqrt{\langle\psi|\psi\rangle}\) is the normalised wave function. If \(\langle\psi|\psi\rangle\) is not a finite positive number, the wave function cannot be normalised and has no probability interpretation.</p>
+
+  <h3>Measurement and collapse</h3>
+  <p>Making a measurement changes the system. After a position measurement gives \(x_0\), the new \(\psi\) is concentrated at \(x_0\), and the next measurement gives a nearly identical answer. This is the <strong>collapse of the wave function</strong>. To find a distribution, you need many identical systems, not many measurements of one.</p>
+</article>
+
+<article class="view" id="expectation-values" data-ch="I">
+  <p class="lede">Since single outcomes are probabilistic, the useful predictions are averages. Every observable has an operator.</p>
+
+  <div class="hero">
+    <div class="hero-label">Expectation value</div>
+    \begin{equation} \langle A\rangle = \langle\psi|\hat A\psi\rangle = \int_{-\infty}^\infty\psi^*(x)\,\hat A\psi(x)\,dx \tag{2.17} \end{equation}
+    <p>For normalised states. The operator acts first, then you integrate.</p>
+  </div>
+
+  <div class="hero">
+    <div class="hero-label">Position and momentum operators</div>
+    \[ \hat x = x, \qquad \hat p_x = -i\hbar\frac{\partial}{\partial x} \]
+  </div>
+
+  <p>For any function of position, \(\langle f\rangle = \int\psi^*f(x)\psi\,dx\).</p>
+  <p>The momentum operator is justified by the plane wave \(\psi = e^{2\pi ix/\lambda}\), which gives \(\hat p_x\psi = (h/\lambda)\psi = p\psi\). This is an eigenvalue problem, with the matrix replaced by a differential operator. The plane wave itself cannot be normalised.</p>
+
+  <details class="ex" open><summary><span class="ex-tag">Example</span><span>\(\psi = \sqrt{2/L}\,\sin(3\pi x/L)\) on \(0 \lt x \lt L\)</span></summary><div class="ex-body">
+    <p>Acting with the momentum operator,</p>
+    \[ \hat p_x\psi = -i\hbar\sqrt{\frac2L}\frac{3\pi}{L}\cos\frac{3\pi x}{L}, \]
+    <p>so \(\psi\) is not an eigenfunction of \(\hat p_x\). The average momentum is</p>
+    \[ \langle p\rangle = -i\hbar\frac{3\pi}{L^2}\int_0^L\sin\frac{6\pi x}{L}\,dx = 0. \]
+    <p>Zero average momentum does not imply that the particle is at rest.</p>
+  </div></details>
+</article>
+
+<article class="view" id="hermitian" data-ch="I">
+  <p class="lede">Measured values are real numbers, so observables must be Hermitian operators.</p>
+
+  <div class="hero">
+    <div class="hero-label">Hermitian operator</div>
+    \begin{equation} \langle\psi_1|\hat A\psi_2\rangle = \langle\hat A\psi_1|\psi_2\rangle \quad\text{for all } \psi_1, \psi_2 \tag{2.21} \end{equation}
+    <p>For matrices this means \(H^\dagger = (H^*)^T = H\).</p>
+  </div>
+
+  <p>A useful consequence, for any Hermitian \(\hat A\):</p>
+  \begin{equation} \langle\psi_1|\hat A\psi_2\rangle = \langle\psi_2|\hat A\psi_1\rangle^*. \tag{2.27} \end{equation}
+  <p>Setting \(\psi_1 = \psi_2 = \psi\) shows \(\langle\psi|\hat A\psi\rangle\) equals its own conjugate. So <strong>the expectation value of a Hermitian operator is real</strong>.</p>
+
+  <details class="ex"><summary><span class="ex-tag">Example</span><span>Matrix test</span></summary><div class="ex-body">
+    \[ A = \begin{pmatrix} 1 & 1+i \\ 1-i & 3 \end{pmatrix} \]
+    <p>is Hermitian, since transposing and conjugating gives \(A\) back. The matrix with \(1+i\) in both off-diagonal positions is not.</p>
+  </div></details>
+
+  <details class="ex" open><summary><span class="ex-tag">Example</span><span>\(\hat p\) is Hermitian</span></summary><div class="ex-body">
+    <p>Integrate by parts:</p>
+    \[ \langle\psi_1|\hat P\psi_2\rangle = -i\hbar\int\psi_1^*\frac{d\psi_2}{dx}\,dx = -i\hbar\big[\psi_1^*\psi_2\big]_{-\infty}^\infty + i\hbar\int\frac{d\psi_1^*}{dx}\psi_2\,dx. \]
+    <p>For normalisable wave functions, \(\psi_{1,2} \to 0\) at infinity, so the surface term vanishes. What remains is</p>
+    \[ \int\left(-i\hbar\frac{d\psi_1}{dx}\right)^*\psi_2\,dx = \langle\hat P\psi_1|\psi_2\rangle. \]
+    <p>The factor of \(i\) is essential: \(d/dx\) on its own is not Hermitian.</p>
+  </div></details>
+
+  <details class="ex"><summary><span class="ex-tag">Example</span><span>A three-state system</span></summary><div class="ex-body">
+    \[ |\psi\rangle = \frac{1}{\sqrt3}\begin{pmatrix} 1 \\ i \\ 1 \end{pmatrix}, \qquad \hat A = \begin{pmatrix} 1 & 1 & 2 \\ 1 & 0 & 3 \\ 2 & 3 & 0 \end{pmatrix}. \]
+    <p>\(\langle\psi| = \tfrac{1}{\sqrt3}(1, -i, 1)\), with the bra conjugated, so \(\langle\psi|\psi\rangle = 1\). Then</p>
+    \[ \langle\psi|\hat A\psi\rangle = \tfrac13(1, -i, 1)\begin{pmatrix} 3 + i \\ 4 \\ 2 + 3i \end{pmatrix} = \tfrac13(3 + i - 4i + 2 + 3i) = \frac53. \]
+    <p>The imaginary parts cancel, as they must.</p>
+  </div></details>
+</article>
+
+<article class="view" id="eigenstates" data-ch="I">
+  <p class="lede">The eigenfunctions of an observable are a basis, and the only values a measurement can ever give are its eigenvalues.</p>
+
+  <div class="hero">
+    <div class="hero-label">Eigenvalue equation</div>
+    \begin{equation} \hat A\psi_n(x) = \lambda_n\psi_n(x) \tag{2.33} \end{equation}
+    <p>For Hermitian \(\hat A\): the eigenvalues are real, and the eigenfunctions can be chosen orthonormal, \(\langle\psi_m|\psi_n\rangle = \delta_{mn}\).</p>
+  </div>
+
+  <div class="hero">
+    <div class="hero-label">Expansion and measurement probabilities</div>
+    \[ |\psi\rangle = \sum_na_n|\psi_n\rangle, \qquad a_i = \langle\psi_i|\psi\rangle, \qquad P(\lambda_i) = |a_i|^2 \]
+    <p>After measuring \(\lambda_i\), the state is \(\psi_i\), and repeating the measurement gives \(\lambda_i\) with probability one.</p>
+  </div>
+
+  <h3>Proofs</h3>
+  <div class="box"><div class="box-title">Eigenvalues are real</div>
+    <p>From Hermiticity, \(\langle\hat A\psi_n|\psi_n\rangle = \langle\psi_n|\hat A\psi_n\rangle\). The left side is \(\lambda_n^*\langle\psi_n|\psi_n\rangle\), and the right side is \(\lambda_n\langle\psi_n|\psi_n\rangle\). Since \(\langle\psi_n|\psi_n\rangle \neq 0\), \(\lambda_n = \lambda_n^*\).</p>
+  </div>
+  <div class="box"><div class="box-title">Different eigenvalues give orthogonal eigenfunctions</div>
+    <p>\(\langle\psi_n|\hat A\psi_m\rangle = \langle\hat A\psi_n|\psi_m\rangle\) gives \((\lambda_m - \lambda_n)\langle\psi_n|\psi_m\rangle = 0\). So either \(\lambda_m = \lambda_n\) or \(\langle\psi_n|\psi_m\rangle = 0\). Degenerate eigenfunctions, with equal eigenvalues, can be chosen orthogonal.</p>
+  </div>
+  <div class="box"><div class="box-title">Probabilities sum to one</div>
+    <p>\(1 = \langle\psi|\psi\rangle = \sum_{m,n}a_m^*a_n\langle\psi_m|\psi_n\rangle = \sum_n|a_n|^2\). So the eigenvalues exhaust the possible results: in QM, no other values can be obtained.</p>
+  </div>
+
+  <div class="note"><b>Measuring something else.</b> To measure a different observable \(B\), rewrite the state in the eigenbasis of \(\hat B\).</div>
+
+  <h3>The Hamiltonian</h3>
+  <p>Replacing classical observables by operators in \(E = p^2/2m + V\) gives the most important operator in QM. Its eigenvalues are the energy levels:</p>
+  <div class="hero">
+    <div class="hero-label">Time-independent Schrödinger equation</div>
+    \begin{equation} \hat H\psi = E\psi, \qquad \hat H = \frac{\hat p^2}{2m} + V(\hat x) = -\frac{\hbar^2}{2m}\frac{d^2}{dx^2} + V(x) \tag{2.54} \end{equation}
+    <p>In 3D, \(\dfrac{\hat{\mathbf p}^2}{2m} = -\dfrac{\hbar^2}{2m}\left(\dfrac{\partial^2}{\partial x^2} + \dfrac{\partial^2}{\partial y^2} + \dfrac{\partial^2}{\partial z^2}\right)\).</p>
+  </div>
+
+  <details class="ex"><summary><span class="ex-tag">Example</span><span>Particle on a ring: periodic boundary conditions</span></summary><div class="ex-body">
+    <p>With \(\psi(0) = \psi(L)\) and no force, \(\hat p\psi = p\psi\) gives \(\psi = Ae^{ikx}\), with \(k = p/\hbar\). The boundary condition requires \(e^{ikL} = 1\), so</p>
+    \[ k = \frac{2n\pi}{L}, \qquad \psi_n(x) = \frac{1}{\sqrt L}e^{2in\pi x/L}, \]
+    <p>with \(A_n = 1/\sqrt L\) from normalisation. For \(m \neq n\), \(\langle\psi_n|\psi_m\rangle = \tfrac1L\dfrac{L(e^{2\pi i(m-n)} - 1)}{2\pi i(m-n)} = 0\).</p>
+  </div></details>
+</article>
+
+<article class="view" id="time-evolution" data-ch="I">
+  <p class="lede">The Schrödinger equation is the law of motion for the wave function. Energy eigenstates just rotate in phase, while superpositions truly change.</p>
+
+  <div class="hero">
+    <div class="hero-label">Time-dependent Schrödinger equation</div>
+    \begin{equation} i\hbar\frac{\partial}{\partial t}\psi(x,t) = \hat H\psi(x,t) \tag{2.56} \end{equation}
+  </div>
+
+  <div class="hero">
+    <div class="hero-label">General solution</div>
+    \begin{equation} \psi(x,t) = \sum_nc_ne^{-iE_nt/\hbar}\psi_n(x), \qquad E_n = \hbar\omega_n \tag{2.63} \end{equation}
+    <p>The \(c_n\) are constant, and \(|c_n|^2\) stays the probability of measuring \(E_n\). Also \(\langle\hat H\rangle = \sum_n|c_n|^2E_n\).</p>
+  </div>
+
+  <h3>Stationary states</h3>
+  <p>Separating variables, \(\psi = f(t)\psi_n(x)\), gives \(i\hbar\,df/dt = E_nf\), so</p>
+  \begin{equation} \psi(x,t) = e^{-i(t - t_0)E_n/\hbar}\psi_n(x). \tag{2.61} \end{equation}
+  <p>For a single eigenstate, the phases cancel in \(\psi^*\psi\), so the probability distribution is <strong>time-independent</strong>.</p>
+
+  <h3>Superpositions</h3>
+  <p>For \(\psi = a\phi_ne^{-i\omega_nt} + b\phi_me^{-i\omega_mt}\):</p>
+  \begin{equation} P = |a|^2|\phi_n|^2 + |b|^2|\phi_m|^2 + b^*a\phi_m^*\phi_ne^{i(\omega_m - \omega_n)t} + a^*b\phi_n^*\phi_me^{i(\omega_n - \omega_m)t}. \tag{2.82} \end{equation}
+  <p>The cross terms oscillate with frequency \(|\omega_n - \omega_m|\). Integrated over all \(x\), they vanish by orthogonality, so the total probability stays constant while the shape moves.</p>
+
+  <h3>Conservation of probability</h3>
+  <p>Using \(\partial_t\psi = \hat H\psi/(i\hbar)\) and Hermiticity:</p>
+  \[ \frac{d}{dt}\langle\psi|\psi\rangle = \frac i\hbar\big(\langle\hat H\psi|\psi\rangle - \langle\psi|\hat H\psi\rangle\big) = 0. \]
+
+  <details class="ex" open><summary><span class="ex-tag">Example</span><span>Two-state system: \(\hat H = \hbar\begin{pmatrix} 1 & 1+i \\ 1-i & 2 \end{pmatrix}\)</span></summary><div class="ex-body">
+    <p><strong>Energies.</strong> \(\det(\hat H - E) = (E - \hbar)(E - 2\hbar) - 2\hbar^2 = E(E - 3\hbar) = 0\), so \(E = 0\) or \(3\hbar\).</p>
+    <p><strong>Eigenstates.</strong> Solving and normalising,</p>
+    \[ |\psi_0\rangle = \frac{1}{\sqrt3}\begin{pmatrix} 1+i \\ -1 \end{pmatrix}, \qquad |\psi_1\rangle = \frac{1}{\sqrt3}\begin{pmatrix} 1 \\ 1-i \end{pmatrix}. \]
+    <p>These are orthogonal, as they must be: \(\langle\psi_1|\psi_0\rangle = \tfrac13(1 + i - (1 + i)) = 0\).</p>
+    <p><strong>Time evolution.</strong> If \(|\psi(0)\rangle = a|\psi_0\rangle + b|\psi_1\rangle\), then</p>
+    \[ |\psi(t)\rangle = a|\psi_0\rangle + be^{-3it}|\psi_1\rangle. \]
+  </div></details>
+
+  <div class="note"><b>Correspondence principle.</b> Superpositions of many eigenstates produce sharper peaks that move back and forth, like a classical particle bouncing off walls.</div>
+</article>
+
+<article class="view" id="problems-1" data-ch="I">
+  <p class="lede">Practice for Chapter I, in the style of the course problem sheets. All questions are new.</p>
+  <div class="note"><b>Modelled on:</b> Problem Sheets 1 and 2, Sheet 5 Q1 and Sheet 7 Q1(i).</div>
+  <div class="pool">
+
+  <section class="q" data-style="Sheet 1 Q1" data-topic="eigenstates">
+    <p>Find the eigenvalues and normalised eigenvectors of \(M = \begin{pmatrix} 1 & 2i \\ -2i & 1 \end{pmatrix}\). What property of \(M\) guarantees that the eigenvalues are real? Check that the eigenvectors are orthogonal.</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>\(\det(M - \lambda) = (1 - \lambda)^2 - 4 = 0\), so \(\lambda - 1 = \pm2\), giving \(\lambda = 3\) or \(-1\).</li>
+      <li>For \(\lambda = 3\): \(-2a + 2ib = 0\), so \(a = ib\). Normalised, \(\mathbf e_1 = \tfrac{1}{\sqrt2}(i, 1)^T\).</li>
+      <li>For \(\lambda = -1\): \(2a + 2ib = 0\), so \(a = -ib\). Normalised, \(\mathbf e_2 = \tfrac{1}{\sqrt2}(-i, 1)^T\).</li>
+      <li>\(M\) is Hermitian: \((M^*)^T = M\). That guarantees real eigenvalues.</li>
+      <li>Orthogonality, conjugating the bra: \(\mathbf e_1^\dagger\mathbf e_2 = \tfrac12\big[(-i)(-i) + 1\big] = \tfrac12(-1 + 1) = 0\). ✓</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Sheet 2 Q2" data-topic="postulates">
+    <p>The unnormalised wave function of a particle is \(\psi(x) = \dfrac{1}{1 + x^2}\).</p>
+    <p>(i) Find the normalised wave function. (ii) Find the probability that a position measurement gives \(x \gt 1\). (iii) Find \(\langle p\rangle\). (iv) Find \(\langle x^2\rangle\).</p>
+    <p><em>Hint: use \(x = \tan\theta\).</em></p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>(i) With \(x = \tan\theta\), \(dx = \sec^2\theta\,d\theta\):
+      \[ \int_{-\infty}^\infty\frac{dx}{(1 + x^2)^2} = \int_{-\pi/2}^{\pi/2}\cos^2\theta\,d\theta = \frac\pi2. \]
+      So \(\hat\psi = \sqrt{\dfrac2\pi}\,\dfrac{1}{1 + x^2}\).</li>
+      <li>(ii) \(x = 1\) corresponds to \(\theta = \pi/4\):
+      \[ P = \frac2\pi\int_{\pi/4}^{\pi/2}\cos^2\theta\,d\theta = \frac2\pi\left[\frac\theta2 + \frac{\sin2\theta}{4}\right]_{\pi/4}^{\pi/2} = \frac2\pi\left(\frac\pi8 - \frac14\right) = \frac14 - \frac{1}{2\pi} \approx 0.091. \]</li>
+      <li>(iii) \(\psi\) is real and even, so \(\psi\psi'\) is odd and
+      \[ \langle p\rangle = -i\hbar\int\hat\psi\hat\psi'\,dx = 0. \]</li>
+      <li>(iv) Again with \(x = \tan\theta\):
+      \[ \langle x^2\rangle = \frac2\pi\int_{-\pi/2}^{\pi/2}\sin^2\theta\,d\theta = \frac2\pi\cdot\frac\pi2 = 1. \]</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Sheet 5 Q1" data-topic="expectation-values">
+    <p>A quantum system is in the normalised state \(|\psi\rangle = n\begin{pmatrix} 1 \\ -i \\ 1 + i \end{pmatrix}\). Find \(n\), and the expectation value of the observable
+    \[ Q = \begin{pmatrix} 2 & i & 0 \\ -i & 2 & 0 \\ 0 & 0 & 1 \end{pmatrix}. \]</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>\(\langle\psi|\psi\rangle = |n|^2(1 + 1 + 2) = 4|n|^2 = 1\), so \(n = \tfrac12\).</li>
+      <li>Acting with \(Q\) on the unscaled vector:
+      \[ Q\begin{pmatrix} 1 \\ -i \\ 1 + i \end{pmatrix} = \begin{pmatrix} 2 + 1 \\ -i - 2i \\ 1 + i \end{pmatrix} = \begin{pmatrix} 3 \\ -3i \\ 1 + i \end{pmatrix}. \]</li>
+      <li>The bra is \(\tfrac12(1, i, 1 - i)\). So
+      \[ \langle Q\rangle = \tfrac14\big[3 + (i)(-3i) + (1 - i)(1 + i)\big] = \tfrac14(3 + 3 + 2) = 2. \]
+      This is real, as expected for a Hermitian matrix.</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Sheet 2 Q1" data-topic="hermitian">
+    <p>Establish whether each of the following is Hermitian, on wave functions that vanish with their derivatives at \(x \to \pm\infty\):</p>
+    <p>(a) \(\hat D = \dfrac{d}{dx}\) &nbsp; (b) \(\hat F = i\dfrac{d}{dx}\) &nbsp; (c) \(\hat G = \dfrac{d^2}{dx^2}\)</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>(a) Integrating by parts, with zero surface term:
+      \[ \langle\psi_1|\hat D\psi_2\rangle = \int\psi_1^*\psi_2'\,dx = -\int(\psi_1^*)'\psi_2\,dx = -\langle\hat D\psi_1|\psi_2\rangle. \]
+      So \(\hat D\) is <strong>not</strong> Hermitian. It is anti-Hermitian.</li>
+      <li>(b) \(\langle\psi_1|\hat F\psi_2\rangle = i\int\psi_1^*\psi_2'\,dx = -i\int(\psi_1')^*\psi_2\,dx = \int(i\psi_1')^*\psi_2\,dx = \langle\hat F\psi_1|\psi_2\rangle\). So \(\hat F\) <strong>is</strong> Hermitian.</li>
+      <li>(c) Integrating by parts twice brings two minus signs:
+      \[ \int\psi_1^*\psi_2''\,dx = \int(\psi_1'')^*\psi_2\,dx. \]
+      So \(\hat G\) <strong>is</strong> Hermitian.</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Notes §2.5" data-topic="time-evolution">
+    <p>A two-state system has Hamiltonian \(\hat H = \hbar\begin{pmatrix} 2 & 1 \\ 1 & 2 \end{pmatrix}\), and at \(t = 0\) it is in the state \(\begin{pmatrix} 1 \\ 0 \end{pmatrix}\). Find the energy eigenvalues and eigenstates, and the state at time \(t\). Find the probability that the system is still in \(\begin{pmatrix} 1 \\ 0 \end{pmatrix}\) at time \(t\).</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>\((2\hbar - E)^2 = \hbar^2\), so \(E = \hbar\) or \(3\hbar\). The normalised eigenstates are
+      \[ |\psi_-\rangle = \frac{1}{\sqrt2}\begin{pmatrix} 1 \\ -1 \end{pmatrix}, \qquad |\psi_+\rangle = \frac{1}{\sqrt2}\begin{pmatrix} 1 \\ 1 \end{pmatrix}, \]
+      with energies \(\hbar\) and \(3\hbar\) respectively.</li>
+      <li>The initial state is \(\tfrac{1}{\sqrt2}\big(|\psi_+\rangle + |\psi_-\rangle\big)\).</li>
+      <li>Each part picks up its own phase:
+      \[ |\psi(t)\rangle = \tfrac{1}{\sqrt2}\big(e^{-3it}|\psi_+\rangle + e^{-it}|\psi_-\rangle\big) = \tfrac12\begin{pmatrix} e^{-3it} + e^{-it} \\ e^{-3it} - e^{-it} \end{pmatrix}. \]</li>
+      <li>The overlap with \((1,0)^T\) is the top component, \(e^{-2it}\cos t\). So
+      \[ P(t) = \cos^2t. \]
+      The system oscillates between the two basis states.</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Sheet 1 Q2" data-topic="eigenstates">
+    <p>Find the eigenvalues and normalised eigenvectors \(\mathbf p, \mathbf q, \mathbf r\) of \(M = \begin{pmatrix} 2 & 1 & 0 \\ 1 & 2 & 1 \\ 0 & 1 & 2 \end{pmatrix}\). Write \((1, 0, 0)^T\) as \(a\mathbf p + b\mathbf q + c\mathbf r\), and check that \(a^2 + b^2 + c^2 = 1\).</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>With \(\mu = \lambda - 2\), the characteristic equation is \(-\mu^3 + 2\mu = 0\), so \(\mu = 0, \pm\sqrt2\). Thus \(\lambda = 2\) and \(2 \pm \sqrt2\).</li>
+      <li>The normalised eigenvectors are
+      \[ \mathbf p = \tfrac{1}{\sqrt2}\begin{pmatrix} 1 \\ 0 \\ -1 \end{pmatrix}, \quad \mathbf q = \tfrac12\begin{pmatrix} 1 \\ \sqrt2 \\ 1 \end{pmatrix}, \quad \mathbf r = \tfrac12\begin{pmatrix} 1 \\ -\sqrt2 \\ 1 \end{pmatrix}, \]
+      for \(\lambda = 2\), \(2 + \sqrt2\) and \(2 - \sqrt2\).</li>
+      <li>By orthonormality, each coefficient is a scalar product with \((1,0,0)^T\): \(a = \tfrac{1}{\sqrt2}\), \(b = \tfrac12\), \(c = \tfrac12\).</li>
+      <li>Check: \(a^2 + b^2 + c^2 = \tfrac12 + \tfrac14 + \tfrac14 = 1\). ✓</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Sheet 1 Q3" data-topic="eigenstates">
+    <p>With \(\sigma_1 = \begin{pmatrix} 0 & 1 \\ 1 & 0 \end{pmatrix}\), \(\sigma_2 = \begin{pmatrix} 0 & -i \\ i & 0 \end{pmatrix}\), \(\sigma_3 = \begin{pmatrix} 1 & 0 \\ 0 & -1 \end{pmatrix}\), let \(\sigma_+ = \sigma_1 + i\sigma_2\). Show that \([\sigma_3, \sigma_+] = 2\sigma_+\). Is \(\sigma_+\) Hermitian?</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>\(\sigma_+ = \begin{pmatrix} 0 & 1 \\ 1 & 0 \end{pmatrix} + \begin{pmatrix} 0 & 1 \\ -1 & 0 \end{pmatrix} = \begin{pmatrix} 0 & 2 \\ 0 & 0 \end{pmatrix}\).</li>
+      <li>\(\sigma_3\sigma_+ = \begin{pmatrix} 0 & 2 \\ 0 & 0 \end{pmatrix}\) and \(\sigma_+\sigma_3 = \begin{pmatrix} 0 & -2 \\ 0 & 0 \end{pmatrix}\).</li>
+      <li>So \([\sigma_3, \sigma_+] = \begin{pmatrix} 0 & 4 \\ 0 & 0 \end{pmatrix} = 2\sigma_+\). ✓</li>
+      <li>\(\sigma_+^\dagger = \begin{pmatrix} 0 & 0 \\ 2 & 0 \end{pmatrix} \neq \sigma_+\), so \(\sigma_+\) is not Hermitian.</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Notes §2.4" data-topic="eigenstates">
+    <p>Prove that the eigenvalues of a Hermitian operator are real, and that eigenfunctions with different eigenvalues are orthogonal.</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>Let \(\hat A\psi_n = \lambda_n\psi_n\). Hermiticity gives \(\langle\hat A\psi_n|\psi_n\rangle = \langle\psi_n|\hat A\psi_n\rangle\).</li>
+      <li>The bra is conjugated, so the left side is \(\lambda_n^*\langle\psi_n|\psi_n\rangle\). The right side is \(\lambda_n\langle\psi_n|\psi_n\rangle\).</li>
+      <li>Since \(\langle\psi_n|\psi_n\rangle \neq 0\), \(\lambda_n^* = \lambda_n\), so \(\lambda_n\) is real.</li>
+      <li>Now start from \(\langle\psi_n|\hat A\psi_m\rangle = \langle\hat A\psi_n|\psi_m\rangle\). Using reality, this gives \(\lambda_m\langle\psi_n|\psi_m\rangle = \lambda_n\langle\psi_n|\psi_m\rangle\).</li>
+      <li>So \((\lambda_m - \lambda_n)\langle\psi_n|\psi_m\rangle = 0\). If \(\lambda_m \neq \lambda_n\), then \(\langle\psi_n|\psi_m\rangle = 0\).</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Notes §2.5" data-topic="time-evolution">
+    <p>Use the Schrödinger equation and the Hermiticity of \(\hat H\) to prove that \(\dfrac{d}{dt}\langle\psi|\psi\rangle = 0\). What does this mean physically?</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>\(\dfrac{d}{dt}\langle\psi|\psi\rangle = \displaystyle\int\left(\frac{\partial\psi^*}{\partial t}\psi + \psi^*\frac{\partial\psi}{\partial t}\right)dx\).</li>
+      <li>From the Schrödinger equation, \(\partial_t\psi = \dfrac{1}{i\hbar}\hat H\psi\). Conjugating, \(\partial_t\psi^* = -\dfrac{1}{i\hbar}(\hat H\psi)^*\).</li>
+      <li>Substituting:
+      \[ \frac{d}{dt}\langle\psi|\psi\rangle = \frac{1}{i\hbar}\big(\langle\psi|\hat H\psi\rangle - \langle\hat H\psi|\psi\rangle\big) = 0, \]
+      by Hermiticity.</li>
+      <li>Physically, total probability is conserved. Particles are not being created or destroyed.</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Notes §2.4" data-topic="eigenstates">
+    <p>A particle moves on a ring of circumference \(L\), so that \(\psi(x + L) = \psi(x)\), with \(V = 0\). Find the momentum eigenfunctions, the allowed momenta and the energies. Which levels are degenerate?</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>\(-i\hbar\psi' = p\psi\) gives \(\psi = Ae^{ikx}\), with \(k = p/\hbar\).</li>
+      <li>Periodicity requires \(e^{ikL} = 1\), so \(k = 2\pi n/L\) with \(n\) any integer.</li>
+      <li>Normalising over \([0,L]\): \(|A|^2L = 1\), so \(\psi_n = \dfrac{1}{\sqrt L}e^{2\pi inx/L}\).</li>
+      <li>So \(p_n = \dfrac{2\pi n\hbar}{L}\), and
+      \[ E_n = \frac{p_n^2}{2m} = \frac{2\pi^2\hbar^2n^2}{mL^2}. \]</li>
+      <li>\(E_n\) depends on \(n^2\), so \(\psi_n\) and \(\psi_{-n}\) are degenerate for \(n \neq 0\): the two directions round the ring. The level \(n = 0\) is not degenerate.</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Notes §2.4" data-topic="expectation-values">
+    <p>Is \(\psi = \cos kx\) an eigenfunction of \(\hat p\)? Of \(\hat p^2\)? Write \(\psi\) as a superposition of momentum eigenstates, and state the possible results of a momentum measurement, with their relative probabilities.</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>\(\hat p\psi = i\hbar k\sin kx\), which is not a multiple of \(\psi\). So it is not an eigenfunction of \(\hat p\).</li>
+      <li>\(\hat p^2\psi = -\hbar^2\psi'' = \hbar^2k^2\psi\). So it is an eigenfunction of \(\hat p^2\), with eigenvalue \(\hbar^2k^2\).</li>
+      <li>\(\cos kx = \tfrac12\big(e^{ikx} + e^{-ikx}\big)\), a superposition of eigenstates of \(\hat p\) with \(p = \pm\hbar k\).</li>
+      <li>The coefficients have equal magnitude, so the results \(+\hbar k\) and \(-\hbar k\) are equally likely.</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Notes §1.2" data-topic="duality">
+    <p>Light of wavelength \(200\,\text{nm}\) falls on a metal with escape energy \(4.0\,\text{eV}\). Find the maximum energy of the emitted electrons, and their de Broglie wavelength. Use \(hc = 1240\,\text{eV nm}\) and \(m_ec^2 = 511\,\text{keV}\).</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>The photon energy is \(E = hc/\lambda = 1240/200 = 6.2\,\text{eV}\).</li>
+      <li>From (1.2), \(E_{\text{electron}} = 6.2 - 4.0 = 2.2\,\text{eV}\).</li>
+      <li>Non-relativistically, \(p = \sqrt{2mE}\), so \(pc = \sqrt{2(511\times10^3)(2.2)}\,\text{eV} \approx 1499\,\text{eV}\).</li>
+      <li>Then
+      \[ \lambda = \frac hp = \frac{hc}{pc} = \frac{1240}{1499}\,\text{nm} \approx 0.83\,\text{nm}. \]</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Notes §1.3" data-topic="quantisation">
+    <p>Solve \(f'' + \alpha^2f = 0\) with the boundary conditions \(f'(0) = f'(L) = 0\), for \(\alpha \gt 0\). Show that \(\alpha\) is quantised, and write down the eigenfunctions.</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>The general solution is \(f = A\sin\alpha x + B\cos\alpha x\), with \(f' = \alpha(A\cos\alpha x - B\sin\alpha x)\).</li>
+      <li>\(f'(0) = 0\) gives \(\alpha A = 0\), so \(A = 0\).</li>
+      <li>\(f'(L) = 0\) gives \(B\alpha\sin\alpha L = 0\). For a non-trivial solution, \(\alpha L = n\pi\).</li>
+      <li>So \(\alpha = n\pi/L\) with \(n = 1, 2, 3, \dots\), and
+      \[ f_n(x) = B_n\cos\frac{n\pi x}{L}. \]</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Notes §2.4" data-topic="eigenstates">
+    <p>An observable has orthonormal eigenstates \(\psi_1, \psi_2, \psi_3\) with eigenvalues \(1, 2, 3\). The system is in the state \(|\psi\rangle = \tfrac{1}{\sqrt{14}}\big(|\psi_1\rangle + 2|\psi_2\rangle + 3|\psi_3\rangle\big)\).</p>
+    <p>Find the probability of each outcome and the expectation value. If a measurement gives 2, what is the state immediately afterwards, and what would a second measurement give?</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>\(P_i = |a_i|^2\), so \(P_1 = \tfrac{1}{14}\), \(P_2 = \tfrac{4}{14}\), \(P_3 = \tfrac{9}{14}\). These sum to 1. ✓</li>
+      <li>\(\langle A\rangle = \sum_iP_i\lambda_i = \dfrac{1 + 8 + 27}{14} = \dfrac{18}{7}\).</li>
+      <li>After measuring 2, the wave function collapses to \(|\psi_2\rangle\).</li>
+      <li>A second measurement then gives 2 with probability one.</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Sheet 2 Q3" data-topic="eigenstates">
+    <p>Show by explicit calculation that the functions \(\phi_n(x) = \dfrac{1}{\sqrt{2\pi}}e^{inx}\), for integer \(n\), form an orthonormal set on \(0 \leq x \leq 2\pi\). Treat \(m = n\) and \(m \neq n\) separately.</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>The bra is conjugated, so
+      \[ \langle\phi_m|\phi_n\rangle = \frac{1}{2\pi}\int_0^{2\pi}e^{i(n-m)x}\,dx. \]</li>
+      <li>For \(m = n\), the integrand is 1, so the result is \(\tfrac{1}{2\pi}\cdot2\pi = 1\).</li>
+      <li>For \(m \neq n\):
+      \[ \langle\phi_m|\phi_n\rangle = \frac{1}{2\pi}\left[\frac{e^{i(n-m)x}}{i(n-m)}\right]_0^{2\pi} = \frac{e^{2\pi i(n-m)} - 1}{2\pi i(n-m)} = 0, \]
+      since \(n - m\) is an integer.</li>
+      <li>Together, \(\langle\phi_m|\phi_n\rangle = \delta_{mn}\). ✓</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Sheet 7 Q1(i)" data-topic="time-evolution">
+    <p>Let \(\psi(x,0) = \tfrac{1}{\sqrt2}\big(\phi_1(x) + \phi_2(x)\big)\), where \(\phi_1, \phi_2\) are real, orthonormal energy eigenstates with energies \(E_1, E_2\). Write down \(\psi(x,t)\) and the probability density \(P(x,t)\). Show that \(P\) oscillates, with what frequency, and that its integral is constant.</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>Each eigenstate gets its own phase:
+      \[ \psi(x,t) = \tfrac{1}{\sqrt2}\big(\phi_1e^{-iE_1t/\hbar} + \phi_2e^{-iE_2t/\hbar}\big). \]</li>
+      <li>Multiplying by the conjugate, the cross terms combine into a cosine:
+      \[ P(x,t) = \tfrac12\big(\phi_1^2 + \phi_2^2\big) + \phi_1\phi_2\cos\frac{(E_2 - E_1)t}{\hbar}. \]</li>
+      <li>So \(P\) oscillates with angular frequency \(|E_2 - E_1|/\hbar\).</li>
+      <li>Integrating over \(x\), the normalisation gives \(\tfrac12(1 + 1) = 1\). The cross term vanishes by orthogonality. So the total probability stays 1.</li>
+    </ol></details>
+  </section>
+
+  </div>
+</article>
+
+<!-- ═══════════ CHAPTER II: BOUND STATES ═══════════ -->
+
+<article class="view" id="infinite-well" data-ch="II">
+  <p class="lede">The simplest bound-state problem, and the source of most exam questions. Walls force the wave function to vanish, which quantises the energy.</p>
+
+  <div class="hero">
+    <div class="hero-label">Infinite square well, \(0 \leq x \leq L\)</div>
+    \[ \phi_n(x) = \sqrt{\frac2L}\sin\frac{n\pi x}{L}, \qquad E_n = \frac{\hbar^2\pi^2n^2}{2mL^2}, \qquad n = 1, 2, 3, \dots \]
+  </div>
+
+  <figure id="fig-well"><figcaption>The lowest three eigenstates, each drawn at the height of its energy. Note \(E_n \propto n^2\).</figcaption></figure>
+
+  <h3>Derivation</h3>
+  <ol class="steps">
+    <li><strong>Inside.</strong> \(V = 0\), so with \(k^2 = 2mE/\hbar^2 \gt 0\):
+    \[ \phi'' + k^2\phi = 0 \quad\Longrightarrow\quad \phi = A\sin kx + B\cos kx, \qquad E = \frac{\hbar^2k^2}{2m}. \]</li>
+    <li><strong>Outside.</strong> \(V = \infty\) rules out any normalisable solution with finite energy, so \(\phi \equiv 0\).</li>
+    <li><strong>Boundary conditions.</strong> Continuity of \(\phi\) at \(x = 0\) gives \(B = 0\). At \(x = L\), \(\sin kL = 0\), so \(k = n\pi/L\).</li>
+    <li><strong>Normalisation.</strong> \(1 = A_n^2\int_0^L\sin^2(n\pi x/L)\,dx = A_n^2L/2\), so \(A_n = \sqrt{2/L}\).</li>
+  </ol>
+
+  <div class="note"><b>Infinite walls.</b> Only \(\phi\) is continuous here. Its derivative jumps at the walls. For finite potentials, both \(\phi\) and \(\phi'\) are continuous.</div>
+
+  <h3>Averages in the \(n\)th state</h3>
+  \[ \langle x\rangle = \frac2L\int_0^Lx\sin^2\frac{n\pi x}{L}\,dx = \frac L2, \qquad \langle p\rangle = -i\hbar\frac{2n\pi}{L^2}\int_0^L\sin\frac{n\pi x}{L}\cos\frac{n\pi x}{L}\,dx = 0. \]
+  <p>Regardless of \(n\), the average position is the middle of the well, and the average momentum is zero. This does not mean the particle is at rest.</p>
+</article>
+
+<article class="view" id="symmetric-well" data-ch="II">
+  <p class="lede">The same well, shifted to be symmetric. The energies do not change, but symmetry now sorts the states by parity.</p>
+
+  <div class="hero">
+    <div class="hero-label">Symmetric infinite well, \(-L \leq x \leq L\)</div>
+    \[ \phi_n^-(x) = \frac{1}{\sqrt L}\sin\frac{n\pi x}{L} \;\;\text{(odd)}, \qquad \phi_n^+(x) = \frac{1}{\sqrt L}\cos\frac{(2n+1)\pi x}{2L} \;\;\text{(even)} \]
+    <p>Here \(n \geq 1\) for the odd states and \(n \geq 0\) for the even states.</p>
+  </div>
+
+  <h3>Derivation</h3>
+  <p>Requiring \(\phi = 0\) at both walls gives</p>
+  \begin{equation} A\cos kL + B\sin kL = 0, \qquad A\cos kL - B\sin kL = 0. \tag{2.103} \end{equation}
+  <p>Adding and subtracting gives \(A\cos kL = 0\) and \(B\sin kL = 0\). Both can only hold if one coefficient vanishes:</p>
+  <div class="tbl"><table>
+    <tr><th>Case</th><th>Condition</th><th>Parity</th><th>Energy</th></tr>
+    <tr><td>\(A = 0\)</td><td>\(\sin kL = 0\), \(\;kL = n\pi\)</td><td>Odd</td><td>\(\dfrac{\hbar^2\pi^2n^2}{2mL^2}\)</td></tr>
+    <tr><td>\(B = 0\)</td><td>\(\cos kL = 0\), \(\;kL = \tfrac{(2n+1)\pi}{2}\)</td><td>Even</td><td>\(\dfrac{\hbar^2(2n+1)^2\pi^2}{8mL^2}\)</td></tr>
+  </table></div>
+  <p>Normalisation can be read off from the earlier result by doubling the width of the well, which gives \(1/\sqrt L\).</p>
+
+  <h3>Parity</h3>
+  <div class="note"><b>Key fact.</b> If \(V(x) = V(-x)\), then \(\hat H\) is unchanged by \(x \to -x\). So if \(\phi(x)\) solves the equation, so does \(\phi(-x)\). This means non-degenerate eigenfunctions are either even or odd.</div>
+</article>
+
+<article class="view" id="finite-well" data-ch="II">
+  <p class="lede">With finite walls the particle leaks into the classically forbidden region, and the energies come from a transcendental equation.</p>
+
+  <div class="hero">
+    <div class="hero-label">Finite well: even bound states</div>
+    \[ V = -V_0 \text{ for } |x| \leq L, \quad V = 0 \text{ outside}, \quad -V_0 \lt E \lt 0 \]
+    \begin{equation} k = q\tan(qL) \tag{2.122} \end{equation}
+    \[ k^2 = -\frac{2mE}{\hbar^2}, \qquad q^2 = \frac{2m(E + V_0)}{\hbar^2}, \qquad k^2 + q^2 = \frac{2mV_0}{\hbar^2} \]
+  </div>
+
+  <h3>The solution in each region</h3>
+  \begin{equation} \phi(x) = \begin{cases} Ae^{kx} & x \lt -L \\ B\cos qx & -L \leq x \leq L \\ Ae^{-kx} & x \gt L \end{cases} \tag{2.118} \end{equation}
+  <p>The growing exponentials are discarded so that \(\phi\) is normalisable. Odd states use \(\sin qx\) in the middle.</p>
+
+  <h3>Why \(\phi\) and \(\phi'\) are continuous</h3>
+  <p>Integrate \(\phi'' = -\tfrac{2m}{\hbar^2}(E - V)\phi\) across a point \(x_0\), from \(x_0 - \epsilon\) to \(x_0 + \epsilon\). For finite \(V\), the integral tends to zero as \(\epsilon \to 0\), so \(\phi'\) has no jump. Continuity of \(\phi'\) then implies continuity of \(\phi\).</p>
+
+  <h3>Matching and solving</h3>
+  <p>At \(x = L\): \(Ae^{-kL} = B\cos qL\) and \(Ake^{-kL} = Bq\sin qL\). Dividing gives (2.122). In dimensionless form:</p>
+  \begin{equation} kL = \sqrt{\frac{2mV_0L^2}{\hbar^2} - q^2L^2}, \qquad kL = qL\tan(qL). \tag{2.123} \end{equation}
+  <figure id="fig-finite"><figcaption>Even bound states: the intersections of \(qL\tan qL\) with the circle \((kL)^2 + (qL)^2 = 2mV_0L^2/\hbar^2\). There is always at least one.</figcaption></figure>
+
+  <h3>Outside the well</h3>
+  <div class="hero">
+    <div class="hero-label">Probability of being outside</div>
+    \begin{equation} P_{\text{I,III}} = \frac{q^2}{(1 + kL)(k^2 + q^2)} = \frac{E + V_0}{V_0(1 + kL)} \gt 0 \tag{2.128} \end{equation}
+    <p>This has no classical analogue. It tends to 0 as \(V_0 \to \infty\). The normalisation is \(|A|^2 = \dfrac{kq^2e^{2kL}}{(1 + kL)(k^2 + q^2)}\).</p>
+  </div>
+
+  <h3>Other energies</h3>
+  <div class="tbl"><table>
+    <tr><th>Energy</th><th>Behaviour</th></tr>
+    <tr><td>\(E \lt -V_0\)</td><td>No solution: real exponentials everywhere cannot be matched at both walls.</td></tr>
+    <tr><td>\(-V_0 \lt E \lt 0\)</td><td>Discrete bound states, as above.</td></tr>
+    <tr><td>\(E \gt 0\)</td><td>Continuum: free waves in every region, with \(q \gt k\) in the well, so a shorter wavelength there. No quantisation, and not normalisable.</td></tr>
+  </table></div>
+</article>
+
+<article class="view" id="problems-2" data-ch="II">
+  <p class="lede">Practice for Chapter II, in the style of the course problem sheets. All questions are new.</p>
+  <div class="note"><b>Modelled on:</b> Problem Sheets 3 and 4, Sheet 5 Q2 and Sheet 7 Q1.</div>
+  <div class="pool">
+
+  <section class="q" data-style="Sheet 3 Q1" data-topic="infinite-well">
+    <p>A particle in an infinite well \(0 \leq x \leq L\) is in its ground state at \(t = 0\). Find the probability of finding it between \(x = 0\) and \(x = L/4\). Why does this not depend on time? Would that still be true for \(\psi = \tfrac{1}{\sqrt2}(\phi_1 + \phi_2)\)?</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>Using \(\sin^2\theta = \tfrac12(1 - \cos2\theta)\):
+      \[ P = \frac2L\int_0^{L/4}\sin^2\frac{\pi x}{L}\,dx = \left[\frac xL - \frac{1}{2\pi}\sin\frac{2\pi x}{L}\right]_0^{L/4} = \frac14 - \frac{1}{2\pi} \approx 0.091. \]</li>
+      <li>In an energy eigenstate, \(\psi(x,t) = e^{-iE_1t/\hbar}\phi_1(x)\). The phase cancels in \(\psi^*\psi\), so \(P\) is independent of time.</li>
+      <li>For the superposition, \(|\psi|^2\) contains a cross term oscillating as \(\cos\big((E_2 - E_1)t/\hbar\big)\). So \(P\) would depend on time.</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Sheet 3 Q3" data-topic="infinite-well">
+    <p>A particle in an infinite well \(0 \leq x \leq L\) has the wave function
+    \[ \psi(x) = A\left[\sin\frac{\pi x}{L} + \sqrt3\sin\frac{3\pi x}{L}\right]. \]
+    (i) Write \(\psi\) in terms of the normalised eigenfunctions \(\phi_n\). (ii) Find \(A\). (iii) What are the possible results of an energy measurement, and their probabilities? (iv) Find \(\langle\hat H\rangle\).</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>(i) Since \(\sin(n\pi x/L) = \sqrt{L/2}\,\phi_n\):
+      \[ \psi = A\sqrt{\frac L2}\big(\phi_1 + \sqrt3\,\phi_3\big). \]</li>
+      <li>(ii) By orthonormality, \(1 = A^2\tfrac L2(1 + 3) = 2A^2L\). So \(A = \dfrac{1}{\sqrt{2L}}\).</li>
+      <li>(iii) Then \(\psi = \tfrac12\phi_1 + \tfrac{\sqrt3}{2}\phi_3\). So the results are \(E_1\) with probability \(\tfrac14\) and \(E_3 = 9E_1\) with probability \(\tfrac34\).</li>
+      <li>(iv) \(\langle\hat H\rangle = \tfrac14E_1 + \tfrac34(9E_1) = 7E_1 = \dfrac{7\pi^2\hbar^2}{2mL^2}\).</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Sheet 4 Q2" data-topic="infinite-well">
+    <p>In an infinite well \(0 \leq x \leq L\), a particle has the wave function \(\psi(x) = Ax(L - x)\).</p>
+    <p>(i) Find \(A\). (ii) Find the probability that an energy measurement gives \(E_1\). (iii) Find \(\langle\hat H\rangle\), and compare it with \(E_1\).</p>
+    <p><em>You may use \(\int_0^Lx(L - x)\sin(\pi x/L)\,dx = 4L^3/\pi^3\).</em></p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>(i) \(\int_0^Lx^2(L - x)^2\,dx = L^5/30\), so \(A = \sqrt{30/L^5}\).</li>
+      <li>(ii) \(a_1 = \langle\phi_1|\psi\rangle = \sqrt{\dfrac2L}\sqrt{\dfrac{30}{L^5}}\cdot\dfrac{4L^3}{\pi^3} = \dfrac{8\sqrt{15}}{\pi^3}\). So
+      \[ P(E_1) = \frac{960}{\pi^6} \approx 0.9986. \]</li>
+      <li>(iii) Inside the well, \(\psi'' = -2A\). Since \(\psi\) is real:
+      \[ \langle\hat H\rangle = -\frac{\hbar^2}{2m}\int_0^L\psi\psi''\,dx = \frac{\hbar^2}{m}A^2\int_0^Lx(L - x)\,dx = \frac{\hbar^2}{m}\cdot\frac{30}{L^5}\cdot\frac{L^3}{6} = \frac{5\hbar^2}{mL^2}. \]</li>
+      <li>This is above \(E_1 = \dfrac{\pi^2\hbar^2}{2mL^2} \approx \dfrac{4.93\hbar^2}{mL^2}\), as it must be. The state is very nearly the ground state.</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Sheet 4 Q3" data-topic="infinite-well">
+    <p>A particle is in the ground state of an infinite well \(0 \leq x \leq L\) when the wall at \(x = L\) is suddenly moved to \(x = 3L\), leaving the wave function unchanged. Find the probability that an energy measurement finds it in the ground state of the new well.</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>The old state is \(\phi_1 = \sqrt{2/L}\sin(\pi x/L)\) on \([0,L]\), and zero beyond. The new ground state is \(\chi_1 = \sqrt{2/(3L)}\sin(\pi x/3L)\).</li>
+      <li>The overlap only has support on \([0,L]\):
+      \[ a = \frac{2}{\sqrt3L}\int_0^L\sin\frac{\pi x}{L}\sin\frac{\pi x}{3L}\,dx. \]</li>
+      <li>Using \(2\sin A\sin B = \cos(A - B) - \cos(A + B)\):
+      \[ \int_0^L\sin\frac{\pi x}{L}\sin\frac{\pi x}{3L}\,dx = \frac12\left[\frac{3L}{2\pi}\sin\frac{2\pi}{3} - \frac{3L}{4\pi}\sin\frac{4\pi}{3}\right] = \frac{9\sqrt3L}{16\pi}. \]</li>
+      <li>So \(a = \dfrac{9}{8\pi}\), and
+      \[ P = |a|^2 = \frac{81}{64\pi^2} \approx 0.128. \]</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Sheet 4 Q1" data-topic="symmetric-well">
+    <p>A particle trapped in \(-B \leq x \leq B\) has the normalised wave function
+    \[ \psi_a(x) = \frac{1}{\sqrt{2B}}\left(\cos\frac{\pi x}{2B} + i\sin\frac{\pi x}{B}\right). \]
+    Find the probability of \(x \gt 0\), and \(\langle p\rangle\). Repeat for \(\psi_b\), which has the same form without the \(i\).</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>Write \(c = \cos(\pi x/2B)\) and \(s = \sin(\pi x/B)\). For \(\psi_a\), \(|\psi_a|^2 = (c^2 + s^2)/2B\), which is even. So \(P(x \gt 0) = \tfrac12\).</li>
+      <li>For \(\psi_b\), \(|\psi_b|^2 = (c^2 + s^2 + 2cs)/2B\). Using \(\int_0^Bcs\,dx = \tfrac{4B}{3\pi}\):
+      \[ P(x \gt 0) = \frac12 + \frac{1}{2B}\cdot2\cdot\frac{4B}{3\pi} = \frac12 + \frac{4}{3\pi} \approx 0.924. \]</li>
+      <li>For \(\langle p\rangle\) in \(\psi_a\), the \(cc'\) and \(ss'\) terms integrate to zero, leaving
+      \[ \langle p\rangle = \frac{\hbar}{2B}\int_{-B}^B(cs' - sc')\,dx. \]</li>
+      <li>Using \(\int cs'\,dx = \tfrac43\), and \(\int sc'\,dx = -\tfrac43\) by parts:
+      \[ \langle p\rangle_a = \frac{\hbar}{2B}\cdot\frac83 = \frac{4\hbar}{3B}. \]</li>
+      <li>\(\psi_b\) is real, so \(\langle p\rangle_b = -i\hbar\int\psi_b\psi_b'\,dx = -\tfrac{i\hbar}{2}\big[\psi_b^2\big]_{-B}^B = 0\).</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Sheet 7 Q1" data-topic="infinite-well">
+    <p>In an infinite well \(0 \leq x \leq L\), a particle has \(\psi(x,0) = \tfrac{1}{\sqrt2}(\phi_2 + \phi_3)\). Find \(\langle x\rangle\) as a function of time.</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>\(\psi(x,t) = \tfrac{1}{\sqrt2}\big(\phi_2e^{-iE_2t/\hbar} + \phi_3e^{-iE_3t/\hbar}\big)\), so
+      \[ \langle x\rangle = \tfrac12\big(\langle x\rangle_2 + \langle x\rangle_3\big) + \langle\phi_2|x|\phi_3\rangle\cos\omega t, \quad \omega = \frac{E_3 - E_2}{\hbar} = \frac{5\pi^2\hbar}{2mL^2}. \]</li>
+      <li>Each eigenstate has \(\langle x\rangle_n = L/2\), so the first term is \(L/2\).</li>
+      <li>Using \(2\sin A\sin B = \cos(A - B) - \cos(A + B)\):
+      \[ \langle\phi_2|x|\phi_3\rangle = \frac1L\int_0^Lx\left[\cos\frac{\pi x}{L} - \cos\frac{5\pi x}{L}\right]dx. \]</li>
+      <li>For odd \(k\), \(\int_0^Lx\cos(k\pi x/L)\,dx = -2L^2/(k^2\pi^2)\). So
+      \[ \langle\phi_2|x|\phi_3\rangle = -\frac{2L}{\pi^2}\left(1 - \frac{1}{25}\right) = -\frac{48L}{25\pi^2}. \]</li>
+      <li>Therefore
+      \[ \langle x\rangle(t) = \frac L2 - \frac{48L}{25\pi^2}\cos\omega t. \]</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Sheet 5 Q2" data-topic="finite-well">
+    <p>A particle has \(V = \infty\) for \(x \lt 0\), \(V = -V_0\) for \(0 \leq x \leq L\), and \(V = 0\) for \(x \gt L\). Show that bound states with \(-V_0 \lt E \lt 0\) satisfy \(k = -q\cot qL\), with \(k, q\) defined as usual. Deduce that there is no bound state unless \(V_0 \gt \dfrac{\pi^2\hbar^2}{8mL^2}\).</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>Inside, \(\phi = 0\) at \(x = 0\) leaves \(\phi = B\sin qx\). Outside, normalisability leaves \(\phi = Ce^{-kx}\).</li>
+      <li>Continuity at \(x = L\): \(B\sin qL = Ce^{-kL}\) and \(Bq\cos qL = -kCe^{-kL}\). Dividing gives \(k = -q\cot qL\).</li>
+      <li>In dimensionless form, \(kL = -qL\cot qL\), together with \((kL)^2 + (qL)^2 = 2mV_0L^2/\hbar^2\).</li>
+      <li>For \(kL \gt 0\), we need \(\cot qL \lt 0\), so \(qL \gt \pi/2\) at the first intersection.</li>
+      <li>The circle must therefore reach \(qL = \pi/2\): \(\dfrac{2mV_0L^2}{\hbar^2} \gt \dfrac{\pi^2}{4}\). That gives \(V_0 \gt \dfrac{\pi^2\hbar^2}{8mL^2}\).</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Sheet 5 Q2" data-topic="finite-well">
+    <p>A symmetric finite well has \(2mV_0L^2/\hbar^2 = 4\). Show that there is exactly one even bound state. Given that \(qL \approx 1.030\) for it, find \(E/V_0\) and the probability that the particle is outside the well.</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>The even condition is \(kL = qL\tan qL\) with \((kL)^2 + (qL)^2 = 4\), so \(qL \leq 2\).</li>
+      <li>The first branch of \(qL\tan qL\) runs over \(0 \leq qL \lt \pi/2\), and gives one intersection. The next branch starts at \(qL = \pi \gt 2\), beyond the circle. So there is exactly one.</li>
+      <li>With \(qL = 1.030\): \(kL = \sqrt{4 - 1.061} \approx 1.714\).</li>
+      <li>From \(k^2 = -2mE/\hbar^2\): \(\dfrac{E}{V_0} = -\dfrac{(kL)^2}{4} \approx -0.735\).</li>
+      <li>From (2.128):
+      \[ P = \frac{E + V_0}{V_0(1 + kL)} \approx \frac{0.265}{2.714} \approx 0.098. \]</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Notes §2.6" data-topic="symmetric-well">
+    <p>Prove that if \(V(x) = V(-x)\), then a non-degenerate eigenfunction of \(\hat H\) is either even or odd.</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>Let \(\hat H\phi(x) = E\phi(x)\). Replace \(x\) by \(-x\). The operator \(d^2/dx^2\) is unchanged, and \(V(-x) = V(x)\). So \(\phi(-x)\) satisfies the same equation with the same \(E\).</li>
+      <li>Non-degeneracy means the eigenfunction for \(E\) is unique up to a constant, so \(\phi(-x) = c\,\phi(x)\).</li>
+      <li>Applying this twice gives \(\phi(x) = c^2\phi(x)\), so \(c^2 = 1\) and \(c = \pm1\).</li>
+      <li>\(c = 1\) gives an even function, and \(c = -1\) gives an odd function.</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Sheet 3 Q2" data-topic="infinite-well">
+    <p>Show that in the \(n\)th eigenstate of the well \(0 \leq x \leq L\), \(\langle x\rangle = L/2\) and \(\langle p\rangle = 0\). Does \(\langle p\rangle = 0\) mean that the particle is at rest?</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>\(\langle x\rangle = \dfrac1L\displaystyle\int_0^Lx\left(1 - \cos\frac{2n\pi x}{L}\right)dx\).</li>
+      <li>The first term gives \(L/2\). The second integrates by parts to zero, as \(\sin 2n\pi = 0\) and \(\cos2n\pi = \cos0\). So \(\langle x\rangle = L/2\).</li>
+      <li>\(\hat p\phi_n = -i\hbar\sqrt{\tfrac2L}\tfrac{n\pi}{L}\cos\tfrac{n\pi x}{L}\). Then
+      \[ \langle p\rangle = -i\hbar\frac{n\pi}{L^2}\int_0^L\sin\frac{2n\pi x}{L}\,dx = 0. \]</li>
+      <li>No: it means the left- and right-moving parts balance. The state is a superposition of \(p = \pm\hbar k\), and \(\langle p^2\rangle = \hbar^2k^2 \neq 0\).</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Notes §2.6" data-topic="symmetric-well">
+    <p>For the symmetric well of width \(2L\), show that the energies can all be written \(E = \dfrac{\hbar^2\pi^2N^2}{8mL^2}\), for \(N = 1, 2, 3, \dots\) Which values of \(N\) are even states? Which parity is the ground state?</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>Even states have \(kL = (2n+1)\pi/2\), so \(k = N\pi/2L\) with \(N = 2n + 1\) odd.</li>
+      <li>Odd states have \(kL = n\pi\), so \(k = N\pi/2L\) with \(N = 2n\) even.</li>
+      <li>In both cases, \(E = \dfrac{\hbar^2k^2}{2m} = \dfrac{\hbar^2\pi^2N^2}{8mL^2}\). This is the earlier result with \(L \to 2L\).</li>
+      <li>So \(N\) odd gives even-parity states. The ground state, \(N = 1\), is even: \(\cos(\pi x/2L)\).</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Sheet 5 Q2(iii)" data-topic="finite-well">
+    <p>For the even bound state of the finite well, the normalisation is \(|A|^2 = \dfrac{kq^2e^{2kL}}{(1 + kL)(k^2 + q^2)}\). Calculate the probability of finding the particle outside the well, and write it in terms of \(E\), \(V_0\) and \(kL\). What happens as \(V_0 \to \infty\)?</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>Outside, \(|\phi|^2 = |A|^2e^{-2k|x|}\). Using symmetry:
+      \[ P = 2|A|^2\int_L^\infty e^{-2kx}\,dx = \frac{|A|^2e^{-2kL}}{k}. \]</li>
+      <li>Substituting \(|A|^2\):
+      \[ P = \frac{q^2}{(1 + kL)(k^2 + q^2)}. \]</li>
+      <li>Since \(q^2 \propto E + V_0\) and \(k^2 + q^2 \propto V_0\) with the same factor \(2m/\hbar^2\):
+      \[ P = \frac{E + V_0}{V_0(1 + kL)}. \]</li>
+      <li>As \(V_0 \to \infty\), \(kL \to \infty\), so \(P \to 0\). This recovers the infinite well.</li>
+    </ol></details>
+  </section>
+
+  </div>
+</article>
+
+<!-- ═══════════ CHAPTER III: SCATTERING ═══════════ -->
+
+<article class="view" id="probability-flux" data-ch="III">
+  <p class="lede">Non-normalisable waves still carry a well-defined flow of probability. Comparing fluxes replaces normalisation in scattering problems.</p>
+
+  <div class="hero">
+    <div class="hero-label">Probability flux</div>
+    \[ j(x) = \frac{i\hbar}{2m}\left(\frac{d\phi^*}{dx}\phi - \phi^*\frac{d\phi}{dx}\right) = \frac{1}{2m}\big[(\hat p\phi)^*\phi + \phi^*(\hat p\phi)\big] \]
+    \[ \frac{d}{dt}P(a \leq x \leq b) = j(a) - j(b) \]
+    <p>In words: rate of change of probability = flow in − flow out.</p>
+  </div>
+
+  <h3>Derivation</h3>
+  <ol class="steps">
+    <li>Differentiate \(P = \int_a^b\phi^*\phi\,dx\), and use \(\dot\phi = -\tfrac i\hbar\hat H\phi\):
+    \[ \frac{dP}{dt} = \int_a^b\left[\frac i\hbar(\hat H\phi)^*\phi - \frac i\hbar\phi^*\hat H\phi\right]dx. \]</li>
+    <li>With \(\hat H = -\tfrac{\hbar^2}{2m}\tfrac{d^2}{dx^2} + V\), the real potential terms cancel:
+    \[ \frac{dP}{dt} = -\frac{i\hbar}{2m}\int_a^b\big((\phi'')^*\phi - \phi^*\phi''\big)\,dx. \]</li>
+    <li>Integrating by parts, the \(|\phi'|^2\) terms cancel, leaving the boundary terms \(j(a) - j(b)\).</li>
+  </ol>
+
+  <details class="ex" open><summary><span class="ex-tag">Example</span><span>Plane wave \(\phi = Ae^{ikx}\)</span></summary><div class="ex-body">
+    <p>\(\hat p\phi = \hbar k\phi\), so</p>
+    \[ j = \frac{\hbar k}{m}|A|^2. \]
+    <p>This is density times velocity: \(|A|^2\) is the probability density, and \(\hbar k/m\) is momentum over mass. It is like road traffic: cars passing per hour = cars per mile × miles per hour.</p>
+  </div></details>
+
+  <h3>Free waves</h3>
+  <p>For \(V = 0\) and \(E \gt 0\), with \(k^2 = 2mE/\hbar^2\), the general solution is \(\psi = Ae^{ikx} + Be^{-ikx}\). There is no boundary condition, so the spectrum \(E = \hbar^2k^2/2m\) is continuous. The flux is</p>
+  \begin{equation} j = \frac{\hbar k}{m}\big(|A|^2 - |B|^2\big). \tag{2.147} \end{equation}
+  <p>So \(Ae^{ikx}\) moves right and \(Be^{-ikx}\) moves left, and the cross terms cancel.</p>
+</article>
+
+<article class="view" id="potential-step" data-ch="III">
+  <p class="lede">Unlike a classical particle, a quantum particle can reflect from a step it has enough energy to climb.</p>
+
+  <figure id="fig-step"><figcaption>Particles arrive from the left. For \(E \gt V_1\), both reflection and transmission occur, with different wavelengths on each side.</figcaption></figure>
+
+  <div class="hero">
+    <div class="hero-label">Step: \(E \gt V_1\)</div>
+    \begin{equation} R = \left(\frac{k - k_1}{k + k_1}\right)^2, \qquad T = \frac{4kk_1}{(k + k_1)^2}, \qquad R + T = 1 \tag{2.160} \end{equation}
+    <p>With \(k^2 = 2mE/\hbar^2\) and \(k_1^2 = 2m(E - V_1)/\hbar^2\).</p>
+  </div>
+
+  <h3>Case \(E \gt V_1\)</h3>
+  <ol class="steps">
+    <li>With no wave coming in from the right:
+    \[ \psi = \begin{cases} Ae^{ikx} + Be^{-ikx} & x \lt 0 \\ Ce^{ik_1x} & x \gt 0. \end{cases} \]</li>
+    <li>Continuity of \(\psi\) and \(\psi'\) at \(x = 0\): \(A + B = C\) and \(ik(A - B) = ik_1C\).</li>
+    <li>Solving:
+    \[ C = \frac{2k}{k + k_1}A, \qquad B = \frac{k - k_1}{k + k_1}A. \]</li>
+    <li>The fluxes are \(j_A = \tfrac{\hbar k}{m}|A|^2\), \(j_B = -\tfrac{\hbar k}{m}|B|^2\), \(j_C = \tfrac{\hbar k_1}{m}|C|^2\). Define \(T = j_C/j_A\) and \(R = -j_B/j_A\).</li>
+  </ol>
+
+  <div class="note"><b>Watch the \(k_1\).</b> \(T\) is a ratio of fluxes, so it contains \(k_1/k\). It is not \(|C|^2/|A|^2\), because the wave moves at a different speed after the step.</div>
+
+  <h3>Case \(E \lt V_1\)</h3>
+  <div class="hero">
+    <div class="hero-label">Step: \(E \lt V_1\)</div>
+    \[ \psi_{\text{II}} = Ce^{-qx}, \qquad q^2 = \frac{2m(V_1 - E)}{\hbar^2}, \qquad B = \frac{k - iq}{k + iq}A, \qquad R = 1, \quad T = 0 \]
+    <p>Everything is reflected, but an exponential tail enters the classically forbidden region.</p>
+  </div>
+  <p>\(|B| = |A|\) because \(k - iq\) and \(k + iq\) are complex conjugates. The growing exponential is discarded to keep \(\psi\) finite at infinity. Continuity gives \(A + B = C\) and \(ik(A - B) = -qC\).</p>
+</article>
+
+<article class="view" id="potential-barrier" data-ch="III">
+  <p class="lede">Give the step a finite width, and the decaying tail reaches the other side. Particles get through a barrier they classically cannot cross.</p>
+
+  <figure id="fig-tunnel"><figcaption>Tunnelling, with \(E \lt V_1\): an oscillating wave on the left, a decaying tail inside, and a smaller transmitted wave on the right.</figcaption></figure>
+
+  <div class="hero">
+    <div class="hero-label">Tunnelling: \(E \lt V_1\)</div>
+    \begin{equation} T = \frac{4k^2q^2}{(k^2 + q^2)^2\sinh^2(qL) + 4k^2q^2} \tag{2.183} \end{equation}
+    <p>With \(k^2 = 2mE/\hbar^2\) and \(q^2 = 2m(V_1 - E)/\hbar^2\). \(T\) is largest for a low, thin barrier.</p>
+  </div>
+
+  <div class="hero">
+    <div class="hero-label">Above the barrier: \(E \gt V_1\)</div>
+    \[ T = \frac{4k^2k_1^2}{(k^2 - k_1^2)^2\sin^2(k_1L) + 4k^2k_1^2}, \qquad k_1^2 = \frac{2m(E - V_1)}{\hbar^2} \]
+    <p>Part of the wave reflects even above the barrier. But \(T = 1\) when \(k_1L = n\pi\).</p>
+  </div>
+
+  <h3>Setting up \(E \lt V_1\)</h3>
+  <ol class="steps">
+    <li>The barrier is \(V = V_1\) on \(0 \lt x \lt L\). Now the growing exponential must be kept, since the region is finite:
+    \[ \psi = \begin{cases} Ae^{ikx} + Be^{-ikx} & x \lt 0 \\ Ce^{qx} + De^{-qx} & 0 \lt x \lt L \\ Fe^{ikx} & x \gt L. \end{cases} \]</li>
+    <li>Matching at \(x = L\) gives
+    \[ C = \frac{Fe^{ikL}(q + ik)e^{-qL}}{2q}, \qquad D = \frac{Fe^{ikL}(q - ik)e^{qL}}{2q}. \]</li>
+    <li>Matching at \(x = 0\), then substituting:
+    \[ A = \frac{Fe^{ikL}}{2ikq}\big[(k^2 - q^2)\sinh qL + 2ikq\cosh qL\big], \quad B = \frac{Fe^{ikL}}{2ikq}(k^2 + q^2)\sinh qL. \]</li>
+    <li>Both sides have momentum \(\hbar k\), so \(T = |F|^2/|A|^2\) and \(R = |B|^2/|A|^2\). The form (2.183) uses \((k^2 - q^2)^2 + 4k^2q^2 = (k^2 + q^2)^2\), and clearly \(T + R = 1\).</li>
+  </ol>
+
+  <details class="ex"><summary><span class="ex-tag">Application</span><span>\(\alpha\)-decay</span></summary><div class="ex-body">
+    <p>In a nucleus, the short-range nuclear force binds protons and neutrons, while the electrostatic force is repulsive. Together they form a potential barrier. \(\alpha\)-particles tunnel out through it, and the \(\alpha\)-decay rate matches the tunnelling probability one can estimate.</p>
+  </div></details>
+</article>
+
+<article class="view" id="problems-3" data-ch="III">
+  <p class="lede">Practice for Chapter III, in the style of the course problem sheets. All questions are new.</p>
+  <div class="note"><b>Modelled on:</b> Problem Sheet 6 Q1–2, with the step and barrier results from the notes.</div>
+  <div class="pool">
+
+  <section class="q" data-style="Sheet 6 Q1" data-topic="probability-flux">
+    <p>Write \(\psi(x) = r(x)e^{i\theta(x)}\), with \(r, \theta\) real, and show that \(j = \dfrac\hbar m r^2\theta'\). Use this to find the flux of \(\psi = (1 + ix)e^{ikx}\), and the flux of any real wave function.</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>\(\psi' = (r' + ir\theta')e^{i\theta}\), so \(\hat p\psi = -i\hbar(r' + ir\theta')e^{i\theta}\).</li>
+      <li>Then \(\psi^*\hat p\psi = -i\hbar rr' + \hbar r^2\theta'\). The flux is
+      \[ j = \frac{1}{2m}\big[(\hat p\psi)^*\psi + \psi^*\hat p\psi\big] = \frac1m\operatorname{Re}\big(\psi^*\hat p\psi\big) = \frac\hbar mr^2\theta'. \]</li>
+      <li>For \(\psi = (1 + ix)e^{ikx}\): \(r^2 = 1 + x^2\) and \(\theta = kx + \arctan x\), so \(\theta' = k + \dfrac{1}{1 + x^2}\).</li>
+      <li>Hence
+      \[ j = \frac\hbar m\big[k(1 + x^2) + 1\big]. \]</li>
+      <li>A real \(\psi\) has constant \(\theta\), so \(j = 0\). It carries no net flow.</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Notes §2.6.6" data-topic="potential-step">
+    <p>Particles of energy \(E = 2V_1\) hit a potential step of height \(V_1\). Find the reflection and transmission probabilities. What would happen classically?</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>\(k^2 = 2m(2V_1)/\hbar^2\) and \(k_1^2 = 2mV_1/\hbar^2\), so \(k_1 = k/\sqrt2\).</li>
+      <li>From (2.160):
+      \[ R = \left(\frac{1 - 1/\sqrt2}{1 + 1/\sqrt2}\right)^2 = \left(\frac{\sqrt2 - 1}{\sqrt2 + 1}\right)^2 = (\sqrt2 - 1)^4 \approx 0.029. \]</li>
+      <li>\(T = 1 - R \approx 0.971\).</li>
+      <li>Classically, every particle would continue with reduced speed, so \(R = 0\).</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Notes §2.6.6" data-topic="potential-step">
+    <p>A particle of energy \(E \gt 0\) meets a potential that <em>drops</em> to \(V = -V_0\) for \(x \gt 0\), with \(V_0 = 8E\). Find \(R\) and \(T\). Comment on the result.</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>The matching is the same as for the upward step, with \(k_1^2 = 2m(E + V_0)/\hbar^2\).</li>
+      <li>\(E + V_0 = 9E\), so \(k_1 = 3k\).</li>
+      <li>\(R = \left(\dfrac{1 - 3}{1 + 3}\right)^2 = \dfrac14\) and \(T = \dfrac{4\cdot3}{16} = \dfrac34\).</li>
+      <li>A classical particle would never reflect from a drop in potential, but a quantum wave reflects from any sudden change.</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Notes §2.6.6" data-topic="potential-step">
+    <p>For a step with \(E \lt V_1\), suppose \(E = V_1/2\). Show that \(k = q\). Find \(B\) and \(C\) in terms of \(A\). What are \(R\) and \(T\)? How far does the wave penetrate?</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>\(k^2 = 2mE/\hbar^2\) and \(q^2 = 2m(V_1 - E)/\hbar^2\), which are equal when \(E = V_1/2\).</li>
+      <li>\(B = \dfrac{k - iq}{k + iq}A = \dfrac{1 - i}{1 + i}A = -iA\).</li>
+      <li>\(C = A + B = (1 - i)A\), so \(|C|^2 = 2|A|^2\).</li>
+      <li>\(|B| = |A|\), so \(R = 1\) and \(T = 0\). The tail \(Ce^{-qx}\) carries no flux, since it is a real exponential times a constant phase.</li>
+      <li>The probability density falls as \(e^{-2qx}\), so the penetration depth is of order \(1/q = \hbar/\sqrt{mV_1}\).</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Notes §2.6.6" data-topic="potential-barrier">
+    <p>A particle has energy \(E = V_1/2\) at a barrier of height \(V_1\) and width \(L\). Show that \(T = \operatorname{sech}^2(qL)\), and find the form of \(T\) for a thick barrier, \(qL \gg 1\).</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>\(E = V_1/2\) gives \(k = q\). Substituting in (2.183):
+      \[ T = \frac{4q^4}{4q^4\sinh^2(qL) + 4q^4} = \frac{1}{1 + \sinh^2(qL)} = \frac{1}{\cosh^2(qL)}. \]</li>
+      <li>For \(qL \gg 1\), \(\cosh qL \approx \tfrac12e^{qL}\), so
+      \[ T \approx 4e^{-2qL}. \]</li>
+      <li>Tunnelling falls off exponentially with the barrier width.</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Sheet 6 Q2" data-topic="potential-barrier">
+    <p>A particle of energy \(E \gt 0\) scatters off a square <em>well</em>, \(V = -V_0\) for \(0 \leq x \leq L\). The result is \(T\) of the \(E \gt V_1\) barrier, with \(k_1^2 = 2m(E + V_0)/\hbar^2\). At what energies is \(T = 1\)? Find the minimum possible \(T\) when \(V_0 = 3E\).</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>\(T = \dfrac{4k^2k_1^2}{(k^2 - k_1^2)^2\sin^2(k_1L) + 4k^2k_1^2}\).</li>
+      <li>\(T = 1\) when \(\sin k_1L = 0\), so \(k_1L = n\pi\). That gives
+      \[ E = \frac{n^2\pi^2\hbar^2}{2mL^2} - V_0. \]</li>
+      <li>\(T\) is smallest when \(\sin^2(k_1L) = 1\):
+      \[ T_{\min} = \frac{4k^2k_1^2}{(k^2 - k_1^2)^2 + 4k^2k_1^2} = \frac{4k^2k_1^2}{(k^2 + k_1^2)^2}. \]</li>
+      <li>\(V_0 = 3E\) gives \(k_1^2 = 4k^2\). So
+      \[ T_{\min} = \frac{16k^4}{25k^4} = \frac{16}{25}. \]</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Notes §2.6.6" data-topic="potential-barrier">
+    <p>Show that as \(E \to V_1\) from below, the tunnelling formula (2.183) gives
+    \[ T \to \frac{1}{1 + k^2L^2/4}. \]
+    Write this in terms of \(V_1\), \(m\), \(L\).</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>As \(E \to V_1\), \(q \to 0\), so \(\sinh qL \approx qL\).</li>
+      <li>The denominator is then approximately \(k^4q^2L^2 + 4k^2q^2\), using \(k^2 + q^2 \approx k^2\).</li>
+      <li>So
+      \[ T \to \frac{4k^2q^2}{k^4q^2L^2 + 4k^2q^2} = \frac{1}{1 + k^2L^2/4}. \]</li>
+      <li>With \(k^2 = 2mV_1/\hbar^2\):
+      \[ T \to \frac{1}{1 + mV_1L^2/2\hbar^2}. \]</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Notes §2.6.4" data-topic="probability-flux">
+    <p>Show that for a stationary state with a real potential, the flux \(j\) is independent of \(x\). Use this to explain why \(1 - R\) and \(T\) must be equal at a step.</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>Differentiating, the \(|\phi'|^2\) terms cancel:
+      \[ \frac{dj}{dx} = \frac{i\hbar}{2m}\big((\phi^*)''\phi - \phi^*\phi''\big). \]</li>
+      <li>The Schrödinger equation gives \(\phi'' = \tfrac{2m}{\hbar^2}(V - E)\phi\). The factor is real, so \((\phi^*)'' = \tfrac{2m}{\hbar^2}(V - E)\phi^*\).</li>
+      <li>The two terms then cancel, so \(dj/dx = 0\).</li>
+      <li>At a step, the flux left of the step, \(j_A + j_B\), must equal the flux on the right, \(j_C\).</li>
+      <li>Dividing by \(j_A\): \(1 - R = T\).</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Notes §2.6.6" data-topic="potential-barrier">
+    <p>An electron of energy \(1\,\text{eV}\) meets a barrier of height \(5\,\text{eV}\) and width \(0.5\,\text{nm}\). Taking \(\hbar^2/2m = 0.0381\,\text{eV nm}^2\), find \(k\), \(q\) and \(T\). By about what factor does \(T\) change if the width doubles?</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>\(k^2 = 1/0.0381 = 26.2\,\text{nm}^{-2}\), so \(k = 5.12\,\text{nm}^{-1}\).</li>
+      <li>\(q^2 = 4/0.0381 = 105\,\text{nm}^{-2}\), so \(q = 10.2\,\text{nm}^{-1}\), and \(qL = 5.12\).</li>
+      <li>\(\sinh^2(qL) \approx \tfrac14e^{2qL}\), and \((k^2 + q^2)^2 \gg 4k^2q^2/\sinh^2(qL)\). So
+      \[ T \approx \frac{4k^2q^2}{(k^2 + q^2)^2\sinh^2qL} = \frac{16k^2q^2}{(k^2 + q^2)^2}e^{-2qL} \approx 9\times10^{-5}. \]</li>
+      <li>Doubling \(L\) multiplies \(T\) by about \(e^{-2qL} \approx e^{-10.2} \approx 3.6\times10^{-5}\).</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Notes §2.6.6" data-topic="potential-step">
+    <p>For the step with \(E \gt V_1\), take \(k = 3\), \(k_1 = 1\), \(A = 1\). Find \(B\), \(C\), \(R\) and \(T\). Show that \(|\psi|^2\) oscillates for \(x \lt 0\) and is constant for \(x \gt 0\). Why is \(T\) not equal to \(|C|^2\)?</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>\(B = \dfrac{k - k_1}{k + k_1}A = \dfrac12\) and \(C = \dfrac{2k}{k + k_1}A = \dfrac32\).</li>
+      <li>\(R = |B|^2/|A|^2 = \tfrac14\) and \(T = \dfrac{4kk_1}{(k + k_1)^2} = \tfrac34\). So \(R + T = 1\). ✓</li>
+      <li>For \(x \lt 0\):
+      \[ |\psi|^2 = \big|e^{3ix} + \tfrac12e^{-3ix}\big|^2 = \tfrac54 + \cos6x, \]
+      an interference pattern between the incoming and reflected waves.</li>
+      <li>For \(x \gt 0\), \(|\psi|^2 = |C|^2 = \tfrac94\), which is constant.</li>
+      <li>\(T\) compares fluxes, and flux is density times speed. The speed after the step is smaller, so \(T = \dfrac{k_1}{k}|C|^2 = \dfrac13\cdot\dfrac94 = \dfrac34\).</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Notes §2.6.5" data-topic="probability-flux">
+    <p>Show that \(\psi = Ae^{ikx} + Be^{-ikx}\) has flux \(j = \dfrac{\hbar k}{m}(|A|^2 - |B|^2)\). What is the flux of \(\psi = \cos kx\)? Interpret this.</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>\(\hat p\psi = \hbar k\big(Ae^{ikx} - Be^{-ikx}\big)\).</li>
+      <li>Then
+      \[ \psi^*\hat p\psi = \hbar k\big(|A|^2 - |B|^2 - A^*Be^{-2ikx} + B^*Ae^{2ikx}\big). \]</li>
+      <li>The last two terms are together purely imaginary, so they vanish on taking the real part. Hence
+      \[ j = \frac1m\operatorname{Re}\big(\psi^*\hat p\psi\big) = \frac{\hbar k}{m}\big(|A|^2 - |B|^2\big). \]</li>
+      <li>\(\cos kx\) has \(A = B = \tfrac12\), so \(j = 0\). This is a standing wave: equal flows left and right give no net transport.</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Notes §2.6.6" data-topic="potential-barrier">
+    <p>Starting from \(A\) and \(B\) on the barrier page, show that for \(E \lt V_1\), \(T + R = 1\), and explain why the two forms of \(T\) in (2.183) agree.</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>\(|A|^2 = \dfrac{|F|^2}{4k^2q^2}\big[(k^2 - q^2)^2\sinh^2qL + 4k^2q^2\cosh^2qL\big]\), since the two parts are real and imaginary.</li>
+      <li>\(|B|^2 = \dfrac{|F|^2}{4k^2q^2}(k^2 + q^2)^2\sinh^2qL\).</li>
+      <li>Use \(\cosh^2 = 1 + \sinh^2\) in \(|A|^2\), together with \((k^2 - q^2)^2 + 4k^2q^2 = (k^2 + q^2)^2\):
+      \[ |A|^2 = \frac{|F|^2}{4k^2q^2}\big[(k^2 + q^2)^2\sinh^2qL + 4k^2q^2\big]. \]
+      This is the second form of \(T = |F|^2/|A|^2\).</li>
+      <li>So \(|F|^2 + |B|^2 = |A|^2\), since \(|F|^2\) supplies the \(4k^2q^2\) term. Dividing by \(|A|^2\) gives \(T + R = 1\).</li>
+    </ol></details>
+  </section>
+
+  </div>
+</article>
+
+<!-- ═══════════ CHAPTER IV: FORMALISM ═══════════ -->
+
+<article class="view" id="commutators" data-ch="IV">
+  <p class="lede">Measuring changes a system, so the order of measurements matters. The commutator measures exactly how much.</p>
+
+  <div class="hero">
+    <div class="hero-label">Canonical commutation relation</div>
+    \begin{equation} [\hat x, \hat p] = i\hbar \tag{3.7} \end{equation}
+    <p>In 3D, \([x_i, p_j] = i\hbar\delta_{ij}\). All other position–momentum commutators vanish.</p>
+  </div>
+
+  <h3>Definitions and basic rules</h3>
+  \begin{equation} [A,B] = AB - BA, \qquad [A,A] = 0, \qquad [A,B] = -[B,A]. \tag{3.1} \end{equation}
+  <p>An operator is <strong>anti-Hermitian</strong> if \(\langle\phi|B\psi\rangle = -\langle B\phi|\psi\rangle\). If \(A\) is Hermitian, then \(iA\) is anti-Hermitian.</p>
+  <div class="note"><b>Key result.</b> If \(A\) and \(B\) are Hermitian, then \([A,B]\) is anti-Hermitian. So we can write \([A,B] = iC\), with \(C\) Hermitian.</div>
+
+  <h3>Evaluating a commutator</h3>
+  <p>Because \(\hat p\) is a differential operator, act on a test function:</p>
+  \[ [\hat x, \hat p]f = x(-i\hbar)\frac{df}{dx} + i\hbar\frac{d}{dx}(xf) = -i\hbar x\frac{df}{dx} + i\hbar f + i\hbar x\frac{df}{dx} = i\hbar f. \]
+  <p>The right side of (3.7) contains the unit operator, which is usually not written out.</p>
+
+  <h3>The general inequality</h3>
+  <p>For Hermitian \(A, B\), let \(\phi = (A + i\lambda B)\psi\) with \(\lambda\) real. Then</p>
+  \begin{equation} \langle\phi|\phi\rangle = \langle A^2\rangle - \lambda\langle C\rangle + \lambda^2\langle B^2\rangle \geq 0. \tag{3.9} \end{equation}
+  <p>A quadratic in \(\lambda\) that is never negative cannot have two distinct real roots, so its discriminant gives</p>
+  \begin{equation} \langle A^2\rangle\langle B^2\rangle \geq \tfrac14\langle C\rangle^2. \tag{3.11} \end{equation}
+</article>
+
+<article class="view" id="uncertainty" data-ch="IV">
+  <p class="lede">Not a limit on instruments: position and momentum cannot both be sharp, because of how the operators fail to commute.</p>
+
+  <div class="hero">
+    <div class="hero-label">Heisenberg's uncertainty principle</div>
+    \begin{equation} \Delta x\,\Delta p \geq \frac\hbar2 \tag{3.17} \end{equation}
+    <p>with \((\Delta A)^2 = \langle(A - \langle A\rangle)^2\rangle = \langle A^2\rangle - \langle A\rangle^2\).</p>
+  </div>
+
+  <h3>Derivation</h3>
+  <ol class="steps">
+    <li>Shift the operators: \(\tilde x = \hat x - \langle x\rangle\) and \(\tilde p = \hat p - \langle p\rangle\). The averages are numbers, so \([\tilde x, \tilde p] = [\hat x, \hat p] = i\hbar\), meaning \(C = \hbar\).</li>
+    <li>Applying (3.11): \(\langle\tilde x^2\rangle\langle\tilde p^2\rangle \geq \tfrac14\hbar^2\).</li>
+    <li>By definition this is \((\Delta x)^2(\Delta p)^2 \geq \tfrac14\hbar^2\).</li>
+  </ol>
+
+  <h3>Consequences</h3>
+  <ul>
+    <li>In the classical limit \(\hbar \to 0\), there is no such uncertainty.</li>
+    <li>If operators commute, the observables may be measured precisely together. For example, \([\hat p_x, \hat y] = 0\).</li>
+    <li>In three dimensions, the bound applies in each direction separately.</li>
+    <li>A plane wave \(e^{ikx}\) has exact momentum \(\hbar k\), but \(|\psi|^2 = 1\) everywhere, so \(\Delta x = \infty\).</li>
+    <li>If \(\Delta x \sim L\), then \(\Delta p \sim 1/L\).</li>
+  </ul>
+
+  <div class="hero">
+    <div class="hero-label">Energy–time uncertainty</div>
+    \begin{equation} \Delta E\,\Delta t \geq \frac\hbar2 \tag{3.18} \end{equation}
+    <p>This allows energy to be "borrowed" for a short time, making tunnelling and vacuum fluctuations possible.</p>
+  </div>
+
+  <h3>Where it comes from</h3>
+  <p>To measure a position, photons must scatter off the particle, transferring an uncertain momentum. A sharper position measurement needs shorter wavelengths or more photons, which disturbs the momentum more.</p>
+</article>
+
+<article class="view" id="gaussians" data-ch="IV">
+  <p class="lede">The Gaussian is the most classical state possible: it exactly saturates the uncertainty bound.</p>
+
+  <div class="hero">
+    <div class="hero-label">Gaussian integrals</div>
+    \[ I_n(a) = \int_{-\infty}^\infty x^ne^{-ax^2}\,dx, \qquad I_0 = \sqrt{\frac\pi a}, \qquad I_{2n+1} = 0, \qquad I_{2n+2} = -\frac{dI_{2n}}{da} \]
+    <p>So \(I_2 = \dfrac{\sqrt\pi}{2a^{3/2}}\) and \(I_4 = \dfrac{3\sqrt\pi}{4a^{5/2}}\). Odd powers vanish by symmetry.</p>
+  </div>
+
+  <div class="hero">
+    <div class="hero-label">Gaussian state saturates the bound</div>
+    \[ \psi(x) = \left(\frac a\pi\right)^{1/4}e^{-\frac12ax^2}, \qquad (\Delta x)^2 = \frac{1}{2a}, \quad (\Delta p)^2 = \frac{a\hbar^2}{2}, \quad \Delta x\,\Delta p = \frac\hbar2 \]
+  </div>
+
+  <h3>The calculation</h3>
+  <ol class="steps">
+    <li><strong>Normalisation.</strong> \(|A|^2I_0(a) = 1\), so \(A = (a/\pi)^{1/4}\).</li>
+    <li><strong>Position.</strong> \(\langle x\rangle = 0\) since the integrand is odd, and
+    \[ \langle x^2\rangle = |A|^2I_2(a) = \sqrt{\frac a\pi}\frac{\sqrt\pi}{2a^{3/2}} = \frac{1}{2a}. \]</li>
+    <li><strong>Momentum.</strong> \(\hat p\psi = i\hbar ax\psi\), so \(\langle p\rangle = 0\). Using Hermiticity, \(\langle\hat p^2\rangle = \langle\hat p\psi|\hat p\psi\rangle\), which is simpler:
+    \[ \langle\hat p^2\rangle = \hbar^2a^2|A|^2I_2(a) = \frac{a\hbar^2}{2}. \]</li>
+  </ol>
+
+  <h3>Fourier transform</h3>
+  <p>Completing the square gives another Gaussian:</p>
+  \begin{equation} \tilde f(k) = \int_{-\infty}^\infty e^{-ax^2}e^{ikx}\,dx = \sqrt{\frac\pi a}\,e^{-k^2/4a}. \tag{3.38} \end{equation}
+  <figure id="fig-gauss"><figcaption>Narrow in position (left) means wide in momentum (right), and vice versa. Solid and dashed curves are two values of \(a\).</figcaption></figure>
+</article>
+
+<article class="view" id="wave-packets" data-ch="IV">
+  <p class="lede">A superposition of plane waves can localise a particle. A Gaussian packet is the closest QM gets to a classical particle.</p>
+
+  <div class="hero">
+    <div class="hero-label">Wave packet</div>
+    \begin{equation} \psi(x,t) = \int_{-\infty}^\infty C(k)\,e^{ikx - i\omega(k)t}\,dk, \qquad \omega(k) = \frac{\hbar k^2}{2m} \tag{3.40} \end{equation}
+    <p>A Gaussian packet has \(C(k) = Ae^{-\alpha^2(k - k_0)^2}\).</p>
+  </div>
+
+  <p>A free particle has solutions \(\psi_k = e^{i(kx - \omega t)}\) with \(\hbar\omega = \hbar^2k^2/2m\), which are not normalisable. Superposing them gives a normalisable state, but with no definite momentum or energy, so it changes shape with time. A wave packet that is Gaussian initially stays Gaussian, with a complex, time-dependent width.</p>
+
+  <h3>Gaussian packet summary</h3>
+  <div class="tbl"><table>
+    <tr><th>Property</th><th>Result</th></tr>
+    <tr><td>Velocity</td><td>\(\dfrac{\hbar k_0}{m} = \dfrac{\langle p\rangle}{m}\)</td></tr>
+    <tr><td>Initial widths</td><td>\(\Delta x = \alpha\), \(\;\Delta p = \dfrac{\hbar}{2\alpha}\), so \(\Delta x\,\Delta p = \dfrac\hbar2\)</td></tr>
+    <tr><td>Spreading</td><td>\(\Delta x \approx \dfrac{\Delta p}{m}t\), due to the mix of momenta</td></tr>
+    <tr><td>Flux at \(t = 0\)</td><td>\(j = |\psi|^2\dfrac{\hbar k_0}{m}\): the same average speed at each point</td></tr>
+    <tr><td>Flux at \(t \gt 0\)</td><td>The average speed depends on \(x\): faster at the front, slower at the back</td></tr>
+  </table></div>
+</article>
+
+<article class="view" id="harmonic-oscillator" data-ch="IV">
+  <p class="lede">The notes end just as this topic is introduced, so this page is built from Problem Sheet 7 Q2.</p>
+
+  <div class="hero">
+    <div class="hero-label">Simple harmonic oscillator</div>
+    \[ \hat H = -\frac{\hbar^2}{2m}\frac{d^2}{dx^2} + \frac12m\omega^2x^2 = \hbar\omega\left(a^\dagger a + \frac12\right), \qquad \alpha^2 = \frac{m\omega}{\hbar} \]
+    \[ a = -\frac{i}{\sqrt2\alpha}\left(\frac{d}{dx} + \alpha^2x\right), \qquad a^\dagger = -\frac{i}{\sqrt2\alpha}\left(\frac{d}{dx} - \alpha^2x\right) \]
+  </div>
+
+  <div class="hero">
+    <div class="hero-label">Ground state and ladder</div>
+    \[ a\psi_0 = 0, \qquad \psi_0 = Ae^{-\frac12\alpha^2x^2}, \quad A^2 = \frac{\alpha}{\sqrt\pi}, \qquad \psi_n = \frac{1}{\sqrt{n!}}(a^\dagger)^n\psi_0 \]
+    <p>The ground state is a Gaussian, with \(a = \alpha^2\) in the notation of the previous pages.</p>
+  </div>
+
+  <h3>First excited states</h3>
+  \[ \psi_1(x) = i\,\frac{(2\alpha^3)^{1/2}}{\pi^{1/4}}\,xe^{-\frac12\alpha^2x^2}, \qquad \psi_2(x) = \frac{\alpha^{1/2}}{\sqrt2\,\pi^{1/4}}\big(1 - 2\alpha^2x^2\big)e^{-\frac12\alpha^2x^2}. \]
+  <p>\(\psi_1\) is odd and \(\psi_2\) is even, so \(\langle\psi_1|\psi_2\rangle = 0\) by symmetry.</p>
+
+  <h3>From a wave function to a potential</h3>
+  <p>If \(\psi = Ae^{-f(x)}\) is an eigenstate with energy \(E\), then \(\psi'' = (f'^2 - f'')\psi\), and the Schrödinger equation gives</p>
+  \[ V(x) = E + \frac{\hbar^2}{2m}\big(f'^2 - f''\big). \]
+</article>
+
+<article class="view" id="problems-4" data-ch="IV">
+  <p class="lede">Practice for Chapter IV, in the style of the course problem sheets. All questions are new.</p>
+  <div class="note"><b>Modelled on:</b> Problem Sheet 6 Q3 and Problem Sheet 7 Q2–3.</div>
+  <div class="pool">
+
+  <section class="q" data-style="Notes §3.1" data-topic="commutators">
+    <p>Using \([AB, C] = A[B, C] + [A, C]B\) and \([\hat x, \hat p] = i\hbar\), show that \([\hat x^2, \hat p] = 2i\hbar\hat x\) and \([\hat x, \hat p^2] = 2i\hbar\hat p\).</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>Taking \(A = B = \hat x\) and \(C = \hat p\):
+      \[ [\hat x^2, \hat p] = \hat x[\hat x, \hat p] + [\hat x, \hat p]\hat x = 2i\hbar\hat x. \]</li>
+      <li>In the same way, using \([A, BC] = B[A, C] + [A, B]C\):
+      \[ [\hat x, \hat p^2] = \hat p[\hat x, \hat p] + [\hat x, \hat p]\hat p = 2i\hbar\hat p. \]</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Notes §3.1" data-topic="commutators">
+    <p>For \(\hat H = \dfrac{\hat p^2}{2m} + V(\hat x)\), show that \([\hat H, \hat x] = -\dfrac{i\hbar}{m}\hat p\). Why is there no contribution from \(V\)?</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>\(V(\hat x)\) is a function of \(x\) alone, so it commutes with \(\hat x\). That gives \([\hat H, \hat x] = \tfrac{1}{2m}[\hat p^2, \hat x]\).</li>
+      <li>From \([\hat x, \hat p^2] = 2i\hbar\hat p\), reversing the order changes the sign:
+      \[ [\hat p^2, \hat x] = -2i\hbar\hat p. \]</li>
+      <li>So \([\hat H, \hat x] = -\dfrac{i\hbar}{m}\hat p\). ✓</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Sheet 6 Q3" data-topic="uncertainty">
+    <p>A particle in the well \(0 \leq x \leq L\) has \(\psi = \sqrt{30/L^5}\,x(L - x)\). Find \(\Delta x\) and \(\Delta p\), and compare \(\Delta x\,\Delta p\) with the uncertainty principle.</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>By symmetry, \(\langle x\rangle = L/2\). Since \(\psi\) is real, \(\langle p\rangle = 0\).</li>
+      <li>\(\langle x^2\rangle = \dfrac{30}{L^5}\displaystyle\int_0^Lx^4(L - x)^2\,dx = \dfrac{30}{L^5}\cdot\dfrac{L^7}{105} = \dfrac{2L^2}{7}\).</li>
+      <li>So \((\Delta x)^2 = \dfrac{2L^2}{7} - \dfrac{L^2}{4} = \dfrac{L^2}{28}\).</li>
+      <li>Using Hermiticity, \(\langle p^2\rangle = \hbar^2\displaystyle\int\psi'^2\,dx = \hbar^2\frac{30}{L^5}\int_0^L(L - 2x)^2\,dx = \frac{10\hbar^2}{L^2}\).</li>
+      <li>Therefore
+      \[ \Delta x\,\Delta p = \sqrt{\frac{10}{28}}\,\hbar = \sqrt{\frac{5}{14}}\,\hbar \approx 0.598\hbar \geq \frac\hbar2. \]
+      The principle holds, and this state is close to the bound.</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Notes §3.3" data-topic="gaussians">
+    <p>For \(\psi = Axe^{-\frac12ax^2}\): find \(A\), \(\langle x^2\rangle\) and \(\langle p^2\rangle\), and hence \(\Delta x\,\Delta p\). Use \(I_0, I_2, I_4\).</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>\(1 = A^2I_2(a)\), so \(A^2 = \dfrac{2a^{3/2}}{\sqrt\pi}\).</li>
+      <li>\(\langle x\rangle = 0\) by symmetry, and
+      \[ \langle x^2\rangle = A^2I_4(a) = \frac{2a^{3/2}}{\sqrt\pi}\cdot\frac{3\sqrt\pi}{4a^{5/2}} = \frac{3}{2a}. \]</li>
+      <li>\(\psi' = A(1 - ax^2)e^{-\frac12ax^2}\). Using \(\langle p^2\rangle = \hbar^2\int\psi'^2\,dx\):
+      \[ \langle p^2\rangle = \hbar^2A^2\big(I_0 - 2aI_2 + a^2I_4\big) = \hbar^2A^2\sqrt{\frac\pi a}\left(1 - 1 + \frac34\right) = \frac32a\hbar^2. \]</li>
+      <li>With \(\langle p\rangle = 0\):
+      \[ \Delta x\,\Delta p = \sqrt{\frac{3}{2a}\cdot\frac32a\hbar^2} = \frac32\hbar, \]
+      which is above the bound, unlike the pure Gaussian.</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Notes §3.3" data-topic="gaussians">
+    <p>Use (3.38) to find the Fourier transform of \(\psi(x) = e^{-\frac12ax^2}\). From \(|\psi|^2\) and \(|\tilde\psi|^2\), find the widths \(\Delta x\) and \(\Delta k\), and show that \(\Delta x\,\Delta k = \tfrac12\).</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>Replacing \(a \to a/2\) in (3.38): \(\tilde\psi(k) = \sqrt{\dfrac{2\pi}{a}}\,e^{-k^2/2a}\).</li>
+      <li>\(|\psi|^2 = e^{-ax^2}\). Comparing with \(\langle x^2\rangle = 1/2a\) gives \(\Delta x = 1/\sqrt{2a}\).</li>
+      <li>\(|\tilde\psi|^2 \propto e^{-k^2/a}\), which is the same form with \(a \to 1/a\). So \(\Delta k = \sqrt{a/2}\).</li>
+      <li>Hence \(\Delta x\,\Delta k = \tfrac12\). With \(p = \hbar k\), this is \(\Delta x\,\Delta p = \hbar/2\). ✓</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Notes §3.4" data-topic="wave-packets">
+    <p>An electron is localised in a Gaussian packet with \(\Delta x = 1\,\text{nm}\). Estimate how long it takes for the spreading term \((\Delta p/m)t\) to equal the initial width. Use \(\hbar = 1.05\times10^{-34}\,\text{J s}\) and \(m = 9.1\times10^{-31}\,\text{kg}\).</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>A Gaussian packet saturates the bound, so \(\Delta p = \hbar/(2\Delta x)\).</li>
+      <li>Setting \(\dfrac{\Delta p}{m}t = \Delta x\) gives \(t = \dfrac{2m(\Delta x)^2}{\hbar}\).</li>
+      <li>Numerically,
+      \[ t = \frac{2(9.1\times10^{-31})(10^{-9})^2}{1.05\times10^{-34}} \approx 1.7\times10^{-14}\,\text{s}. \]</li>
+      <li>The time grows with \(m\), which is why large objects do not visibly spread.</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Sheet 7 Q2" data-topic="harmonic-oscillator">
+    <p>With \(a\) and \(a^\dagger\) as defined for the oscillator, show that \(\hbar\omega(a^\dagger a + \tfrac12)\) equals \(-\dfrac{\hbar^2}{2m}\dfrac{d^2}{dx^2} + \dfrac12m\omega^2x^2\), and that \([a, a^\dagger] = 1\).</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>Since \((-i)^2 = -1\):
+      \[ a^\dagger a = -\frac{1}{2\alpha^2}\left(\frac{d}{dx} - \alpha^2x\right)\left(\frac{d}{dx} + \alpha^2x\right). \]</li>
+      <li>Acting on a function, \(\tfrac{d}{dx}(\alpha^2xf) = \alpha^2f + \alpha^2xf'\), so the operator product is \(\tfrac{d^2}{dx^2} + \alpha^2 - \alpha^4x^2\).</li>
+      <li>So \(a^\dagger a = -\dfrac{1}{2\alpha^2}\dfrac{d^2}{dx^2} - \dfrac12 + \dfrac12\alpha^2x^2\).</li>
+      <li>Then with \(\alpha^2 = m\omega/\hbar\):
+      \[ \hbar\omega\big(a^\dagger a + \tfrac12\big) = -\frac{\hbar^2}{2m}\frac{d^2}{dx^2} + \frac12m\omega^2x^2. \;\checkmark \]</li>
+      <li>In the other order, \(aa^\dagger = -\dfrac{1}{2\alpha^2}\left(\dfrac{d^2}{dx^2} - \alpha^2 - \alpha^4x^2\right)\). Subtracting gives \([a, a^\dagger] = 1\).</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Sheet 7 Q2" data-topic="harmonic-oscillator">
+    <p>Use \([a, a^\dagger] = 1\) to show that \([\hat H, a^\dagger] = \hbar\omega\,a^\dagger\). Deduce that if \(\psi\) has energy \(E\), then \(a^\dagger\psi\) has energy \(E + \hbar\omega\). Hence find the energy levels.</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>\([\hat H, a^\dagger] = \hbar\omega[a^\dagger a, a^\dagger] = \hbar\omega\,a^\dagger[a, a^\dagger] = \hbar\omega\,a^\dagger\).</li>
+      <li>Then \(\hat Ha^\dagger\psi = a^\dagger\hat H\psi + \hbar\omega a^\dagger\psi = (E + \hbar\omega)a^\dagger\psi\).</li>
+      <li>The ground state has \(a\psi_0 = 0\), so \(\hat H\psi_0 = \tfrac12\hbar\omega\,\psi_0\).</li>
+      <li>Each \(a^\dagger\) adds \(\hbar\omega\), so
+      \[ E_n = \big(n + \tfrac12\big)\hbar\omega, \qquad n = 0, 1, 2, \dots \]</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Sheet 7 Q3" data-topic="harmonic-oscillator">
+    <p>What potential has \(\psi = A\operatorname{sech}(bx)\) as an eigenstate? Choose \(V \to 0\) as \(|x| \to \infty\), and find the energy.</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>Write \(\psi = Ae^{-f}\), with \(f = \ln\cosh bx\). Then \(f' = b\tanh bx\) and \(f'' = b^2\operatorname{sech}^2bx\).</li>
+      <li>From \(V = E + \dfrac{\hbar^2}{2m}(f'^2 - f'')\), using \(\tanh^2 = 1 - \operatorname{sech}^2\):
+      \[ V = E + \frac{\hbar^2b^2}{2m}\big(1 - 2\operatorname{sech}^2bx\big). \]</li>
+      <li>\(V \to 0\) at infinity requires \(E = -\dfrac{\hbar^2b^2}{2m}\).</li>
+      <li>Therefore
+      \[ V(x) = -\frac{\hbar^2b^2}{m}\operatorname{sech}^2(bx). \]
+      This is an attractive well, and \(\psi\) is a bound state with \(E \lt 0\).</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Sheet 7 Q2" data-topic="harmonic-oscillator">
+    <p>Verify directly that \(\psi = xe^{-\frac12\alpha^2x^2}\) is an eigenfunction of the oscillator Hamiltonian, with \(E = \tfrac32\hbar\omega\).</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>\(\psi' = (1 - \alpha^2x^2)e^{-\frac12\alpha^2x^2}\).</li>
+      <li>\(\psi'' = (-3\alpha^2x + \alpha^4x^3)e^{-\frac12\alpha^2x^2} = (-3\alpha^2 + \alpha^4x^2)\psi\).</li>
+      <li>So
+      \[ \hat H\psi = \left[\frac{\hbar^2}{2m}(3\alpha^2 - \alpha^4x^2) + \frac12m\omega^2x^2\right]\psi. \]</li>
+      <li>With \(\alpha^2 = m\omega/\hbar\): \(\dfrac{\hbar^2\alpha^4}{2m} = \dfrac12m\omega^2\), so the \(x^2\) terms cancel.</li>
+      <li>This leaves \(\dfrac{3\hbar^2\alpha^2}{2m} = \dfrac32\hbar\omega\). ✓</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Sheet 7 Q1" data-topic="harmonic-oscillator">
+    <p>In the oscillator ground state, find \(\langle x^2\rangle\) and \(\langle p^2\rangle\). Show that the average kinetic and potential energies are equal, and that they add to \(\tfrac12\hbar\omega\).</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>The ground state is a Gaussian with \(a = \alpha^2\), so \(\langle x^2\rangle = \dfrac{1}{2\alpha^2}\) and \(\langle p^2\rangle = \dfrac{\alpha^2\hbar^2}{2}\).</li>
+      <li>\(\langle T\rangle = \dfrac{\langle p^2\rangle}{2m} = \dfrac{\alpha^2\hbar^2}{4m} = \dfrac14\hbar\omega\).</li>
+      <li>\(\langle V\rangle = \dfrac12m\omega^2\langle x^2\rangle = \dfrac{m\omega^2}{4\alpha^2} = \dfrac14\hbar\omega\).</li>
+      <li>So \(\langle T\rangle = \langle V\rangle\), and they add to \(\tfrac12\hbar\omega\). ✓</li>
+    </ol></details>
+  </section>
+
+  <section class="q" data-style="Notes §3.2" data-topic="uncertainty">
+    <p>An excited atomic state lives for about \(10^{-8}\,\text{s}\). Use the energy–time relation to estimate the minimum spread in its energy, in eV. Take \(\hbar = 6.58\times10^{-16}\,\text{eV s}\). Why is there no such bound between \(\hat p_x\) and \(\hat y\)?</p>
+    <details class="sol"><summary>Show solution</summary><ol class="steps">
+      <li>From (3.18), \(\Delta E \geq \dfrac{\hbar}{2\Delta t}\).</li>
+      <li>Numerically,
+      \[ \Delta E \geq \frac{6.58\times10^{-16}}{2\times10^{-8}} \approx 3.3\times10^{-8}\,\text{eV}. \]</li>
+      <li>\([\hat p_x, \hat y] = 0\), so \(C = 0\) in (3.11). The bound is then just \(\Delta p_x\,\Delta y \geq 0\), and both can be sharp.</li>
+    </ol></details>
+  </section>
+
+  </div>
+</article>
+
+</div><!-- /wrap -->
+
+<script>
+const SHEET = { code: 'MATH325', full: 'MATH325 — Quantum Mechanics Cheat Sheet' };
+const CHAPTERS = { I: 'Foundations and General Theory', II: 'Bound States', III: 'Scattering', IV: 'Formalism and Uncertainty' };
+const PENCIL = '<path d="M4 20l1-4.500L16.500 4l3.500 3.500L8.500 19 4 20z"/><path d="M14 6.500l3.500 3.500"/>';
+const TOPICS = [
+  { id: 'duality', ch: 'I', title: 'Wave–Particle Duality', desc: 'Photons, de Broglie and the double slit',
+    icon: '<path d="M2 12c1.500-5 3-5 4.500 0s3 5 4.500 0"/><circle cx="17" cy="12" r="3.500" fill="currentColor"/>' },
+  { id: 'quantisation', ch: 'I', title: 'Quantisation', desc: 'How boundary conditions pick out integers',
+    icon: '<path d="M4 20h16M4 14h16M4 9h16M4 5h16"/><path d="M12 20v-6" stroke-width="2.500"/>' },
+  { id: 'postulates', ch: 'I', title: 'Postulates', desc: 'States, probability and collapse',
+    icon: '<path d="M6 4L3 12l3 8"/><path d="M14 4l-1 16"/><path d="M18 4l3 8-3 8"/>' },
+  { id: 'expectation-values', ch: 'I', title: 'Expectation Values', desc: 'Operators and averages',
+    icon: '<path d="M3 20c4 0 5-14 9-14s5 14 9 14"/><path d="M12 6v14" stroke-dasharray="2 3"/>' },
+  { id: 'hermitian', ch: 'I', title: 'Hermitian Operators', desc: 'Why observables have real values',
+    icon: '<path d="M5 4v16M13 4v16M5 12h8"/><path d="M18 4l3 3M21 4l-3 3"/>' },
+  { id: 'eigenstates', ch: 'I', title: 'Eigenstates', desc: 'Measurement, bases and the Hamiltonian',
+    icon: '<path d="M4 20V4"/><path d="M4 20h16"/><path d="M4 20L16 8"/><path d="M12 8h4v4"/>' },
+  { id: 'time-evolution', ch: 'I', title: 'Time Evolution', desc: 'The time-dependent Schrödinger equation',
+    icon: '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.500 2"/>' },
+  { id: 'problems-1', ch: 'I', title: 'Problems', desc: 'Sixteen questions in the style of Sheets 1, 2, 5 and 7', icon: PENCIL },
+
+  { id: 'infinite-well', ch: 'II', title: 'Infinite Square Well', desc: 'Energies, eigenstates and averages',
+    icon: '<path d="M4 3v18h16V3"/><path d="M4 17C8 7 16 7 20 17"/>' },
+  { id: 'symmetric-well', ch: 'II', title: 'Symmetric Well', desc: 'Even and odd solutions',
+    icon: '<path d="M4 3v18h16V3"/><path d="M12 21V3" stroke-dasharray="2 3"/><path d="M4 12c2.500-7 5.500-7 8 0s5.500 7 8 0"/>' },
+  { id: 'finite-well', ch: 'II', title: 'Finite Square Well', desc: 'Matching, and leaking into walls',
+    icon: '<path d="M2 8h6v13h8V8h6"/><path d="M2 14c3 0 4-1 6-3 2-4 6-4 8 0 2 2 3 3 6 3"/>' },
+  { id: 'problems-2', ch: 'II', title: 'Problems', desc: 'Twelve questions in the style of Sheets 3 to 5', icon: PENCIL },
+
+  { id: 'probability-flux', ch: 'III', title: 'Probability Flux', desc: 'Flow of probability and free waves',
+    icon: '<path d="M3 8h14M3 16h14"/><path d="M14 5l3 3-3 3M14 13l3 3-3 3"/><path d="M21 4v16"/>' },
+  { id: 'potential-step', ch: 'III', title: 'Potential Step', desc: 'Reflection and transmission',
+    icon: '<path d="M2 18h10V8h10"/><path d="M3 12h6"/><path d="M6 9l3 3-3 3"/>' },
+  { id: 'potential-barrier', ch: 'III', title: 'Barrier and Tunnelling', desc: 'Getting through the forbidden region',
+    icon: '<path d="M2 19h8V6h4v13h8"/><path d="M2 12c1-4 2-4 3 0s2 4 3 0"/><path d="M16 13c.700-2 1.300-2 2 0s1.300 2 2 0" stroke-width="1.200"/>' },
+  { id: 'problems-3', ch: 'III', title: 'Problems', desc: 'Twelve questions in the style of Sheet 6', icon: PENCIL },
+
+  { id: 'commutators', ch: 'IV', title: 'Commutators', desc: 'The canonical commutation relation',
+    icon: '<path d="M8 4H4v16h4M16 4h4v16h-4"/><path d="M10 12h4"/>' },
+  { id: 'uncertainty', ch: 'IV', title: 'Uncertainty Principle', desc: 'Heisenberg, derived',
+    icon: '<ellipse cx="12" cy="12" rx="10" ry="4"/><ellipse cx="12" cy="12" rx="4" ry="10"/>' },
+  { id: 'gaussians', ch: 'IV', title: 'Gaussian Wave Functions', desc: 'Integrals, and saturating the bound',
+    icon: '<path d="M2 20c5 0 6-15 10-15s5 15 10 15"/>' },
+  { id: 'wave-packets', ch: 'IV', title: 'Wave Packets', desc: 'Localising a free particle',
+    icon: '<path d="M2 12c2 0 2-.500 3-1s1 2 2 2 1-5 2-5 1 8 2 8 1-10 2-10 1 8 2 8 1-5 2-5 1 2 2 2 1-.500 3 1"/>' },
+  { id: 'harmonic-oscillator', ch: 'IV', title: 'Harmonic Oscillator', desc: 'Ladder operators, from Sheet 7',
+    icon: '<path d="M3 4c3 10 6 15 9 15s6-5 9-15"/><path d="M8 15h8M6 11h12M5 7h14" opacity=".6"/>' },
+  { id: 'problems-4', ch: 'IV', title: 'Problems', desc: 'Twelve questions in the style of Sheets 6 and 7', icon: PENCIL },
+];
+
+const iconSvg = t => `<span class="icon"><svg viewBox="0 0 24 24" aria-hidden="true">${t.icon}</svg></span>`;
+
+/* ── Build the homepage and each topic's header and pager ── */
+(function build() {
+  const contents = document.getElementById('contents');
+  Object.keys(CHAPTERS).forEach(ch => {
+    const cards = TOPICS.filter(t => t.ch === ch).map(t =>
+      `<a class="topic-card" href="#${t.id}">${iconSvg(t)}<span><b>${t.title}</b><span class="d">${t.desc}</span></span></a>`).join('');
+    contents.insertAdjacentHTML('beforeend',
+      `<section class="ch-group" data-ch="${ch}"><div class="ch-head"><span class="ch-num">Chapter ${ch}</span><span class="ch-title">${CHAPTERS[ch]}</span></div><div class="topic-grid">${cards}</div></section>`);
+  });
+  TOPICS.forEach((t, i) => {
+    const el = document.getElementById(t.id);
+    const prev = TOPICS[i - 1], next = TOPICS[i + 1];
+    el.insertAdjacentHTML('afterbegin',
+      `<nav class="topbar"><a href="#">← All topics</a><span class="where">Chapter ${t.ch} · ${CHAPTERS[t.ch]}</span></nav>
+       <div class="topic-head">${iconSvg(t)}<h2 class="topic-title">${t.title}</h2></div>`);
+    el.insertAdjacentHTML('beforeend',
+      `<nav class="pager">${prev ? `<a href="#${prev.id}"><small>← Previous</small>${prev.title}</a>` : ''}${next ? `<a class="nx" href="#${next.id}"><small>Next →</small>${next.title}</a>` : ''}</nav>`);
+  });
+})();
+
+/* ── Problems: show 4 questions from each pool, and cycle on demand ── */
+const SHOW = 4;
+function shuffled(list) {
+  const a = list.slice();
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+document.querySelectorAll('.pool').forEach(pool => {
+  const all = [...pool.querySelectorAll('.q')];
+  const sets = Math.ceil(all.length / SHOW);
+  let order = shuffled(all), set = 0;
+
+  all.forEach(q => {
+    const topic = TOPICS.find(t => t.id === q.dataset.topic);
+    q.insertAdjacentHTML('afterbegin',
+      `<div class="q-head"><span class="q-num"></span><span>Based on ${q.dataset.style}</span><a href="#${topic.id}">${topic.title}</a></div>`);
+  });
+
+  pool.insertAdjacentHTML('afterend',
+    `<div class="pool-controls"><button class="gen-btn" type="button">Generate new questions</button><span class="pool-count"></span></div>`);
+  const controls = pool.nextElementSibling;
+  const count = controls.querySelector('.pool-count');
+
+  function show() {
+    all.forEach(q => { q.hidden = true; q.querySelector('details').open = false; });
+    order.slice(set * SHOW, (set + 1) * SHOW).forEach((q, i) => {
+      q.hidden = false;
+      q.querySelector('.q-num').textContent = `Question ${i + 1}`;
+      pool.append(q);
+    });
+    count.textContent = `Set ${set + 1} of ${sets} · ${all.length} questions in the pool`;
+  }
+
+  controls.querySelector('.gen-btn').addEventListener('click', () => {
+    set++;
+    if (set === sets) { set = 0; order = shuffled(all); }   // pool finished: start a fresh cycle
+    show();
+    markLongEquations();
+    pool.closest('.view').scrollIntoView({ block: 'start', behavior: 'instant' });
+  });
+  show();
+});
+document.addEventListener('toggle', e => {
+  if (e.target.matches && e.target.matches('details.sol')) {
+    e.target.querySelector('summary').textContent = e.target.open ? 'Hide solution' : 'Show solution';
+  }
+}, true);
+
+/* ── Hash routing, so links, reloads and the back button all work ── */
+function route() {
+  const id = decodeURIComponent(location.hash.slice(1));
+  const target = (id && document.getElementById(id)) || document.getElementById('home');
+  document.querySelectorAll('.view').forEach(v => v.classList.toggle('active', v === target));
+  const t = TOPICS.find(x => x.id === target.id);
+  document.title = t ? `${t.title} — ${SHEET.code}` : SHEET.full;
+  window.scrollTo({ top: 0, behavior: 'instant' });
+  markLongEquations();
+}
+function markLongEquations() {
+  document.querySelectorAll('.view.active .katex-display').forEach(e => {
+    if (e.offsetParent) e.classList.toggle('scrolls', e.scrollWidth - e.clientWidth > 4);
+  });
+}
+window.addEventListener('resize', markLongEquations);
+document.addEventListener('toggle', markLongEquations, true);
+window.addEventListener('hashchange', route);
+route();
+
+/* ── KaTeX: \( \) inline, \[ \] and equation environments for display ── */
+function initMath() {
+  renderMathInElement(document.body, { throwOnError: false, strict: 'ignore' });
+  markLongEquations();
+  document.body.dataset.mathReady = '1';
+}
+
+/* ── SVG figures, plotted from the actual formulas ── */
+const NS = 'http://www.w3.org/2000/svg';
+function el(tag, attrs, parent, text) {
+  const n = document.createElementNS(NS, tag);
+  Object.entries(attrs).forEach(([k, v]) => n.setAttribute(k, v));
+  if (text !== undefined) n.textContent = text;
+  if (parent) parent.appendChild(n);
+  return n;
+}
+function plot(id, w, h, bounds, draw, flipY) {
+  const [x0, x1, y0, y1] = bounds, pad = 34;
+  const svg = el('svg', { viewBox: `0 0 ${w} ${h}`, role: 'img' });
+  const X = x => pad + (x - x0) / (x1 - x0) * (w - 2 * pad);
+  const Y = y => flipY ? pad + (y - y0) / (y1 - y0) * (h - 2 * pad) : h - pad - (y - y0) / (y1 - y0) * (h - 2 * pad);
+  const g = {
+    svg, X, Y,
+    curve(fn, a, b, attrs = {}) {
+      let d = '';
+      for (let i = 0; i <= 160; i++) { const p = fn(a + (b - a) * i / 160); d += (i ? 'L' : 'M') + X(p[0]).toFixed(1) + ' ' + Y(p[1]).toFixed(1); }
+      return el('path', { d, fill: 'none', stroke: 'var(--accent)', 'stroke-width': 2, ...attrs }, svg);
+    },
+    line(a, b, c, d, attrs = {}) { return el('line', { x1: X(a), y1: Y(b), x2: X(c), y2: Y(d), stroke: 'var(--ink-muted)', 'stroke-width': 1, ...attrs }, svg); },
+    dot(x, y, r = 4) { return el('circle', { cx: X(x), cy: Y(y), r, fill: 'var(--accent)' }, svg); },
+    text(x, y, s, dx = 6, dy = -6, anchor = 'start') { return el('text', { x: X(x) + dx, y: Y(y) + dy, 'text-anchor': anchor }, svg, s); },
+  };
+  draw(g);
+  document.getElementById(id).prepend(svg);
+}
+
+/* ── Figures ── */
+const { sin, cos, tan, exp, PI, sqrt, sinh, cosh } = Math;
+const faint = { stroke: 'var(--ink-muted)', 'stroke-width': 1, opacity: .45 };
+
+plot('fig-well', 620, 300, [0, 1, 0, 11.5], g => {
+  const scale = .65;
+  [1, 2, 3].forEach(n => {
+    const E = n * n;
+    g.line(0, E, 1, E, { 'stroke-dasharray': '3 4', opacity: .6 });
+    g.curve(x => [x, E + scale * sin(n * PI * x)], 0, 1);
+    g.text(1, E, 'E' + '₁₂₃'[n - 1], 8, 4);
+  });
+  g.line(0, 0, 0, 11.5, { 'stroke-width': 2.5 }); g.line(1, 0, 1, 11.5, { 'stroke-width': 2.5 }); g.line(0, 0, 1, 0, { 'stroke-width': 2.5 });
+  g.text(0, 0, '0', -4, 20); g.text(1, 0, 'L', -4, 20);
+});
+
+plot('fig-finite', 620, 320, [0, 8.4, 0, 8.4], g => {
+  const R = 7.2;
+  [[0, PI / 2], [PI, 3 * PI / 2], [2 * PI, 8.4]].forEach(([a, b]) => {
+    const end = Math.min(b - .02, 8.39);
+    const stop = (() => { let z = a; while (z < end && z * tan(z) < 8.4) z += .002; return z; })();
+    g.curve(z => [z, z * tan(z)], a + .0001, stop);
+  });
+  g.curve(t => [R * cos(t), R * sin(t)], 0, PI / 2, { stroke: 'var(--ink-soft)', 'stroke-dasharray': '6 4' });
+  [PI / 2, 3 * PI / 2, 5 * PI / 2].forEach(z => g.line(z, 0, z, 8.4, faint));
+  g.line(0, 0, 8.4, 0); g.line(0, 0, 0, 8.4);
+  g.text(8.4, 0, 'qL', -14, 20); g.text(0, 8.4, 'kL', 8, 8);
+  g.text(PI / 2, 0, 'π/2', -12, 18); g.text(3 * PI / 2, 0, '3π/2', -14, 18); g.text(5 * PI / 2, 0, '5π/2', -14, 18);
+  [[1.3, 4.68], [3.9, 6.05], [6.15, 3.75]].forEach(([, ]) => {});
+  const find = (a, b) => { let lo = a + 1e-4, hi = b - 1e-4; const f = z => z * tan(z) - sqrt(R * R - z * z); for (let i = 0; i < 60; i++) { const m = (lo + hi) / 2; f(m) > 0 ? hi = m : lo = m; } return lo; };
+  [find(0, PI / 2), find(PI, 3 * PI / 2), find(2 * PI, 5 * PI / 2 > R ? R : 5 * PI / 2)].forEach(z => g.dot(z, sqrt(Math.max(R * R - z * z, 0))));
+});
+
+plot('fig-step', 620, 230, [-5, 5, 0, 2.3], g => {
+  g.line(-5, .25, 0, .25, { 'stroke-width': 2.2 }); g.line(0, .25, 0, 1, { 'stroke-width': 2.2 }); g.line(0, 1, 5, 1, { 'stroke-width': 2.2 });
+  const k = 3.2, k1 = 1.8, r = (k - k1) / (k + k1), t = 2 * k / (k + k1), E = 1.45, s = .32;
+  g.curve(x => [x, E + s * (cos(k * x) + r * cos(k * x))], -5, 0);
+  g.curve(x => [x, E + s * t * cos(k1 * x)], 0, 5);
+  g.text(-5, .25, 'V = 0', 4, -6); g.text(5, 1, 'V₁', -18, 18); g.text(-2.5, 2.05, 'incoming + reflected', -60, 0); g.text(2.6, 2.05, 'transmitted', -34, 0);
+});
+
+plot('fig-tunnel', 620, 240, [-6, 7, 0, 2.5], g => {
+  // Exact |ψ| for a unit incoming wave, from the matching conditions
+  const L = 1.5, k = 2.2, q = .85;
+  const ch = cosh(q * L), sh = sinh(q * L);
+  // ψ(0) and ψ'(0) for F = 1, dropping the overall phase e^{ikL}
+  const p0 = [ch, -(k / q) * sh], d0 = [-q * sh, k * ch];
+  const dOverIk = [d0[1] / k, -d0[0] / k];
+  const A = [(p0[0] + dOverIk[0]) / 2, (p0[1] + dOverIk[1]) / 2], B = [(p0[0] - dOverIk[0]) / 2, (p0[1] - dOverIk[1]) / 2];
+  const nA = Math.hypot(...A), F = 1 / nA;
+  const left = x => { const c = cos(k * x), s = sin(k * x); const re = (A[0] * c - A[1] * s) + (B[0] * c + B[1] * s), im = (A[0] * s + A[1] * c) + (-B[0] * s + B[1] * c); return F * Math.hypot(re, im); };
+  const mid = x => F * sqrt(cosh(q * (L - x)) ** 2 + (k / q) ** 2 * sinh(q * (L - x)) ** 2);
+  g.line(-6, 0, 0, 0, { 'stroke-width': 2 }); g.line(0, 0, 0, 2.3, { 'stroke-width': 2 }); g.line(0, 2.3, L, 2.3, { 'stroke-width': 2 }); g.line(L, 2.3, L, 0, { 'stroke-width': 2 }); g.line(L, 0, 7, 0, { 'stroke-width': 2 });
+  g.curve(x => [x, left(x)], -6, 0);
+  g.curve(x => [x, mid(x)], 0, L);
+  g.curve(x => [x, F], L, 7);
+  g.text(0, 2.3, 'barrier', 2, -6); g.text(-3, 2.05, '|ψ|', -6, 0); g.text(7, F, 'transmitted', -66, -8);
+});
+
+plot('fig-gauss', 620, 210, [-4, 13, 0, 1.25], g => {
+  const a1 = 3, a2 = .6;
+  g.curve(x => [x, exp(-a1 * x * x)], -3.8, 3.8);
+  g.curve(x => [x, exp(-a2 * x * x)], -3.8, 3.8, { 'stroke-dasharray': '6 5' });
+  const c = 9, f = (k, a) => sqrt(1 / a) * exp(-(k * k) / (4 * a)) * .75;
+  g.curve(k => [c + k, f(k, a1) ], -3.8, 3.8);
+  g.curve(k => [c + k, f(k, a2) * .77], -3.8, 3.8, { 'stroke-dasharray': '6 5' });
+  g.line(-4, 0, 4, 0); g.line(5, 0, 13, 0);
+  g.text(3.8, 0, 'x', 0, 18); g.text(12.8, 0, 'k', 0, 18);
+});
+
+/* ── Logo: |ψ|² of (φ₁ + φ₂)/√2 in a box. The cross term oscillates at the true
+   relative frequency, so the density sloshes between the walls. ── */
+(function logo() {
+  const svg = document.getElementById('logo'), x0 = 30, x1 = 250, base = 128, H = 52;
+  const css = v => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+  const violet = css('--gold'), teal = css('--teal'), wall = css('--ink-muted');
+  const defs = el('defs', {}, svg), grad = el('linearGradient', { id: 'psi', x1: 0, y1: 0, x2: 0, y2: 1 }, defs);
+  el('stop', { offset: '0%', 'stop-color': violet, 'stop-opacity': .55 }, grad);
+  el('stop', { offset: '100%', 'stop-color': violet, 'stop-opacity': .03 }, grad);
+  el('path', { d: `M${x0} 16V${base}H${x1}V16`, fill: 'none', stroke: wall, 'stroke-width': 2, 'stroke-linejoin': 'round' }, svg);
+  const fill = el('path', { fill: 'url(#psi)' }, svg);
+  const line = el('path', { fill: 'none', stroke: violet, 'stroke-width': 2.2 }, svg);
+  const avg = el('line', { y1: 20, y2: base, stroke: teal, 'stroke-width': 1.3, 'stroke-dasharray': '3 4' }, svg);
+  function show(t) {
+    const c = cos(t); let d = '', mean = 0, tot = 0;
+    for (let i = 0; i <= 90; i++) {
+      const u = i / 90, p = .5 * (sin(PI * u) ** 2 + sin(2 * PI * u) ** 2) + sin(PI * u) * sin(2 * PI * u) * c;
+      mean += u * p; tot += p;
+      d += (i ? 'L' : 'M') + (x0 + (x1 - x0) * u).toFixed(1) + ' ' + (base - H * p).toFixed(1);
+    }
+    line.setAttribute('d', d);
+    fill.setAttribute('d', d + `L${x1} ${base}L${x0} ${base}Z`);
+    const xm = x0 + (x1 - x0) * mean / tot;
+    avg.setAttribute('x1', xm); avg.setAttribute('x2', xm);
+  }
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) { show(.9); return; }
+  (function tick(now) { show(now / 1400); requestAnimationFrame(tick); })(0);
+})();
+</script>
+</body>
+</html>
